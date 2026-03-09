@@ -1,0 +1,51 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo $CLAUDE_FILE | grep -q '\\.py$' && uv run ruff check --fix $CLAUDE_FILE && uv run ruff format $CLAUDE_FILE || true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo $CLAUDE_TOOL_INPUT | grep -q '\"command\":.*git commit' && uv run pytest tests/ --tb=short -q || true"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(uv sync:*)",
+      "Bash(uv run:*)",
+      "Bash(uv pip install:*)",
+      "Bash(ruff:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git push)",
+      "Bash(git rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(echo:*)",
+      "Bash(tree:*)"
+    ],
+    "deny": [
+      "Read(credentials/**)",
+      "Read(.env)"
+    ]
+  }
+}

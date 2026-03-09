@@ -1,0 +1,36 @@
+# Set up
+.idea/
+.project
+
+# Python
+__pycache__/
+.pytest_cache/
+*.egg-info/
+venv/
+.venv/
+
+# Environment Variables/Secrets
+.env
+credentials/
+*/credentials/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Sketches
+sketches/
+notebooks/
+
+# AWS / Cloud
+.aws-sam/
+
+# Logs / Output
+*.log
+
+# Data
+*/data/
+
+# Build artifacts
+build/
+.claude/settings.local.json

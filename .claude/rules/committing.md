@@ -1,0 +1,77 @@
+# Committing Guidelines
+
+## Post-Change Workflow
+
+**IMPORTANT**: After completing any task that involves code changes, ALWAYS follow this workflow:
+
+1. **Fix tests if needed**: If the changes require test updates, fix
+   them before committing (the `preCommit` hook will catch failures,
+   but fixing upfront avoids wasted commit attempts).
+2. **Update version and changelog**: Follow `versioning.md` rules. Include guideline changes (`.claude/rules/`, `CLAUDE.md`) in the changelog too.
+3. **Update README.md if needed**: When changes affect user-facing functionality:
+   - New bot commands: document them
+   - Changed command behavior: update existing descriptions
+   - New configuration options: document them
+4. **Update CLAUDE.md if needed**: When rules change or new important patterns emerge
+5. **Sync environment**: Run `uv sync --all-extras` to update `uv.lock`,
+   then `uv pip install -e ".[dev]"` to reinstall the editable package.
+6. **Commit changes**: Create a commit with a descriptive message following
+   the format below.
+   - **Always include `uv.lock`** in the commit — run `git status` to
+     verify it is staged before committing.
+   - Use simple `-m "..."` quoting for commit messages (no heredocs).
+   - The `preCommit` hook will run tests; if they fail the commit is
+     aborted — fix and retry.
+7. **Push to remote**: Push the changes with `git push`
+
+This workflow is MANDATORY after every prompt that results in code changes.
+
+**Guideline changes** (`.claude/rules/`, `CLAUDE.md`): still require a
+patch version bump and changelog entry — follow the full workflow above
+(skip tests only if no code changed).
+
+**Pure tracking changes** (`backlog.md` checkboxes only): commit and push,
+but skip tests and version bump.
+
+## Commit Message Format
+
+Use conventional commit style:
+
+```
+<type>: <description>
+
+[optional body]
+```
+
+## Types
+
+- `feat` - New feature or functionality
+- `fix` - Bug fix
+- `refactor` - Code refactoring without changing behavior
+- `docs` - Documentation changes
+- `test` - Adding or updating tests
+- `chore` - Maintenance tasks, dependency updates
+
+## Best Practices
+
+- Keep the subject line under 72 characters
+- Use imperative mood ("Add feature" not "Added feature")
+- Separate subject from body with a blank line
+- Use the body to explain *what* and *why*, not *how*
+- Reference issues when applicable
+
+## Examples
+
+```
+feat: Add /play and /stop handlers
+
+Exercise session lifecycle with inline keyboards.
+```
+
+```
+fix: Handle missing session in answer handler
+```
+
+```
+docs: Add deployment instructions to README
+```
