@@ -1,0 +1,41 @@
+"""Statistics handlers."""
+
+from telegram import Update
+from telegram.ext import ContextTypes
+
+from rembrandt_chat._helpers import resolve_user
+from rembrandt_chat.config import LANG_FROM, LANG_TO
+from rembrandt_chat.formatting import (
+    format_daily_stats,
+    format_weak_words,
+)
+
+
+async def stats(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/stats` — show daily stats."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    user, db = resolve_user(update, context)
+
+    daily = db.daily_stats(user.id, days=7)
+    await update.message.reply_text(format_daily_stats(daily))
+
+
+async def weak(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/weak` — show weakest words."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    user, db = resolve_user(update, context)
+
+    words = db.weak_words(
+        user.id, LANG_FROM, LANG_TO, limit=10
+    )
+    await update.message.reply_text(format_weak_words(words))

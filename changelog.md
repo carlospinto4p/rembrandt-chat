@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.2 - 10th March 2026
+
+- Split `handlers.py` into separate modules:
+  - `_helpers.py`: shared helpers (`resolve_user`, `get_session`, `require_session`, `send_next`) and user-data key constants.
+  - `session_handlers.py`: `/start`, `/play`, `/stop`, `/hint`, `/skip`, answer handlers.
+  - `word_handlers.py`: `/addword`, `/mywords`, `/deleteword`.
+  - `stats_handlers.py`: `/stats`, `/weak`.
+- Converted `handlers.py` into a re-export facade for backward compatibility.
+- Updated `test_handlers.py`: patched `Session` in `session_handlers` module.
+
+
 ### v0.8.1 - 10th March 2026
 
 - Refactored `handlers.py`:

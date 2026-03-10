@@ -61,7 +61,7 @@ async def test_play_creates_session():
     ex = make_exercise()
 
     with patch(
-        "rembrandt_chat.handlers.Session"
+        "rembrandt_chat.session_handlers.Session"
     ) as MockSession:
         mock_session = MockSession.return_value
         mock_session.next_exercise.return_value = ex
@@ -87,7 +87,7 @@ async def test_play_no_words_available():
     ctx = make_context()
 
     with patch(
-        "rembrandt_chat.handlers.Session"
+        "rembrandt_chat.session_handlers.Session"
     ) as MockSession:
         MockSession.return_value.next_exercise.return_value = (
             None

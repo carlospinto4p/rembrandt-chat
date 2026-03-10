@@ -19,4 +19,4 @@
 - [x] Move shared test helpers (`_user`, `_word`, `_context`, `_update`, `_callback_update`) to `conftest.py`
 - [x] Move inline import to top level in `deleteword`
 - [x] Consolidate callback-data constants (`DEL_CB_PREFIX` → `formatting.py`)
-- [ ] Split `handlers.py` into `session_handlers.py`, `word_handlers.py`, `stats_handlers.py`
+- [x] Split `handlers.py` into `session_handlers.py`, `word_handlers.py`, `stats_handlers.py`
