@@ -20,3 +20,7 @@
 - [x] Move inline import to top level in `deleteword`
 - [x] Consolidate callback-data constants (`DEL_CB_PREFIX` → `formatting.py`)
 - [x] Split `handlers.py` into `session_handlers.py`, `word_handlers.py`, `stats_handlers.py`
+
+### 2026.03.10
+
+- [ ] Upgrade rembrandt client version to v3.2.0
