@@ -1,16 +1,12 @@
 """Tests for word management handlers."""
 
-from datetime import datetime, timezone
-from unittest.mock import AsyncMock, MagicMock
-
 import pytest
-from rembrandt import User, Word
 from telegram.ext import ConversationHandler
 
+from rembrandt_chat.formatting import DEL_CB_PREFIX
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
-    DEL_CB_PREFIX,
     addword_cancel,
     addword_definition,
     addword_start,
@@ -19,57 +15,13 @@ from rembrandt_chat.handlers import (
     handle_deleteword_callback,
     mywords,
 )
-from rembrandt_chat.user_mapping import UserMapper
 
-
-# --- Helpers ---
-
-
-def _user() -> User:
-    return User(
-        id=1,
-        username="tg_12345",
-        display_name="Alice",
-        password_hash="",
-        created_at=datetime.now(timezone.utc),
-    )
-
-
-def _word(word_id: int = 1, word_from: str = "efimero") -> Word:
-    return Word(
-        id=word_id,
-        language_from="es",
-        language_to="es",
-        word_from=word_from,
-        word_to="Que dura poco tiempo",
-        tags=[],
-        owner_id=1,
-    )
-
-
-def _context() -> MagicMock:
-    mapper = MagicMock(spec=UserMapper)
-    mapper.ensure_user.return_value = _user()
-    ctx = MagicMock()
-    ctx.bot_data = {"user_mapper": mapper, "db": MagicMock()}
-    ctx.user_data = {}
-    return ctx
-
-
-def _update(text: str = "") -> MagicMock:
-    update = MagicMock()
-    update.effective_user = MagicMock()
-    update.effective_user.id = 12345
-    update.message = AsyncMock()
-    update.message.text = text
-    return update
-
-
-def _callback_update(data: str) -> MagicMock:
-    update = MagicMock()
-    update.callback_query = AsyncMock()
-    update.callback_query.data = data
-    return update
+from .conftest import (
+    make_callback_update,
+    make_context,
+    make_update,
+    make_word,
+)
 
 
 # --- /addword conversation ---
@@ -77,8 +29,8 @@ def _callback_update(data: str) -> MagicMock:
 
 @pytest.mark.asyncio
 async def test_addword_start_asks_for_word():
-    update = _update()
-    ctx = _context()
+    update = make_update()
+    ctx = make_context()
     state = await addword_start(update, ctx)
     assert state == AWAITING_WORD
     update.message.reply_text.assert_called_once()
@@ -88,8 +40,8 @@ async def test_addword_start_asks_for_word():
 
 @pytest.mark.asyncio
 async def test_addword_word_stores_and_asks_definition():
-    update = _update(text="efimero")
-    ctx = _context()
+    update = make_update(text="efimero")
+    ctx = make_context()
     state = await addword_word(update, ctx)
     assert state == AWAITING_DEFINITION
     assert ctx.user_data["_addword_word"] == "efimero"
@@ -99,8 +51,8 @@ async def test_addword_word_stores_and_asks_definition():
 
 @pytest.mark.asyncio
 async def test_addword_definition_saves_word():
-    update = _update(text="Que dura poco tiempo")
-    ctx = _context()
+    update = make_update(text="Que dura poco tiempo")
+    ctx = make_context()
     ctx.user_data["_addword_word"] = "efimero"
 
     state = await addword_definition(update, ctx)
@@ -119,8 +71,8 @@ async def test_addword_definition_saves_word():
 
 @pytest.mark.asyncio
 async def test_addword_empty_word_aborts():
-    update = _update(text="Que dura poco tiempo")
-    ctx = _context()
+    update = make_update(text="Que dura poco tiempo")
+    ctx = make_context()
     ctx.user_data["_addword_word"] = ""
 
     state = await addword_definition(update, ctx)
@@ -131,8 +83,8 @@ async def test_addword_empty_word_aborts():
 
 @pytest.mark.asyncio
 async def test_addword_cancel():
-    update = _update()
-    ctx = _context()
+    update = make_update()
+    ctx = make_context()
     ctx.user_data["_addword_word"] = "something"
 
     state = await addword_cancel(update, ctx)
@@ -146,11 +98,11 @@ async def test_addword_cancel():
 
 @pytest.mark.asyncio
 async def test_mywords_lists_words():
-    update = _update()
-    ctx = _context()
+    update = make_update()
+    ctx = make_context()
     ctx.bot_data["db"].get_words.return_value = [
-        _word(1, "efimero"),
-        _word(2, "perpetuo"),
+        make_word(1, "efimero"),
+        make_word(2, "perpetuo"),
     ]
 
     await mywords(update, ctx)
@@ -162,8 +114,8 @@ async def test_mywords_lists_words():
 
 @pytest.mark.asyncio
 async def test_mywords_empty():
-    update = _update()
-    ctx = _context()
+    update = make_update()
+    ctx = make_context()
     ctx.bot_data["db"].get_words.return_value = []
 
     await mywords(update, ctx)
@@ -177,10 +129,10 @@ async def test_mywords_empty():
 
 @pytest.mark.asyncio
 async def test_deleteword_shows_buttons():
-    update = _update()
-    ctx = _context()
+    update = make_update()
+    ctx = make_context()
     ctx.bot_data["db"].get_words.return_value = [
-        _word(1, "efimero"),
+        make_word(1, "efimero"),
     ]
 
     await deleteword(update, ctx)
@@ -194,8 +146,8 @@ async def test_deleteword_shows_buttons():
 
 @pytest.mark.asyncio
 async def test_deleteword_empty():
-    update = _update()
-    ctx = _context()
+    update = make_update()
+    ctx = make_context()
     ctx.bot_data["db"].get_words.return_value = []
 
     await deleteword(update, ctx)
@@ -206,8 +158,8 @@ async def test_deleteword_empty():
 
 @pytest.mark.asyncio
 async def test_deleteword_callback_deletes():
-    update = _callback_update(f"{DEL_CB_PREFIX}42")
-    ctx = _context()
+    update = make_callback_update(f"{DEL_CB_PREFIX}42")
+    ctx = make_context()
 
     await handle_deleteword_callback(update, ctx)
 

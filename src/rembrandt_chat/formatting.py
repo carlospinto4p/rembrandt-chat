@@ -14,6 +14,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 MC_PREFIX = "mc:"
 QUALITY_PREFIX = "q:"
 REVEAL_CB = "reveal"
+DEL_CB_PREFIX = "delw:"
 
 # Quality labels for self-graded buttons
 _QUALITY_LABELS = ["0", "1", "2", "3", "4", "5"]

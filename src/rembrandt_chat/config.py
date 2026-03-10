@@ -2,6 +2,10 @@
 
 import os
 
+# Default language pair for exercises and word storage.
+LANG_FROM = "es"
+LANG_TO = "es"
+
 
 def get_bot_token() -> str:
     """Return the Telegram bot token.

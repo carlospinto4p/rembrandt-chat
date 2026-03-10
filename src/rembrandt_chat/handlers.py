@@ -1,10 +1,12 @@
 """Telegram command handlers."""
 
-from rembrandt import PostgresDatabase, Session
-from telegram import Update
+from rembrandt import PostgresDatabase, Session, User
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
+from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
+    DEL_CB_PREFIX,
     MC_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
@@ -23,6 +25,49 @@ _SESSION = "session"
 _EXERCISE = "exercise"
 
 
+# --- shared helpers ---
+
+
+def _resolve_user(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> tuple[User, PostgresDatabase]:
+    """Return the rembrandt user and database from context.
+
+    Ensures the Telegram user is registered.
+    """
+    mapper: UserMapper = context.bot_data["user_mapper"]
+    user = mapper.ensure_user(update.effective_user)
+    db: PostgresDatabase = context.bot_data["db"]
+    return user, db
+
+
+def _get_session(
+    context: ContextTypes.DEFAULT_TYPE,
+) -> tuple[Session | None, dict]:
+    """Return the active session and user_data dict."""
+    user_data = context.user_data
+    session: Session | None = user_data.get(_SESSION)
+    return session, user_data
+
+
+def _require_session(
+    context: ContextTypes.DEFAULT_TYPE,
+) -> tuple[Session, dict] | None:
+    """Return ``(session, user_data)`` if both session and
+    exercise are active, otherwise ``None``.
+    """
+    session, user_data = _get_session(context)
+    if session is None:
+        return None
+    if user_data.get(_EXERCISE) is None:
+        return None
+    return session, user_data
+
+
+# --- /start ---
+
+
 async def start(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
@@ -31,14 +76,16 @@ async def start(
     if update.effective_user is None or update.message is None:
         return
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
+    user, _ = _resolve_user(update, context)
 
     name = user.display_name or user.username
     await update.message.reply_text(
         f"Welcome, {name}!\n\n"
         "Use /play to start an exercise session."
     )
+
+
+# --- /play, /stop ---
 
 
 async def play(
@@ -57,15 +104,13 @@ async def play(
         )
         return
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
+    user, db = _resolve_user(update, context)
 
-    db = context.bot_data["db"]
     session = Session(
         db=db,
         user_id=user.id,
-        language_from="es",
-        language_to="es",
+        language_from=LANG_FROM,
+        language_to=LANG_TO,
     )
     user_data[_SESSION] = session
 
@@ -90,16 +135,18 @@ async def stop(
     if update.message is None:
         return
 
-    user_data = context.user_data
-    session: Session | None = user_data.get(_SESSION)
+    session, user_data = _get_session(context)
     if session is None:
         await update.message.reply_text("No active session.")
         return
 
-    stats = session.summary()
+    summary = session.summary()
     user_data.pop(_SESSION, None)
     user_data.pop(_EXERCISE, None)
-    await update.message.reply_text(format_summary(stats))
+    await update.message.reply_text(format_summary(summary))
+
+
+# --- /hint, /skip ---
 
 
 async def hint(
@@ -110,16 +157,18 @@ async def hint(
     if update.message is None:
         return
 
-    user_data = context.user_data
-    session: Session | None = user_data.get(_SESSION)
-    if session is None:
-        await update.message.reply_text("No active session.")
+    result = _require_session(context)
+    if result is None:
+        session, _ = _get_session(context)
+        msg = (
+            "No active exercise."
+            if session is not None
+            else "No active session."
+        )
+        await update.message.reply_text(msg)
         return
 
-    if user_data.get(_EXERCISE) is None:
-        await update.message.reply_text("No active exercise.")
-        return
-
+    session, _ = result
     h = session.hint()
     await update.message.reply_text(format_hint(h))
 
@@ -132,22 +181,27 @@ async def skip(
     if update.message is None:
         return
 
-    user_data = context.user_data
-    session: Session | None = user_data.get(_SESSION)
-    if session is None:
-        await update.message.reply_text("No active session.")
+    result = _require_session(context)
+    if result is None:
+        session, _ = _get_session(context)
+        msg = (
+            "No active exercise."
+            if session is not None
+            else "No active session."
+        )
+        await update.message.reply_text(msg)
         return
 
-    if user_data.get(_EXERCISE) is None:
-        await update.message.reply_text("No active exercise.")
-        return
-
+    session, user_data = result
     skipped = session.skip()
     await update.message.reply_text(
         f"Skipped: {skipped.word.word_from}"
     )
 
     await _send_next(session, user_data, update)
+
+
+# --- answer handlers ---
 
 
 async def handle_answer_text(
@@ -158,17 +212,13 @@ async def handle_answer_text(
     if update.effective_user is None or update.message is None:
         return
 
-    user_data = context.user_data
-    session: Session | None = user_data.get(_SESSION)
-    if session is None:
+    result = _require_session(context)
+    if result is None:
         return
 
-    exercise = user_data.get(_EXERCISE)
-    if exercise is None:
-        return
-
-    result = session.answer(text=update.message.text or "")
-    await update.message.reply_text(format_answer(result))
+    session, user_data = result
+    answer = session.answer(text=update.message.text or "")
+    await update.message.reply_text(format_answer(answer))
 
     await _send_next(session, user_data, update)
 
@@ -183,15 +233,12 @@ async def handle_answer_callback(
         return
     await query.answer()
 
-    user_data = context.user_data
-    session: Session | None = user_data.get(_SESSION)
-    if session is None:
+    result = _require_session(context)
+    if result is None:
         return
 
-    exercise = user_data.get(_EXERCISE)
-    if exercise is None:
-        return
-
+    session, user_data = result
+    exercise = user_data[_EXERCISE]
     data = query.data or ""
 
     # Flashcard reveal — show answer + quality buttons
@@ -205,8 +252,8 @@ async def handle_answer_callback(
     # Quality rating (self-graded / flashcard)
     if data.startswith(QUALITY_PREFIX):
         quality = int(data[len(QUALITY_PREFIX):])
-        result = session.answer(quality=quality)
-        await query.edit_message_text(format_answer(result))
+        answer = session.answer(quality=quality)
+        await query.edit_message_text(format_answer(answer))
         await _send_next(session, user_data, update)
         return
 
@@ -214,13 +261,14 @@ async def handle_answer_callback(
     if data.startswith(MC_PREFIX):
         idx = int(data[len(MC_PREFIX):])
         chosen = exercise.options[idx]
-        result = session.answer(text=chosen)
-        await query.edit_message_text(format_answer(result))
+        answer = session.answer(text=chosen)
+        await query.edit_message_text(format_answer(answer))
         await _send_next(session, user_data, update)
         return
 
 
-# --- /addword conversation states ---
+# --- /addword conversation ---
+
 AWAITING_WORD, AWAITING_DEFINITION = range(2)
 
 
@@ -232,8 +280,7 @@ async def addword_start(
     if update.effective_user is None or update.message is None:
         return ConversationHandler.END
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    mapper.ensure_user(update.effective_user)
+    _resolve_user(update, context)
 
     await update.message.reply_text("Send the word:")
     return AWAITING_WORD
@@ -274,13 +321,11 @@ async def addword_definition(
         )
         return ConversationHandler.END
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
-    db: PostgresDatabase = context.bot_data["db"]
+    user, db = _resolve_user(update, context)
 
     db.add_word(
-        language_from="es",
-        language_to="es",
+        language_from=LANG_FROM,
+        language_to=LANG_TO,
         word_from=word_from,
         word_to=word_to,
         owner_id=user.id,
@@ -302,7 +347,7 @@ async def addword_cancel(
     return ConversationHandler.END
 
 
-# --- /mywords ---
+# --- /mywords, /deleteword ---
 
 
 async def mywords(
@@ -313,11 +358,9 @@ async def mywords(
     if update.effective_user is None or update.message is None:
         return
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
-    db: PostgresDatabase = context.bot_data["db"]
+    user, db = _resolve_user(update, context)
 
-    words = db.get_words("es", "es", owner_id=user.id)
+    words = db.get_words(LANG_FROM, LANG_TO, owner_id=user.id)
     if not words:
         await update.message.reply_text(
             "You have no private words yet. "
@@ -332,11 +375,6 @@ async def mywords(
     await update.message.reply_text("\n".join(lines))
 
 
-# --- /deleteword ---
-
-DEL_CB_PREFIX = "delw:"
-
-
 async def deleteword(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
@@ -345,18 +383,14 @@ async def deleteword(
     if update.effective_user is None or update.message is None:
         return
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
-    db: PostgresDatabase = context.bot_data["db"]
+    user, db = _resolve_user(update, context)
 
-    words = db.get_words("es", "es", owner_id=user.id)
+    words = db.get_words(LANG_FROM, LANG_TO, owner_id=user.id)
     if not words:
         await update.message.reply_text(
             "You have no private words to delete."
         )
         return
-
-    from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
     buttons = [
         [
@@ -394,7 +428,7 @@ async def handle_deleteword_callback(
     await query.edit_message_text("Word deleted.")
 
 
-# --- /stats and /weak ---
+# --- /stats, /weak ---
 
 
 async def stats(
@@ -405,9 +439,7 @@ async def stats(
     if update.effective_user is None or update.message is None:
         return
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
-    db: PostgresDatabase = context.bot_data["db"]
+    user, db = _resolve_user(update, context)
 
     daily = db.daily_stats(user.id, days=7)
     await update.message.reply_text(format_daily_stats(daily))
@@ -421,12 +453,15 @@ async def weak(
     if update.effective_user is None or update.message is None:
         return
 
-    mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
-    db: PostgresDatabase = context.bot_data["db"]
+    user, db = _resolve_user(update, context)
 
-    words = db.weak_words(user.id, "es", "es", limit=10)
+    words = db.weak_words(
+        user.id, LANG_FROM, LANG_TO, limit=10
+    )
     await update.message.reply_text(format_weak_words(words))
+
+
+# --- internal ---
 
 
 async def _send_next(
@@ -437,12 +472,12 @@ async def _send_next(
     """Advance to the next exercise or end the session."""
     exercise = session.next_exercise()
     if exercise is None:
-        stats = session.summary()
+        summary = session.summary()
         user_data.pop(_SESSION, None)
         user_data.pop(_EXERCISE, None)
         chat = update.effective_chat
         if chat is not None:
-            await chat.send_message(format_summary(stats))
+            await chat.send_message(format_summary(summary))
         return
 
     user_data[_EXERCISE] = exercise

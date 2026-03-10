@@ -13,14 +13,16 @@ from telegram.ext import (
 )
 
 from rembrandt_chat.config import (
+    LANG_FROM,
+    LANG_TO,
     get_base_vocab_path,
     get_bot_token,
     get_database_url,
 )
+from rembrandt_chat.formatting import DEL_CB_PREFIX
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
-    DEL_CB_PREFIX,
     addword_cancel,
     addword_definition,
     addword_start,
@@ -49,10 +51,10 @@ def _load_base_vocab(db: PostgresDatabase) -> None:
     path = get_base_vocab_path()
     if path is None:
         return
-    existing = db.get_words("es", "es")
+    existing = db.get_words(LANG_FROM, LANG_TO)
     if existing:
         return
-    words = import_words_csv(db, path, "es", "es")
+    words = import_words_csv(db, path, LANG_FROM, LANG_TO)
     log.info("Loaded %d base vocabulary words from %s", len(words), path)
 
 

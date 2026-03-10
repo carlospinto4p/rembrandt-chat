@@ -1,6 +1,21 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.1 - 10th March 2026
+
+- Refactored `handlers.py`:
+  - Extracted `_resolve_user()` helper (deduplicated 7 call sites).
+  - Extracted `_require_session()` / `_get_session()` guards (deduplicated session+exercise checks).
+  - Replaced hardcoded `"es", "es"` with `LANG_FROM` / `LANG_TO` constants from `config.py`.
+  - Moved inline import to top level in `deleteword`.
+- Updated `config.py`: added `LANG_FROM` and `LANG_TO` constants.
+- Updated `bot.py`: import `DEL_CB_PREFIX` from `formatting` and use language constants.
+- Moved `DEL_CB_PREFIX` to `formatting.py` with other callback-data constants.
+- Moved shared test helpers to `conftest.py`, removed duplication from:
+  - `test_handlers.py`
+  - `test_word_handlers.py`
+
+
 ### v0.8.0 - 10th March 2026
 
 - Added `Dockerfile` and `docker-compose.yml` with PostgreSQL and bot services.
