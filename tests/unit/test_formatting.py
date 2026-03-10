@@ -1,0 +1,234 @@
+"""Tests for rembrandt_chat.formatting."""
+
+from rembrandt import Hint, SessionStats, Word
+from rembrandt.models import AnswerResult, Exercise, ExerciseType
+
+from rembrandt_chat.formatting import (
+    MC_PREFIX,
+    QUALITY_PREFIX,
+    REVEAL_CB,
+    flashcard_reveal,
+    format_answer,
+    format_exercise,
+    format_hint,
+    format_summary,
+)
+
+
+def _word(**kw) -> Word:
+    defaults = dict(
+        id=1,
+        language_from="es",
+        language_to="es",
+        word_from="efimero",
+        word_to="Que dura poco tiempo",
+        tags=[],
+    )
+    defaults.update(kw)
+    return Word(**defaults)
+
+
+def _exercise(
+    exercise_type: ExerciseType = ExerciseType.MULTIPLE_CHOICE,
+    **kw,
+) -> Exercise:
+    defaults = dict(
+        word=_word(),
+        exercise_type=exercise_type,
+        options=[],
+        prompt="",
+        expected_answer="",
+    )
+    defaults.update(kw)
+    return Exercise(**defaults)
+
+
+# --- format_exercise: multiple choice ---
+
+
+def test_multiple_choice_text():
+    ex = _exercise(
+        prompt="Que dura poco tiempo",
+        options=["efimero", "perpetuo", "antiguo", "moderno"],
+    )
+    text, kb = format_exercise(ex)
+    assert "Que dura poco tiempo" in text
+    assert kb is not None
+
+
+def test_multiple_choice_keyboard_buttons():
+    options = ["efimero", "perpetuo", "antiguo", "moderno"]
+    ex = _exercise(options=options)
+    _, kb = format_exercise(ex)
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert len(flat) == 4
+    assert flat[0].text == "efimero"
+    assert flat[0].callback_data == f"{MC_PREFIX}0"
+    assert flat[3].callback_data == f"{MC_PREFIX}3"
+
+
+def test_multiple_choice_two_per_row():
+    ex = _exercise(
+        options=["a", "b", "c", "d"],
+    )
+    _, kb = format_exercise(ex)
+    assert len(kb.inline_keyboard) == 2
+    assert len(kb.inline_keyboard[0]) == 2
+
+
+# --- format_exercise: self-graded ---
+
+
+def test_self_graded_text():
+    ex = _exercise(exercise_type=ExerciseType.SELF_GRADED)
+    text, kb = format_exercise(ex)
+    assert "efimero" in text
+    assert "Que dura poco tiempo" in text
+    assert kb is not None
+
+
+def test_self_graded_quality_buttons():
+    ex = _exercise(exercise_type=ExerciseType.SELF_GRADED)
+    _, kb = format_exercise(ex)
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert len(flat) == 6
+    assert flat[0].callback_data == f"{QUALITY_PREFIX}0"
+    assert flat[5].callback_data == f"{QUALITY_PREFIX}5"
+
+
+# --- format_exercise: flashcard ---
+
+
+def test_flashcard_prompt():
+    ex = _exercise(exercise_type=ExerciseType.FLASHCARD)
+    text, kb = format_exercise(ex)
+    assert "efimero" in text
+    assert kb is not None
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert flat[0].callback_data == REVEAL_CB
+
+
+def test_flashcard_reveal():
+    ex = _exercise(exercise_type=ExerciseType.FLASHCARD)
+    text, kb = flashcard_reveal(ex)
+    assert "efimero" in text
+    assert "Que dura poco tiempo" in text
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert flat[0].callback_data == f"{QUALITY_PREFIX}0"
+
+
+# --- format_exercise: typed answers ---
+
+
+def test_reverse_flashcard_typed():
+    ex = _exercise(
+        exercise_type=ExerciseType.REVERSE_FLASHCARD,
+        prompt="Que dura poco tiempo",
+    )
+    text, kb = format_exercise(ex)
+    assert "Type your answer" in text
+    assert kb is None
+
+
+def test_conjugation_typed():
+    ex = _exercise(
+        exercise_type=ExerciseType.CONJUGATION,
+        prompt="presente, yo",
+    )
+    text, kb = format_exercise(ex)
+    assert "Conjugate" in text
+    assert "presente, yo" in text
+    assert kb is None
+
+
+def test_cloze_typed():
+    ex = _exercise(
+        exercise_type=ExerciseType.CLOZE,
+        prompt="El gato es muy ___",
+    )
+    text, kb = format_exercise(ex)
+    assert "Fill in the blank" in text
+    assert kb is None
+
+
+# --- format_answer ---
+
+
+def test_format_answer_correct():
+    result = AnswerResult(
+        correct=True,
+        expected="efimero",
+        given="efimero",
+        word=_word(),
+    )
+    text = format_answer(result)
+    assert "\u2705" in text
+    assert "efimero" in text
+
+
+def test_format_answer_near_miss():
+    result = AnswerResult(
+        correct=True,
+        expected="efimero",
+        given="efemero",
+        word=_word(),
+        near_miss=True,
+    )
+    text = format_answer(result)
+    assert "efemero" in text
+
+
+def test_format_answer_wrong():
+    result = AnswerResult(
+        correct=False,
+        expected="efimero",
+        given="perpetuo",
+        word=_word(),
+    )
+    text = format_answer(result)
+    assert "\u274c" in text
+    assert "efimero" in text
+
+
+# --- format_hint ---
+
+
+def test_format_hint_pattern():
+    hint = Hint(
+        first_letter="e",
+        word_length=7,
+        pattern="ef_____",
+        reveal_count=2,
+    )
+    text = format_hint(hint)
+    assert "ef_____" in text
+
+
+def test_format_hint_with_sentence():
+    hint = Hint(
+        first_letter="e",
+        word_length=7,
+        pattern="e______",
+        example_sentence="La belleza es ___.",
+    )
+    text = format_hint(hint)
+    assert "La belleza es ___." in text
+
+
+# --- format_summary ---
+
+
+def test_format_summary():
+    stats = SessionStats(
+        total=10,
+        correct=8,
+        incorrect=2,
+        streak=3,
+        best_streak=5,
+        accuracy_pct=80.0,
+    )
+    text = format_summary(stats)
+    assert "Total: 10" in text
+    assert "Correct: 8" in text
+    assert "80%" in text
+    assert "Best streak: 5" in text

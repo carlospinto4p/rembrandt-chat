@@ -14,8 +14,8 @@ The `backlog.md` file tracks all improvements, fixes, and refactoring proposals.
 
 ## Displaying the Backlog
 
-- **When showing the backlog to the user** (e.g., to choose tasks), display
-  each item with a sequential number to make it easy to pick tasks by number
+- **Hide completed items** — only show open (`- [ ]`) items
+- **Number sequentially** starting from 1, so the user can pick by number
 
 ## Workflow Rules
 

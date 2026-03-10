@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.3.0 - 10th March 2026
+
+- Added `formatting.py`: render exercises, answers, hints, and session summaries as Telegram messages with inline keyboards.
+- Added `test_formatting.py`: 16 tests covering all exercise types and formatters.
+
+
 ### v0.2.0 - 10th March 2026
 
 - Added `config.py`: load `TELEGRAM_BOT_TOKEN` and `DATABASE_URL` from env.
