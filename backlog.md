@@ -9,4 +9,4 @@
 - [x] Hints and skip — `/hint`, `/skip` handlers
 - [x] Word management — `/addword` conversational handler, `/mywords`, `/deleteword`
 - [x] Stats — `/stats`, `/weak` handlers
-- [ ] Deployment — `Dockerfile`, `docker-compose.yml`, base vocab loading on first run
+- [x] Deployment — `Dockerfile`, `docker-compose.yml`, base vocab loading on first run

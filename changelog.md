@@ -1,6 +1,18 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.0 - 10th March 2026
+
+- Added `Dockerfile` and `docker-compose.yml` with PostgreSQL and bot services.
+- Added `rembrandt-chat` console script entry point.
+- Added base vocabulary loading on first run via `BASE_VOCAB_PATH` env var.
+- Updated `bot.py`: logging setup and `_load_base_vocab()` on startup.
+- Updated `config.py`: added `get_base_vocab_path()`.
+- Added tests:
+  - `test_bot.py`: 3 tests for base vocab loading logic.
+  - `test_config.py`: 3 tests for `get_base_vocab_path()`.
+
+
 ### v0.7.0 - 10th March 2026
 
 - Added `/stats` handler: show daily stats for the last 7 days.

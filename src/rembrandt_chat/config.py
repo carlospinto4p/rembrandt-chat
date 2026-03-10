@@ -27,3 +27,11 @@ def get_database_url() -> str:
             "DATABASE_URL environment variable is not set"
         )
     return url
+
+
+def get_base_vocab_path() -> str | None:
+    """Return the optional base vocabulary CSV path.
+
+    :return: The path string, or ``None`` if not set.
+    """
+    return os.environ.get("BASE_VOCAB_PATH") or None

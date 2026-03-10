@@ -1,6 +1,8 @@
 """Bot application factory and entry point."""
 
-from rembrandt import PostgresDatabase
+import logging
+
+from rembrandt import PostgresDatabase, import_words_csv
 from telegram.ext import (
     ApplicationBuilder,
     CallbackQueryHandler,
@@ -10,7 +12,11 @@ from telegram.ext import (
     filters,
 )
 
-from rembrandt_chat.config import get_bot_token, get_database_url
+from rembrandt_chat.config import (
+    get_base_vocab_path,
+    get_bot_token,
+    get_database_url,
+)
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
@@ -35,9 +41,29 @@ from rembrandt_chat.handlers import (
 from rembrandt_chat.user_mapping import UserMapper
 
 
+log = logging.getLogger(__name__)
+
+
+def _load_base_vocab(db: PostgresDatabase) -> None:
+    """Import shared vocabulary on first run if configured."""
+    path = get_base_vocab_path()
+    if path is None:
+        return
+    existing = db.get_words("es", "es")
+    if existing:
+        return
+    words = import_words_csv(db, path, "es", "es")
+    log.info("Loaded %d base vocabulary words from %s", len(words), path)
+
+
 def create_app() -> None:
     """Build and run the Telegram bot application."""
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    )
     db = PostgresDatabase(get_database_url())
+    _load_base_vocab(db)
     mapper = UserMapper(db)
 
     app = (
