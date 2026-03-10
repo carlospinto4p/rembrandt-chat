@@ -11,6 +11,7 @@ from rembrandt_chat.formatting import (
     flashcard_reveal,
     format_answer,
     format_exercise,
+    format_hint,
     format_summary,
 )
 from rembrandt_chat.user_mapping import UserMapper
@@ -97,6 +98,54 @@ async def stop(
     user_data.pop(_SESSION, None)
     user_data.pop(_EXERCISE, None)
     await update.message.reply_text(format_summary(stats))
+
+
+async def hint(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/hint` — get a progressive hint for the current exercise."""
+    if update.message is None:
+        return
+
+    user_data = context.user_data
+    session: Session | None = user_data.get(_SESSION)
+    if session is None:
+        await update.message.reply_text("No active session.")
+        return
+
+    if user_data.get(_EXERCISE) is None:
+        await update.message.reply_text("No active exercise.")
+        return
+
+    h = session.hint()
+    await update.message.reply_text(format_hint(h))
+
+
+async def skip(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/skip` — skip the current exercise."""
+    if update.message is None:
+        return
+
+    user_data = context.user_data
+    session: Session | None = user_data.get(_SESSION)
+    if session is None:
+        await update.message.reply_text("No active session.")
+        return
+
+    if user_data.get(_EXERCISE) is None:
+        await update.message.reply_text("No active exercise.")
+        return
+
+    skipped = session.skip()
+    await update.message.reply_text(
+        f"Skipped: {skipped.word.word_from}"
+    )
+
+    await _send_next(session, user_data, update)
 
 
 async def handle_answer_text(

@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.5.0 - 10th March 2026
+
+- Added `/hint` handler: progressive hints during exercises.
+- Added `/skip` handler: skip current exercise and advance.
+- Updated `bot.py`: register `/hint` and `/skip` commands.
+- Added tests for `/hint` and `/skip` (6 new tests).
+
+
 ### v0.4.0 - 10th March 2026
 
 - Added `/play` handler: create a rembrandt `Session` and send the first exercise.

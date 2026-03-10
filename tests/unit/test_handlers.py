@@ -8,10 +8,13 @@ from rembrandt import SessionStats, User, Word
 from rembrandt.models import AnswerResult, Exercise, ExerciseType
 
 from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
+from rembrandt import Hint
 from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_answer_text,
+    hint,
     play,
+    skip,
     start,
     stop,
 )
@@ -318,3 +321,83 @@ async def test_session_ends_on_last_exercise():
     await handle_answer_text(update, ctx)
 
     assert "session" not in ctx.user_data
+
+
+# --- /hint ---
+
+
+@pytest.mark.asyncio
+async def test_hint_returns_pattern():
+    session = MagicMock()
+    session.hint.return_value = Hint(
+        first_letter="e",
+        word_length=7,
+        pattern="ef_____",
+        reveal_count=2,
+    )
+    ex = _exercise(exercise_type=ExerciseType.REVERSE_FLASHCARD)
+    update = _update()
+    ctx = _context(session=session, exercise=ex)
+
+    await hint(update, ctx)
+
+    session.hint.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "ef_____" in text
+
+
+@pytest.mark.asyncio
+async def test_hint_no_session():
+    update = _update()
+    ctx = _context()
+    await hint(update, ctx)
+    text = update.message.reply_text.call_args[0][0]
+    assert "No active session" in text
+
+
+@pytest.mark.asyncio
+async def test_hint_no_exercise():
+    update = _update()
+    ctx = _context(session=MagicMock())
+    await hint(update, ctx)
+    text = update.message.reply_text.call_args[0][0]
+    assert "No active exercise" in text
+
+
+# --- /skip ---
+
+
+@pytest.mark.asyncio
+async def test_skip_advances_to_next():
+    session = MagicMock()
+    skipped_ex = _exercise()
+    session.skip.return_value = skipped_ex
+    session.next_exercise.return_value = _exercise()
+
+    update = _update()
+    ctx = _context(session=session, exercise=skipped_ex)
+
+    await skip(update, ctx)
+
+    session.skip.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "Skipped" in text
+    assert "efimero" in text
+
+
+@pytest.mark.asyncio
+async def test_skip_no_session():
+    update = _update()
+    ctx = _context()
+    await skip(update, ctx)
+    text = update.message.reply_text.call_args[0][0]
+    assert "No active session" in text
+
+
+@pytest.mark.asyncio
+async def test_skip_no_exercise():
+    update = _update()
+    ctx = _context(session=MagicMock())
+    await skip(update, ctx)
+    text = update.message.reply_text.call_args[0][0]
+    assert "No active exercise" in text
