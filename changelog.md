@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.4.0 - 10th March 2026
+
+- Added `/play` handler: create a rembrandt `Session` and send the first exercise.
+- Added `/stop` handler: end session and show summary.
+- Added `handle_answer_text`: process typed answers for reverse flashcard, conjugation, cloze, etc.
+- Added `handle_answer_callback`: process inline keyboard presses for multiple choice, self-graded quality, and flashcard reveal.
+- Updated `bot.py`: register `/play`, `/stop`, callback query, and text message handlers; share `db` via `bot_data`.
+- Added handler tests:
+  - `/play`, `/stop`, text answers, callback answers, session lifecycle
+
+
 ### v0.3.0 - 10th March 2026
 
 - Added `formatting.py`: render exercises, answers, hints, and session summaries as Telegram messages with inline keyboards.

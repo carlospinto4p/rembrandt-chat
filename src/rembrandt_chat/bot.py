@@ -1,10 +1,22 @@
 """Bot application factory and entry point."""
 
 from rembrandt import PostgresDatabase
-from telegram.ext import ApplicationBuilder, CommandHandler
+from telegram.ext import (
+    ApplicationBuilder,
+    CallbackQueryHandler,
+    CommandHandler,
+    MessageHandler,
+    filters,
+)
 
 from rembrandt_chat.config import get_bot_token, get_database_url
-from rembrandt_chat.handlers import start
+from rembrandt_chat.handlers import (
+    handle_answer_callback,
+    handle_answer_text,
+    play,
+    start,
+    stop,
+)
 from rembrandt_chat.user_mapping import UserMapper
 
 
@@ -19,8 +31,18 @@ def create_app() -> None:
         .build()
     )
     app.bot_data["user_mapper"] = mapper
+    app.bot_data["db"] = db
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("play", play))
+    app.add_handler(CommandHandler("stop", stop))
+    app.add_handler(CallbackQueryHandler(handle_answer_callback))
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & ~filters.COMMAND,
+            handle_answer_text,
+        )
+    )
 
     app.run_polling()
 
