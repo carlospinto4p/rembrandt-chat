@@ -114,14 +114,39 @@ Environment variables (loaded via `config.py`):
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@localhost/rembrandt` |
 | `BASE_VOCAB_PATH` | Path to shared vocabulary JSON (optional) | `data/spanish_10000.json` |
 
-## Deployment
+## Deployment (Docker Compose)
 
-Run with Docker Compose:
+1. Copy the example environment file and fill in your bot token:
+
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` and set `TELEGRAM_BOT_TOKEN` to the token from
+   [@BotFather](https://t.me/BotFather). Optionally set
+   `BASE_VOCAB_PATH` to a vocabulary CSV file to preload on first run.
+
+3. Start the services:
 
 ```bash
 docker compose up -d
 ```
 
-The `docker-compose.yml` includes PostgreSQL and the bot as services.
-On first run, if `BASE_VOCAB_PATH` is set and the words table is empty,
-the shared vocabulary is loaded automatically.
+This spins up PostgreSQL and the bot. The database connection is
+handled internally — no need to set `DATABASE_URL` when using
+Docker Compose.
+
+On first run, if `BASE_VOCAB_PATH` is set and the words table is
+empty, the shared vocabulary is loaded automatically.
+
+To view logs:
+
+```bash
+docker compose logs -f bot
+```
+
+To stop:
+
+```bash
+docker compose stop
+```

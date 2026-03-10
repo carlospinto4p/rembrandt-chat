@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.3 - 10th March 2026
+
+- Added `.env.example` with documented environment variables.
+- Updated `README.md`: expanded deployment section with step-by-step Docker Compose instructions.
+
+
 ### v0.8.2 - 10th March 2026
 
 - Split `handlers.py` into separate modules:
