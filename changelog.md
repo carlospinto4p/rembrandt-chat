@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.6.0 - 10th March 2026
+
+- Added `/addword` conversational handler: two-step flow (word, then definition) to add private words.
+- Added `/mywords` handler: list user's private words.
+- Added `/deleteword` handler: show private words as inline buttons, tap to delete.
+- Updated `bot.py`: register `ConversationHandler` for `/addword`, `/mywords`, `/deleteword`, and delete callback.
+- Added `test_word_handlers.py`: 10 tests for word management.
+
+
 ### v0.5.0 - 10th March 2026
 
 - Added `/hint` handler: progressive hints during exercises.
