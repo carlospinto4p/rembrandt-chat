@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.7.0 - 10th March 2026
+
+- Added `/stats` handler: show daily stats for the last 7 days.
+- Added `/weak` handler: show the user's 10 weakest words.
+- Added `format_daily_stats()` and `format_weak_words()` to `formatting.py`.
+- Added 8 new tests (4 formatting + 4 handler).
+
+
 ### v0.6.0 - 10th March 2026
 
 - Added `/addword` conversational handler: two-step flow (word, then definition) to add private words.

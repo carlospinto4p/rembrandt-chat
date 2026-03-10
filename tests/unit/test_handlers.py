@@ -4,11 +4,16 @@ from datetime import datetime, timezone
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from rembrandt import SessionStats, User, Word
-from rembrandt.models import AnswerResult, Exercise, ExerciseType
+from rembrandt import Hint, SessionStats, User, Word
+from rembrandt.models import (
+    AnswerResult,
+    DailyStats,
+    Exercise,
+    ExerciseType,
+    WeakWord,
+)
 
 from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
-from rembrandt import Hint
 from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_answer_text,
@@ -16,7 +21,9 @@ from rembrandt_chat.handlers import (
     play,
     skip,
     start,
+    stats,
     stop,
+    weak,
 )
 from rembrandt_chat.user_mapping import UserMapper
 
@@ -401,3 +408,72 @@ async def test_skip_no_exercise():
     await skip(update, ctx)
     text = update.message.reply_text.call_args[0][0]
     assert "No active exercise" in text
+
+
+# --- /stats ---
+
+
+@pytest.mark.asyncio
+async def test_stats_shows_daily():
+    update = _update()
+    ctx = _context()
+    ctx.bot_data["db"].daily_stats.return_value = [
+        DailyStats(
+            date="2026-03-10", answers=20,
+            correct=18, accuracy_pct=90.0,
+        ),
+    ]
+
+    await stats(update, ctx)
+
+    ctx.bot_data["db"].daily_stats.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "2026-03-10" in text
+
+
+@pytest.mark.asyncio
+async def test_stats_empty():
+    update = _update()
+    ctx = _context()
+    ctx.bot_data["db"].daily_stats.return_value = []
+
+    await stats(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No activity" in text
+
+
+# --- /weak ---
+
+
+@pytest.mark.asyncio
+async def test_weak_shows_words():
+    update = _update()
+    ctx = _context()
+    ctx.bot_data["db"].weak_words.return_value = [
+        WeakWord(
+            word=_word(),
+            attempts=10,
+            errors=7,
+            error_rate=0.7,
+            last_attempt=datetime.now(timezone.utc),
+        ),
+    ]
+
+    await weak(update, ctx)
+
+    ctx.bot_data["db"].weak_words.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "efimero" in text
+
+
+@pytest.mark.asyncio
+async def test_weak_empty():
+    update = _update()
+    ctx = _context()
+    ctx.bot_data["db"].weak_words.return_value = []
+
+    await weak(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No weak words" in text

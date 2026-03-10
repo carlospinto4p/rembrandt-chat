@@ -3,8 +3,10 @@
 from rembrandt import Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
+    DailyStats,
     Exercise,
     ExerciseType,
+    WeakWord,
 )
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -179,6 +181,41 @@ def format_summary(stats: SessionStats) -> str:
         f"Accuracy: {stats.accuracy_pct:.0f}%\n"
         f"Best streak: {stats.best_streak}"
     )
+
+
+def format_daily_stats(stats: list[DailyStats]) -> str:
+    """Render daily stats for the last few days.
+
+    :param stats: List of daily stats (most recent first).
+    :return: Formatted stats text.
+    """
+    if not stats:
+        return "No activity recorded yet."
+    lines = ["Daily stats:\n"]
+    for s in stats:
+        lines.append(
+            f"{s.date}: {s.answers} answers, "
+            f"{s.correct} correct ({s.accuracy_pct:.0f}%)"
+        )
+    return "\n".join(lines)
+
+
+def format_weak_words(words: list[WeakWord]) -> str:
+    """Render the user's weakest words.
+
+    :param words: List of weak words.
+    :return: Formatted weak-words text.
+    """
+    if not words:
+        return "No weak words found. Keep practising!"
+    lines = ["Your weakest words:\n"]
+    for i, w in enumerate(words, 1):
+        lines.append(
+            f"{i}. {w.word.word_from} \u2014 "
+            f"{w.errors}/{w.attempts} errors "
+            f"({w.error_rate:.0%})"
+        )
+    return "\n".join(lines)
 
 
 # ---- shared keyboard builders ----

@@ -28,7 +28,9 @@ from rembrandt_chat.handlers import (
     play,
     skip,
     start,
+    stats,
     stop,
+    weak,
 )
 from rembrandt_chat.user_mapping import UserMapper
 
@@ -53,6 +55,8 @@ def create_app() -> None:
     app.add_handler(CommandHandler("skip", skip))
     app.add_handler(CommandHandler("mywords", mywords))
     app.add_handler(CommandHandler("deleteword", deleteword))
+    app.add_handler(CommandHandler("stats", stats))
+    app.add_handler(CommandHandler("weak", weak))
 
     addword_conv = ConversationHandler(
         entry_points=[

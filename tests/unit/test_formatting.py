@@ -1,7 +1,15 @@
 """Tests for rembrandt_chat.formatting."""
 
+from datetime import datetime, timezone
+
 from rembrandt import Hint, SessionStats, Word
-from rembrandt.models import AnswerResult, Exercise, ExerciseType
+from rembrandt.models import (
+    AnswerResult,
+    DailyStats,
+    Exercise,
+    ExerciseType,
+    WeakWord,
+)
 
 from rembrandt_chat.formatting import (
     MC_PREFIX,
@@ -9,9 +17,11 @@ from rembrandt_chat.formatting import (
     REVEAL_CB,
     flashcard_reveal,
     format_answer,
+    format_daily_stats,
     format_exercise,
     format_hint,
     format_summary,
+    format_weak_words,
 )
 
 
@@ -232,3 +242,53 @@ def test_format_summary():
     assert "Correct: 8" in text
     assert "80%" in text
     assert "Best streak: 5" in text
+
+
+# --- format_daily_stats ---
+
+
+def test_format_daily_stats():
+    stats = [
+        DailyStats(
+            date="2026-03-10", answers=20,
+            correct=18, accuracy_pct=90.0,
+        ),
+        DailyStats(
+            date="2026-03-09", answers=15,
+            correct=12, accuracy_pct=80.0,
+        ),
+    ]
+    text = format_daily_stats(stats)
+    assert "2026-03-10" in text
+    assert "20 answers" in text
+    assert "90%" in text
+    assert "2026-03-09" in text
+
+
+def test_format_daily_stats_empty():
+    text = format_daily_stats([])
+    assert "No activity" in text
+
+
+# --- format_weak_words ---
+
+
+def test_format_weak_words():
+    words = [
+        WeakWord(
+            word=_word(),
+            attempts=10,
+            errors=7,
+            error_rate=0.7,
+            last_attempt=datetime.now(timezone.utc),
+        ),
+    ]
+    text = format_weak_words(words)
+    assert "efimero" in text
+    assert "7/10" in text
+    assert "70%" in text
+
+
+def test_format_weak_words_empty():
+    text = format_weak_words([])
+    assert "No weak words" in text

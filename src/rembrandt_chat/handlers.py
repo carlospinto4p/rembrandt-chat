@@ -10,9 +10,11 @@ from rembrandt_chat.formatting import (
     REVEAL_CB,
     flashcard_reveal,
     format_answer,
+    format_daily_stats,
     format_exercise,
     format_hint,
     format_summary,
+    format_weak_words,
 )
 from rembrandt_chat.user_mapping import UserMapper
 
@@ -390,6 +392,41 @@ async def handle_deleteword_callback(
     db.delete_word(word_id)
 
     await query.edit_message_text("Word deleted.")
+
+
+# --- /stats and /weak ---
+
+
+async def stats(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/stats` — show daily stats."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    mapper: UserMapper = context.bot_data["user_mapper"]
+    user = mapper.ensure_user(update.effective_user)
+    db: PostgresDatabase = context.bot_data["db"]
+
+    daily = db.daily_stats(user.id, days=7)
+    await update.message.reply_text(format_daily_stats(daily))
+
+
+async def weak(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/weak` — show weakest words."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    mapper: UserMapper = context.bot_data["user_mapper"]
+    user = mapper.ensure_user(update.effective_user)
+    db: PostgresDatabase = context.bot_data["db"]
+
+    words = db.weak_words(user.id, "es", "es", limit=10)
+    await update.message.reply_text(format_weak_words(words))
 
 
 async def _send_next(
