@@ -23,7 +23,7 @@
 
 ### 2026.03.10
 
-- [ ] Upgrade rembrandt client version to v3.2.0
+- [x] Upgrade rembrandt client version to v3.2.0
 
 ### 2026.03.11 (improvements pass)
 

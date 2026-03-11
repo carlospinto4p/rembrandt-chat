@@ -46,16 +46,25 @@ from rembrandt_chat.user_mapping import UserMapper
 log = logging.getLogger(__name__)
 
 
-def _load_base_vocab(db: PostgresDatabase) -> None:
+async def _load_base_vocab(db: PostgresDatabase) -> None:
     """Import shared vocabulary on first run if configured."""
     path = get_base_vocab_path()
     if path is None:
         return
-    existing = db.get_words(LANG_FROM, LANG_TO)
+    existing = await db.get_words(LANG_FROM, LANG_TO)
     if existing:
         return
-    words = import_words_csv(db, path, LANG_FROM, LANG_TO)
+    words = await import_words_csv(db, path, LANG_FROM, LANG_TO)
     log.info("Loaded %d base vocabulary words from %s", len(words), path)
+
+
+async def _post_init(app) -> None:
+    """Connect to the database after the application starts."""
+    db = await PostgresDatabase.connect(get_database_url())
+    await _load_base_vocab(db)
+    mapper = UserMapper(db)
+    app.bot_data["user_mapper"] = mapper
+    app.bot_data["db"] = db
 
 
 def create_app() -> None:
@@ -64,17 +73,13 @@ def create_app() -> None:
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     )
-    db = PostgresDatabase(get_database_url())
-    _load_base_vocab(db)
-    mapper = UserMapper(db)
 
     app = (
         ApplicationBuilder()
         .token(get_bot_token())
+        .post_init(_post_init)
         .build()
     )
-    app.bot_data["user_mapper"] = mapper
-    app.bot_data["db"] = db
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("play", play))

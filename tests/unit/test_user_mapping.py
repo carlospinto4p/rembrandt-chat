@@ -1,7 +1,7 @@
 """Tests for rembrandt_chat.user_mapping."""
 
 from datetime import datetime, timezone
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from rembrandt import User
@@ -72,28 +72,30 @@ def test_display_name_fallback():
 
 @pytest.fixture
 def mock_db():
-    return MagicMock()
+    return AsyncMock()
 
 
-def test_ensure_user_returns_existing(mock_db):
+@pytest.mark.asyncio
+async def test_ensure_user_returns_existing(mock_db):
     existing = _rembrandt_user()
     mock_db.get_user.return_value = existing
 
     mapper = UserMapper(mock_db)
-    result = mapper.ensure_user(_telegram_user())
+    result = await mapper.ensure_user(_telegram_user())
 
     assert result is existing
     mock_db.get_user.assert_called_once_with("tg_12345")
     mock_db.register_user.assert_not_called()
 
 
-def test_ensure_user_registers_new(mock_db):
+@pytest.mark.asyncio
+async def test_ensure_user_registers_new(mock_db):
     mock_db.get_user.return_value = None
     registered = _rembrandt_user()
     mock_db.register_user.return_value = registered
 
     mapper = UserMapper(mock_db)
-    result = mapper.ensure_user(_telegram_user())
+    result = await mapper.ensure_user(_telegram_user())
 
     assert result is registered
     mock_db.get_user.assert_called_once_with("tg_12345")

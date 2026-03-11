@@ -12,7 +12,7 @@ SESSION = "session"
 EXERCISE = "exercise"
 
 
-def resolve_user(
+async def resolve_user(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> tuple[User, PostgresDatabase]:
@@ -21,7 +21,7 @@ def resolve_user(
     Ensures the Telegram user is registered.
     """
     mapper: UserMapper = context.bot_data["user_mapper"]
-    user = mapper.ensure_user(update.effective_user)
+    user = await mapper.ensure_user(update.effective_user)
     db: PostgresDatabase = context.bot_data["db"]
     return user, db
 
@@ -55,7 +55,7 @@ async def send_next(
     update: Update,
 ) -> None:
     """Advance to the next exercise or end the session."""
-    exercise = session.next_exercise()
+    exercise = await session.next_exercise()
     if exercise is None:
         summary = session.summary()
         user_data.pop(SESSION, None)

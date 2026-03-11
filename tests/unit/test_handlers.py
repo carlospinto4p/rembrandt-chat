@@ -1,7 +1,7 @@
 """Tests for rembrandt_chat.handlers."""
 
 from datetime import datetime, timezone
-from unittest.mock import MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from rembrandt import Hint, SessionStats
@@ -64,7 +64,9 @@ async def test_play_creates_session():
         "rembrandt_chat.session_handlers.Session"
     ) as MockSession:
         mock_session = MockSession.return_value
-        mock_session.next_exercise.return_value = ex
+        mock_session.next_exercise = AsyncMock(
+            return_value=ex
+        )
         await play(update, ctx)
 
     assert ctx.user_data["session"] is mock_session
@@ -89,8 +91,8 @@ async def test_play_no_words_available():
     with patch(
         "rembrandt_chat.session_handlers.Session"
     ) as MockSession:
-        MockSession.return_value.next_exercise.return_value = (
-            None
+        MockSession.return_value.next_exercise = AsyncMock(
+            return_value=None
         )
         await play(update, ctx)
 
@@ -134,8 +136,12 @@ async def test_stop_no_session():
 @pytest.mark.asyncio
 async def test_answer_text_correct():
     session = MagicMock()
-    session.answer.return_value = make_answer_result(correct=True)
-    session.next_exercise.return_value = make_exercise()
+    session.answer = AsyncMock(
+        return_value=make_answer_result(correct=True)
+    )
+    session.next_exercise = AsyncMock(
+        return_value=make_exercise()
+    )
     ex = make_exercise(
         exercise_type=ExerciseType.REVERSE_FLASHCARD
     )
@@ -163,8 +169,12 @@ async def test_answer_text_no_session():
 @pytest.mark.asyncio
 async def test_callback_multiple_choice():
     session = MagicMock()
-    session.answer.return_value = make_answer_result(correct=True)
-    session.next_exercise.return_value = make_exercise()
+    session.answer = AsyncMock(
+        return_value=make_answer_result(correct=True)
+    )
+    session.next_exercise = AsyncMock(
+        return_value=make_exercise()
+    )
     ex = make_exercise()
 
     update = make_callback_update(f"{MC_PREFIX}0")
@@ -182,8 +192,12 @@ async def test_callback_multiple_choice():
 @pytest.mark.asyncio
 async def test_callback_quality():
     session = MagicMock()
-    session.answer.return_value = make_answer_result(correct=True)
-    session.next_exercise.return_value = make_exercise()
+    session.answer = AsyncMock(
+        return_value=make_answer_result(correct=True)
+    )
+    session.next_exercise = AsyncMock(
+        return_value=make_exercise()
+    )
     ex = make_exercise(exercise_type=ExerciseType.SELF_GRADED)
 
     update = make_callback_update(f"{QUALITY_PREFIX}4")
@@ -217,8 +231,10 @@ async def test_callback_reveal():
 @pytest.mark.asyncio
 async def test_session_ends_on_last_exercise():
     session = MagicMock()
-    session.answer.return_value = make_answer_result(correct=True)
-    session.next_exercise.return_value = None
+    session.answer = AsyncMock(
+        return_value=make_answer_result(correct=True)
+    )
+    session.next_exercise = AsyncMock(return_value=None)
     session.summary.return_value = SessionStats(
         total=1, correct=1, incorrect=0,
         streak=1, best_streak=1, accuracy_pct=100.0,
@@ -286,7 +302,9 @@ async def test_skip_advances_to_next():
     session = MagicMock()
     skipped_ex = make_exercise()
     session.skip.return_value = skipped_ex
-    session.next_exercise.return_value = make_exercise()
+    session.next_exercise = AsyncMock(
+        return_value=make_exercise()
+    )
 
     update = make_update()
     ctx = make_context(session=session, exercise=skipped_ex)

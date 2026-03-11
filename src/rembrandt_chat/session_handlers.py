@@ -33,7 +33,7 @@ async def start(
     if update.effective_user is None or update.message is None:
         return
 
-    user, _ = resolve_user(update, context)
+    user, _ = await resolve_user(update, context)
 
     name = user.display_name or user.username
     await update.message.reply_text(
@@ -58,7 +58,7 @@ async def play(
         )
         return
 
-    user, db = resolve_user(update, context)
+    user, db = await resolve_user(update, context)
 
     session = Session(
         db=db,
@@ -68,7 +68,7 @@ async def play(
     )
     user_data[SESSION] = session
 
-    exercise = session.next_exercise()
+    exercise = await session.next_exercise()
     if exercise is None:
         user_data.pop(SESSION, None)
         await update.message.reply_text(
@@ -165,7 +165,7 @@ async def handle_answer_text(
         return
 
     session, user_data = result
-    answer = session.answer(text=update.message.text or "")
+    answer = await session.answer(text=update.message.text or "")
     await update.message.reply_text(format_answer(answer))
 
     await send_next(session, user_data, update)
@@ -198,7 +198,7 @@ async def handle_answer_callback(
 
     if data.startswith(QUALITY_PREFIX):
         quality = int(data[len(QUALITY_PREFIX):])
-        answer = session.answer(quality=quality)
+        answer = await session.answer(quality=quality)
         await query.edit_message_text(format_answer(answer))
         await send_next(session, user_data, update)
         return
@@ -206,7 +206,7 @@ async def handle_answer_callback(
     if data.startswith(MC_PREFIX):
         idx = int(data[len(MC_PREFIX):])
         chosen = exercise.options[idx]
-        answer = session.answer(text=chosen)
+        answer = await session.answer(text=chosen)
         await query.edit_message_text(format_answer(answer))
         await send_next(session, user_data, update)
         return

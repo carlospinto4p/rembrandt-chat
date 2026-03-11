@@ -35,7 +35,9 @@ class UserMapper:
     def __init__(self, db: PostgresDatabase) -> None:
         self._db = db
 
-    def ensure_user(self, tg_user: TelegramUser) -> User:
+    async def ensure_user(
+        self, tg_user: TelegramUser,
+    ) -> User:
         """Return the rembrandt user for `tg_user`, creating one
         if it does not exist yet.
 
@@ -43,11 +45,11 @@ class UserMapper:
         :return: The corresponding rembrandt `User`.
         """
         username = _make_username(tg_user.id)
-        user = self._db.get_user(username)
+        user = await self._db.get_user(username)
         if user is not None:
             return user
         password = secrets.token_urlsafe(32)
-        return self._db.register_user(
+        return await self._db.register_user(
             username,
             password,
             display_name=_display_name(tg_user),

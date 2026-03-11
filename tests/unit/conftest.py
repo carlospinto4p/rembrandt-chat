@@ -67,12 +67,14 @@ def make_context(
     exercise: Exercise | None = None,
 ) -> MagicMock:
     mapper = MagicMock(spec=UserMapper)
-    mapper.ensure_user.return_value = user or make_user()
+    mapper.ensure_user = AsyncMock(
+        return_value=user or make_user()
+    )
 
     ctx = MagicMock()
     ctx.bot_data = {
         "user_mapper": mapper,
-        "db": MagicMock(),
+        "db": AsyncMock(),
     }
     ctx.user_data = {}
     if session is not None:

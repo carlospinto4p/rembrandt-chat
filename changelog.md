@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.9.0 - 11th March 2026
+
+- Upgraded rembrandt dependency from v2.6.0 to v3.2.0.
+- Migrated to async database API: `PostgresDatabase.connect()`, all DB calls and `Session.next_exercise()`/`Session.answer()` now use `await`.
+- Updated `bot.py`: database init moved to `post_init` callback for async lifecycle.
+- Updated `user_mapping.py`: `ensure_user()` is now async.
+- Updated `_helpers.py`: `resolve_user()` and `send_next()` now await async calls.
+- Updated all handler modules to await async DB and session methods.
+- Updated all test mocks to use `AsyncMock` for async methods.
+
+
 ### v0.8.7 - 11th March 2026
 
 - Restructured `README.md`: clearer flow from token to configuration to running the bot, with a dedicated "Running the Bot" section.

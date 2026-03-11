@@ -19,7 +19,7 @@ async def addword_start(
     if update.effective_user is None or update.message is None:
         return ConversationHandler.END
 
-    resolve_user(update, context)
+    await resolve_user(update, context)
 
     await update.message.reply_text("Send the word:")
     return AWAITING_WORD
@@ -60,9 +60,9 @@ async def addword_definition(
         )
         return ConversationHandler.END
 
-    user, db = resolve_user(update, context)
+    user, db = await resolve_user(update, context)
 
-    db.add_word(
+    await db.add_word(
         language_from=LANG_FROM,
         language_to=LANG_TO,
         word_from=word_from,
@@ -94,9 +94,11 @@ async def mywords(
     if update.effective_user is None or update.message is None:
         return
 
-    user, db = resolve_user(update, context)
+    user, db = await resolve_user(update, context)
 
-    words = db.get_words(LANG_FROM, LANG_TO, owner_id=user.id)
+    words = await db.get_words(
+        LANG_FROM, LANG_TO, owner_id=user.id,
+    )
     if not words:
         await update.message.reply_text(
             "You have no private words yet. "
@@ -119,9 +121,11 @@ async def deleteword(
     if update.effective_user is None or update.message is None:
         return
 
-    user, db = resolve_user(update, context)
+    user, db = await resolve_user(update, context)
 
-    words = db.get_words(LANG_FROM, LANG_TO, owner_id=user.id)
+    words = await db.get_words(
+        LANG_FROM, LANG_TO, owner_id=user.id,
+    )
     if not words:
         await update.message.reply_text(
             "You have no private words to delete."
@@ -159,6 +163,6 @@ async def handle_deleteword_callback(
 
     word_id = int(data[len(DEL_CB_PREFIX):])
     db: PostgresDatabase = context.bot_data["db"]
-    db.delete_word(word_id)
+    await db.delete_word(word_id)
 
     await query.edit_message_text("Word deleted.")

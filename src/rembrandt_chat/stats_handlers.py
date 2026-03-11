@@ -19,9 +19,9 @@ async def stats(
     if update.effective_user is None or update.message is None:
         return
 
-    user, db = resolve_user(update, context)
+    user, db = await resolve_user(update, context)
 
-    daily = db.daily_stats(user.id, days=7)
+    daily = await db.daily_stats(user.id, days=7)
     await update.message.reply_text(format_daily_stats(daily))
 
 
@@ -33,9 +33,9 @@ async def weak(
     if update.effective_user is None or update.message is None:
         return
 
-    user, db = resolve_user(update, context)
+    user, db = await resolve_user(update, context)
 
-    words = db.weak_words(
+    words = await db.weak_words(
         user.id, LANG_FROM, LANG_TO, limit=10
     )
     await update.message.reply_text(format_weak_words(words))
