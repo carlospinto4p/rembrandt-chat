@@ -35,6 +35,10 @@ rembrandt-chat
 
 ## Bot Setup: New vs Existing
 
+End users just open a chat with the bot in Telegram and send `/start`
+— no setup on their part. The sections below are for **deployers**
+choosing between creating a fresh bot or reusing an existing one.
+
 ### Creating a new bot
 
 If you don't have a Telegram bot yet:
