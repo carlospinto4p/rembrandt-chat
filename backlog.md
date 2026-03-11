@@ -30,7 +30,7 @@
 - [x] `/forecast` command — show upcoming review workload per day using `db.forecast()`
 - [x] `/retention` command — show overall retention rate using `db.retention_rate()`
 - [x] Session mode selection — inline keyboard on `/play` to pick learn-new, review-due, or mixed
-- [ ] Tests for `stats_handlers.py` — `/stats` and `/weak` have zero coverage
+- [x] Tests for `stats_handlers.py` — `/stats` and `/weak` have zero coverage
 - [ ] Lesson system — `/lessons` (list) and `/lesson <name>` (practice a word group) using rembrandt's lesson management
 - [ ] Progress export/import — `/export` sends JSON with full SR state, `/import` restores it
 - [ ] Typing indicator — send `ChatAction.TYPING` before slow operations
