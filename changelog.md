@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.6 - 11th March 2026
+
+- Removed redundant "Quick Start" section from `README.md` (covered by "Bot Setup" and "Deployment").
+
+
 ### v0.8.5 - 11th March 2026
 
 - Updated `README.md`: clarified that the bot setup section is for deployers, not end users.

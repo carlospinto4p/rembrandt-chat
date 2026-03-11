@@ -17,22 +17,6 @@ spaced-repetition scheduling, and lets users add their own private words.
 pip install rembrandt-chat
 ```
 
-## Quick Start
-
-1. Create a bot via [@BotFather](https://t.me/BotFather) and get your token.
-2. Set environment variables:
-
-```bash
-export TELEGRAM_BOT_TOKEN="123456:ABC-DEF..."
-export DATABASE_URL="postgresql://user:pass@localhost/rembrandt"
-```
-
-3. Run the bot:
-
-```bash
-rembrandt-chat
-```
-
 ## Bot Setup: New vs Existing
 
 End users just open a chat with the bot in Telegram and send `/start`
