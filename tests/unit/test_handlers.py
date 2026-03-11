@@ -5,10 +5,16 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from rembrandt import Hint, SessionStats
-from rembrandt.models import DailyStats, ExerciseType, WeakWord
+from rembrandt.models import (
+    DailyStats,
+    ExerciseType,
+    ReviewForecast,
+    WeakWord,
+)
 
 from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
 from rembrandt_chat.handlers import (
+    forecast,
     handle_answer_callback,
     handle_answer_text,
     hint,
@@ -402,3 +408,35 @@ async def test_weak_empty():
 
     text = update.message.reply_text.call_args[0][0]
     assert "No weak words" in text
+
+
+# --- /forecast ---
+
+
+@pytest.mark.asyncio
+async def test_forecast_shows_days():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].forecast.return_value = [
+        ReviewForecast(date="2026-03-11", due_count=15),
+        ReviewForecast(date="2026-03-12", due_count=8),
+    ]
+
+    await forecast(update, ctx)
+
+    ctx.bot_data["db"].forecast.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "2026-03-11" in text
+    assert "15" in text
+
+
+@pytest.mark.asyncio
+async def test_forecast_empty():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].forecast.return_value = []
+
+    await forecast(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No reviews scheduled" in text

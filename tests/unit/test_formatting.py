@@ -8,6 +8,7 @@ from rembrandt.models import (
     DailyStats,
     Exercise,
     ExerciseType,
+    ReviewForecast,
     WeakWord,
 )
 
@@ -21,6 +22,7 @@ from rembrandt_chat.formatting import (
     format_exercise,
     format_hint,
     format_summary,
+    format_forecast,
     format_weak_words,
 )
 
@@ -292,3 +294,22 @@ def test_format_weak_words():
 def test_format_weak_words_empty():
     text = format_weak_words([])
     assert "No weak words" in text
+
+
+# --- format_forecast ---
+
+
+def test_format_forecast():
+    data = [
+        ReviewForecast(date="2026-03-11", due_count=15),
+        ReviewForecast(date="2026-03-12", due_count=8),
+    ]
+    text = format_forecast(data)
+    assert "2026-03-11" in text
+    assert "15 cards due" in text
+    assert "2026-03-12" in text
+
+
+def test_format_forecast_empty():
+    text = format_forecast([])
+    assert "No reviews scheduled" in text

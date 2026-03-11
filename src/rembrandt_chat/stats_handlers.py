@@ -7,6 +7,7 @@ from rembrandt_chat._helpers import resolve_user
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
     format_daily_stats,
+    format_forecast,
     format_weak_words,
 )
 
@@ -39,3 +40,17 @@ async def weak(
         user.id, LANG_FROM, LANG_TO, limit=10
     )
     await update.message.reply_text(format_weak_words(words))
+
+
+async def forecast(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/forecast` — show upcoming review workload."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    user, db = await resolve_user(update, context)
+
+    days = await db.forecast(user.id, days=7)
+    await update.message.reply_text(format_forecast(days))

@@ -6,6 +6,7 @@ from rembrandt.models import (
     DailyStats,
     Exercise,
     ExerciseType,
+    ReviewForecast,
     WeakWord,
 )
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -216,6 +217,22 @@ def format_weak_words(words: list[WeakWord]) -> str:
             f"{w.errors}/{w.attempts} errors "
             f"({w.error_rate:.0%})"
         )
+    return "\n".join(lines)
+
+
+def format_forecast(
+    forecast: list[ReviewForecast],
+) -> str:
+    """Render the upcoming review workload.
+
+    :param forecast: List of daily forecasts.
+    :return: Formatted forecast text.
+    """
+    if not forecast:
+        return "No reviews scheduled. Add words to get started!"
+    lines = ["Upcoming reviews:\n"]
+    for f in forecast:
+        lines.append(f"{f.date}: {f.due_count} cards due")
     return "\n".join(lines)
 
 

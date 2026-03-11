@@ -28,6 +28,7 @@ from rembrandt_chat.handlers import (
     addword_start,
     addword_word,
     deleteword,
+    forecast,
     handle_answer_callback,
     handle_answer_text,
     handle_deleteword_callback,
@@ -90,6 +91,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("deleteword", deleteword))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("weak", weak))
+    app.add_handler(CommandHandler("forecast", forecast))
 
     addword_conv = ConversationHandler(
         entry_points=[

@@ -17,7 +17,7 @@ from rembrandt_chat.session_handlers import (
     start,
     stop,
 )
-from rembrandt_chat.stats_handlers import stats, weak
+from rembrandt_chat.stats_handlers import forecast, stats, weak
 from rembrandt_chat.word_handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
@@ -49,4 +49,5 @@ __all__ = [
     "handle_deleteword_callback",
     "stats",
     "weak",
+    "forecast",
 ]

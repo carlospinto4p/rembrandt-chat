@@ -27,7 +27,7 @@
 
 ### 2026.03.11 (improvements pass)
 
-- [ ] `/forecast` command — show upcoming review workload per day using `db.forecast()`
+- [x] `/forecast` command — show upcoming review workload per day using `db.forecast()`
 - [ ] `/retention` command — show overall retention rate using `db.retention_rate()`
 - [ ] Session mode selection — inline keyboard on `/play` to pick learn-new, review-due, or mixed
 - [ ] Tests for `stats_handlers.py` — `/stats` and `/weak` have zero coverage

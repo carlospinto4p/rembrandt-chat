@@ -112,6 +112,7 @@ docker compose stop
 | `/deleteword` | Delete one of your words |
 | `/stats` | Show daily stats and accuracy |
 | `/weak` | Show your weakest words |
+| `/forecast` | Show upcoming review workload (7 days) |
 
 ## Exercise Types
 
