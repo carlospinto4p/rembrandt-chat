@@ -17,41 +17,86 @@ spaced-repetition scheduling, and lets users add their own private words.
 pip install rembrandt-chat
 ```
 
-## Bot Setup: New vs Existing
+## Getting a Bot Token
 
-End users just open a chat with the bot in Telegram and send `/start`
-— no setup on their part. The sections below are for **deployers**
-choosing between creating a fresh bot or reusing an existing one.
+You need a Telegram bot token to run rembrandt-chat. If you already
+have one from a previous deployment, skip to [Configuration](#configuration).
 
-### Creating a new bot
-
-If you don't have a Telegram bot yet:
+To create a new bot:
 
 1. Open [@BotFather](https://t.me/BotFather) in Telegram.
 2. Send `/newbot` and follow the prompts to choose a name and username.
-3. BotFather will give you a token — set it as `TELEGRAM_BOT_TOKEN`.
-4. Optionally, send `/setcommands` to BotFather to register the
-   command list (see [Bot Commands](#bot-commands) below) so users
-   get autocomplete when typing `/`.
+3. Copy the token BotFather gives you.
+4. Optionally, send `/setcommands` to register the command list
+   (see [Bot Commands](#bot-commands)) so users get autocomplete
+   when typing `/`.
 
-With a new bot you start with an empty database — no users, no
-words, no history. Set `BASE_VOCAB_PATH` to preload a shared
-vocabulary on first run.
+## Configuration
 
-### Using an existing bot
+Set the following environment variables:
 
-If you already have a bot token from a previous deployment:
+| Variable | Description | Required |
+|---|---|---|
+| `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather | Yes |
+| `DATABASE_URL` | PostgreSQL connection string | Yes |
+| `BASE_VOCAB_PATH` | Path to shared vocabulary JSON | No |
 
-1. Set the same `TELEGRAM_BOT_TOKEN` in your environment.
-2. Point `DATABASE_URL` to the existing database to preserve all
-   users, words, scores, and session history.
-3. The bot resumes exactly where it left off — no re-registration
-   needed.
+If `BASE_VOCAB_PATH` is set and the words table is empty on first
+run, the shared vocabulary is loaded automatically.
 
-If you reuse the token but connect to a **new** database, the bot
-will work but all users will appear as new (they just need to send
-`/start` again). Their Telegram accounts are re-registered
-automatically, but previous scores and words are lost.
+## Running the Bot
+
+```bash
+rembrandt-chat
+```
+
+That's it. End users just open a chat with the bot in Telegram and
+send `/start`.
+
+### New bot vs existing database
+
+With a **new bot and empty database**, you start fresh — no users,
+no words, no history. Use `BASE_VOCAB_PATH` to preload vocabulary.
+
+If you **reuse a token with the same database**, the bot resumes
+exactly where it left off — all users, words, and scores are
+preserved.
+
+If you reuse a token but point to a **new database**, the bot works
+but all users appear as new. They just send `/start` again to
+re-register, but previous scores and words are lost.
+
+## Deployment (Docker Compose)
+
+1. Copy the example environment file and fill in your bot token:
+
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` and set `TELEGRAM_BOT_TOKEN`. Optionally set
+   `BASE_VOCAB_PATH` to a vocabulary CSV file to preload.
+
+3. Start the services:
+
+```bash
+docker compose up -d
+```
+
+This spins up PostgreSQL and the bot. No need to set `DATABASE_URL`
+— Docker Compose handles the database connection internally.
+
+To view logs:
+
+```bash
+docker compose logs -f bot
+```
+
+To stop:
+
+```bash
+docker compose stop
+```
 
 ## Bot Commands
 
@@ -123,50 +168,3 @@ Bot:  Added "efimero" — Que dura poco tiempo
 ```
 
 Private words are visible only to the user who added them.
-
-## Configuration
-
-Environment variables (loaded via `config.py`):
-
-| Variable | Description | Example |
-|---|---|---|
-| `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather | `123456:ABC-DEF...` |
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@localhost/rembrandt` |
-| `BASE_VOCAB_PATH` | Path to shared vocabulary JSON (optional) | `data/spanish_10000.json` |
-
-## Deployment (Docker Compose)
-
-1. Copy the example environment file and fill in your bot token:
-
-```bash
-cp .env.example .env
-```
-
-2. Edit `.env` and set `TELEGRAM_BOT_TOKEN` to the token from
-   [@BotFather](https://t.me/BotFather). Optionally set
-   `BASE_VOCAB_PATH` to a vocabulary CSV file to preload on first run.
-
-3. Start the services:
-
-```bash
-docker compose up -d
-```
-
-This spins up PostgreSQL and the bot. The database connection is
-handled internally — no need to set `DATABASE_URL` when using
-Docker Compose.
-
-On first run, if `BASE_VOCAB_PATH` is set and the words table is
-empty, the shared vocabulary is loaded automatically.
-
-To view logs:
-
-```bash
-docker compose logs -f bot
-```
-
-To stop:
-
-```bash
-docker compose stop
-```

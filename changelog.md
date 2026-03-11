@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.7 - 11th March 2026
+
+- Restructured `README.md`: clearer flow from token to configuration to running the bot, with a dedicated "Running the Bot" section.
+
+
 ### v0.8.6 - 11th March 2026
 
 - Removed redundant "Quick Start" section from `README.md` (covered by "Bot Setup" and "Deployment").
