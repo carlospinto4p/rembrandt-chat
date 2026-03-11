@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.11.0 - 11th March 2026
+
+- Added `/retention` command: shows overall retention rate over the last 30 days.
+- Added `format_retention()` in `formatting.py`.
+- Updated `README.md`: added `/retention` to the command table.
+
+
 ### v0.10.0 - 11th March 2026
 
 - Added `/forecast` command: shows upcoming review workload per day (7-day lookahead).

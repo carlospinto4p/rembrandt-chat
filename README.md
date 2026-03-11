@@ -113,6 +113,7 @@ docker compose stop
 | `/stats` | Show daily stats and accuracy |
 | `/weak` | Show your weakest words |
 | `/forecast` | Show upcoming review workload (7 days) |
+| `/retention` | Show overall retention rate (30 days) |
 
 ## Exercise Types
 

@@ -220,6 +220,17 @@ def format_weak_words(words: list[WeakWord]) -> str:
     return "\n".join(lines)
 
 
+def format_retention(rate: float) -> str:
+    """Render the overall retention rate.
+
+    :param rate: Retention percentage (0.0–100.0).
+    :return: Formatted retention text.
+    """
+    if rate == 0.0:
+        return "No answers recorded yet. Start a session with /play!"
+    return f"Retention rate (last 30 days): {rate:.0f}%"
+
+
 def format_forecast(
     forecast: list[ReviewForecast],
 ) -> str:

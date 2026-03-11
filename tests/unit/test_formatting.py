@@ -23,6 +23,7 @@ from rembrandt_chat.formatting import (
     format_hint,
     format_summary,
     format_forecast,
+    format_retention,
     format_weak_words,
 )
 
@@ -313,3 +314,17 @@ def test_format_forecast():
 def test_format_forecast_empty():
     text = format_forecast([])
     assert "No reviews scheduled" in text
+
+
+# --- format_retention ---
+
+
+def test_format_retention():
+    text = format_retention(85.0)
+    assert "85%" in text
+    assert "Retention" in text
+
+
+def test_format_retention_zero():
+    text = format_retention(0.0)
+    assert "No answers recorded" in text

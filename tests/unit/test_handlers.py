@@ -16,6 +16,7 @@ from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
 from rembrandt_chat.handlers import (
     forecast,
     handle_answer_callback,
+    retention,
     handle_answer_text,
     hint,
     play,
@@ -440,3 +441,31 @@ async def test_forecast_empty():
 
     text = update.message.reply_text.call_args[0][0]
     assert "No reviews scheduled" in text
+
+
+# --- /retention ---
+
+
+@pytest.mark.asyncio
+async def test_retention_shows_rate():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].retention_rate.return_value = 85.0
+
+    await retention(update, ctx)
+
+    ctx.bot_data["db"].retention_rate.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "85%" in text
+
+
+@pytest.mark.asyncio
+async def test_retention_no_answers():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].retention_rate.return_value = 0.0
+
+    await retention(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No answers recorded" in text

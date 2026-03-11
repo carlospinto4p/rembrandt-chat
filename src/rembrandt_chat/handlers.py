@@ -17,7 +17,12 @@ from rembrandt_chat.session_handlers import (
     start,
     stop,
 )
-from rembrandt_chat.stats_handlers import forecast, stats, weak
+from rembrandt_chat.stats_handlers import (
+    forecast,
+    retention,
+    stats,
+    weak,
+)
 from rembrandt_chat.word_handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
@@ -50,4 +55,5 @@ __all__ = [
     "stats",
     "weak",
     "forecast",
+    "retention",
 ]
