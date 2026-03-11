@@ -24,3 +24,17 @@
 ### 2026.03.10
 
 - [ ] Upgrade rembrandt client version to v3.2.0
+
+### 2026.03.11 (improvements pass)
+
+- [ ] `/forecast` command — show upcoming review workload per day using `db.forecast()`
+- [ ] `/retention` command — show overall retention rate using `db.retention_rate()`
+- [ ] Session mode selection — inline keyboard on `/play` to pick learn-new, review-due, or mixed
+- [ ] Tests for `stats_handlers.py` — `/stats` and `/weak` have zero coverage
+- [ ] Lesson system — `/lessons` (list) and `/lesson <name>` (practice a word group) using rembrandt's lesson management
+- [ ] Progress export/import — `/export` sends JSON with full SR state, `/import` restores it
+- [ ] Typing indicator — send `ChatAction.TYPING` before slow operations
+- [ ] Configurable daily limits — expose `max_new_cards` / `max_review_cards` via env vars or `/settings`
+- [ ] Word tags — use rembrandt's `tags` field in `/addword`, display in `/mywords`, allow filtering by tag
+- [ ] CEFR level display — show word difficulty (A1–C2) in exercise prompts and `/mywords`
+- [ ] `/history` command — show recent answers with date filtering using `db.get_answer_history()`
