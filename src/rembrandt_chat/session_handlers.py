@@ -1,6 +1,6 @@
 """Session lifecycle and exercise handlers."""
 
-from rembrandt import Session
+from rembrandt import Session, lesson_progress
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -15,6 +15,7 @@ from rembrandt_chat._helpers import (
 )
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
+    LESSON_CB_PREFIX,
     MC_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
@@ -22,6 +23,7 @@ from rembrandt_chat.formatting import (
     format_answer,
     format_exercise,
     format_hint,
+    format_lessons,
     format_summary,
 )
 
@@ -263,3 +265,81 @@ async def handle_answer_callback(
         await query.edit_message_text(format_answer(answer))
         await send_next(session, user_data, update)
         return
+
+
+async def lessons(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/lessons` — list available lessons with progress."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    user, db = await resolve_user(update, context)
+
+    all_lessons = await db.get_lessons(LANG_FROM, LANG_TO)
+    progress = [
+        await lesson_progress(db, user.id, ls)
+        for ls in all_lessons
+    ]
+    text, keyboard = format_lessons(all_lessons, progress)
+    await update.message.reply_text(
+        text, reply_markup=keyboard
+    )
+
+
+async def handle_lesson_callback(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Start a session scoped to a lesson's words."""
+    query = update.callback_query
+    if query is None:
+        return
+    await query.answer()
+
+    data = query.data or ""
+    if not data.startswith(LESSON_CB_PREFIX):
+        return
+
+    user_data = context.user_data
+    if user_data.get(SESSION) is not None:
+        await query.edit_message_text(
+            "You already have an active session. "
+            "Use /stop to end it first."
+        )
+        return
+
+    lesson_id = int(data[len(LESSON_CB_PREFIX):])
+    user, db = await resolve_user(update, context)
+
+    lesson = await db.get_lesson(lesson_id)
+    if lesson is None:
+        await query.edit_message_text("Lesson not found.")
+        return
+
+    session = Session(
+        db=db,
+        user_id=user.id,
+        language_from=LANG_FROM,
+        language_to=LANG_TO,
+        word_ids=lesson.word_ids,
+    )
+    user_data[SESSION] = session
+
+    exercise = await session.next_exercise()
+    if exercise is None:
+        user_data.pop(SESSION, None)
+        await query.edit_message_text(
+            "No words available in this lesson."
+        )
+        return
+
+    user_data[EXERCISE] = exercise
+    await query.edit_message_text(
+        f"Lesson: {lesson.title}",
+    )
+    text, keyboard = format_exercise(exercise)
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_message(text, reply_markup=keyboard)

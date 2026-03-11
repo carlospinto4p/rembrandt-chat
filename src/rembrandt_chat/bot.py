@@ -19,7 +19,7 @@ from rembrandt_chat.config import (
     get_bot_token,
     get_database_url,
 )
-from rembrandt_chat.formatting import DEL_CB_PREFIX
+from rembrandt_chat.formatting import DEL_CB_PREFIX, LESSON_CB_PREFIX
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
@@ -33,8 +33,10 @@ from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_answer_text,
     handle_deleteword_callback,
+    handle_lesson_callback,
     handle_play_mode,
     hint,
+    lessons,
     mywords,
     play,
     retention,
@@ -96,6 +98,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("weak", weak))
     app.add_handler(CommandHandler("forecast", forecast))
     app.add_handler(CommandHandler("retention", retention))
+    app.add_handler(CommandHandler("lessons", lessons))
 
     addword_conv = ConversationHandler(
         entry_points=[
@@ -125,6 +128,12 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_play_mode,
             pattern=f"^{PLAY_MODE_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_lesson_callback,
+            pattern=f"^{LESSON_CB_PREFIX}",
         )
     )
     app.add_handler(

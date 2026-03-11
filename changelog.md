@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.13.0 - 11th March 2026
+
+- Added `/lessons` command: lists available lessons with completion progress, tap to start a lesson session.
+- Added `handle_lesson_callback()` in `session_handlers.py`: creates a session scoped to a lesson's word set.
+- Added `format_lessons()` and `LESSON_CB_PREFIX` in `formatting.py`.
+- Updated `README.md`: added `/lessons` to the command table.
+
+
 ### v0.12.0 - 11th March 2026
 
 - Added session mode selection: `/play` now shows an inline keyboard to pick Mixed, Learn new, or Review due.

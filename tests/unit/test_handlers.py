@@ -8,6 +8,8 @@ from rembrandt import Hint, SessionStats
 from rembrandt.models import (
     DailyStats,
     ExerciseType,
+    Lesson,
+    LessonProgress,
     ReviewForecast,
     WeakWord,
 )
@@ -16,7 +18,9 @@ from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
 from rembrandt_chat.handlers import (
     forecast,
     handle_answer_callback,
+    handle_lesson_callback,
     handle_play_mode,
+    lessons,
     retention,
     handle_answer_text,
     hint,
@@ -483,3 +487,106 @@ async def test_retention_no_answers():
 
     text = update.message.reply_text.call_args[0][0]
     assert "No answers recorded" in text
+
+
+# --- /lessons ---
+
+
+def _lesson(
+    lesson_id: int = 1, title: str = "A1 - Lesson 1",
+) -> Lesson:
+    return Lesson(
+        id=lesson_id,
+        title=title,
+        language_from="es",
+        language_to="es",
+        word_ids=[1, 2, 3],
+        word_count=3,
+    )
+
+
+def _lesson_progress(lesson_id: int = 1) -> LessonProgress:
+    return LessonProgress(
+        lesson_id=lesson_id,
+        user_id=1,
+        words_total=3,
+        words_studied=2,
+        words_mastered=1,
+        completion_pct=66.7,
+        mastery_pct=33.3,
+    )
+
+
+@pytest.mark.asyncio
+async def test_lessons_shows_list():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].get_lessons.return_value = [
+        _lesson(),
+    ]
+
+    with patch(
+        "rembrandt_chat.session_handlers.lesson_progress",
+        new_callable=AsyncMock,
+        return_value=_lesson_progress(),
+    ):
+        await lessons(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "A1 - Lesson 1" in text
+    assert "67%" in text
+
+
+@pytest.mark.asyncio
+async def test_lessons_empty():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].get_lessons.return_value = []
+
+    await lessons(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No lessons available" in text
+
+
+@pytest.mark.asyncio
+async def test_lesson_callback_starts_session():
+    update = make_callback_update("lesson:1")
+    ctx = make_context()
+    lesson = _lesson()
+    ctx.bot_data["db"].get_lesson.return_value = lesson
+    ex = make_exercise()
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session"
+    ) as MockSession:
+        mock_session = MockSession.return_value
+        mock_session.next_exercise = AsyncMock(
+            return_value=ex
+        )
+        await handle_lesson_callback(update, ctx)
+
+    assert ctx.user_data["session"] is mock_session
+    assert ctx.user_data["exercise"] is ex
+    MockSession.assert_called_once_with(
+        db=ctx.bot_data["db"],
+        user_id=1,
+        language_from="es",
+        language_to="es",
+        word_ids=[1, 2, 3],
+    )
+
+
+@pytest.mark.asyncio
+async def test_lesson_callback_not_found():
+    update = make_callback_update("lesson:99")
+    ctx = make_context()
+    ctx.bot_data["db"].get_lesson.return_value = None
+
+    await handle_lesson_callback(update, ctx)
+
+    text = (
+        update.callback_query
+        .edit_message_text.call_args[0][0]
+    )
+    assert "not found" in text.lower()

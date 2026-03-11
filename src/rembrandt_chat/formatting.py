@@ -6,6 +6,8 @@ from rembrandt.models import (
     DailyStats,
     Exercise,
     ExerciseType,
+    Lesson,
+    LessonProgress,
     ReviewForecast,
     WeakWord,
 )
@@ -218,6 +220,43 @@ def format_weak_words(words: list[WeakWord]) -> str:
             f"({w.error_rate:.0%})"
         )
     return "\n".join(lines)
+
+
+LESSON_CB_PREFIX = "lesson:"
+
+
+def format_lessons(
+    lessons: list[Lesson],
+    progress: list[LessonProgress],
+) -> tuple[str, InlineKeyboardMarkup | None]:
+    """Render a list of lessons with progress.
+
+    :param lessons: Available lessons.
+    :param progress: Progress for each lesson (same order).
+    :return: Formatted text and inline keyboard.
+    """
+    if not lessons:
+        return "No lessons available.", None
+    prog_map = {p.lesson_id: p for p in progress}
+    lines = ["Lessons:\n"]
+    buttons: list[list[InlineKeyboardButton]] = []
+    for lesson in lessons:
+        p = prog_map.get(lesson.id)
+        pct = f"{p.completion_pct:.0f}%" if p else "0%"
+        lines.append(
+            f"{lesson.id}. {lesson.title} ({pct} complete)"
+        )
+        buttons.append([
+            InlineKeyboardButton(
+                lesson.title,
+                callback_data=(
+                    f"{LESSON_CB_PREFIX}{lesson.id}"
+                ),
+            )
+        ])
+    text = "\n".join(lines)
+    keyboard = InlineKeyboardMarkup(buttons)
+    return text, keyboard
 
 
 def format_retention(rate: float) -> str:

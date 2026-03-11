@@ -8,6 +8,8 @@ from rembrandt.models import (
     DailyStats,
     Exercise,
     ExerciseType,
+    Lesson,
+    LessonProgress,
     ReviewForecast,
     WeakWord,
 )
@@ -23,6 +25,7 @@ from rembrandt_chat.formatting import (
     format_hint,
     format_summary,
     format_forecast,
+    format_lessons,
     format_retention,
     format_weak_words,
 )
@@ -328,3 +331,35 @@ def test_format_retention():
 def test_format_retention_zero():
     text = format_retention(0.0)
     assert "No answers recorded" in text
+
+
+# --- format_lessons ---
+
+
+def test_format_lessons():
+    ls = [
+        Lesson(
+            id=1, title="A1 - Basics",
+            language_from="es", language_to="es",
+            word_count=10, word_ids=[1, 2, 3],
+        ),
+    ]
+    prog = [
+        LessonProgress(
+            lesson_id=1, user_id=1, words_total=10,
+            words_studied=7, words_mastered=3,
+            completion_pct=70.0, mastery_pct=30.0,
+        ),
+    ]
+    text, kb = format_lessons(ls, prog)
+    assert "A1 - Basics" in text
+    assert "70%" in text
+    assert kb is not None
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert flat[0].callback_data == "lesson:1"
+
+
+def test_format_lessons_empty():
+    text, kb = format_lessons([], [])
+    assert "No lessons available" in text
+    assert kb is None
