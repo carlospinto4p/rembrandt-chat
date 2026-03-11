@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.8.4 - 11th March 2026
+
+- Updated `README.md`: added "Bot Setup: New vs Existing" section explaining the differences between creating a new bot and reusing an existing one.
+
+
 ### v0.8.3 - 10th March 2026
 
 - Added `.env.example` with documented environment variables.

@@ -33,6 +33,38 @@ export DATABASE_URL="postgresql://user:pass@localhost/rembrandt"
 rembrandt-chat
 ```
 
+## Bot Setup: New vs Existing
+
+### Creating a new bot
+
+If you don't have a Telegram bot yet:
+
+1. Open [@BotFather](https://t.me/BotFather) in Telegram.
+2. Send `/newbot` and follow the prompts to choose a name and username.
+3. BotFather will give you a token — set it as `TELEGRAM_BOT_TOKEN`.
+4. Optionally, send `/setcommands` to BotFather to register the
+   command list (see [Bot Commands](#bot-commands) below) so users
+   get autocomplete when typing `/`.
+
+With a new bot you start with an empty database — no users, no
+words, no history. Set `BASE_VOCAB_PATH` to preload a shared
+vocabulary on first run.
+
+### Using an existing bot
+
+If you already have a bot token from a previous deployment:
+
+1. Set the same `TELEGRAM_BOT_TOKEN` in your environment.
+2. Point `DATABASE_URL` to the existing database to preserve all
+   users, words, scores, and session history.
+3. The bot resumes exactly where it left off — no re-registration
+   needed.
+
+If you reuse the token but connect to a **new** database, the bot
+will work but all users will appear as new (they just need to send
+`/start` again). Their Telegram accounts are re-registered
+automatically, but previous scores and words are lost.
+
 ## Bot Commands
 
 | Command | Description |
