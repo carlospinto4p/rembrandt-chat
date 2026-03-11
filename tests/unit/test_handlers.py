@@ -16,6 +16,7 @@ from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
 from rembrandt_chat.handlers import (
     forecast,
     handle_answer_callback,
+    handle_play_mode,
     retention,
     handle_answer_text,
     hint,
@@ -62,23 +63,19 @@ async def test_start_no_effective_user():
 
 
 @pytest.mark.asyncio
-async def test_play_creates_session():
+async def test_play_shows_mode_keyboard():
     update = make_update()
     ctx = make_context()
-    ex = make_exercise()
+    await play(update, ctx)
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
-        mock_session = MockSession.return_value
-        mock_session.next_exercise = AsyncMock(
-            return_value=ex
-        )
-        await play(update, ctx)
-
-    assert ctx.user_data["session"] is mock_session
-    assert ctx.user_data["exercise"] is ex
-    update.message.reply_text.assert_called_once()
+    call_kwargs = update.message.reply_text.call_args
+    assert "mode" in call_kwargs[0][0].lower()
+    kb = call_kwargs[1]["reply_markup"]
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    labels = [btn.text for btn in flat]
+    assert "Mixed" in labels
+    assert "Learn new" in labels
+    assert "Review due" in labels
 
 
 @pytest.mark.asyncio
@@ -91,8 +88,27 @@ async def test_play_rejects_when_session_active():
 
 
 @pytest.mark.asyncio
-async def test_play_no_words_available():
-    update = make_update()
+async def test_play_mode_creates_session():
+    update = make_callback_update("play_mode:mixed")
+    ctx = make_context()
+    ex = make_exercise()
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session"
+    ) as MockSession:
+        mock_session = MockSession.return_value
+        mock_session.next_exercise = AsyncMock(
+            return_value=ex
+        )
+        await handle_play_mode(update, ctx)
+
+    assert ctx.user_data["session"] is mock_session
+    assert ctx.user_data["exercise"] is ex
+
+
+@pytest.mark.asyncio
+async def test_play_mode_no_words_available():
+    update = make_callback_update("play_mode:learn_new")
     ctx = make_context()
 
     with patch(
@@ -101,11 +117,9 @@ async def test_play_no_words_available():
         MockSession.return_value.next_exercise = AsyncMock(
             return_value=None
         )
-        await play(update, ctx)
+        await handle_play_mode(update, ctx)
 
     assert "session" not in ctx.user_data
-    text = update.message.reply_text.call_args[0][0]
-    assert "No words available" in text
 
 
 # --- /stop ---

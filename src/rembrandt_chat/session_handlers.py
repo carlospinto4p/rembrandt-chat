@@ -1,7 +1,8 @@
 """Session lifecycle and exercise handlers."""
 
 from rembrandt import Session
-from telegram import Update
+from rembrandt.models import SessionMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from rembrandt_chat._helpers import (
@@ -23,6 +24,14 @@ from rembrandt_chat.formatting import (
     format_hint,
     format_summary,
 )
+
+PLAY_MODE_PREFIX = "play_mode:"
+
+_MODE_LABELS = {
+    SessionMode.MIXED: "Mixed",
+    SessionMode.LEARN_NEW: "Learn new",
+    SessionMode.REVIEW_DUE: "Review due",
+}
 
 
 async def start(
@@ -46,13 +55,50 @@ async def play(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/play` — start an exercise session."""
+    """`/play` — pick a session mode, then start."""
     if update.effective_user is None or update.message is None:
         return
 
+    if context.user_data.get(SESSION) is not None:
+        await update.message.reply_text(
+            "You already have an active session. "
+            "Use /stop to end it first."
+        )
+        return
+
+    buttons = [
+        InlineKeyboardButton(
+            label,
+            callback_data=f"{PLAY_MODE_PREFIX}{mode.value}",
+        )
+        for mode, label in _MODE_LABELS.items()
+    ]
+    await update.message.reply_text(
+        "Choose a session mode:",
+        reply_markup=InlineKeyboardMarkup([buttons]),
+    )
+
+
+async def handle_play_mode(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle session-mode button press from `/play`."""
+    query = update.callback_query
+    if query is None:
+        return
+    await query.answer()
+
+    data = query.data or ""
+    if not data.startswith(PLAY_MODE_PREFIX):
+        return
+
+    mode_value = data[len(PLAY_MODE_PREFIX):]
+    mode = SessionMode(mode_value)
+
     user_data = context.user_data
     if user_data.get(SESSION) is not None:
-        await update.message.reply_text(
+        await query.edit_message_text(
             "You already have an active session. "
             "Use /stop to end it first."
         )
@@ -65,20 +111,27 @@ async def play(
         user_id=user.id,
         language_from=LANG_FROM,
         language_to=LANG_TO,
+        mode=mode,
     )
     user_data[SESSION] = session
 
     exercise = await session.next_exercise()
     if exercise is None:
         user_data.pop(SESSION, None)
-        await update.message.reply_text(
+        await query.edit_message_text(
             "No words available. Add words first with /addword."
         )
         return
 
     user_data[EXERCISE] = exercise
+    label = _MODE_LABELS[mode]
     text, keyboard = format_exercise(exercise)
-    await update.message.reply_text(text, reply_markup=keyboard)
+    await query.edit_message_text(
+        f"Session started ({label}).",
+    )
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_message(text, reply_markup=keyboard)
 
 
 async def stop(

@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.12.0 - 11th March 2026
+
+- Added session mode selection: `/play` now shows an inline keyboard to pick Mixed, Learn new, or Review due.
+- Added `handle_play_mode()` callback handler in `session_handlers.py`.
+
+
 ### v0.11.0 - 11th March 2026
 
 - Added `/retention` command: shows overall retention rate over the last 30 days.

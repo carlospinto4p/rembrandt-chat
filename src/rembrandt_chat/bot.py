@@ -23,6 +23,7 @@ from rembrandt_chat.formatting import DEL_CB_PREFIX
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_WORD,
+    PLAY_MODE_PREFIX,
     addword_cancel,
     addword_definition,
     addword_start,
@@ -30,12 +31,13 @@ from rembrandt_chat.handlers import (
     deleteword,
     forecast,
     handle_answer_callback,
-    retention,
     handle_answer_text,
     handle_deleteword_callback,
+    handle_play_mode,
     hint,
     mywords,
     play,
+    retention,
     skip,
     start,
     stats,
@@ -119,6 +121,12 @@ def create_app() -> None:
     )
     app.add_handler(addword_conv)
 
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_play_mode,
+            pattern=f"^{PLAY_MODE_PREFIX}",
+        )
+    )
     app.add_handler(
         CallbackQueryHandler(
             handle_deleteword_callback,

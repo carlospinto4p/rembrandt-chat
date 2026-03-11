@@ -9,8 +9,10 @@ The actual implementations live in:
 """
 
 from rembrandt_chat.session_handlers import (
+    PLAY_MODE_PREFIX,
     handle_answer_callback,
     handle_answer_text,
+    handle_play_mode,
     hint,
     play,
     skip,
@@ -36,8 +38,10 @@ from rembrandt_chat.word_handlers import (
 )
 
 __all__ = [
+    "PLAY_MODE_PREFIX",
     "start",
     "play",
+    "handle_play_mode",
     "stop",
     "hint",
     "skip",
