@@ -1,7 +1,10 @@
 """Statistics handlers."""
 
+import io
+import json
+
 from telegram import Update
-from telegram.ext import ContextTypes
+from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import resolve_user
 from rembrandt_chat.config import LANG_FROM, LANG_TO
@@ -69,3 +72,104 @@ async def retention(
 
     rate = await db.retention_rate(user.id, days=30)
     await update.message.reply_text(format_retention(rate))
+
+
+async def export_progress(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/export` — send progress as a JSON file."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    user, db = await resolve_user(update, context)
+
+    records = await db.export_progress(user.id)
+    if not records:
+        await update.message.reply_text(
+            "No progress to export yet. "
+            "Start a session with /play!"
+        )
+        return
+
+    payload = json.dumps(records, indent=2)
+    buf = io.BytesIO(payload.encode())
+    buf.name = "rembrandt_progress.json"
+    await update.message.reply_document(
+        document=buf,
+        caption=f"Exported {len(records)} card(s).",
+    )
+
+
+AWAITING_FILE = 10
+
+
+async def import_start(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """`/import` — ask the user for a JSON file."""
+    if update.effective_user is None or update.message is None:
+        return ConversationHandler.END
+
+    await resolve_user(update, context)
+
+    await update.message.reply_text(
+        "Send the JSON file exported with /export."
+    )
+    return AWAITING_FILE
+
+
+async def import_file(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """Receive the JSON file and restore progress."""
+    if update.effective_user is None or update.message is None:
+        return ConversationHandler.END
+
+    user, db = await resolve_user(update, context)
+
+    doc = update.message.document
+    if doc is None:
+        await update.message.reply_text(
+            "Please send a JSON file."
+        )
+        return AWAITING_FILE
+
+    tg_file = await doc.get_file()
+    data = await tg_file.download_as_bytearray()
+
+    try:
+        records = json.loads(data)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        await update.message.reply_text(
+            "Could not read the file. "
+            "Please send a valid JSON file."
+        )
+        return ConversationHandler.END
+
+    if not isinstance(records, list):
+        await update.message.reply_text(
+            "Invalid format: expected a JSON array."
+        )
+        return ConversationHandler.END
+
+    for rec in records:
+        rec["user_id"] = user.id
+
+    count = await db.import_progress(records)
+    await update.message.reply_text(
+        f"Imported {count} card(s) successfully."
+    )
+    return ConversationHandler.END
+
+
+async def import_cancel(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """Cancel the /import conversation."""
+    if update.message is not None:
+        await update.message.reply_text("Cancelled.")
+    return ConversationHandler.END

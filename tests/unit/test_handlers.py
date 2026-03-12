@@ -16,10 +16,13 @@ from rembrandt.models import (
 
 from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
 from rembrandt_chat.handlers import (
+    export_progress,
     forecast,
     handle_answer_callback,
     handle_lesson_callback,
     handle_play_mode,
+    import_file,
+    import_start,
     lessons,
     retention,
     handle_answer_text,
@@ -590,3 +593,119 @@ async def test_lesson_callback_not_found():
         .edit_message_text.call_args[0][0]
     )
     assert "not found" in text.lower()
+
+
+# --- /export ---
+
+
+@pytest.mark.asyncio
+async def test_export_sends_file():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].export_progress.return_value = [
+        {"word_id": 1, "easiness_factor": 2.5},
+    ]
+
+    await export_progress(update, ctx)
+
+    ctx.bot_data["db"].export_progress.assert_called_once()
+    update.message.reply_document.assert_called_once()
+    call_kw = update.message.reply_document.call_args
+    assert "1 card" in call_kw[1]["caption"]
+
+
+@pytest.mark.asyncio
+async def test_export_empty():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].export_progress.return_value = []
+
+    await export_progress(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No progress" in text
+
+
+# --- /import ---
+
+
+@pytest.mark.asyncio
+async def test_import_start_asks_for_file():
+    update = make_update()
+    ctx = make_context()
+
+    from rembrandt_chat.stats_handlers import AWAITING_FILE
+
+    result = await import_start(update, ctx)
+
+    assert result == AWAITING_FILE
+    text = update.message.reply_text.call_args[0][0]
+    assert "JSON file" in text
+
+
+@pytest.mark.asyncio
+async def test_import_file_success():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].import_progress.return_value = 3
+
+    mock_doc = AsyncMock()
+    mock_tg_file = AsyncMock()
+    mock_tg_file.download_as_bytearray.return_value = (
+        b'[{"word_id":1},{"word_id":2},{"word_id":3}]'
+    )
+    mock_doc.get_file.return_value = mock_tg_file
+    update.message.document = mock_doc
+
+    from telegram.ext import ConversationHandler
+
+    result = await import_file(update, ctx)
+
+    assert result == ConversationHandler.END
+    ctx.bot_data["db"].import_progress.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "3 card" in text
+
+
+@pytest.mark.asyncio
+async def test_import_file_invalid_json():
+    update = make_update()
+    ctx = make_context()
+
+    mock_doc = AsyncMock()
+    mock_tg_file = AsyncMock()
+    mock_tg_file.download_as_bytearray.return_value = (
+        b"not json"
+    )
+    mock_doc.get_file.return_value = mock_tg_file
+    update.message.document = mock_doc
+
+    from telegram.ext import ConversationHandler
+
+    result = await import_file(update, ctx)
+
+    assert result == ConversationHandler.END
+    text = update.message.reply_text.call_args[0][0]
+    assert "Could not read" in text
+
+
+@pytest.mark.asyncio
+async def test_import_file_not_array():
+    update = make_update()
+    ctx = make_context()
+
+    mock_doc = AsyncMock()
+    mock_tg_file = AsyncMock()
+    mock_tg_file.download_as_bytearray.return_value = (
+        b'{"not": "an array"}'
+    )
+    mock_doc.get_file.return_value = mock_tg_file
+    update.message.document = mock_doc
+
+    from telegram.ext import ConversationHandler
+
+    result = await import_file(update, ctx)
+
+    assert result == ConversationHandler.END
+    text = update.message.reply_text.call_args[0][0]
+    assert "expected a JSON array" in text

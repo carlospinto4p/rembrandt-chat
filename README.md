@@ -115,6 +115,8 @@ docker compose stop
 | `/forecast` | Show upcoming review workload (7 days) |
 | `/retention` | Show overall retention rate (30 days) |
 | `/lessons` | List lessons and start a lesson session |
+| `/export` | Export your progress as a JSON file |
+| `/import` | Import progress from a JSON file |
 
 ## Exercise Types
 

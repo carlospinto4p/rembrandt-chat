@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.14.0 - 12th March 2026
+
+- Added `/export` command: sends progress as a JSON file.
+- Added `/import` command: restores progress from a JSON file (conversational flow).
+- Added `export_progress()`, `import_start()`, `import_file()`, `import_cancel()` in `stats_handlers.py`.
+- Updated `README.md`: added `/export` and `/import` to the command table.
+
+
 ### v0.13.0 - 11th March 2026
 
 - Added `/lessons` command: lists available lessons with completion progress, tap to start a lesson session.

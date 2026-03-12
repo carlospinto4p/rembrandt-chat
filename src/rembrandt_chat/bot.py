@@ -29,6 +29,8 @@ from rembrandt_chat.handlers import (
     addword_start,
     addword_word,
     deleteword,
+    AWAITING_FILE,
+    export_progress,
     forecast,
     handle_answer_callback,
     handle_answer_text,
@@ -36,6 +38,9 @@ from rembrandt_chat.handlers import (
     handle_lesson_callback,
     handle_play_mode,
     hint,
+    import_cancel,
+    import_file,
+    import_start,
     lessons,
     mywords,
     play,
@@ -99,6 +104,25 @@ def create_app() -> None:
     app.add_handler(CommandHandler("forecast", forecast))
     app.add_handler(CommandHandler("retention", retention))
     app.add_handler(CommandHandler("lessons", lessons))
+    app.add_handler(CommandHandler("export", export_progress))
+
+    import_conv = ConversationHandler(
+        entry_points=[
+            CommandHandler("import", import_start),
+        ],
+        states={
+            AWAITING_FILE: [
+                MessageHandler(
+                    filters.Document.ALL,
+                    import_file,
+                ),
+            ],
+        },
+        fallbacks=[
+            CommandHandler("cancel", import_cancel),
+        ],
+    )
+    app.add_handler(import_conv)
 
     addword_conv = ConversationHandler(
         entry_points=[
