@@ -177,6 +177,8 @@ async def mywords(
     lines = []
     for i, w in enumerate(words, 1):
         line = f"{i}. {w.word_from} \u2014 {w.word_to}"
+        if w.cefr:
+            line += f" ({w.cefr})"
         if w.tags:
             line += f" [{', '.join(w.tags)}]"
         lines.append(line)

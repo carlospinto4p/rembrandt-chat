@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.17.0 - 12th March 2026
+
+- Added CEFR level badge to exercise prompts: `[A1]`, `[B2]`, etc. when the word has a CEFR level.
+- Updated `/mywords`: shows CEFR level next to each word when available.
+- Added `_cefr_badge()` helper in `formatting.py`.
+
+
 ### v0.16.0 - 12th March 2026
 
 - Added word tags to `/addword`: after entering the definition, users can type comma-separated tags or /skip.

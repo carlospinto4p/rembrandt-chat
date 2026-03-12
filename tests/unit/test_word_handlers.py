@@ -157,6 +157,20 @@ async def test_mywords_lists_words():
 
 
 @pytest.mark.asyncio
+async def test_mywords_shows_cefr():
+    update = make_update(text="/mywords")
+    ctx = make_context()
+    ctx.bot_data["db"].get_words.return_value = [
+        make_word(1, "efimero", cefr="B1"),
+    ]
+
+    await mywords(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "(B1)" in text
+
+
+@pytest.mark.asyncio
 async def test_mywords_shows_tags():
     update = make_update(text="/mywords")
     ctx = make_context()

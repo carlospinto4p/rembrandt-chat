@@ -23,6 +23,12 @@ DEL_CB_PREFIX = "delw:"
 _QUALITY_LABELS = ["0", "1", "2", "3", "4", "5"]
 
 
+def _cefr_badge(exercise: Exercise) -> str:
+    """Return a CEFR level badge, or empty string."""
+    cefr = exercise.word.cefr
+    return f" [{cefr}]" if cefr else ""
+
+
 def format_exercise(
     exercise: Exercise,
 ) -> tuple[str, InlineKeyboardMarkup | None]:
@@ -35,13 +41,18 @@ def format_exercise(
     et = exercise.exercise_type
 
     if et is ExerciseType.MULTIPLE_CHOICE:
-        return _fmt_multiple_choice(exercise)
-    if et is ExerciseType.SELF_GRADED:
-        return _fmt_self_graded_prompt(exercise)
-    if et is ExerciseType.FLASHCARD:
-        return _fmt_flashcard_prompt(exercise)
-    # All remaining types expect a typed answer
-    return _fmt_typed(exercise)
+        text, kb = _fmt_multiple_choice(exercise)
+    elif et is ExerciseType.SELF_GRADED:
+        text, kb = _fmt_self_graded_prompt(exercise)
+    elif et is ExerciseType.FLASHCARD:
+        text, kb = _fmt_flashcard_prompt(exercise)
+    else:
+        text, kb = _fmt_typed(exercise)
+
+    badge = _cefr_badge(exercise)
+    if badge:
+        text = f"{badge}\n{text}"
+    return text, kb
 
 
 # ---- exercise formatters ----

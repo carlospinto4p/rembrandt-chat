@@ -363,3 +363,26 @@ def test_format_lessons_empty():
     text, kb = format_lessons([], [])
     assert "No lessons available" in text
     assert kb is None
+
+
+# --- CEFR badge ---
+
+
+def test_exercise_shows_cefr_badge():
+    w = _word(cefr="B1")
+    ex = _exercise(
+        word=w,
+        exercise_type=ExerciseType.REVERSE_FLASHCARD,
+        prompt="Que dura poco tiempo",
+    )
+    text, _ = format_exercise(ex)
+    assert "[B1]" in text
+
+
+def test_exercise_no_cefr_no_badge():
+    ex = _exercise(
+        exercise_type=ExerciseType.REVERSE_FLASHCARD,
+        prompt="Que dura poco tiempo",
+    )
+    text, _ = format_exercise(ex)
+    assert "[" not in text.split("\n")[0]
