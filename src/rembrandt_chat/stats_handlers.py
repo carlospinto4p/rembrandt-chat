@@ -1,5 +1,6 @@
 """Statistics handlers."""
 
+import asyncio
 import io
 import json
 from datetime import datetime, timedelta, timezone
@@ -94,13 +95,12 @@ async def history(
             days=_DAYS_MAP[arg]
         )
 
-    records = await db.get_answer_history(
-        user.id, limit=50, since=since,
-    )
-
-    words = await db.get_words(LANG_FROM, LANG_TO)
-    user_words = await db.get_words(
-        LANG_FROM, LANG_TO, owner_id=user.id,
+    records, words, user_words = await asyncio.gather(
+        db.get_answer_history(
+            user.id, limit=50, since=since,
+        ),
+        db.get_words(LANG_FROM, LANG_TO),
+        db.get_words(LANG_FROM, LANG_TO, owner_id=user.id),
     )
     word_map = {w.id: w.word_from for w in words + user_words}
 

@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.18.3 - 12th March 2026
+
+- Updated `stats_handlers.py`: `/history` now runs all 3 DB queries concurrently via `asyncio.gather()`.
+- Updated `session_handlers.py`: `/lessons` now fetches all lesson progress concurrently via `asyncio.gather()`.
+- Updated `word_handlers.py`: `/addword` clears leftover `_addword_*` keys on entry to prevent accumulation from abandoned conversations.
+
+
 ### v0.18.2 - 12th March 2026
 
 - Added `_start_session()` helper in `session_handlers.py`: deduplicated session creation + first exercise fetch + error handling from `handle_play_mode` and `handle_lesson_callback`.

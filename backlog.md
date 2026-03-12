@@ -48,3 +48,9 @@
 - [x] Extract `_create_and_start_session()` helper in `session_handlers.py` — deduplicate session creation + first exercise fetch + error handling (2 occurrences)
 - [x] Extract `_require_active_exercise()` helper in `session_handlers.py` — deduplicate no-session/no-exercise error logic in `/hint` and `/skip` (2 occurrences)
 - [x] Standardise conversation handler early returns — unify `ConversationHandler.END` guard pattern with message decorator (5 occurrences across 2 files)
+
+### 2026.03.12 (v0.18.2 optimization review)
+
+- [x] Use `asyncio.gather()` for parallel DB queries in `/history` — `get_answer_history`, `get_words` (shared), and `get_words` (user) are independent but run sequentially (`stats_handlers.py`)
+- [x] Use `asyncio.gather()` for parallel lesson progress in `/lessons` — N sequential `lesson_progress()` calls could run concurrently (`session_handlers.py`)
+- [x] Clean up `_addword_*` conversation keys on all exit paths — `_addword_word` and `_addword_def` may linger in `user_data` if the conversation ends abnormally (`word_handlers.py`)

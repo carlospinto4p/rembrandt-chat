@@ -1,5 +1,6 @@
 """Session lifecycle and exercise handlers."""
 
+import asyncio
 from typing import Any
 
 from rembrandt import PostgresDatabase, ReviewConfig, Session, lesson_progress
@@ -314,10 +315,12 @@ async def lessons(
     user, db = await resolve_user_with_typing(update, context)
 
     all_lessons = await db.get_lessons(LANG_FROM, LANG_TO)
-    progress = [
-        await lesson_progress(db, user.id, ls)
-        for ls in all_lessons
-    ]
+    progress = await asyncio.gather(
+        *(
+            lesson_progress(db, user.id, ls)
+            for ls in all_lessons
+        )
+    )
     text, keyboard = format_lessons(all_lessons, progress)
     await update.message.reply_text(
         text, reply_markup=keyboard

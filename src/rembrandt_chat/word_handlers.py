@@ -23,6 +23,10 @@ async def addword_start(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """`/addword` — begin the add-word conversation."""
+    # Clear leftovers from a previously abandoned conversation
+    context.user_data.pop("_addword_word", None)
+    context.user_data.pop("_addword_def", None)
+
     await resolve_user(update, context)
 
     await update.message.reply_text("Send the word:")
