@@ -1,121 +1,121 @@
 word_from,word_to
-mesa,mueble que consta de una superficie plana y horizontal sostenida por patas
-silla,mueble para sentarse que tiene respaldo
-cama,mueble que sirve para recostarse sobre él para dormir
-puerta,"abertura practicada en una construcción, vehículo u otro objeto, por la cual se accede y abandona el mismo"
-ventana,"Parte abierta en un muro para dejar penetrar la luz y el aire en una habitación o recinto, generalmente situada a más de un metro de altura"
-cocina,habitación o recinto destinado a la elaboración y cocción de alimentos
-espejo,Superficie capaz de reflejar la luz y suficientemente clara como para formar una imagen
-lámpara,"Dispositivo que soporta una luz artificial, como una bombilla eléctrica. Sus formas, tamaño y luminosidad varía de acuerdo a los espacios en los que se encuentre y el diseño de las mismas"
-alfombra,"pieza de tejido con que se cubren los suelos para decoración, abrigo y protección"
-escalera,"Construcción formada por una serie de escalones, permitiendo al usuario desplazarse entre los distintos planos de un edificio o lugar"
-pan,masa a base de harina y agua endurecida por cocción al horno
-leche,"sustancia líquida de color blanco y de alto valor nutritivo que se produce en las mamas de las hembras de los mamíferos para alimentar a sus crías. Para consumo humano es común emplear la producida por vacas, ovejas, búfalas o cabras"
-agua,"sustancia transparente, inodora e insípida, que se encuentra en estado líquido a temperatura y presión estándar, y cuya composición molecular es de dos átomos de hidrógeno por uno de oxígeno"
-arroz,"(Oryza sativa) planta de la familia de las poáceas, originaria del Lejano Oriente y cultivada en todo el mundo como alimento. Es una hierba perenne, de hasta 2 m de altura, con largas hojas aciculadas, pequeñas flores en espiga que fructifican en una cariópside de hasta 1 cm de largo. Requiere terrenos muy húmedos y climas cálidos"
-carne,"Músculos y vísceras del cuerpo de los animales, por contraposición a las partes óseas"
-fruta,"fruto comestible de algunas plantas, en especial si es dulce, utilizado como alimento o como ingrediente para preparar alimentos"
-verdura,"planta o producto vegetal comestible y perecedero, del cual se consumen las partes verdes, en especial hojas, tallos y frutos en vaina"
-queso,"alimento obtenido al separar la parte sólida de la leche mediante la adición de cuajo, prensando o cociendo luego la pasta resultante y madurándola en un grado variable"
-huevo,"Cuerpo unicelular, de forma esférica u elíptica, que aloja al embrión de numerosas especies de animales invertebrados, así como de peces, reptiles y aves durante la primera fase de su desarrollo, proporcionándole los compuestos nutritivos que éste necesita"
-sal,condimento compuesto principalmente por cloruro de sodio. Se usa en todo el mundo desde tiempos remotos y confiere a los alimentos un sabor característico (salado)
-madre,progenitora de sexo femenino
-padre,"macho, animal o humano, que ha engendrado o adoptado hijos"
-hermano,"Persona que, con respecto a otra, comparte uno o ambos padres"
-hermana,"Persona que, con respecto a otra, comparte uno o ambos padres. Forma femenina de hermano"
-abuelo,ascendiente directo en segunda generación. Padre del padre o de la madre
-abuela,Ascendiente directa en segunda generación. Madre del padre o de la madre
-hijo,individuo respecto a cualquiera de sus progenitores
-hija,Persona de sexo femenino respecto a cualquiera de sus progenitores
-primo,Hijo del tío de alguien
-sobrino,hijo de un hermano o hermana
-cabeza,"Parte superior del cuerpo del ser humano y de algunos animales, que contiene el cerebro, la boca, los ojos, y otros órganos sensoriales"
-mano,extremidad prensil y articulada en el extremo distal del brazo de los antropoides
-pie,Miembro del cuerpo que se encuentra al final de las piernas y debajo del tobillo
-ojo,órgano sensible a la luz que permite la visión en los seres vivos
-boca,"Abertura anterior del tubo digestivo de los animales, por el cual se ingieren los alimentos"
-nariz,Órgano de la cara del ser humano utilizado para oler y respirar
-oreja,Estructura cartilaginosa (compuesta de piel y cartílago) que forma la parte externa del oído del hombre y algunos animales
-brazo,"Segundo segmento del miembro superior, entre la cintura escapular -que lo fija al tronco- y el antebrazo. Se articula con la primera en el hombro, y con el segundo en el codo"
-pierna,"Miembros inferiores del ser humano y posteriores de otros vertebrados terrestres, que se insertan en la cadera y se emplean para la locomoción"
-dedo,Cada uno de los apéndices en que termina la mano
-camisa,"Prenda de vestir, generalmente con mangas y cuellos, que cubre la zona del cuerpo humano comprendida entre el cuello y la cintura. Habitualmente se abrocha por delante mediante botones"
-falda,"prenda de uso mayoritariamente femenino, que cubre de la cintura hacia abajo envolviendo el cuerpo sin costura entre las piernas. Forma parte del hábito masculino en algunos grupos, como la vestimenta talar de los sacerdotes católicos, o culturas, como el kilt de los escoceses"
-zapato,"calzado con suela de cuero u otro material fuerte que se diferencia de las botas en que no sube del tobillo, y de las zapatillas en que suele ser rígido y se usa como vestuario formal"
-sombrero,prenda de vestir que protege y adorna la cabeza
-pantalón,"prenda de vestir que tipicamente cubre desde la cintura hasta los tobillos, pero que puede ser más corto, y en que cada pierna está envuelta por separado"
-cinturón,"tira de tela o cuero que, ceñida a la cintura, sirve para sujetar el pantalón, para ajustar un vestido o para colgar utensilios o armas"
-abrigo,prenda de vestir que se pone encima de las demás y sirve para abrigar
-bufanda,"Prenda larga y estrecha, por lo común de lana o seda, con que se envuelve y abriga el cuello y la boca"
-guante,"prenda que viste y protege la mano, sea o no con los dedos separados"
-bolsillo,"Bolsa pequeña, ubicada en algunas prendas de vestir, que se usa para guardar cosas"
-calle,"camino urbano, especialmente el destinado al tránsito de vehículos"
-plaza,"En una ciudad o poblado, área abierta y espaciosa en la cual la gente puede transitar y reunirse"
-parque,"terreno o sitio cercado y con plantas, para caza o para recreo, generalmente inmediato a un palacio o a una población"
-puente,construcción sólida que permite salvar un obstáculo pasando sobre él
-iglesia,edificio destinado al culto de la religión cristiana
-mercado,Sitio o edificio destinado a la compraventa de bienes y servicios
-hospital,"Lugar donde se atiende a los enfermos, para proporcionar el diagnóstico y tratamiento que necesitan"
-escuela,Instituto que ofrece enseñanza primaria
-biblioteca,Institución o lugar donde se conservan y consultan libros y otros materiales de lectura
-estación,"Cada una de las paradas regulares de un recorrido de tren, metro o autobús"
-árbol,"fanerófito, de fuste único. Por ejemplo. Las plantas como las palmeras son arborescentes, i.e. no son árboles"
-flor,"órgano reproductivo de las angiospermas, caracterizado generalmente por tener vivos colores. Se compone de distintos tipos de hojas especializadas, algunas con función propiamente reproductiva y otras que actúan como protectoras de las anteriores o como medio de reclamo para atraer polinizadores"
-río,"corriente de agua de caudal importante que discurre por tierra desde un manantial, una masa de hielos o un lago"
-montaña,Conjunto de rocas piedras y tierra que forman una elevación grande sobre el terreno
-bosque,terreno cubierto por árboles y otra vegetación
-playa,arenal o pedregal costero y más o menos llano
-piedra,"material natural sólido, caracterizado por su dureza y consistencia, empleado para la construcción en numerosas culturas alrededor del mundo"
-nube,"Vapor de agua suspendido en la atmósfera, cuya condensación se precipita como lluvia, granizo o nieve"
-lluvia,Conjunto de gotas de agua producidas por la condensación del agua y que se precipitan del cielo sobre la tierra
-tierra,Superficie del planeta Tierra que no se encuentra cubierta por agua
-perro,"(Canis lupus familiaris) Variedad doméstica del lobo de muchas y diversas razas, compañero del hombre desde tiempos prehistóricos"
-gato,"(Felis catus) animal carnívoro de la familia de los felinos, domesticado como animal de compañía desde al menos el 3500 a. C"
-caballo,"(Equus caballus) mamífero doméstico ungulado de la familia de los équidos, utilizado por el hombre para montar o como animal de tiro"
-pájaro,"ave, en especial si es de pequeño tamaño"
-pez,"cualquiera de unas 30 000 especies de animales vertebrados, caracterizados por ser los únicos adaptados a respirar agua durante todo su ciclo vital. Forman un grupo sin rigor taxonómico que comprende varios grupos evolutivos diferentes, que sólo tienen en común su adaptación al medio acuático"
-vaca,(Bos taurus) Denominación común de la hembra de la especie bovina
-oveja,"(Ovis aries) mamífero rumiante ungulado, generalmente criado por su carne, leche y lana"
-gallina,"ave gallinácea con una cresta cutánea de variadas formas sobre la cabeza, dos apéndices carnosos (carúnculas) que le cuelgan debajo del pico, patas con uñas para escarbar; el macho (gallo) posee un espolón. Es un ave de corral de la que se aprovechan sus huevos, plumas y carne"
-conejo,"(familia Leporidae) Cualquiera de unas dos docenas de especies de pequeños mamíferos lagomorfos, de pelo tupido, orejas erguidas tan largas como la cabeza, un rabo muy corto, patas delanteras cortas y traseras muy largas, que le permiten desplazarse con brincos. Habita en madrigueras que cava en la tierra y es muy prolífico. Se lo cría como animal de compañía, y para aprovechar su carne, su cuero y su pelo"
-tortuga,"Reptiles del orden de los Quelonios caracterizados por tener un tronco ancho y corto, protegido por un caparazón que está formado, generalmente, por placas óseas revestidas de placas córneas"
-médico,Persona con formación profesional que se dedica a diagnosticar y tratar enfermedades
-maestro,Persona que enseña en una institución educacional
-abogado,"Experto en derecho, acreditado con título universitario, que presta asistencia técnica jurídica aconsejando o defendiendo a alguna de las partes en un juicio"
-ingeniero,Persona que ejerce la ingeniería
-enfermero,persona que ejerce la profesión de enfermería
-bombero,"Persona perteneciente a un cuerpo cuyas funciones son entre otras: Apagar incendios, atender incidentes con materiales peligrosos, salvamento de personas y animales en casos de emergencia, asistencia en rescate y accidentes de tráfico y atender otros siniestros"
-carpintero,"Persona cuyo oficio es el trabajo en la madera, ya sea en madera de construcción (puertas, ventanas, etc...) como en muebles"
-cocinero,Persona que tiene por oficio cocinar y aderezar las viandas
-periodista,Aquella persona que ejerce el periodismo
-soldado,"Individuo que forma parte de una milicia, en especial si de forma continuada o profesional"
-alegría,sensación de contento que se produce debido a algo agradable
-tristeza,"estado emocional de dolor y descontento, desagradable para quien lo experimenta"
-miedo,"emoción de ansiedad difícil de controlar causada por algo que puede causar algún daño físico, emocional, patrimonial etc. Tanto el objeto que causa el miedo como la posibilidad de causar daño pueden ser reales o imaginarios"
-amor,"sentimiento afectivo de atracción, unión y afinidad que se experimenta hacia una persona, animal o cosa"
-odio,"sentimiento de violento desagrado hacia alguien o algo, que lleva a desearle el mal"
-vergüenza,"sentimiento de turbación causado por sentir culpa, humillación o deshonra"
-orgullo,"arrogancia, estimación excesiva de uno mismo o sentimiento de superioridad sobre otros"
-esperanza,confianza o deseo de que algo deseado sucederá
-envidia,"infelicidad causada por el bienestar, éxito, posesiones etc. de otro"
-ternura,suavidad y blandura de un objeto o su superficie
-equipaje,"Conjunto de objetos, bultos y maletas que lleva consigo un viajero"
-pasaporte,"documento con validez internacional, que identifica a su titular, expedido por las autoridades de un país, que acredita el permiso o autorización legal para que salga o ingrese del mismo, por los puertos internacionales"
-billete,Papel impreso que posee un valor nominal que permite usarlo como medio de pago
-aduana,organismo del Estado encargado de percibir las tasas y derechos que gravan los bienes que se comercian atravesando las fronteras
-maleta,"caja o recipiente, dotado de asas u otros medios de sujeción, empleada para transportar ropas y otros enseres en cierta cantidad durante un viaje"
-destino,"Situación a la que supuestamente se llega de forma inevitable, impulsado por una fuerza desconocida e irresistible"
-frontera,confín de un Estado
-vuelo,Acción de ir por el aire moviéndose o sosteniéndose con alas u otra superficie análoga
-andén,vereda para acceder a un tren
-brújula,Instrumento que sirve para determinar cualquier dirección de la superficie terrestre por medio de una aguja imantada que siempre marca los polos magnéticos Norte-Sur
-costumbre,Repetición frecuente del mismo acto
-herencia,Bienes que recibe una persona cedidos por una persona que ha fallecido
-ciudadano,Persona que forma parte de una comunidad política y goza de derechos civiles
-igualdad,"simetría o conformidad de algo en comparación con otra cosa en cuanto a su naturaleza, forma, calidad, cantidad, valor, etc. igual"
-libertad,"Estado en el cual fuerzas ajenas no imponen su criterio, aplicable física o moralmente sobre la propia decisión del sujeto"
-democracia,doctrina política que propicia la participación del pueblo en el gobierno
-prejuicio,"Juicio u opinión formados sin fundamento, basados en ideas preconcebidas"
-convivencia,Acción de vivir en compañía de otro u otros
-identidad,Condición de idéntico (que es igual o parecido)
-solidaridad,"Unión de responsabilidades e intereses comunes, entre los miembros de un grupo o entre personas, etc"
+efímero,Que dura un solo día
+ubicuo,Que está presente a un mismo tiempo en todas partes. Dícese solamente de Dios
+acérrimo,"Muy tenaz, firme o intransigente en sus ideas o actitudes"
+perspicaz,"Que tiene o muestra una percepción mental aguda, penetrante"
+recóndito,"Muy escondido, reservado y oculto"
+prístino,Que mantiene sin cambio alguno su naturaleza original
+insigne,"Célebre, distinguido por méritos o cualidades sobresalientes"
+exiguo,Muy escaso en cantidad o dimensión
+incólume,"saludable, sin lesión ni menoscabo"
+acucioso,"diligente, solícito, que hace las cosas pronto y con cuidado"
+diáfano,"Dicho de un cuerpo, que permite el paso de la luz casi en su totalidad"
+ignoto,"Desconocido, no descubierto ni explorado"
+vetusto,Muy antiguo o de mucha edad
+feraz,"Sumamente fértil, copioso en frutos"
+sempiterno,De duración infinita
+iracundo,"Propenso a la ira, que se encoleriza con facilidad"
+ominoso,"Que produce temor, rechazo o repugnancia por contener peligro, azar, o mala suerte; que se debe evitar o no desear"
+cruento,Que implica o provoca gran efusión de sangre
+inveterado,"Muy antiguo y arraigado, difícil de cambiar por su larga duración"
+execrable,"Que merece condenarse, rechazarse o criticarse con severidad, por profanar algo considerado sagrado o muy valioso moralmente"
+desidia,Falta de esfuerzo o dedicación para la realización de las tareas necesarias o prescritas
+vehemencia,calidad o cualidad de vehemente o impetuoso
+mesura,"Moderación, compostura y gravedad en el comportamiento o las palabras"
+displicencia,desagrado o indiferencia en el trato
+acervo,Cúmulo de cosas u objetos pequeños colocados desordenadamente unos sobre otros
+menoscabo,"Disminución del valor, la importancia o el prestigio de algo o alguien"
+acopio,"Acción de juntar o reunir en cantidad algo, especialmente provisiones o materiales"
+desazón,"Malestar, inquietud o disgusto interior"
+premura,"aprieto, apuro, prisa, urgencia, instancia"
+denuedo,"Empleo de energía, valor, ánimo, vigor para lograr algo, en especial venciendo dificultades"
+resquicio,abertura que hay entre el quicio y la puerta
+cariz,Aspecto o apariencia que presenta un asunto o situación
+derrotero,Camino o rumbo por el que se llega a un fin propuesto
+coyuntura,Combinación de circunstancias y factores que caracterizan una situación en un momento dado
+vestigio,Señal que queda en un sitio por donde se ha pisado o estado
+diatriba,discurso o escrito violento e injurioso contra alguien o algo
+precepto,mandamiento u ordenanza dada por una persona que tiene autorización para ello
+salvedad,"Razonamiento o advertencia que se emplea como excusa, descargo, limitación o cortapisa de lo que se va a decir o hacer"
+envergadura,"distancia que hay entre las puntas de las alas de una nave, de un ave o de cualquier otro animal, cuando éstas están totalmente extendidas"
+menester,Ocupación habitual de un individuo
+dilucidar,"explicar un asunto, aclararlo; dejar clara e inteligible alguna cosa"
+esgrimir,"Usar algo, especialmente un argumento o razón, como arma para atacar o defenderse"
+soslayar,"Evitar una dificultad o un asunto, eludirlo o pasarlo por alto"
+ponderar,"Examinar con cuidado y atención algo, sopesando sus ventajas e inconvenientes"
+acaecer,"ocurrir, producirse un hecho, tener lugar un acontecimiento, suceder"
+enmendar,"arreglar, corregir los fallos o defectos"
+socavar,"excavar por debajo alguna cosa, dejándola sin la debida seguridad y resistencia"
+abogar,defender y dar consejo a alguien que es objeto de un juicio o pleito legal
+discernir,diferenciar conceptualmente una cosa de otra
+aducir,Presentar razones o pruebas; presentar un alegato o argumentación
+dirimir,Resolver o poner fin a una disputa o litigio
+resarcir,"Reparar un daño, mediante el pago de un bien o la realización de una acción"
+escatimar,"Dar o usar lo menos posible, o solo lo imprescindible, algún recurso"
+desdeñar,Tratar con desdén a alguien; tratar algo con ostensible indiferencia o menosperecio; considerar inferior algo
+vindicar,Defender o reivindicar a alguien o algo que ha sido injustamente atacado o despreciado
+acusar,"Asignar a alguien la culpa o responsabilidad de algo ilegal. inmoral o reprobable, como un delito, vicio, tacha o falta"
+usurpar,Apoderarse de una propiedad o de un derecho que pertenece a otro de una forma violenta
+desistir,"Dejar de insistir, interrumpir un esfuerzo, una acción, etc"
+atenuar,"reducir, disminuir o debilitar la fuerza, el efecto, la potencia o la intensidad de algo"
+amedrentar,"infundir miedo, temor o aprensión"
+escindir,Separar o dividir en dos o más partes de importancia similar
+holgar,"Descansar, tomar aliento después de alguna fatiga"
+increpar,reprender a una persona con dureza y severidad
+azuzar,incitar a un perro a que ladre o ataque
+expiar,Limpiar o enmendar la culpa a través del cumplimiento de un castigo o penitencia
+zaherir,Decir a alguien algo que le provoque humillación o dolor moral
+denostar,Atacar verbalmente a alguien con graves insultos y ofensas
+conminar,Amenazar a alguien con un castigo si no cumple lo que se le ordena
+medrar,"Mejorar de posición, crecer o prosperar en fortuna o reputación"
+fulminar,"Destruir o aniquilar de manera súbita y violenta, como un rayo"
+falacia,"engaño, fraude o mentira con que se intenta perjudicar a otro"
+silogismo,"demostración que consta de tres proposiciones, una de las cuales se deduce del conjunto de las otras dos"
+premisa,Principio por el cual se logran inferencias y alcanzan conclusiones
+paradoja,"opinión o declaración opuesta a las ideas, opiniones, creencias o sentimientos de la mayoría de las personas"
+retórica,"Arte de dar eficacia al lenguaje para obtener el objetivo deseado, especialmente estético o persuasivo"
+sofisma,Razón o argumento aparente con que se quiere defender o persuadir lo que es falso
+aforismo,"declaración o sentencia concisa; acordada por un gran número de personas (foro); que pretende expresar un principio o la verdad en una manera breve, pensativa y aparentemente cerrada"
+elocuencia,"habilidad de expresarse con completa fluidez, con un amplio vocabulario y de modo eficaz para persuadir o producir una respuesta emotiva de quien recibe el mensaje"
+apología,"Discurso de palabra o escrito, en defensa, justificación, alabanza o adulación de personas, actitudes o cosas"
+demagogia,Práctica política consistente en ganarse con halagos el favor popular
+ontología,"Parte de la metafísica que estudia el ser en tanto que es y existe. Por ello es llamada la teoría del ser, es decir, el estudio de todo lo que es: qué es, cómo es y cómo es posible"
+epistemología,"campo de la filosofía que trata sobre los fundamentos, límites, y métodos del conocimiento científico"
+axioma,verdad evidente que no requiere prueba o demostración
+dialéctica,"Técnica formal de razonamiento que permite llegar a una verdad mediante el diálogo, intercambiando argumentos lógicos"
+teleología,Doctrina que intenta explicar el universo como un sistema de relaciones causales con un propósito final
+hermenéutica,"teoría y método para la interpretación de textos, que busca establecer el sentido original de un texto para su autor o para la comunidad en la que se produjo"
+nihilismo,"negación de todo principio, autoridad o dogma filosófico o religioso"
+solipsismo,teoría subjetiva que sostiene que tan sólo el propio yo es lo único que existe o que puede demostrarse
+empirismo,"corriente filosófica según la cual el conocimiento se halla fundado en la experiencia. Se contrapone al racionalismo, para el cual el conocimiento se halla fundado en gran parte en la razón"
+altruismo,"esmero y diligencia puesto por una persona en conseguir el bien de los demás, aun a expensas del propio"
+metáfora,"figura retórica consistente en establecer una identidad entre dos términos y emplear uno con el significado del otro, basándose en una comparación no expresada entre las dos realidades que dichos términos designan"
+metonimia,"tropo que designa una cosa con el nombre de otra con la que guarda una relación de causa efecto, de autor a obra, o de algún otro tipo de contigüidad temporal, causal o espacial"
+sinécdoque,"tropo en el que: una parte de algo es usada para representar el todo, el todo es usado por una parte, la especie es usada por el género, el género es usado por la especie, el material de que algo está hecho es usado por la cosa"
+oxímoron,expresión en la que se emplean dos términos incongruentes o contradictorios
+hipérbole,"Exageración muy grande e intencional, que consiste en aumentar con el fin de obtener un enunciado más expresivo, como al decir: ""Te llamé un millón de veces"", ""un millón de gracias"" o ""te doy mil besos"""
+antítesis,Oposición o contrariedad de dos juicios o afirmaciones
+prosopopeya,enunciación de un discurso o una proposición por parte de un personaje en una obra literaria
+elipsis,"Ausencia de alguna palabra en una oración, que no afecta su sentido"
+anáfora,Figura retórica que consiste en la repetición de una o varias palabras al principio de versos o frases sucesivas
+pleonasmo,"Figura de construcción, que consiste en emplear en la oración uno o más vocablos innecesarios para que tenga sentido completo, pero con los cuales se da énfasis a lo dicho"
+jurisprudencia,"término jurídico que significa conjunto de las decisiones e interpretaciones de la ley, tomadas por los tribunales. Estas decisiones funcionan como una fuente del derecho sustituyendo la falta de la ley - están basadas en actos y prácticas pasadas que tratan sobre los casos iguales o parecidos"
+potestad,dominio que se tiene sobre una cosa
+prerrogativa,"privilegio o exención que se concede a alguien, como beneficio correspondiente a una dignidad o cargo"
+promulgar,publicar una cosa solemnemente; hacerla saber a todos
+derogar,"abolir, dejar sin vigencia o modificar una ley, norma o precepto establecido, a menudo reemplazándolos con una orden nueva"
+litigio,"disputa legal, diferendo"
+indulto,gracia o privilegio concedido a uno para que pueda hacer lo que sin él no podría
+exhorto,"Escrito que envía un juez o un tribunal a otro con más jurisdicción, para que mande el cumplimiento de lo que le pide"
+fuero,"Ley, o estatuto particular de algun reino o provincia de España"
+aquiescencia,acuerdo que se presta pasivamente a una decisión o designio ajeno
+boato,exhibición pública de magnificencia
+acaecimiento,Algo que sucede u ocurre
+albor,"Luz del amanecer, comienzo o principio de algo"
+solaz,Descanso o recreo del cuerpo o del espíritu
+denuesto,"injuria grave, de palabra o por escrito"
+infundio,"mentira, información falsa o sin fundamento que se difunde generalmente para perjudicar a alguien"
+procaz,"Dicho de una persona: Que se comporta o habla de manera desvergonzada o atrevida, en especial en el aspecto sexual"
+lozano,"Dicho de un vegetal o un terreno poblado de ellos, que abunda en hojas y brotes que muestran su vigor"
+donaire,Capacidad de expresarse con elegancia e ingenio y de las obras con estas cualidades
+prestancia,"Cualidad de excelente, distinguido o superior en su clase"

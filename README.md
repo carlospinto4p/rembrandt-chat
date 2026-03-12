@@ -48,10 +48,11 @@ If `BASE_VOCAB_PATH` is set and the words table is empty on first
 run, the shared vocabulary is loaded automatically.
 
 If `BUNDLED_VOCAB_DIR` is set, the bot loads bundled vocabulary
-(120 Spanish words) and 12 thematic lessons on first run. The
-directory should contain `vocab.csv`, `vocab.json`, and
-`lessons.json`. Set it to the `data/` directory included in
-this repository.
+and lessons on first run. Includes 120 advanced Spanish words
+(C1–C2) for native speakers, across 12 thematic lessons:
+adjetivos cultos, verbos precisos, retórica, filosofía, figuras
+retóricas, derecho, and more. Set it to the `data/` directory
+included in this repository.
 
 ## Running the Bot
 

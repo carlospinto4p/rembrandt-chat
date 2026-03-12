@@ -1,12 +1,13 @@
 [
   {
-    "title": "La casa",
-    "description": "Objetos y partes de la casa",
+    "title": "Adjetivos cultos",
+    "description": "Adjetivos poco comunes de registro culto",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A1",
+    "cefr": "C1",
     "tags": [
-      "hogar"
+      "adjetivos",
+      "culto"
     ],
     "word_ranks": [
       1,
@@ -22,13 +23,14 @@
     ]
   },
   {
-    "title": "Alimentos",
-    "description": "Comida y bebida cotidiana",
+    "title": "Adjetivos literarios",
+    "description": "Adjetivos de uso literario y formal",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A1",
+    "cefr": "C2",
     "tags": [
-      "comida"
+      "adjetivos",
+      "literario"
     ],
     "word_ranks": [
       11,
@@ -44,13 +46,14 @@
     ]
   },
   {
-    "title": "La familia",
-    "description": "Miembros de la familia",
+    "title": "Sustantivos abstractos",
+    "description": "Conceptos abstractos de uso culto",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A1",
+    "cefr": "C1",
     "tags": [
-      "familia"
+      "sustantivos",
+      "abstracto"
     ],
     "word_ranks": [
       21,
@@ -66,13 +69,14 @@
     ]
   },
   {
-    "title": "El cuerpo",
-    "description": "Partes del cuerpo humano",
+    "title": "Sustantivos formales",
+    "description": "Sustantivos de registro formal y académico",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A1",
+    "cefr": "C1",
     "tags": [
-      "cuerpo"
+      "sustantivos",
+      "formal"
     ],
     "word_ranks": [
       31,
@@ -88,13 +92,14 @@
     ]
   },
   {
-    "title": "Ropa y accesorios",
-    "description": "Prendas de vestir",
+    "title": "Verbos precisos I",
+    "description": "Verbos cultos para expresarse con precisión",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A2",
+    "cefr": "C1",
     "tags": [
-      "ropa"
+      "verbos",
+      "culto"
     ],
     "word_ranks": [
       41,
@@ -110,13 +115,14 @@
     ]
   },
   {
-    "title": "La ciudad",
-    "description": "Lugares y elementos urbanos",
+    "title": "Verbos precisos II",
+    "description": "Más verbos cultos de uso formal",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A2",
+    "cefr": "C1",
     "tags": [
-      "ciudad"
+      "verbos",
+      "culto"
     ],
     "word_ranks": [
       51,
@@ -132,13 +138,14 @@
     ]
   },
   {
-    "title": "La naturaleza",
-    "description": "Elementos del mundo natural",
+    "title": "Verbos literarios",
+    "description": "Verbos de uso literario y poético",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A2",
+    "cefr": "C2",
     "tags": [
-      "naturaleza"
+      "verbos",
+      "literario"
     ],
     "word_ranks": [
       61,
@@ -154,13 +161,14 @@
     ]
   },
   {
-    "title": "Animales",
-    "description": "Animales comunes",
+    "title": "Retórica y argumentación",
+    "description": "Vocabulario para el discurso y la persuasión",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "A2",
+    "cefr": "C1",
     "tags": [
-      "animales"
+      "retórica",
+      "argumentación"
     ],
     "word_ranks": [
       71,
@@ -176,13 +184,13 @@
     ]
   },
   {
-    "title": "Profesiones",
-    "description": "Oficios y profesiones",
+    "title": "Filosofía y pensamiento",
+    "description": "Términos filosóficos y del pensamiento crítico",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "B1",
+    "cefr": "C2",
     "tags": [
-      "trabajo"
+      "filosofía"
     ],
     "word_ranks": [
       81,
@@ -198,13 +206,14 @@
     ]
   },
   {
-    "title": "Emociones",
-    "description": "Sentimientos y estados de ánimo",
+    "title": "Figuras retóricas",
+    "description": "Recursos literarios y estilísticos",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "B1",
+    "cefr": "C1",
     "tags": [
-      "emociones"
+      "literatura",
+      "retórica"
     ],
     "word_ranks": [
       91,
@@ -220,13 +229,14 @@
     ]
   },
   {
-    "title": "Viajes",
-    "description": "Vocabulario de viaje y transporte",
+    "title": "Derecho y gobierno",
+    "description": "Vocabulario jurídico y político",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "B1",
+    "cefr": "C1",
     "tags": [
-      "viajes"
+      "derecho",
+      "política"
     ],
     "word_ranks": [
       101,
@@ -242,13 +252,13 @@
     ]
   },
   {
-    "title": "Cultura y sociedad",
-    "description": "Conceptos culturales y sociales",
+    "title": "Palabras en desuso",
+    "description": "Arcaísmos y palabras poco frecuentes",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "B2",
+    "cefr": "C2",
     "tags": [
-      "cultura"
+      "arcaísmo"
     ],
     "word_ranks": [
       111,

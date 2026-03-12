@@ -1,9 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.19.1 - 12th March 2026
+
+- Fixed bundled vocabulary: replaced basic A1–B2 words with 120 advanced words (C1–C2) aimed at Spanish native speakers expanding their vocabulary.
+- Updated `scripts/build_vocab.py`: new word list with 12 thematic lessons (adjetivos cultos, verbos precisos, retórica, filosofía, figuras retóricas, derecho, arcaísmos).
+- Fixed ~20 low-quality Wiktionary definitions with manual replacements.
+
+
 ### v0.19.0 - 12th March 2026
 
-- Added bundled Spanish vocabulary: 120 words in 12 thematic lessons (A1–B2), definitions sourced from es.wiktionary.org (CC BY-SA 4.0).
+- Added bundled Spanish vocabulary: 120 words in 12 thematic lessons, definitions sourced from es.wiktionary.org (CC BY-SA 4.0).
 - Added `scripts/build_vocab.py`: fetches definitions from the Wiktionary API and generates data files.
 - Added in `data/`:
   - `vocab.json`: vocabulary entries with rank, word, and definition.
