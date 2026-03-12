@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.17.1 - 12th March 2026
+
+- Fixed `changelog.md`: applied sub-bullet formatting for all entries listing 3+ items (per `versioning.md` rules).
+
+
 ### v0.17.0 - 12th March 2026
 
 - Added CEFR level badge to exercise prompts: `[A1]`, `[B2]`, etc. when the word has a CEFR level.
@@ -12,7 +17,11 @@
 
 - Added word tags to `/addword`: after entering the definition, users can type comma-separated tags or /skip.
 - Updated `/mywords`: displays tags next to each word, supports `/mywords <tag>` filtering.
-- Added `addword_tags()`, `addword_skip_tags()`, `_save_word()`, and `AWAITING_TAGS` in `word_handlers.py`.
+- Added in `word_handlers.py`:
+  - `addword_tags()`
+  - `addword_skip_tags()`
+  - `_save_word()`
+  - `AWAITING_TAGS`
 - Updated `README.md`: documented tag support in `/addword` and `/mywords`.
 
 
@@ -26,17 +35,28 @@
 ### v0.14.1 - 12th March 2026
 
 - Added `send_typing()` helper in `_helpers.py`: sends `ChatAction.TYPING` before slow operations.
-- Updated handlers with typing indicator:
-  - `stats_handlers.py`: `/stats`, `/weak`, `/forecast`, `/retention`, `/export`, `/import`
-  - `word_handlers.py`: `/mywords`, `/deleteword`
-  - `session_handlers.py`: `/lessons`
+- Updated `stats_handlers.py` with typing indicator:
+  - `/stats`
+  - `/weak`
+  - `/forecast`
+  - `/retention`
+  - `/export`
+  - `/import`
+- Updated `word_handlers.py` with typing indicator:
+  - `/mywords`
+  - `/deleteword`
+- Updated `session_handlers.py` with typing indicator for `/lessons`.
 
 
 ### v0.14.0 - 12th March 2026
 
 - Added `/export` command: sends progress as a JSON file.
 - Added `/import` command: restores progress from a JSON file (conversational flow).
-- Added `export_progress()`, `import_start()`, `import_file()`, `import_cancel()` in `stats_handlers.py`.
+- Added in `stats_handlers.py`:
+  - `export_progress()`
+  - `import_start()`
+  - `import_file()`
+  - `import_cancel()`
 - Updated `README.md`: added `/export` and `/import` to the command table.
 
 
@@ -108,10 +128,25 @@
 ### v0.8.2 - 10th March 2026
 
 - Split `handlers.py` into separate modules:
-  - `_helpers.py`: shared helpers (`resolve_user`, `get_session`, `require_session`, `send_next`) and user-data key constants.
-  - `session_handlers.py`: `/start`, `/play`, `/stop`, `/hint`, `/skip`, answer handlers.
-  - `word_handlers.py`: `/addword`, `/mywords`, `/deleteword`.
-  - `stats_handlers.py`: `/stats`, `/weak`.
+  - `_helpers.py`: shared helpers and user-data key constants:
+    - `resolve_user()`
+    - `get_session()`
+    - `require_session()`
+    - `send_next()`
+  - `session_handlers.py`:
+    - `/start`
+    - `/play`
+    - `/stop`
+    - `/hint`
+    - `/skip`
+    - answer handlers
+  - `word_handlers.py`:
+    - `/addword`
+    - `/mywords`
+    - `/deleteword`
+  - `stats_handlers.py`:
+    - `/stats`
+    - `/weak`
 - Converted `handlers.py` into a re-export facade for backward compatibility.
 - Updated `test_handlers.py`: patched `Session` in `session_handlers` module.
 
@@ -156,7 +191,11 @@
 - Added `/addword` conversational handler: two-step flow (word, then definition) to add private words.
 - Added `/mywords` handler: list user's private words.
 - Added `/deleteword` handler: show private words as inline buttons, tap to delete.
-- Updated `bot.py`: register `ConversationHandler` for `/addword`, `/mywords`, `/deleteword`, and delete callback.
+- Updated `bot.py`: registered handlers:
+  - `ConversationHandler` for `/addword`
+  - `/mywords`
+  - `/deleteword`
+  - delete callback
 - Added `test_word_handlers.py`: 10 tests for word management.
 
 
@@ -172,11 +211,25 @@
 
 - Added `/play` handler: create a rembrandt `Session` and send the first exercise.
 - Added `/stop` handler: end session and show summary.
-- Added `handle_answer_text`: process typed answers for reverse flashcard, conjugation, cloze, etc.
-- Added `handle_answer_callback`: process inline keyboard presses for multiple choice, self-graded quality, and flashcard reveal.
-- Updated `bot.py`: register `/play`, `/stop`, callback query, and text message handlers; share `db` via `bot_data`.
+- Added `handle_answer_text`: process typed answers for:
+  - reverse flashcard
+  - conjugation
+  - cloze
+- Added `handle_answer_callback`: process inline keyboard presses for:
+  - multiple choice
+  - self-graded quality
+  - flashcard reveal
+- Updated `bot.py`: registered handlers:
+  - `/play`
+  - `/stop`
+  - callback query
+  - text message
 - Added handler tests:
-  - `/play`, `/stop`, text answers, callback answers, session lifecycle
+  - `/play`
+  - `/stop`
+  - text answers
+  - callback answers
+  - session lifecycle
 
 
 ### v0.3.0 - 10th March 2026
