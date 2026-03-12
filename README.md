@@ -40,6 +40,8 @@ Set the following environment variables:
 | `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather | Yes |
 | `DATABASE_URL` | PostgreSQL connection string | Yes |
 | `BASE_VOCAB_PATH` | Path to shared vocabulary JSON | No |
+| `MAX_NEW_CARDS` | Max new cards per session (0 = unlimited) | No |
+| `MAX_REVIEW_CARDS` | Max review cards per session (0 = unlimited) | No |
 
 If `BASE_VOCAB_PATH` is set and the words table is empty on first
 run, the shared vocabulary is loaded automatically.

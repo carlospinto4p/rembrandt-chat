@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.15.0 - 12th March 2026
+
+- Added `get_max_new_cards()` and `get_max_review_cards()` in `config.py`: read `MAX_NEW_CARDS` / `MAX_REVIEW_CARDS` env vars.
+- Updated `session_handlers.py`: pass `ReviewConfig` with daily limits to both `handle_play_mode()` and `handle_lesson_callback()`.
+- Updated `README.md`: documented new env vars in the configuration table.
+
+
 ### v0.14.1 - 12th March 2026
 
 - Added `send_typing()` helper in `_helpers.py`: sends `ChatAction.TYPING` before slow operations.

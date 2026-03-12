@@ -114,6 +114,30 @@ async def test_play_mode_creates_session():
 
 
 @pytest.mark.asyncio
+async def test_play_mode_passes_review_config(monkeypatch):
+    monkeypatch.setenv("MAX_NEW_CARDS", "10")
+    monkeypatch.setenv("MAX_REVIEW_CARDS", "30")
+
+    update = make_callback_update("play_mode:mixed")
+    ctx = make_context()
+    ex = make_exercise()
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session"
+    ) as MockSession:
+        mock_session = MockSession.return_value
+        mock_session.next_exercise = AsyncMock(
+            return_value=ex
+        )
+        await handle_play_mode(update, ctx)
+
+    call_kw = MockSession.call_args[1]
+    rc = call_kw["review_config"]
+    assert rc.max_new_cards == 10
+    assert rc.max_review_cards == 30
+
+
+@pytest.mark.asyncio
 async def test_play_mode_no_words_available():
     update = make_callback_update("play_mode:learn_new")
     ctx = make_context()
@@ -577,6 +601,7 @@ async def test_lesson_callback_starts_session():
         language_from="es",
         language_to="es",
         word_ids=[1, 2, 3],
+        review_config=None,
     )
 
 

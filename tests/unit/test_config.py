@@ -6,6 +6,8 @@ from rembrandt_chat.config import (
     get_base_vocab_path,
     get_bot_token,
     get_database_url,
+    get_max_new_cards,
+    get_max_review_cards,
 )
 
 
@@ -53,3 +55,29 @@ def test_get_base_vocab_path_returns_none_when_missing(monkeypatch):
 def test_get_base_vocab_path_returns_none_when_empty(monkeypatch):
     monkeypatch.setenv("BASE_VOCAB_PATH", "")
     assert get_base_vocab_path() is None
+
+
+# --- get_max_new_cards ---
+
+
+def test_get_max_new_cards_returns_value(monkeypatch):
+    monkeypatch.setenv("MAX_NEW_CARDS", "20")
+    assert get_max_new_cards() == 20
+
+
+def test_get_max_new_cards_defaults_to_zero(monkeypatch):
+    monkeypatch.delenv("MAX_NEW_CARDS", raising=False)
+    assert get_max_new_cards() == 0
+
+
+# --- get_max_review_cards ---
+
+
+def test_get_max_review_cards_returns_value(monkeypatch):
+    monkeypatch.setenv("MAX_REVIEW_CARDS", "50")
+    assert get_max_review_cards() == 50
+
+
+def test_get_max_review_cards_defaults_to_zero(monkeypatch):
+    monkeypatch.delenv("MAX_REVIEW_CARDS", raising=False)
+    assert get_max_review_cards() == 0

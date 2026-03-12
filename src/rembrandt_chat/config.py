@@ -39,3 +39,19 @@ def get_base_vocab_path() -> str | None:
     :return: The path string, or ``None`` if not set.
     """
     return os.environ.get("BASE_VOCAB_PATH") or None
+
+
+def get_max_new_cards() -> int:
+    """Return the maximum new cards per session.
+
+    :return: ``0`` (unlimited) if not set.
+    """
+    return int(os.environ.get("MAX_NEW_CARDS", "0"))
+
+
+def get_max_review_cards() -> int:
+    """Return the maximum review cards per session.
+
+    :return: ``0`` (unlimited) if not set.
+    """
+    return int(os.environ.get("MAX_REVIEW_CARDS", "0"))

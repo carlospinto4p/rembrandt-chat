@@ -1,6 +1,6 @@
 """Session lifecycle and exercise handlers."""
 
-from rembrandt import Session, lesson_progress
+from rembrandt import ReviewConfig, Session, lesson_progress
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -14,7 +14,12 @@ from rembrandt_chat._helpers import (
     send_next,
     send_typing,
 )
-from rembrandt_chat.config import LANG_FROM, LANG_TO
+from rembrandt_chat.config import (
+    LANG_FROM,
+    LANG_TO,
+    get_max_new_cards,
+    get_max_review_cards,
+)
 from rembrandt_chat.formatting import (
     LESSON_CB_PREFIX,
     MC_PREFIX,
@@ -29,6 +34,18 @@ from rembrandt_chat.formatting import (
 )
 
 PLAY_MODE_PREFIX = "play_mode:"
+
+
+def _review_config() -> ReviewConfig | None:
+    """Build a `ReviewConfig` from env vars, or ``None``."""
+    new = get_max_new_cards()
+    rev = get_max_review_cards()
+    if new == 0 and rev == 0:
+        return None
+    return ReviewConfig(
+        max_new_cards=new,
+        max_review_cards=rev,
+    )
 
 _MODE_LABELS = {
     SessionMode.MIXED: "Mixed",
@@ -115,6 +132,7 @@ async def handle_play_mode(
         language_from=LANG_FROM,
         language_to=LANG_TO,
         mode=mode,
+        review_config=_review_config(),
     )
     user_data[SESSION] = session
 
@@ -326,6 +344,7 @@ async def handle_lesson_callback(
         language_from=LANG_FROM,
         language_to=LANG_TO,
         word_ids=lesson.word_ids,
+        review_config=_review_config(),
     )
     user_data[SESSION] = session
 
