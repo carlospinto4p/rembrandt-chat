@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.18.2 - 12th March 2026
+
+- Added `_start_session()` helper in `session_handlers.py`: deduplicated session creation + first exercise fetch + error handling from `handle_play_mode` and `handle_lesson_callback`.
+- Added `_require_active_exercise()` helper in `session_handlers.py`: deduplicated no-session/no-exercise error logic from `/hint` and `/skip`.
+- Added `require_message_conv()` decorator in `_helpers.py`: like `require_message` but returns `ConversationHandler.END` for conversation handlers (7 occurrences across 2 files).
+
+
 ### v0.18.1 - 12th March 2026
 
 - Added `require_message()` decorator in `_helpers.py`: eliminates `effective_user`/`message` None guards from 15 handler functions.

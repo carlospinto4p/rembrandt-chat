@@ -7,7 +7,7 @@ from typing import Any
 from rembrandt import PostgresDatabase, Session, User
 from telegram import Update
 from telegram.constants import ChatAction
-from telegram.ext import ContextTypes
+from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat.formatting import format_exercise, format_summary
 from rembrandt_chat.user_mapping import UserMapper
@@ -39,6 +39,35 @@ def require_message(func: _Handler) -> _Handler:
         ):
             return
         await func(update, context)
+
+    return wrapper
+
+
+# Type alias for conversation handler functions
+_ConvHandler = Callable[
+    [Update, ContextTypes.DEFAULT_TYPE],
+    Coroutine[Any, Any, int],
+]
+
+
+def require_message_conv(
+    func: _ConvHandler,
+) -> _ConvHandler:
+    """Like `require_message` but returns
+    ``ConversationHandler.END`` for conversation handlers.
+    """
+
+    @wraps(func)
+    async def wrapper(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE,
+    ) -> int:
+        if (
+            update.effective_user is None
+            or update.message is None
+        ):
+            return ConversationHandler.END
+        return await func(update, context)
 
     return wrapper
 

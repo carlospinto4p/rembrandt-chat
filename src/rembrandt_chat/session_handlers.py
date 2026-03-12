@@ -1,6 +1,8 @@
 """Session lifecycle and exercise handlers."""
 
-from rembrandt import ReviewConfig, Session, lesson_progress
+from typing import Any
+
+from rembrandt import PostgresDatabase, ReviewConfig, Session, lesson_progress
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -53,6 +55,49 @@ def _review_config() -> ReviewConfig | None:
         max_new_cards=new,
         max_review_cards=rev,
     )
+
+async def _start_session(
+    update: Update,
+    user_data: dict,
+    db: PostgresDatabase,
+    user_id: int,
+    *,
+    no_words_msg: str,
+    confirm_msg: str,
+    **session_kwargs: Any,
+) -> None:
+    """Create a session, fetch the first exercise, and send it.
+
+    :param no_words_msg: Message when no exercises available.
+    :param confirm_msg: Confirmation sent via
+        ``query.edit_message_text``.
+    :param session_kwargs: Forwarded to `Session()` (e.g.
+        ``mode`` or ``word_ids``).
+    """
+    query = update.callback_query
+    session = Session(
+        db=db,
+        user_id=user_id,
+        language_from=LANG_FROM,
+        language_to=LANG_TO,
+        review_config=_review_config(),
+        **session_kwargs,
+    )
+    user_data[SESSION] = session
+
+    exercise = await session.next_exercise()
+    if exercise is None:
+        user_data.pop(SESSION, None)
+        await query.edit_message_text(no_words_msg)
+        return
+
+    user_data[EXERCISE] = exercise
+    await query.edit_message_text(confirm_msg)
+    text, keyboard = format_exercise(exercise)
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_message(text, reply_markup=keyboard)
+
 
 _MODE_LABELS = {
     SessionMode.MIXED: "Mixed",
@@ -121,34 +166,17 @@ async def handle_play_mode(
         return
 
     user, db = await resolve_user(update, context)
-
-    session = Session(
-        db=db,
-        user_id=user.id,
-        language_from=LANG_FROM,
-        language_to=LANG_TO,
-        mode=mode,
-        review_config=_review_config(),
-    )
-    user_data[SESSION] = session
-
-    exercise = await session.next_exercise()
-    if exercise is None:
-        user_data.pop(SESSION, None)
-        await query.edit_message_text(
-            "No words available. Add words first with /addword."
-        )
-        return
-
-    user_data[EXERCISE] = exercise
     label = _MODE_LABELS[mode]
-    text, keyboard = format_exercise(exercise)
-    await query.edit_message_text(
-        f"Session started ({label}).",
+
+    await _start_session(
+        update, user_data, db, user.id,
+        no_words_msg=(
+            "No words available. "
+            "Add words first with /addword."
+        ),
+        confirm_msg=f"Session started ({label}).",
+        mode=mode,
     )
-    chat = update.effective_chat
-    if chat is not None:
-        await chat.send_message(text, reply_markup=keyboard)
 
 
 @require_message
@@ -168,21 +196,34 @@ async def stop(
     await update.message.reply_text(format_summary(summary))
 
 
+async def _require_active_exercise(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> tuple[Session, dict] | None:
+    """Return ``(session, user_data)`` or send an error and
+    return ``None``.
+    """
+    result = require_session(context)
+    if result is not None:
+        return result
+    session, _ = get_session(context)
+    msg = (
+        "No active exercise."
+        if session is not None
+        else "No active session."
+    )
+    await update.message.reply_text(msg)
+    return None
+
+
 @require_message
 async def hint(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/hint` — get a progressive hint for the current exercise."""
-    result = require_session(context)
+    result = await _require_active_exercise(update, context)
     if result is None:
-        session, _ = get_session(context)
-        msg = (
-            "No active exercise."
-            if session is not None
-            else "No active session."
-        )
-        await update.message.reply_text(msg)
         return
 
     session, _ = result
@@ -196,15 +237,8 @@ async def skip(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/skip` — skip the current exercise."""
-    result = require_session(context)
+    result = await _require_active_exercise(update, context)
     if result is None:
-        session, _ = get_session(context)
-        msg = (
-            "No active exercise."
-            if session is not None
-            else "No active session."
-        )
-        await update.message.reply_text(msg)
         return
 
     session, user_data = result
@@ -314,29 +348,9 @@ async def handle_lesson_callback(
         await query.edit_message_text("Lesson not found.")
         return
 
-    session = Session(
-        db=db,
-        user_id=user.id,
-        language_from=LANG_FROM,
-        language_to=LANG_TO,
+    await _start_session(
+        update, user_data, db, user.id,
+        no_words_msg="No words available in this lesson.",
+        confirm_msg=f"Lesson: {lesson.title}",
         word_ids=lesson.word_ids,
-        review_config=_review_config(),
     )
-    user_data[SESSION] = session
-
-    exercise = await session.next_exercise()
-    if exercise is None:
-        user_data.pop(SESSION, None)
-        await query.edit_message_text(
-            "No words available in this lesson."
-        )
-        return
-
-    user_data[EXERCISE] = exercise
-    await query.edit_message_text(
-        f"Lesson: {lesson.title}",
-    )
-    text, keyboard = format_exercise(exercise)
-    chat = update.effective_chat
-    if chat is not None:
-        await chat.send_message(text, reply_markup=keyboard)

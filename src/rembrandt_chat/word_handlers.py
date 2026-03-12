@@ -7,6 +7,7 @@ from telegram.ext import ContextTypes, ConversationHandler
 from rembrandt_chat._helpers import (
     require_callback,
     require_message,
+    require_message_conv,
     resolve_user,
     resolve_user_with_typing,
 )
@@ -16,28 +17,24 @@ from rembrandt_chat.formatting import DEL_CB_PREFIX
 AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
 
 
+@require_message_conv
 async def addword_start(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """`/addword` — begin the add-word conversation."""
-    if update.effective_user is None or update.message is None:
-        return ConversationHandler.END
-
     await resolve_user(update, context)
 
     await update.message.reply_text("Send the word:")
     return AWAITING_WORD
 
 
+@require_message_conv
 async def addword_word(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """Receive the word text in the /addword conversation."""
-    if update.message is None:
-        return ConversationHandler.END
-
     context.user_data["_addword_word"] = (
         update.message.text or ""
     ).strip()
@@ -45,14 +42,12 @@ async def addword_word(
     return AWAITING_DEFINITION
 
 
+@require_message_conv
 async def addword_definition(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """Receive the definition, then ask for optional tags."""
-    if update.message is None:
-        return ConversationHandler.END
-
     definition = (update.message.text or "").strip()
     word_from = context.user_data.get("_addword_word", "")
 
@@ -71,34 +66,24 @@ async def addword_definition(
     return AWAITING_TAGS
 
 
+@require_message_conv
 async def addword_tags(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """Receive tags and save the word."""
-    if (
-        update.effective_user is None
-        or update.message is None
-    ):
-        return ConversationHandler.END
-
     raw = (update.message.text or "").strip()
     tags = [t.strip() for t in raw.split(",") if t.strip()]
 
     return await _save_word(update, context, tags=tags)
 
 
+@require_message_conv
 async def addword_skip_tags(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """`/skip` — save the word without tags."""
-    if (
-        update.effective_user is None
-        or update.message is None
-    ):
-        return ConversationHandler.END
-
     return await _save_word(update, context, tags=[])
 
 

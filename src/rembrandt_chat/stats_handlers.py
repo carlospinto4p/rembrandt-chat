@@ -9,6 +9,7 @@ from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import (
     require_message,
+    require_message_conv,
     resolve_user,
     resolve_user_with_typing,
 )
@@ -136,14 +137,12 @@ async def export_progress(
 AWAITING_FILE = 10
 
 
+@require_message_conv
 async def import_start(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """`/import` — ask the user for a JSON file."""
-    if update.effective_user is None or update.message is None:
-        return ConversationHandler.END
-
     await resolve_user(update, context)
 
     await update.message.reply_text(
@@ -152,14 +151,12 @@ async def import_start(
     return AWAITING_FILE
 
 
+@require_message_conv
 async def import_file(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
     """Receive the JSON file and restore progress."""
-    if update.effective_user is None or update.message is None:
-        return ConversationHandler.END
-
     user, db = await resolve_user_with_typing(update, context)
 
     doc = update.message.document
