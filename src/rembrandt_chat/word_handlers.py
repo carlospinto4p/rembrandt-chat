@@ -4,7 +4,12 @@ from rembrandt import PostgresDatabase
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
-from rembrandt_chat._helpers import resolve_user, send_typing
+from rembrandt_chat._helpers import (
+    require_callback,
+    require_message,
+    resolve_user,
+    resolve_user_with_typing,
+)
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import DEL_CB_PREFIX
 
@@ -137,6 +142,7 @@ async def addword_cancel(
     return ConversationHandler.END
 
 
+@require_message
 async def mywords(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
@@ -145,11 +151,7 @@ async def mywords(
 
     If a tag is given, only words with that tag are shown.
     """
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     words = await db.get_words(
         LANG_FROM, LANG_TO, owner_id=user.id,
@@ -185,16 +187,13 @@ async def mywords(
     await update.message.reply_text("\n".join(lines))
 
 
+@require_message
 async def deleteword(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/deleteword` — show private words as buttons to delete."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     words = await db.get_words(
         LANG_FROM, LANG_TO, owner_id=user.id,
@@ -220,16 +219,13 @@ async def deleteword(
     )
 
 
+@require_callback
 async def handle_deleteword_callback(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Handle a delete-word button press."""
     query = update.callback_query
-    if query is None:
-        return
-    await query.answer()
-
     data = query.data or ""
     if not data.startswith(DEL_CB_PREFIX):
         return

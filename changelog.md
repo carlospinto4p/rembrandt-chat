@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.18.1 - 12th March 2026
+
+- Added `require_message()` decorator in `_helpers.py`: eliminates `effective_user`/`message` None guards from 15 handler functions.
+- Added `require_callback()` decorator in `_helpers.py`: eliminates callback query None check + `query.answer()` boilerplate from 4 callback handlers.
+- Added `resolve_user_with_typing()` in `_helpers.py`: combines `send_typing()` + `resolve_user()` (8 call sites).
+- Added `_ACTIVE_SESSION_MSG` constant in `session_handlers.py`: deduplicated "already have active session" message (3 occurrences).
+
+
 ### v0.18.0 - 12th March 2026
 
 - Added `/history` command: shows recent answers with word name, result icon, and timestamp.

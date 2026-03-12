@@ -9,10 +9,12 @@ from rembrandt_chat._helpers import (
     EXERCISE,
     SESSION,
     get_session,
+    require_callback,
+    require_message,
     require_session,
     resolve_user,
+    resolve_user_with_typing,
     send_next,
-    send_typing,
 )
 from rembrandt_chat.config import (
     LANG_FROM,
@@ -35,6 +37,11 @@ from rembrandt_chat.formatting import (
 
 PLAY_MODE_PREFIX = "play_mode:"
 
+_ACTIVE_SESSION_MSG = (
+    "You already have an active session. "
+    "Use /stop to end it first."
+)
+
 
 def _review_config() -> ReviewConfig | None:
     """Build a `ReviewConfig` from env vars, or ``None``."""
@@ -54,14 +61,12 @@ _MODE_LABELS = {
 }
 
 
+@require_message
 async def start(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/start` — greet the user and auto-register if new."""
-    if update.effective_user is None or update.message is None:
-        return
-
     user, _ = await resolve_user(update, context)
 
     name = user.display_name or user.username
@@ -71,18 +76,15 @@ async def start(
     )
 
 
+@require_message
 async def play(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/play` — pick a session mode, then start."""
-    if update.effective_user is None or update.message is None:
-        return
-
     if context.user_data.get(SESSION) is not None:
         await update.message.reply_text(
-            "You already have an active session. "
-            "Use /stop to end it first."
+            _ACTIVE_SESSION_MSG
         )
         return
 
@@ -99,16 +101,13 @@ async def play(
     )
 
 
+@require_callback
 async def handle_play_mode(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Handle session-mode button press from `/play`."""
     query = update.callback_query
-    if query is None:
-        return
-    await query.answer()
-
     data = query.data or ""
     if not data.startswith(PLAY_MODE_PREFIX):
         return
@@ -118,10 +117,7 @@ async def handle_play_mode(
 
     user_data = context.user_data
     if user_data.get(SESSION) is not None:
-        await query.edit_message_text(
-            "You already have an active session. "
-            "Use /stop to end it first."
-        )
+        await query.edit_message_text(_ACTIVE_SESSION_MSG)
         return
 
     user, db = await resolve_user(update, context)
@@ -155,14 +151,12 @@ async def handle_play_mode(
         await chat.send_message(text, reply_markup=keyboard)
 
 
+@require_message
 async def stop(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/stop` — end the current session and show summary."""
-    if update.message is None:
-        return
-
     session, user_data = get_session(context)
     if session is None:
         await update.message.reply_text("No active session.")
@@ -174,14 +168,12 @@ async def stop(
     await update.message.reply_text(format_summary(summary))
 
 
+@require_message
 async def hint(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/hint` — get a progressive hint for the current exercise."""
-    if update.message is None:
-        return
-
     result = require_session(context)
     if result is None:
         session, _ = get_session(context)
@@ -198,14 +190,12 @@ async def hint(
     await update.message.reply_text(format_hint(h))
 
 
+@require_message
 async def skip(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/skip` — skip the current exercise."""
-    if update.message is None:
-        return
-
     result = require_session(context)
     if result is None:
         session, _ = get_session(context)
@@ -226,14 +216,12 @@ async def skip(
     await send_next(session, user_data, update)
 
 
+@require_message
 async def handle_answer_text(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Handle a typed answer."""
-    if update.effective_user is None or update.message is None:
-        return
-
     result = require_session(context)
     if result is None:
         return
@@ -245,20 +233,17 @@ async def handle_answer_text(
     await send_next(session, user_data, update)
 
 
+@require_callback
 async def handle_answer_callback(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Handle inline-keyboard button presses."""
-    query = update.callback_query
-    if query is None:
-        return
-    await query.answer()
-
     result = require_session(context)
     if result is None:
         return
 
+    query = update.callback_query
     session, user_data = result
     exercise = user_data[EXERCISE]
     data = query.data or ""
@@ -286,16 +271,13 @@ async def handle_answer_callback(
         return
 
 
+@require_message
 async def lessons(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/lessons` — list available lessons with progress."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     all_lessons = await db.get_lessons(LANG_FROM, LANG_TO)
     progress = [
@@ -308,26 +290,20 @@ async def lessons(
     )
 
 
+@require_callback
 async def handle_lesson_callback(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Start a session scoped to a lesson's words."""
     query = update.callback_query
-    if query is None:
-        return
-    await query.answer()
-
     data = query.data or ""
     if not data.startswith(LESSON_CB_PREFIX):
         return
 
     user_data = context.user_data
     if user_data.get(SESSION) is not None:
-        await query.edit_message_text(
-            "You already have an active session. "
-            "Use /stop to end it first."
-        )
+        await query.edit_message_text(_ACTIVE_SESSION_MSG)
         return
 
     lesson_id = int(data[len(LESSON_CB_PREFIX):])

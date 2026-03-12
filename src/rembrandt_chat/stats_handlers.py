@@ -7,7 +7,11 @@ from datetime import datetime, timedelta, timezone
 from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 
-from rembrandt_chat._helpers import resolve_user, send_typing
+from rembrandt_chat._helpers import (
+    require_message,
+    resolve_user,
+    resolve_user_with_typing,
+)
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
     format_daily_stats,
@@ -18,31 +22,25 @@ from rembrandt_chat.formatting import (
 )
 
 
+@require_message
 async def stats(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/stats` — show daily stats."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     daily = await db.daily_stats(user.id, days=7)
     await update.message.reply_text(format_daily_stats(daily))
 
 
+@require_message
 async def weak(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/weak` — show weakest words."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     words = await db.weak_words(
         user.id, LANG_FROM, LANG_TO, limit=10
@@ -50,31 +48,25 @@ async def weak(
     await update.message.reply_text(format_weak_words(words))
 
 
+@require_message
 async def forecast(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/forecast` — show upcoming review workload."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     days = await db.forecast(user.id, days=7)
     await update.message.reply_text(format_forecast(days))
 
 
+@require_message
 async def retention(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/retention` — show overall retention rate."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     rate = await db.retention_rate(user.id, days=30)
     await update.message.reply_text(format_retention(rate))
@@ -83,16 +75,13 @@ async def retention(
 _DAYS_MAP = {"1d": 1, "3d": 3, "7d": 7, "30d": 30}
 
 
+@require_message
 async def history(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/history [1d|3d|7d|30d]` — show recent answers."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     text = (update.message.text or "").strip()
     parts = text.split(maxsplit=1)
@@ -119,16 +108,13 @@ async def history(
     )
 
 
+@require_message
 async def export_progress(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/export` — send progress as a JSON file."""
-    if update.effective_user is None or update.message is None:
-        return
-
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     records = await db.export_progress(user.id)
     if not records:
@@ -174,8 +160,7 @@ async def import_file(
     if update.effective_user is None or update.message is None:
         return ConversationHandler.END
 
-    await send_typing(update)
-    user, db = await resolve_user(update, context)
+    user, db = await resolve_user_with_typing(update, context)
 
     doc = update.message.document
     if doc is None:
