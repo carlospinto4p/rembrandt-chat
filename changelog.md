@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.14.1 - 12th March 2026
+
+- Added `send_typing()` helper in `_helpers.py`: sends `ChatAction.TYPING` before slow operations.
+- Updated handlers with typing indicator:
+  - `stats_handlers.py`: `/stats`, `/weak`, `/forecast`, `/retention`, `/export`, `/import`
+  - `word_handlers.py`: `/mywords`, `/deleteword`
+  - `session_handlers.py`: `/lessons`
+
+
 ### v0.14.0 - 12th March 2026
 
 - Added `/export` command: sends progress as a JSON file.

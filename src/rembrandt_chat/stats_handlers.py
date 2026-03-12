@@ -6,7 +6,7 @@ import json
 from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 
-from rembrandt_chat._helpers import resolve_user
+from rembrandt_chat._helpers import resolve_user, send_typing
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
     format_daily_stats,
@@ -24,6 +24,7 @@ async def stats(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     daily = await db.daily_stats(user.id, days=7)
@@ -38,6 +39,7 @@ async def weak(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     words = await db.weak_words(
@@ -54,6 +56,7 @@ async def forecast(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     days = await db.forecast(user.id, days=7)
@@ -68,6 +71,7 @@ async def retention(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     rate = await db.retention_rate(user.id, days=30)
@@ -82,6 +86,7 @@ async def export_progress(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     records = await db.export_progress(user.id)
@@ -128,6 +133,7 @@ async def import_file(
     if update.effective_user is None or update.message is None:
         return ConversationHandler.END
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     doc = update.message.document

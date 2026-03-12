@@ -709,3 +709,28 @@ async def test_import_file_not_array():
     assert result == ConversationHandler.END
     text = update.message.reply_text.call_args[0][0]
     assert "expected a JSON array" in text
+
+
+# --- typing indicator ---
+
+
+@pytest.mark.asyncio
+async def test_stats_sends_typing():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].daily_stats.return_value = []
+
+    await stats(update, ctx)
+
+    update.effective_chat.send_action.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_export_sends_typing():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].export_progress.return_value = []
+
+    await export_progress(update, ctx)
+
+    update.effective_chat.send_action.assert_called_once()

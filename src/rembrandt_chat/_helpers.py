@@ -2,6 +2,7 @@
 
 from rembrandt import PostgresDatabase, Session, User
 from telegram import Update
+from telegram.constants import ChatAction
 from telegram.ext import ContextTypes
 
 from rembrandt_chat.formatting import format_exercise, format_summary
@@ -10,6 +11,16 @@ from rembrandt_chat.user_mapping import UserMapper
 # Keys used in context.user_data
 SESSION = "session"
 EXERCISE = "exercise"
+
+
+async def send_typing(update: Update) -> None:
+    """Send a typing indicator to the user's chat.
+
+    :param update: The incoming Telegram update.
+    """
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_action(ChatAction.TYPING)
 
 
 async def resolve_user(

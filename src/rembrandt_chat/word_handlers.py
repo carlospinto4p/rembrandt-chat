@@ -4,7 +4,7 @@ from rembrandt import PostgresDatabase
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
-from rembrandt_chat._helpers import resolve_user
+from rembrandt_chat._helpers import resolve_user, send_typing
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import DEL_CB_PREFIX
 
@@ -94,6 +94,7 @@ async def mywords(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     words = await db.get_words(
@@ -121,6 +122,7 @@ async def deleteword(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     words = await db.get_words(

@@ -33,7 +33,7 @@
 - [x] Tests for `stats_handlers.py` — `/stats` and `/weak` have zero coverage
 - [x] Lesson system — `/lessons` (list) and `/lesson <name>` (practice a word group) using rembrandt's lesson management
 - [x] Progress export/import — `/export` sends JSON with full SR state, `/import` restores it
-- [ ] Typing indicator — send `ChatAction.TYPING` before slow operations
+- [x] Typing indicator — send `ChatAction.TYPING` before slow operations
 - [ ] Configurable daily limits — expose `max_new_cards` / `max_review_cards` via env vars or `/settings`
 - [ ] Word tags — use rembrandt's `tags` field in `/addword`, display in `/mywords`, allow filtering by tag
 - [ ] CEFR level display — show word difficulty (A1–C2) in exercise prompts and `/mywords`

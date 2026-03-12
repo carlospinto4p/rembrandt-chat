@@ -12,6 +12,7 @@ from rembrandt_chat._helpers import (
     require_session,
     resolve_user,
     send_next,
+    send_typing,
 )
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
@@ -275,6 +276,7 @@ async def lessons(
     if update.effective_user is None or update.message is None:
         return
 
+    await send_typing(update)
     user, db = await resolve_user(update, context)
 
     all_lessons = await db.get_lessons(LANG_FROM, LANG_TO)
