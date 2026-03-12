@@ -37,4 +37,4 @@
 - [x] Configurable daily limits — expose `max_new_cards` / `max_review_cards` via env vars or `/settings`
 - [x] Word tags — use rembrandt's `tags` field in `/addword`, display in `/mywords`, allow filtering by tag
 - [x] CEFR level display — show word difficulty (A1–C2) in exercise prompts and `/mywords`
-- [ ] `/history` command — show recent answers with date filtering using `db.get_answer_history()`
+- [x] `/history` command — show recent answers with date filtering using `db.get_answer_history()`

@@ -41,6 +41,7 @@ from rembrandt_chat.handlers import (
     handle_lesson_callback,
     handle_play_mode,
     hint,
+    history,
     import_cancel,
     import_file,
     import_start,
@@ -107,6 +108,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("forecast", forecast))
     app.add_handler(CommandHandler("retention", retention))
     app.add_handler(CommandHandler("lessons", lessons))
+    app.add_handler(CommandHandler("history", history))
     app.add_handler(CommandHandler("export", export_progress))
 
     import_conv = ConversationHandler(

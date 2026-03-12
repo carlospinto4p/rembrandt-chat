@@ -21,6 +21,7 @@ from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_lesson_callback,
     handle_play_mode,
+    history,
     import_file,
     import_start,
     lessons,
@@ -734,6 +735,64 @@ async def test_import_file_not_array():
     assert result == ConversationHandler.END
     text = update.message.reply_text.call_args[0][0]
     assert "expected a JSON array" in text
+
+
+# --- /history ---
+
+
+@pytest.mark.asyncio
+async def test_history_shows_answers():
+    from rembrandt import AnswerHistory
+
+    update = make_update(text="/history")
+    ctx = make_context()
+    ctx.bot_data["db"].get_answer_history.return_value = [
+        AnswerHistory(
+            user_id=1,
+            word_id=1,
+            exercise_type="multiple_choice",
+            correct=True,
+            quality=5,
+        ),
+    ]
+    ctx.bot_data["db"].get_words.return_value = [
+        make_word(1, "efimero"),
+    ]
+
+    await history(update, ctx)
+
+    ctx.bot_data["db"].get_answer_history.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "efimero" in text
+
+
+@pytest.mark.asyncio
+async def test_history_empty():
+    update = make_update(text="/history")
+    ctx = make_context()
+    ctx.bot_data["db"].get_answer_history.return_value = []
+    ctx.bot_data["db"].get_words.return_value = []
+
+    await history(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No answer history" in text
+
+
+@pytest.mark.asyncio
+async def test_history_with_date_filter():
+    update = make_update(text="/history 7d")
+    ctx = make_context()
+    ctx.bot_data["db"].get_answer_history.return_value = []
+    ctx.bot_data["db"].get_words.return_value = []
+
+    await history(update, ctx)
+
+    call_kw = (
+        ctx.bot_data["db"]
+        .get_answer_history.call_args[1]
+    )
+    assert call_kw["since"] is not None
 
 
 # --- typing indicator ---

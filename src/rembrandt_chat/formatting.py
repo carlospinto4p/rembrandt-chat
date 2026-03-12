@@ -1,6 +1,6 @@
 """Format rembrandt exercises as Telegram messages and keyboards."""
 
-from rembrandt import Hint, SessionStats
+from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
     DailyStats,
@@ -294,6 +294,30 @@ def format_forecast(
     lines = ["Upcoming reviews:\n"]
     for f in forecast:
         lines.append(f"{f.date}: {f.due_count} cards due")
+    return "\n".join(lines)
+
+
+def format_history(
+    records: list[AnswerHistory],
+    word_map: dict[int, str],
+) -> str:
+    """Render recent answer history.
+
+    :param records: Answer history records (newest first).
+    :param word_map: Mapping of word id to word text.
+    :return: Formatted history text.
+    """
+    if not records:
+        return (
+            "No answer history yet. "
+            "Start a session with /play!"
+        )
+    lines = ["Recent answers:\n"]
+    for r in records:
+        icon = "\u2705" if r.correct else "\u274c"
+        word = word_map.get(r.word_id, f"#{r.word_id}")
+        date = r.answered_at.strftime("%d %b %H:%M")
+        lines.append(f"{icon} {word} \u2014 {date}")
     return "\n".join(lines)
 
 

@@ -2,7 +2,7 @@
 
 from datetime import datetime, timezone
 
-from rembrandt import Hint, SessionStats, Word
+from rembrandt import AnswerHistory, Hint, SessionStats, Word
 from rembrandt.models import (
     AnswerResult,
     DailyStats,
@@ -23,6 +23,7 @@ from rembrandt_chat.formatting import (
     format_daily_stats,
     format_exercise,
     format_hint,
+    format_history,
     format_summary,
     format_forecast,
     format_lessons,
@@ -386,3 +387,58 @@ def test_exercise_no_cefr_no_badge():
     )
     text, _ = format_exercise(ex)
     assert "[" not in text.split("\n")[0]
+
+
+# --- format_history ---
+
+
+def test_format_history():
+    records = [
+        AnswerHistory(
+            user_id=1,
+            word_id=1,
+            exercise_type="multiple_choice",
+            correct=True,
+            quality=5,
+            answered_at=datetime(
+                2026, 3, 12, 14, 30,
+                tzinfo=timezone.utc,
+            ),
+        ),
+        AnswerHistory(
+            user_id=1,
+            word_id=2,
+            exercise_type="reverse_flashcard",
+            correct=False,
+            quality=0,
+            answered_at=datetime(
+                2026, 3, 12, 14, 25,
+                tzinfo=timezone.utc,
+            ),
+        ),
+    ]
+    word_map = {1: "efimero", 2: "perpetuo"}
+    text = format_history(records, word_map)
+    assert "efimero" in text
+    assert "perpetuo" in text
+    assert "\u2705" in text
+    assert "\u274c" in text
+
+
+def test_format_history_empty():
+    text = format_history([], {})
+    assert "No answer history" in text
+
+
+def test_format_history_unknown_word():
+    records = [
+        AnswerHistory(
+            user_id=1,
+            word_id=99,
+            exercise_type="multiple_choice",
+            correct=True,
+            quality=5,
+        ),
+    ]
+    text = format_history(records, {})
+    assert "#99" in text

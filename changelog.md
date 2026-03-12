@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.18.0 - 12th March 2026
+
+- Added `/history` command: shows recent answers with word name, result icon, and timestamp.
+- Added `history()` handler in `stats_handlers.py`: supports optional date filter (`/history 1d`, `3d`, `7d`, `30d`).
+- Added `format_history()` in `formatting.py`.
+- Updated `README.md`: added `/history` to the command table.
+
+
 ### v0.17.1 - 12th March 2026
 
 - Fixed `changelog.md`: applied sub-bullet formatting for all entries listing 3+ items (per `versioning.md` rules).

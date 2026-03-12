@@ -2,6 +2,7 @@
 
 import io
 import json
+from datetime import datetime, timedelta, timezone
 
 from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
@@ -11,6 +12,7 @@ from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
     format_daily_stats,
     format_forecast,
+    format_history,
     format_retention,
     format_weak_words,
 )
@@ -76,6 +78,45 @@ async def retention(
 
     rate = await db.retention_rate(user.id, days=30)
     await update.message.reply_text(format_retention(rate))
+
+
+_DAYS_MAP = {"1d": 1, "3d": 3, "7d": 7, "30d": 30}
+
+
+async def history(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/history [1d|3d|7d|30d]` — show recent answers."""
+    if update.effective_user is None or update.message is None:
+        return
+
+    await send_typing(update)
+    user, db = await resolve_user(update, context)
+
+    text = (update.message.text or "").strip()
+    parts = text.split(maxsplit=1)
+    arg = parts[1].strip() if len(parts) > 1 else ""
+
+    since = None
+    if arg in _DAYS_MAP:
+        since = datetime.now(timezone.utc) - timedelta(
+            days=_DAYS_MAP[arg]
+        )
+
+    records = await db.get_answer_history(
+        user.id, limit=50, since=since,
+    )
+
+    words = await db.get_words(LANG_FROM, LANG_TO)
+    user_words = await db.get_words(
+        LANG_FROM, LANG_TO, owner_id=user.id,
+    )
+    word_map = {w.id: w.word_from for w in words + user_words}
+
+    await update.message.reply_text(
+        format_history(records, word_map)
+    )
 
 
 async def export_progress(
