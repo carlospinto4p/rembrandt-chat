@@ -8,7 +8,7 @@ from rembrandt_chat._helpers import resolve_user, send_typing
 from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import DEL_CB_PREFIX
 
-AWAITING_WORD, AWAITING_DEFINITION = range(2)
+AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
 
 
 async def addword_start(
@@ -44,21 +44,68 @@ async def addword_definition(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> int:
-    """Receive the definition and save the word."""
+    """Receive the definition, then ask for optional tags."""
+    if update.message is None:
+        return ConversationHandler.END
+
+    definition = (update.message.text or "").strip()
+    word_from = context.user_data.get("_addword_word", "")
+
+    if not word_from or not definition:
+        await update.message.reply_text(
+            "Word or definition was empty. "
+            "Try /addword again."
+        )
+        context.user_data.pop("_addword_word", None)
+        return ConversationHandler.END
+
+    context.user_data["_addword_def"] = definition
+    await update.message.reply_text(
+        "Send tags (comma-separated) or /skip:"
+    )
+    return AWAITING_TAGS
+
+
+async def addword_tags(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """Receive tags and save the word."""
     if (
         update.effective_user is None
         or update.message is None
     ):
         return ConversationHandler.END
 
-    word_from = context.user_data.pop("_addword_word", "")
-    word_to = (update.message.text or "").strip()
+    raw = (update.message.text or "").strip()
+    tags = [t.strip() for t in raw.split(",") if t.strip()]
 
-    if not word_from or not word_to:
-        await update.message.reply_text(
-            "Word or definition was empty. Try /addword again."
-        )
+    return await _save_word(update, context, tags=tags)
+
+
+async def addword_skip_tags(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """`/skip` — save the word without tags."""
+    if (
+        update.effective_user is None
+        or update.message is None
+    ):
         return ConversationHandler.END
+
+    return await _save_word(update, context, tags=[])
+
+
+async def _save_word(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    *,
+    tags: list[str],
+) -> int:
+    """Save the word from the conversation state."""
+    word_from = context.user_data.pop("_addword_word", "")
+    word_to = context.user_data.pop("_addword_def", "")
 
     user, db = await resolve_user(update, context)
 
@@ -67,11 +114,14 @@ async def addword_definition(
         language_to=LANG_TO,
         word_from=word_from,
         word_to=word_to,
+        tags=tags or None,
         owner_id=user.id,
     )
-    await update.message.reply_text(
-        f'Added "{word_from}" \u2014 {word_to}'
-    )
+
+    msg = f'Added "{word_from}" \u2014 {word_to}'
+    if tags:
+        msg += f" [{', '.join(tags)}]"
+    await update.message.reply_text(msg)
     return ConversationHandler.END
 
 
@@ -83,6 +133,7 @@ async def addword_cancel(
     if update.message is not None:
         await update.message.reply_text("Cancelled.")
     context.user_data.pop("_addword_word", None)
+    context.user_data.pop("_addword_def", None)
     return ConversationHandler.END
 
 
@@ -90,7 +141,10 @@ async def mywords(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/mywords` — list the user's private words."""
+    """`/mywords [tag]` — list the user's private words.
+
+    If a tag is given, only words with that tag are shown.
+    """
     if update.effective_user is None or update.message is None:
         return
 
@@ -100,17 +154,32 @@ async def mywords(
     words = await db.get_words(
         LANG_FROM, LANG_TO, owner_id=user.id,
     )
+
+    # Optional tag filter from command argument
+    text = (update.message.text or "").strip()
+    parts = text.split(maxsplit=1)
+    tag_filter = parts[1].strip() if len(parts) > 1 else ""
+    if tag_filter:
+        words = [
+            w for w in words if tag_filter in w.tags
+        ]
+
     if not words:
-        await update.message.reply_text(
-            "You have no private words yet. "
+        msg = (
+            f"No words with tag \u201c{tag_filter}\u201d."
+            if tag_filter
+            else "You have no private words yet. "
             "Use /addword to add one."
         )
+        await update.message.reply_text(msg)
         return
 
-    lines = [
-        f"{i}. {w.word_from} \u2014 {w.word_to}"
-        for i, w in enumerate(words, 1)
-    ]
+    lines = []
+    for i, w in enumerate(words, 1):
+        line = f"{i}. {w.word_from} \u2014 {w.word_to}"
+        if w.tags:
+            line += f" [{', '.join(w.tags)}]"
+        lines.append(line)
     await update.message.reply_text("\n".join(lines))
 
 

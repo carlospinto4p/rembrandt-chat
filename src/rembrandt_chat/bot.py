@@ -22,14 +22,17 @@ from rembrandt_chat.config import (
 from rembrandt_chat.formatting import DEL_CB_PREFIX, LESSON_CB_PREFIX
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
+    AWAITING_FILE,
+    AWAITING_TAGS,
     AWAITING_WORD,
     PLAY_MODE_PREFIX,
     addword_cancel,
     addword_definition,
+    addword_skip_tags,
     addword_start,
+    addword_tags,
     addword_word,
     deleteword,
-    AWAITING_FILE,
     export_progress,
     forecast,
     handle_answer_callback,
@@ -139,6 +142,13 @@ def create_app() -> None:
                 MessageHandler(
                     filters.TEXT & ~filters.COMMAND,
                     addword_definition,
+                ),
+            ],
+            AWAITING_TAGS: [
+                CommandHandler("skip", addword_skip_tags),
+                MessageHandler(
+                    filters.TEXT & ~filters.COMMAND,
+                    addword_tags,
                 ),
             ],
         },

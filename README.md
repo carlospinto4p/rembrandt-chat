@@ -109,8 +109,8 @@ docker compose stop
 | `/stop` | End session and show summary |
 | `/hint` | Get a hint for the current exercise |
 | `/skip` | Skip the current exercise |
-| `/addword` | Add a new word (conversational) |
-| `/mywords` | List your private words |
+| `/addword` | Add a new word with optional tags |
+| `/mywords [tag]` | List your private words, optionally filtered by tag |
 | `/deleteword` | Delete one of your words |
 | `/stats` | Show daily stats and accuracy |
 | `/weak` | Show your weakest words |

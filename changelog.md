@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.16.0 - 12th March 2026
+
+- Added word tags to `/addword`: after entering the definition, users can type comma-separated tags or /skip.
+- Updated `/mywords`: displays tags next to each word, supports `/mywords <tag>` filtering.
+- Added `addword_tags()`, `addword_skip_tags()`, `_save_word()`, and `AWAITING_TAGS` in `word_handlers.py`.
+- Updated `README.md`: documented tag support in `/addword` and `/mywords`.
+
+
 ### v0.15.0 - 12th March 2026
 
 - Added `get_max_new_cards()` and `get_max_review_cards()` in `config.py`: read `MAX_NEW_CARDS` / `MAX_REVIEW_CARDS` env vars.
