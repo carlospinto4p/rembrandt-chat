@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.18.4 - 12th March 2026
+
+- Fixed `changelog.md`: grouped same-file changes under file-level bullets (v0.18.1, v0.18.2).
+- Updated `versioning.md`: added "group by file" rule for 3+ changes to the same file.
+
+
 ### v0.18.3 - 12th March 2026
 
 - Updated `stats_handlers.py`: `/history` now runs all 3 DB queries concurrently via `asyncio.gather()`.
@@ -10,16 +16,18 @@
 
 ### v0.18.2 - 12th March 2026
 
-- Added `_start_session()` helper in `session_handlers.py`: deduplicated session creation + first exercise fetch + error handling from `handle_play_mode` and `handle_lesson_callback`.
-- Added `_require_active_exercise()` helper in `session_handlers.py`: deduplicated no-session/no-exercise error logic from `/hint` and `/skip`.
+- Added in `session_handlers.py`:
+  - `_start_session()` helper: deduplicated session creation + first exercise fetch + error handling from `handle_play_mode` and `handle_lesson_callback`.
+  - `_require_active_exercise()` helper: deduplicated no-session/no-exercise error logic from `/hint` and `/skip`.
 - Added `require_message_conv()` decorator in `_helpers.py`: like `require_message` but returns `ConversationHandler.END` for conversation handlers (7 occurrences across 2 files).
 
 
 ### v0.18.1 - 12th March 2026
 
-- Added `require_message()` decorator in `_helpers.py`: eliminates `effective_user`/`message` None guards from 15 handler functions.
-- Added `require_callback()` decorator in `_helpers.py`: eliminates callback query None check + `query.answer()` boilerplate from 4 callback handlers.
-- Added `resolve_user_with_typing()` in `_helpers.py`: combines `send_typing()` + `resolve_user()` (8 call sites).
+- Added in `_helpers.py`:
+  - `require_message()` decorator: eliminates `effective_user`/`message` None guards from 15 handler functions.
+  - `require_callback()` decorator: eliminates callback query None check + `query.answer()` boilerplate from 4 callback handlers.
+  - `resolve_user_with_typing()`: combines `send_typing()` + `resolve_user()` (8 call sites).
 - Added `_ACTIVE_SESSION_MSG` constant in `session_handlers.py`: deduplicated "already have active session" message (3 occurrences).
 
 

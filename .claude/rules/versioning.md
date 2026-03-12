@@ -57,10 +57,14 @@ As part of the commit workflow (step 3 in `committing.md`), update the version a
     - `Baz`
     - `Qux`
   ```
+- **Group by file**: When 3+ changes affect the *same* file, group
+  them under one bullet naming the file, with sub-bullets per change.
 - **Group by folder**: When multiple files in the same *auxiliary*
   directory are changed, group them under one bullet with sub-bullets
-  per file. **Do not group `src/rembrandt_chat/` files** — those are the
-  core package and each change should be a top-level bullet.
+  per file. **Do not group different `src/rembrandt_chat/` files** under
+  a directory heading — each file should be a separate top-level
+  bullet (but changes *within* the same file are grouped per the
+  rule above).
   ```markdown
   # GOOD — auxiliary directory grouped:
   - Updated `.claude/rules/`:
