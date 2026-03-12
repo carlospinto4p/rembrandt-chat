@@ -5,6 +5,7 @@ import pytest
 from rembrandt_chat.config import (
     get_base_vocab_path,
     get_bot_token,
+    get_bundled_vocab_dir,
     get_database_url,
     get_max_new_cards,
     get_max_review_cards,
@@ -81,3 +82,25 @@ def test_get_max_review_cards_returns_value(monkeypatch):
 def test_get_max_review_cards_defaults_to_zero(monkeypatch):
     monkeypatch.delenv("MAX_REVIEW_CARDS", raising=False)
     assert get_max_review_cards() == 0
+
+
+# --- get_bundled_vocab_dir ---
+
+
+def test_get_bundled_vocab_dir_returns_value(monkeypatch):
+    monkeypatch.setenv("BUNDLED_VOCAB_DIR", "/data")
+    assert get_bundled_vocab_dir() == "/data"
+
+
+def test_get_bundled_vocab_dir_returns_none_when_missing(
+    monkeypatch,
+):
+    monkeypatch.delenv("BUNDLED_VOCAB_DIR", raising=False)
+    assert get_bundled_vocab_dir() is None
+
+
+def test_get_bundled_vocab_dir_returns_none_when_empty(
+    monkeypatch,
+):
+    monkeypatch.setenv("BUNDLED_VOCAB_DIR", "")
+    assert get_bundled_vocab_dir() is None

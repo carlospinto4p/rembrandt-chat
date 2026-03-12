@@ -1,6 +1,19 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.19.0 - 12th March 2026
+
+- Added bundled Spanish vocabulary: 120 words in 12 thematic lessons (A1–B2), definitions sourced from es.wiktionary.org (CC BY-SA 4.0).
+- Added `scripts/build_vocab.py`: fetches definitions from the Wiktionary API and generates data files.
+- Added in `data/`:
+  - `vocab.json`: vocabulary entries with rank, word, and definition.
+  - `vocab.csv`: CSV format for `import_words_csv()`.
+  - `lessons.json`: 12 lessons grouped by theme and CEFR level.
+- Added `_load_bundled_lessons()` in `bot.py`: loads bundled vocabulary and lessons on first run via `BUNDLED_VOCAB_DIR` env var.
+- Added `get_bundled_vocab_dir()` in `config.py`.
+- Updated `README.md`: documented `BUNDLED_VOCAB_DIR` env var and bundled lessons.
+
+
 ### v0.18.4 - 12th March 2026
 
 - Fixed `changelog.md`: grouped same-file changes under file-level bullets (v0.18.1, v0.18.2).

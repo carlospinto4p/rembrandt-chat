@@ -42,9 +42,16 @@ Set the following environment variables:
 | `BASE_VOCAB_PATH` | Path to shared vocabulary JSON | No |
 | `MAX_NEW_CARDS` | Max new cards per session (0 = unlimited) | No |
 | `MAX_REVIEW_CARDS` | Max review cards per session (0 = unlimited) | No |
+| `BUNDLED_VOCAB_DIR` | Path to directory with bundled vocab/lesson files | No |
 
 If `BASE_VOCAB_PATH` is set and the words table is empty on first
 run, the shared vocabulary is loaded automatically.
+
+If `BUNDLED_VOCAB_DIR` is set, the bot loads bundled vocabulary
+(120 Spanish words) and 12 thematic lessons on first run. The
+directory should contain `vocab.csv`, `vocab.json`, and
+`lessons.json`. Set it to the `data/` directory included in
+this repository.
 
 ## Running the Bot
 

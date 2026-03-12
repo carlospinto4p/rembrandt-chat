@@ -41,6 +41,14 @@ def get_base_vocab_path() -> str | None:
     return os.environ.get("BASE_VOCAB_PATH") or None
 
 
+def get_bundled_vocab_dir() -> str | None:
+    """Return the optional bundled vocabulary data directory.
+
+    :return: The directory path string, or ``None`` if not set.
+    """
+    return os.environ.get("BUNDLED_VOCAB_DIR") or None
+
+
 def get_max_new_cards() -> int:
     """Return the maximum new cards per session.
 

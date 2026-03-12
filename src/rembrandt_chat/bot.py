@@ -2,7 +2,10 @@
 
 import logging
 
+from pathlib import Path
+
 from rembrandt import PostgresDatabase, import_words_csv
+from rembrandt.lessons import load_lessons
 from telegram.ext import (
     ApplicationBuilder,
     CallbackQueryHandler,
@@ -17,6 +20,7 @@ from rembrandt_chat.config import (
     LANG_TO,
     get_base_vocab_path,
     get_bot_token,
+    get_bundled_vocab_dir,
     get_database_url,
 )
 from rembrandt_chat.formatting import DEL_CB_PREFIX, LESSON_CB_PREFIX
@@ -73,10 +77,37 @@ async def _load_base_vocab(db: PostgresDatabase) -> None:
     log.info("Loaded %d base vocabulary words from %s", len(words), path)
 
 
+async def _load_bundled_lessons(db: PostgresDatabase) -> None:
+    """Load bundled vocabulary and lessons on first run."""
+    vocab_dir = get_bundled_vocab_dir()
+    if vocab_dir is None:
+        return
+    d = Path(vocab_dir)
+    vocab_csv = d / "vocab.csv"
+    vocab_json = d / "vocab.json"
+    lessons_json = d / "lessons.json"
+    if not vocab_csv.exists() or not lessons_json.exists():
+        return
+    existing = await db.get_words(LANG_FROM, LANG_TO)
+    if existing:
+        return
+    words = await import_words_csv(db, str(vocab_csv), LANG_FROM, LANG_TO)
+    log.info("Loaded %d bundled vocabulary words", len(words))
+    lessons = await load_lessons(
+        lessons_json,
+        vocab_json,
+        db,
+        language_from=LANG_FROM,
+        language_to=LANG_TO,
+    )
+    log.info("Loaded %d bundled lessons", len(lessons))
+
+
 async def _post_init(app) -> None:
     """Connect to the database after the application starts."""
     db = await PostgresDatabase.connect(get_database_url())
     await _load_base_vocab(db)
+    await _load_bundled_lessons(db)
     mapper = UserMapper(db)
     app.bot_data["user_mapper"] = mapper
     app.bot_data["db"] = db

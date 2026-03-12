@@ -1,0 +1,266 @@
+[
+  {
+    "title": "La casa",
+    "description": "Objetos y partes de la casa",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A1",
+    "tags": [
+      "hogar"
+    ],
+    "word_ranks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  {
+    "title": "Alimentos",
+    "description": "Comida y bebida cotidiana",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A1",
+    "tags": [
+      "comida"
+    ],
+    "word_ranks": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  {
+    "title": "La familia",
+    "description": "Miembros de la familia",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A1",
+    "tags": [
+      "familia"
+    ],
+    "word_ranks": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ]
+  },
+  {
+    "title": "El cuerpo",
+    "description": "Partes del cuerpo humano",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A1",
+    "tags": [
+      "cuerpo"
+    ],
+    "word_ranks": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ]
+  },
+  {
+    "title": "Ropa y accesorios",
+    "description": "Prendas de vestir",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A2",
+    "tags": [
+      "ropa"
+    ],
+    "word_ranks": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ]
+  },
+  {
+    "title": "La ciudad",
+    "description": "Lugares y elementos urbanos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A2",
+    "tags": [
+      "ciudad"
+    ],
+    "word_ranks": [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ]
+  },
+  {
+    "title": "La naturaleza",
+    "description": "Elementos del mundo natural",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A2",
+    "tags": [
+      "naturaleza"
+    ],
+    "word_ranks": [
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70
+    ]
+  },
+  {
+    "title": "Animales",
+    "description": "Animales comunes",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "A2",
+    "tags": [
+      "animales"
+    ],
+    "word_ranks": [
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80
+    ]
+  },
+  {
+    "title": "Profesiones",
+    "description": "Oficios y profesiones",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "B1",
+    "tags": [
+      "trabajo"
+    ],
+    "word_ranks": [
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90
+    ]
+  },
+  {
+    "title": "Emociones",
+    "description": "Sentimientos y estados de ánimo",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "B1",
+    "tags": [
+      "emociones"
+    ],
+    "word_ranks": [
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100
+    ]
+  },
+  {
+    "title": "Viajes",
+    "description": "Vocabulario de viaje y transporte",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "B1",
+    "tags": [
+      "viajes"
+    ],
+    "word_ranks": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110
+    ]
+  },
+  {
+    "title": "Cultura y sociedad",
+    "description": "Conceptos culturales y sociales",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "B2",
+    "tags": [
+      "cultura"
+    ],
+    "word_ranks": [
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120
+    ]
+  }
+]

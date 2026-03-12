@@ -1,0 +1,602 @@
+[
+  {
+    "rank": 1,
+    "definition": "mesa",
+    "word": "mueble que consta de una superficie plana y horizontal sostenida por patas"
+  },
+  {
+    "rank": 2,
+    "definition": "silla",
+    "word": "mueble para sentarse que tiene respaldo"
+  },
+  {
+    "rank": 3,
+    "definition": "cama",
+    "word": "mueble que sirve para recostarse sobre él para dormir"
+  },
+  {
+    "rank": 4,
+    "definition": "puerta",
+    "word": "abertura practicada en una construcción, vehículo u otro objeto, por la cual se accede y abandona el mismo"
+  },
+  {
+    "rank": 5,
+    "definition": "ventana",
+    "word": "Parte abierta en un muro para dejar penetrar la luz y el aire en una habitación o recinto, generalmente situada a más de un metro de altura"
+  },
+  {
+    "rank": 6,
+    "definition": "cocina",
+    "word": "habitación o recinto destinado a la elaboración y cocción de alimentos"
+  },
+  {
+    "rank": 7,
+    "definition": "espejo",
+    "word": "Superficie capaz de reflejar la luz y suficientemente clara como para formar una imagen"
+  },
+  {
+    "rank": 8,
+    "definition": "lámpara",
+    "word": "Dispositivo que soporta una luz artificial, como una bombilla eléctrica. Sus formas, tamaño y luminosidad varía de acuerdo a los espacios en los que se encuentre y el diseño de las mismas"
+  },
+  {
+    "rank": 9,
+    "definition": "alfombra",
+    "word": "pieza de tejido con que se cubren los suelos para decoración, abrigo y protección"
+  },
+  {
+    "rank": 10,
+    "definition": "escalera",
+    "word": "Construcción formada por una serie de escalones, permitiendo al usuario desplazarse entre los distintos planos de un edificio o lugar"
+  },
+  {
+    "rank": 11,
+    "definition": "pan",
+    "word": "masa a base de harina y agua endurecida por cocción al horno"
+  },
+  {
+    "rank": 12,
+    "definition": "leche",
+    "word": "sustancia líquida de color blanco y de alto valor nutritivo que se produce en las mamas de las hembras de los mamíferos para alimentar a sus crías. Para consumo humano es común emplear la producida por vacas, ovejas, búfalas o cabras"
+  },
+  {
+    "rank": 13,
+    "definition": "agua",
+    "word": "sustancia transparente, inodora e insípida, que se encuentra en estado líquido a temperatura y presión estándar, y cuya composición molecular es de dos átomos de hidrógeno por uno de oxígeno"
+  },
+  {
+    "rank": 14,
+    "definition": "arroz",
+    "word": "(Oryza sativa) planta de la familia de las poáceas, originaria del Lejano Oriente y cultivada en todo el mundo como alimento. Es una hierba perenne, de hasta 2 m de altura, con largas hojas aciculadas, pequeñas flores en espiga que fructifican en una cariópside de hasta 1 cm de largo. Requiere terrenos muy húmedos y climas cálidos"
+  },
+  {
+    "rank": 15,
+    "definition": "carne",
+    "word": "Músculos y vísceras del cuerpo de los animales, por contraposición a las partes óseas"
+  },
+  {
+    "rank": 16,
+    "definition": "fruta",
+    "word": "fruto comestible de algunas plantas, en especial si es dulce, utilizado como alimento o como ingrediente para preparar alimentos"
+  },
+  {
+    "rank": 17,
+    "definition": "verdura",
+    "word": "planta o producto vegetal comestible y perecedero, del cual se consumen las partes verdes, en especial hojas, tallos y frutos en vaina"
+  },
+  {
+    "rank": 18,
+    "definition": "queso",
+    "word": "alimento obtenido al separar la parte sólida de la leche mediante la adición de cuajo, prensando o cociendo luego la pasta resultante y madurándola en un grado variable"
+  },
+  {
+    "rank": 19,
+    "definition": "huevo",
+    "word": "Cuerpo unicelular, de forma esférica u elíptica, que aloja al embrión de numerosas especies de animales invertebrados, así como de peces, reptiles y aves durante la primera fase de su desarrollo, proporcionándole los compuestos nutritivos que éste necesita"
+  },
+  {
+    "rank": 20,
+    "definition": "sal",
+    "word": "condimento compuesto principalmente por cloruro de sodio. Se usa en todo el mundo desde tiempos remotos y confiere a los alimentos un sabor característico (salado)"
+  },
+  {
+    "rank": 21,
+    "definition": "madre",
+    "word": "progenitora de sexo femenino"
+  },
+  {
+    "rank": 22,
+    "definition": "padre",
+    "word": "macho, animal o humano, que ha engendrado o adoptado hijos"
+  },
+  {
+    "rank": 23,
+    "definition": "hermano",
+    "word": "Persona que, con respecto a otra, comparte uno o ambos padres"
+  },
+  {
+    "rank": 24,
+    "definition": "hermana",
+    "word": "Persona que, con respecto a otra, comparte uno o ambos padres. Forma femenina de hermano"
+  },
+  {
+    "rank": 25,
+    "definition": "abuelo",
+    "word": "ascendiente directo en segunda generación. Padre del padre o de la madre"
+  },
+  {
+    "rank": 26,
+    "definition": "abuela",
+    "word": "Ascendiente directa en segunda generación. Madre del padre o de la madre"
+  },
+  {
+    "rank": 27,
+    "definition": "hijo",
+    "word": "individuo respecto a cualquiera de sus progenitores"
+  },
+  {
+    "rank": 28,
+    "definition": "hija",
+    "word": "Persona de sexo femenino respecto a cualquiera de sus progenitores"
+  },
+  {
+    "rank": 29,
+    "definition": "primo",
+    "word": "Hijo del tío de alguien"
+  },
+  {
+    "rank": 30,
+    "definition": "sobrino",
+    "word": "hijo de un hermano o hermana"
+  },
+  {
+    "rank": 31,
+    "definition": "cabeza",
+    "word": "Parte superior del cuerpo del ser humano y de algunos animales, que contiene el cerebro, la boca, los ojos, y otros órganos sensoriales"
+  },
+  {
+    "rank": 32,
+    "definition": "mano",
+    "word": "extremidad prensil y articulada en el extremo distal del brazo de los antropoides"
+  },
+  {
+    "rank": 33,
+    "definition": "pie",
+    "word": "Miembro del cuerpo que se encuentra al final de las piernas y debajo del tobillo"
+  },
+  {
+    "rank": 34,
+    "definition": "ojo",
+    "word": "órgano sensible a la luz que permite la visión en los seres vivos"
+  },
+  {
+    "rank": 35,
+    "definition": "boca",
+    "word": "Abertura anterior del tubo digestivo de los animales, por el cual se ingieren los alimentos"
+  },
+  {
+    "rank": 36,
+    "definition": "nariz",
+    "word": "Órgano de la cara del ser humano utilizado para oler y respirar"
+  },
+  {
+    "rank": 37,
+    "definition": "oreja",
+    "word": "Estructura cartilaginosa (compuesta de piel y cartílago) que forma la parte externa del oído del hombre y algunos animales"
+  },
+  {
+    "rank": 38,
+    "definition": "brazo",
+    "word": "Segundo segmento del miembro superior, entre la cintura escapular -que lo fija al tronco- y el antebrazo. Se articula con la primera en el hombro, y con el segundo en el codo"
+  },
+  {
+    "rank": 39,
+    "definition": "pierna",
+    "word": "Miembros inferiores del ser humano y posteriores de otros vertebrados terrestres, que se insertan en la cadera y se emplean para la locomoción"
+  },
+  {
+    "rank": 40,
+    "definition": "dedo",
+    "word": "Cada uno de los apéndices en que termina la mano"
+  },
+  {
+    "rank": 41,
+    "definition": "camisa",
+    "word": "Prenda de vestir, generalmente con mangas y cuellos, que cubre la zona del cuerpo humano comprendida entre el cuello y la cintura. Habitualmente se abrocha por delante mediante botones"
+  },
+  {
+    "rank": 42,
+    "definition": "falda",
+    "word": "prenda de uso mayoritariamente femenino, que cubre de la cintura hacia abajo envolviendo el cuerpo sin costura entre las piernas. Forma parte del hábito masculino en algunos grupos, como la vestimenta talar de los sacerdotes católicos, o culturas, como el kilt de los escoceses"
+  },
+  {
+    "rank": 43,
+    "definition": "zapato",
+    "word": "calzado con suela de cuero u otro material fuerte que se diferencia de las botas en que no sube del tobillo, y de las zapatillas en que suele ser rígido y se usa como vestuario formal"
+  },
+  {
+    "rank": 44,
+    "definition": "sombrero",
+    "word": "prenda de vestir que protege y adorna la cabeza"
+  },
+  {
+    "rank": 45,
+    "definition": "pantalón",
+    "word": "prenda de vestir que tipicamente cubre desde la cintura hasta los tobillos, pero que puede ser más corto, y en que cada pierna está envuelta por separado"
+  },
+  {
+    "rank": 46,
+    "definition": "cinturón",
+    "word": "tira de tela o cuero que, ceñida a la cintura, sirve para sujetar el pantalón, para ajustar un vestido o para colgar utensilios o armas"
+  },
+  {
+    "rank": 47,
+    "definition": "abrigo",
+    "word": "prenda de vestir que se pone encima de las demás y sirve para abrigar"
+  },
+  {
+    "rank": 48,
+    "definition": "bufanda",
+    "word": "Prenda larga y estrecha, por lo común de lana o seda, con que se envuelve y abriga el cuello y la boca"
+  },
+  {
+    "rank": 49,
+    "definition": "guante",
+    "word": "prenda que viste y protege la mano, sea o no con los dedos separados"
+  },
+  {
+    "rank": 50,
+    "definition": "bolsillo",
+    "word": "Bolsa pequeña, ubicada en algunas prendas de vestir, que se usa para guardar cosas"
+  },
+  {
+    "rank": 51,
+    "definition": "calle",
+    "word": "camino urbano, especialmente el destinado al tránsito de vehículos"
+  },
+  {
+    "rank": 52,
+    "definition": "plaza",
+    "word": "En una ciudad o poblado, área abierta y espaciosa en la cual la gente puede transitar y reunirse"
+  },
+  {
+    "rank": 53,
+    "definition": "parque",
+    "word": "terreno o sitio cercado y con plantas, para caza o para recreo, generalmente inmediato a un palacio o a una población"
+  },
+  {
+    "rank": 54,
+    "definition": "puente",
+    "word": "construcción sólida que permite salvar un obstáculo pasando sobre él"
+  },
+  {
+    "rank": 55,
+    "definition": "iglesia",
+    "word": "edificio destinado al culto de la religión cristiana"
+  },
+  {
+    "rank": 56,
+    "definition": "mercado",
+    "word": "Sitio o edificio destinado a la compraventa de bienes y servicios"
+  },
+  {
+    "rank": 57,
+    "definition": "hospital",
+    "word": "Lugar donde se atiende a los enfermos, para proporcionar el diagnóstico y tratamiento que necesitan"
+  },
+  {
+    "rank": 58,
+    "definition": "escuela",
+    "word": "Instituto que ofrece enseñanza primaria"
+  },
+  {
+    "rank": 59,
+    "definition": "biblioteca",
+    "word": "Institución o lugar donde se conservan y consultan libros y otros materiales de lectura"
+  },
+  {
+    "rank": 60,
+    "definition": "estación",
+    "word": "Cada una de las paradas regulares de un recorrido de tren, metro o autobús"
+  },
+  {
+    "rank": 61,
+    "definition": "árbol",
+    "word": "fanerófito, de fuste único. Por ejemplo. Las plantas como las palmeras son arborescentes, i.e. no son árboles"
+  },
+  {
+    "rank": 62,
+    "definition": "flor",
+    "word": "órgano reproductivo de las angiospermas, caracterizado generalmente por tener vivos colores. Se compone de distintos tipos de hojas especializadas, algunas con función propiamente reproductiva y otras que actúan como protectoras de las anteriores o como medio de reclamo para atraer polinizadores"
+  },
+  {
+    "rank": 63,
+    "definition": "río",
+    "word": "corriente de agua de caudal importante que discurre por tierra desde un manantial, una masa de hielos o un lago"
+  },
+  {
+    "rank": 64,
+    "definition": "montaña",
+    "word": "Conjunto de rocas piedras y tierra que forman una elevación grande sobre el terreno"
+  },
+  {
+    "rank": 65,
+    "definition": "bosque",
+    "word": "terreno cubierto por árboles y otra vegetación"
+  },
+  {
+    "rank": 66,
+    "definition": "playa",
+    "word": "arenal o pedregal costero y más o menos llano"
+  },
+  {
+    "rank": 67,
+    "definition": "piedra",
+    "word": "material natural sólido, caracterizado por su dureza y consistencia, empleado para la construcción en numerosas culturas alrededor del mundo"
+  },
+  {
+    "rank": 68,
+    "definition": "nube",
+    "word": "Vapor de agua suspendido en la atmósfera, cuya condensación se precipita como lluvia, granizo o nieve"
+  },
+  {
+    "rank": 69,
+    "definition": "lluvia",
+    "word": "Conjunto de gotas de agua producidas por la condensación del agua y que se precipitan del cielo sobre la tierra"
+  },
+  {
+    "rank": 70,
+    "definition": "tierra",
+    "word": "Superficie del planeta Tierra que no se encuentra cubierta por agua"
+  },
+  {
+    "rank": 71,
+    "definition": "perro",
+    "word": "(Canis lupus familiaris) Variedad doméstica del lobo de muchas y diversas razas, compañero del hombre desde tiempos prehistóricos"
+  },
+  {
+    "rank": 72,
+    "definition": "gato",
+    "word": "(Felis catus) animal carnívoro de la familia de los felinos, domesticado como animal de compañía desde al menos el 3500 a. C"
+  },
+  {
+    "rank": 73,
+    "definition": "caballo",
+    "word": "(Equus caballus) mamífero doméstico ungulado de la familia de los équidos, utilizado por el hombre para montar o como animal de tiro"
+  },
+  {
+    "rank": 74,
+    "definition": "pájaro",
+    "word": "ave, en especial si es de pequeño tamaño"
+  },
+  {
+    "rank": 75,
+    "definition": "pez",
+    "word": "cualquiera de unas 30 000 especies de animales vertebrados, caracterizados por ser los únicos adaptados a respirar agua durante todo su ciclo vital. Forman un grupo sin rigor taxonómico que comprende varios grupos evolutivos diferentes, que sólo tienen en común su adaptación al medio acuático"
+  },
+  {
+    "rank": 76,
+    "definition": "vaca",
+    "word": "(Bos taurus) Denominación común de la hembra de la especie bovina"
+  },
+  {
+    "rank": 77,
+    "definition": "oveja",
+    "word": "(Ovis aries) mamífero rumiante ungulado, generalmente criado por su carne, leche y lana"
+  },
+  {
+    "rank": 78,
+    "definition": "gallina",
+    "word": "ave gallinácea con una cresta cutánea de variadas formas sobre la cabeza, dos apéndices carnosos (carúnculas) que le cuelgan debajo del pico, patas con uñas para escarbar; el macho (gallo) posee un espolón. Es un ave de corral de la que se aprovechan sus huevos, plumas y carne"
+  },
+  {
+    "rank": 79,
+    "definition": "conejo",
+    "word": "(familia Leporidae) Cualquiera de unas dos docenas de especies de pequeños mamíferos lagomorfos, de pelo tupido, orejas erguidas tan largas como la cabeza, un rabo muy corto, patas delanteras cortas y traseras muy largas, que le permiten desplazarse con brincos. Habita en madrigueras que cava en la tierra y es muy prolífico. Se lo cría como animal de compañía, y para aprovechar su carne, su cuero y su pelo"
+  },
+  {
+    "rank": 80,
+    "definition": "tortuga",
+    "word": "Reptiles del orden de los Quelonios caracterizados por tener un tronco ancho y corto, protegido por un caparazón que está formado, generalmente, por placas óseas revestidas de placas córneas"
+  },
+  {
+    "rank": 81,
+    "definition": "médico",
+    "word": "Persona con formación profesional que se dedica a diagnosticar y tratar enfermedades"
+  },
+  {
+    "rank": 82,
+    "definition": "maestro",
+    "word": "Persona que enseña en una institución educacional"
+  },
+  {
+    "rank": 83,
+    "definition": "abogado",
+    "word": "Experto en derecho, acreditado con título universitario, que presta asistencia técnica jurídica aconsejando o defendiendo a alguna de las partes en un juicio"
+  },
+  {
+    "rank": 84,
+    "definition": "ingeniero",
+    "word": "Persona que ejerce la ingeniería"
+  },
+  {
+    "rank": 85,
+    "definition": "enfermero",
+    "word": "persona que ejerce la profesión de enfermería"
+  },
+  {
+    "rank": 86,
+    "definition": "bombero",
+    "word": "Persona perteneciente a un cuerpo cuyas funciones son entre otras: Apagar incendios, atender incidentes con materiales peligrosos, salvamento de personas y animales en casos de emergencia, asistencia en rescate y accidentes de tráfico y atender otros siniestros"
+  },
+  {
+    "rank": 87,
+    "definition": "carpintero",
+    "word": "Persona cuyo oficio es el trabajo en la madera, ya sea en madera de construcción (puertas, ventanas, etc...) como en muebles"
+  },
+  {
+    "rank": 88,
+    "definition": "cocinero",
+    "word": "Persona que tiene por oficio cocinar y aderezar las viandas"
+  },
+  {
+    "rank": 89,
+    "definition": "periodista",
+    "word": "Aquella persona que ejerce el periodismo"
+  },
+  {
+    "rank": 90,
+    "definition": "soldado",
+    "word": "Individuo que forma parte de una milicia, en especial si de forma continuada o profesional"
+  },
+  {
+    "rank": 91,
+    "definition": "alegría",
+    "word": "sensación de contento que se produce debido a algo agradable"
+  },
+  {
+    "rank": 92,
+    "definition": "tristeza",
+    "word": "estado emocional de dolor y descontento, desagradable para quien lo experimenta"
+  },
+  {
+    "rank": 93,
+    "definition": "miedo",
+    "word": "emoción de ansiedad difícil de controlar causada por algo que puede causar algún daño físico, emocional, patrimonial etc. Tanto el objeto que causa el miedo como la posibilidad de causar daño pueden ser reales o imaginarios"
+  },
+  {
+    "rank": 94,
+    "definition": "amor",
+    "word": "sentimiento afectivo de atracción, unión y afinidad que se experimenta hacia una persona, animal o cosa"
+  },
+  {
+    "rank": 95,
+    "definition": "odio",
+    "word": "sentimiento de violento desagrado hacia alguien o algo, que lleva a desearle el mal"
+  },
+  {
+    "rank": 96,
+    "definition": "vergüenza",
+    "word": "sentimiento de turbación causado por sentir culpa, humillación o deshonra"
+  },
+  {
+    "rank": 97,
+    "definition": "orgullo",
+    "word": "arrogancia, estimación excesiva de uno mismo o sentimiento de superioridad sobre otros"
+  },
+  {
+    "rank": 98,
+    "definition": "esperanza",
+    "word": "confianza o deseo de que algo deseado sucederá"
+  },
+  {
+    "rank": 99,
+    "definition": "envidia",
+    "word": "infelicidad causada por el bienestar, éxito, posesiones etc. de otro"
+  },
+  {
+    "rank": 100,
+    "definition": "ternura",
+    "word": "suavidad y blandura de un objeto o su superficie"
+  },
+  {
+    "rank": 101,
+    "definition": "equipaje",
+    "word": "Conjunto de objetos, bultos y maletas que lleva consigo un viajero"
+  },
+  {
+    "rank": 102,
+    "definition": "pasaporte",
+    "word": "documento con validez internacional, que identifica a su titular, expedido por las autoridades de un país, que acredita el permiso o autorización legal para que salga o ingrese del mismo, por los puertos internacionales"
+  },
+  {
+    "rank": 103,
+    "definition": "billete",
+    "word": "Papel impreso que posee un valor nominal que permite usarlo como medio de pago"
+  },
+  {
+    "rank": 104,
+    "definition": "aduana",
+    "word": "organismo del Estado encargado de percibir las tasas y derechos que gravan los bienes que se comercian atravesando las fronteras"
+  },
+  {
+    "rank": 105,
+    "definition": "maleta",
+    "word": "caja o recipiente, dotado de asas u otros medios de sujeción, empleada para transportar ropas y otros enseres en cierta cantidad durante un viaje"
+  },
+  {
+    "rank": 106,
+    "definition": "destino",
+    "word": "Situación a la que supuestamente se llega de forma inevitable, impulsado por una fuerza desconocida e irresistible"
+  },
+  {
+    "rank": 107,
+    "definition": "frontera",
+    "word": "confín de un Estado"
+  },
+  {
+    "rank": 108,
+    "definition": "vuelo",
+    "word": "Acción de ir por el aire moviéndose o sosteniéndose con alas u otra superficie análoga"
+  },
+  {
+    "rank": 109,
+    "definition": "andén",
+    "word": "vereda para acceder a un tren"
+  },
+  {
+    "rank": 110,
+    "definition": "brújula",
+    "word": "Instrumento que sirve para determinar cualquier dirección de la superficie terrestre por medio de una aguja imantada que siempre marca los polos magnéticos Norte-Sur"
+  },
+  {
+    "rank": 111,
+    "definition": "costumbre",
+    "word": "Repetición frecuente del mismo acto"
+  },
+  {
+    "rank": 112,
+    "definition": "herencia",
+    "word": "Bienes que recibe una persona cedidos por una persona que ha fallecido"
+  },
+  {
+    "rank": 113,
+    "definition": "ciudadano",
+    "word": "Persona que forma parte de una comunidad política y goza de derechos civiles"
+  },
+  {
+    "rank": 114,
+    "definition": "igualdad",
+    "word": "simetría o conformidad de algo en comparación con otra cosa en cuanto a su naturaleza, forma, calidad, cantidad, valor, etc. igual"
+  },
+  {
+    "rank": 115,
+    "definition": "libertad",
+    "word": "Estado en el cual fuerzas ajenas no imponen su criterio, aplicable física o moralmente sobre la propia decisión del sujeto"
+  },
+  {
+    "rank": 116,
+    "definition": "democracia",
+    "word": "doctrina política que propicia la participación del pueblo en el gobierno"
+  },
+  {
+    "rank": 117,
+    "definition": "prejuicio",
+    "word": "Juicio u opinión formados sin fundamento, basados en ideas preconcebidas"
+  },
+  {
+    "rank": 118,
+    "definition": "convivencia",
+    "word": "Acción de vivir en compañía de otro u otros"
+  },
+  {
+    "rank": 119,
+    "definition": "identidad",
+    "word": "Condición de idéntico (que es igual o parecido)"
+  },
+  {
+    "rank": 120,
+    "definition": "solidaridad",
+    "word": "Unión de responsabilidades e intereses comunes, entre los miembros de un grupo o entre personas, etc"
+  }
+]
