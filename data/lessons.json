@@ -680,5 +680,531 @@
       298,
       299
     ]
+  },
+  {
+    "title": "Fenómenos y estados I",
+    "description": "Sustantivos cultos para fenómenos y estados",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "fenómenos"
+    ],
+    "word_ranks": [
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309
+    ]
+  },
+  {
+    "title": "Fenómenos y estados II",
+    "description": "Más sustantivos de fenómenos y estados",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "fenómenos"
+    ],
+    "word_ranks": [
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319
+    ]
+  },
+  {
+    "title": "Personas y tipos I",
+    "description": "Sustantivos para tipos de personas",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "personas"
+    ],
+    "word_ranks": [
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329
+    ]
+  },
+  {
+    "title": "Personas y tipos II",
+    "description": "Más sustantivos para tipos de personas",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "sustantivos",
+      "personas"
+    ],
+    "word_ranks": [
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339
+    ]
+  },
+  {
+    "title": "Sentimientos y emociones I",
+    "description": "Sustantivos cultos de sentimientos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "sentimientos"
+    ],
+    "word_ranks": [
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349
+    ]
+  },
+  {
+    "title": "Sentimientos y emociones II",
+    "description": "Más sustantivos de sentimientos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "sentimientos"
+    ],
+    "word_ranks": [
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359
+    ]
+  },
+  {
+    "title": "Conflictos y estratagemas",
+    "description": "Vocabulario de conflictos y engaños",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "conflicto"
+    ],
+    "word_ranks": [
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369
+    ]
+  },
+  {
+    "title": "Espacios y lugares cultos",
+    "description": "Sustantivos cultos de lugares y espacios",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "sustantivos",
+      "lugares"
+    ],
+    "word_ranks": [
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379
+    ]
+  },
+  {
+    "title": "Salud y remedios",
+    "description": "Vocabulario culto de salud y remedios",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sustantivos",
+      "salud"
+    ],
+    "word_ranks": [
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389
+    ]
+  },
+  {
+    "title": "Adjetivos de carácter I",
+    "description": "Adjetivos positivos de carácter",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "adjetivos",
+      "carácter"
+    ],
+    "word_ranks": [
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399
+    ]
+  },
+  {
+    "title": "Adjetivos de carácter II",
+    "description": "Adjetivos negativos de carácter",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "adjetivos",
+      "carácter"
+    ],
+    "word_ranks": [
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409
+    ]
+  },
+  {
+    "title": "Adjetivos de aspecto físico",
+    "description": "Adjetivos cultos de apariencia",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "adjetivos",
+      "aspecto"
+    ],
+    "word_ranks": [
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419
+    ]
+  },
+  {
+    "title": "Adjetivos de condición",
+    "description": "Adjetivos cultos de estados y condiciones",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "adjetivos",
+      "condición"
+    ],
+    "word_ranks": [
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429
+    ]
+  },
+  {
+    "title": "Verbos de comunicación",
+    "description": "Verbos cultos para hablar y debatir",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "verbos",
+      "comunicación"
+    ],
+    "word_ranks": [
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439
+    ]
+  },
+  {
+    "title": "Verbos de percepción y pensamiento",
+    "description": "Verbos cultos de observar y pensar",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "verbos",
+      "percepción"
+    ],
+    "word_ranks": [
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449
+    ]
+  },
+  {
+    "title": "Verbos de dominio y sometimiento",
+    "description": "Verbos cultos de poder y control",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "verbos",
+      "dominio"
+    ],
+    "word_ranks": [
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459
+    ]
+  },
+  {
+    "title": "Verbos de movimiento",
+    "description": "Verbos cultos de desplazamiento",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "verbos",
+      "movimiento"
+    ],
+    "word_ranks": [
+      460,
+      461,
+      462,
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469
+    ]
+  },
+  {
+    "title": "Psicología y mente",
+    "description": "Términos psicológicos cultos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "psicología"
+    ],
+    "word_ranks": [
+      470,
+      471,
+      472,
+      473,
+      474,
+      475,
+      476,
+      477,
+      478,
+      479
+    ]
+  },
+  {
+    "title": "Sociología y poder",
+    "description": "Vocabulario de sociología y sistemas de poder",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "sociología",
+      "política"
+    ],
+    "word_ranks": [
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489
+    ]
+  },
+  {
+    "title": "Religión y creencias",
+    "description": "Vocabulario de religión y doctrinas",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "religión"
+    ],
+    "word_ranks": [
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499
+    ]
+  },
+  {
+    "title": "Naturaleza y geografía",
+    "description": "Vocabulario culto de paisajes y terrenos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "naturaleza",
+      "geografía"
+    ],
+    "word_ranks": [
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509
+    ]
+  },
+  {
+    "title": "Economía y hacienda",
+    "description": "Vocabulario culto de economía y finanzas",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "economía"
+    ],
+    "word_ranks": [
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519
+    ]
+  },
+  {
+    "title": "Virtudes y vicios",
+    "description": "Vocabulario de virtudes y vicios morales",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "sustantivos",
+      "moral"
+    ],
+    "word_ranks": [
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529
+    ]
   }
 ]

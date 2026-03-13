@@ -2,7 +2,7 @@
   {
     "rank": 1,
     "definition": "efímero",
-    "word": "Que dura un solo día"
+    "word": "Que dura un solo día; pasajero, de corta duración"
   },
   {
     "rank": 2,
@@ -17,7 +17,7 @@
   {
     "rank": 4,
     "definition": "perspicaz",
-    "word": "Que tiene o muestra una percepción mental aguda, penetrante"
+    "word": "Que tiene percepción mental aguda y penetrante"
   },
   {
     "rank": 5,
@@ -32,7 +32,7 @@
   {
     "rank": 7,
     "definition": "insigne",
-    "word": "célebre, distinguido"
+    "word": "Célebre, distinguido y notable por sus méritos"
   },
   {
     "rank": 8,
@@ -42,7 +42,7 @@
   {
     "rank": 9,
     "definition": "incólume",
-    "word": "saludable, sin lesión ni menoscabo"
+    "word": "Que no ha sufrido lesión ni menoscabo; ileso"
   },
   {
     "rank": 10,
@@ -52,7 +52,7 @@
   {
     "rank": 11,
     "definition": "conspicuo",
-    "word": "notable, llamativo, marcado, evidente, sobresaliente, ilustre"
+    "word": "Notable, sobresaliente e ilustre"
   },
   {
     "rank": 12,
@@ -1252,52 +1252,52 @@
   {
     "rank": 251,
     "definition": "hipótesis",
-    "word": "proposición o conjunto de proposiciones que se establecen para explicar la ocurrencia de un grupo específico de fenómenos, estas pueden ser conjeturas provisionales para guiar una investigación o bien puede tratarse de proposiciones aceptadas universalmente a la luz de los hechos establecidos"
+    "word": "Proposición que se establece provisionalmente como base de una investigación"
   },
   {
     "rank": 252,
     "definition": "postulado",
-    "word": "Proposición cuya veracidad no requiere demostración, pues su objetivo no es demostrar, sino sostener ulteriores razonamientos, que derivarán a hipótesis"
+    "word": "Proposición cuya veracidad se admite sin demostración"
   },
   {
     "rank": 253,
     "definition": "taxonomía",
-    "word": "Es la ciencia de la clasificación"
+    "word": "Ciencia de la clasificación según principios sistemáticos"
   },
   {
     "rank": 254,
     "definition": "anomalía",
-    "word": "Desviación o desplazamiento de cualquier elemento de su estado normal o de su valor medio, tanto en sentido positivo como negativo"
+    "word": "Desviación o irregularidad respecto de lo normal o esperado"
   },
   {
     "rank": 255,
     "definition": "variable",
-    "word": "Que varía o puede variar"
+    "word": "Que varía o puede variar; magnitud que puede tomar distintos valores"
   },
   {
     "rank": 256,
     "definition": "correlación",
-    "word": "correspondencia, sucesión inmediata o influencia recíproca entre dos o más elementos, que forman entre sí una serie lógica"
+    "word": "Correspondencia o influencia recíproca entre dos o más cosas"
   },
   {
     "rank": 257,
     "definition": "serendipia",
-    "word": "descubrimiento o hallazgo por accidente e intuición, de cosas por las que uno no se preguntaba"
+    "word": "Descubrimiento o hallazgo afortunado e inesperado que se produce por accidente"
   },
   {
     "rank": 258,
     "definition": "heurística",
-    "word": "disciplina que estudia el descubrimiento o la investigación"
+    "word": "Disciplina que estudia los métodos de descubrimiento e investigación"
   },
   {
     "rank": 259,
     "definition": "entropía",
-    "word": "magnitud de la energía de un sistema que no puede convertirse en trabajo"
+    "word": "Magnitud de la energía de un sistema que no puede convertirse en trabajo útil"
   },
   {
     "rank": 260,
     "definition": "etiología",
-    "word": "Estudio sobre el origen fundamental o causa de las cosas"
+    "word": "Estudio sobre el origen fundamental o causa de las cosas, especialmente enfermedades"
   },
   {
     "rank": 261,
@@ -1307,12 +1307,12 @@
   {
     "rank": 262,
     "definition": "profilaxis",
-    "word": "prevención de enfermedades"
+    "word": "Prevención de enfermedades mediante medidas higiénicas o terapéuticas"
   },
   {
     "rank": 263,
     "definition": "iatrogenia",
-    "word": "Daño no deseado ni buscado en la salud, causado o provocado, como efecto secundario inevitable, por un acto médico legítimo y avalado, destinado a curar o mejorar una patología determinada"
+    "word": "Daño no deseado en la salud causado por una intervención médica"
   },
   {
     "rank": 264,
@@ -1322,37 +1322,37 @@
   {
     "rank": 265,
     "definition": "paliativo",
-    "word": "Que reduce o frena el dolor, una molestia, o un problema, sin eliminar la causa"
+    "word": "Que reduce o frena el dolor o un problema sin eliminarlo de raíz"
   },
   {
     "rank": 266,
     "definition": "idiopático",
-    "word": "Hablando de una enfermedad, que no tiene causa u origen conocido"
+    "word": "Dicho de una enfermedad que no tiene causa u origen conocido"
   },
   {
     "rank": 267,
     "definition": "nosología",
-    "word": "Parte de la medicina, que tiene por objeto describir, diferenciar y clasificar las enfermedades"
+    "word": "Parte de la medicina que describe y clasifica las enfermedades"
   },
   {
     "rank": 268,
     "definition": "asepsia",
-    "word": "ausencia de materia productora de descomposición, o de gérmenes que puedan producir infecciones o enfermedades"
+    "word": "Ausencia de gérmenes o materia productora de infecciones"
   },
   {
     "rank": 269,
     "definition": "prognosis",
-    "word": "pronóstico, estimación del desarrollo probable de eventos en el futuro"
+    "word": "Pronóstico; estimación del desarrollo probable de una enfermedad o situación"
   },
   {
     "rank": 270,
     "definition": "boato",
-    "word": "exhibición pública de magnificencia"
+    "word": "Exhibición pública de magnificencia y ostentación"
   },
   {
     "rank": 271,
     "definition": "acaecimiento",
-    "word": "Algo que sucede u ocurre"
+    "word": "Algo que sucede u ocurre; acontecimiento"
   },
   {
     "rank": 272,
@@ -1367,12 +1367,12 @@
   {
     "rank": 274,
     "definition": "denuesto",
-    "word": "injuria grave, de palabra o por escrito"
+    "word": "Injuria grave, de palabra o por escrito"
   },
   {
     "rank": 275,
     "definition": "infundio",
-    "word": "mentira, información falsa o sin fundamento que se difunde generalmente para perjudicar a alguien"
+    "word": "Mentira o información falsa que se difunde con intención de dañar"
   },
   {
     "rank": 276,
@@ -1382,12 +1382,12 @@
   {
     "rank": 277,
     "definition": "lozano",
-    "word": "Dicho de un vegetal o un terreno poblado de ellos, que abunda en hojas y brotes que muestran su vigor"
+    "word": "Que abunda en verdor y frescura; que muestra vigor y salud"
   },
   {
     "rank": 278,
     "definition": "donaire",
-    "word": "Capacidad de expresarse con elegancia e ingenio y de las obras con estas cualidades"
+    "word": "Capacidad de expresarse con elegancia e ingenio; gracia en el porte"
   },
   {
     "rank": 279,
@@ -1397,37 +1397,37 @@
   {
     "rank": 280,
     "definition": "bizarro",
-    "word": "Que muestra valor o bravura"
+    "word": "Que muestra valor o bravura; gallardo y apuesto"
   },
   {
     "rank": 281,
     "definition": "gallardo",
-    "word": "desembarazado, airoso y galán"
+    "word": "Desembarazado, airoso y de porte elegante"
   },
   {
     "rank": 282,
     "definition": "hidalgo",
-    "word": "Propio de, relativo o perteneciente a la nobleza, en especial los estamentos inferiores de la misma"
+    "word": "Perteneciente a la nobleza, especialmente a la baja nobleza castellana"
   },
   {
     "rank": 283,
     "definition": "talante",
-    "word": "Modo o manera de ejecutar una cosa"
+    "word": "Modo o manera de ejecutar una cosa; disposición del ánimo"
   },
   {
     "rank": 284,
     "definition": "desaguisado",
-    "word": "Destrozo, desafuero"
+    "word": "Destrozo, desafuero; acción desatinada o perjudicial"
   },
   {
     "rank": 285,
     "definition": "ínclito",
-    "word": "famoso por su sobresaliente logro o aptitudes"
+    "word": "Famoso por su sobresaliente logro o aptitudes; ilustre"
   },
   {
     "rank": 286,
     "definition": "preclaro",
-    "word": "esclarecido, ilustre, famoso y digno de admiración y respeto"
+    "word": "Esclarecido, ilustre, famoso y digno de admiración y respeto"
   },
   {
     "rank": 287,
@@ -1437,17 +1437,17 @@
   {
     "rank": 288,
     "definition": "merced",
-    "word": "premio o galardón que se da por el trabajo, especialmente al jornalero"
+    "word": "Premio o galardón que se da por el trabajo; gracia o favor"
   },
   {
     "rank": 289,
     "definition": "abolengo",
-    "word": "ascendencia de abuelos o antepasados"
+    "word": "Ascendencia de abuelos o antepasados; linaje noble"
   },
   {
     "rank": 290,
     "definition": "antojadizo",
-    "word": "Que constantemente tiene antojos o quiere conseguir muchas cosas"
+    "word": "Que constantemente tiene antojos o caprichos pasajeros"
   },
   {
     "rank": 291,
@@ -1457,22 +1457,22 @@
   {
     "rank": 292,
     "definition": "cuita",
-    "word": "trabajo, aflicción, situación que causa preocupación o angustia"
+    "word": "Aflicción, preocupación o angustia del ánimo"
   },
   {
     "rank": 293,
     "definition": "desaire",
-    "word": "Falta de amabilidad, o de cortesía"
+    "word": "Falta de amabilidad o cortesía; desatención despectiva"
   },
   {
     "rank": 294,
     "definition": "saña",
-    "word": "enojo ciego; acceso súbito y violento de ira"
+    "word": "Enojo ciego; acceso súbito y violento de ira"
   },
   {
     "rank": 295,
     "definition": "yantar",
-    "word": "tomar la comida de mediodía"
+    "word": "Tomar la comida de mediodía; comer, especialmente con apetito"
   },
   {
     "rank": 296,
@@ -1482,7 +1482,7 @@
   {
     "rank": 297,
     "definition": "algarabía",
-    "word": "ruido generado por un gran conjunto de personas que hablan al mismo tiempo"
+    "word": "Ruido generado por mucha gente que habla al mismo tiempo"
   },
   {
     "rank": 298,
@@ -1493,5 +1493,1155 @@
     "rank": 299,
     "definition": "desvelo",
     "word": "Falta de sueño; cuidado o atención solícita por algo o alguien"
+  },
+  {
+    "rank": 300,
+    "definition": "marasmo",
+    "word": "Paralización o estancamiento extremo de la actividad o el ánimo"
+  },
+  {
+    "rank": 301,
+    "definition": "letargo",
+    "word": "Estado de somnolencia profunda y prolongada; inactividad persistente"
+  },
+  {
+    "rank": 302,
+    "definition": "éxtasis",
+    "word": "Estado de arrobamiento o admiración intensa que suspende los sentidos"
+  },
+  {
+    "rank": 303,
+    "definition": "vorágine",
+    "word": "Remolino impetuoso; situación caótica y absorbente"
+  },
+  {
+    "rank": 304,
+    "definition": "cataclismo",
+    "word": "Trastorno grave del globo terráqueo; gran desastre o catástrofe"
+  },
+  {
+    "rank": 305,
+    "definition": "debacle",
+    "word": "Desastre, hundimiento o derrota repentina y estrepitosa"
+  },
+  {
+    "rank": 306,
+    "definition": "hecatombe",
+    "word": "Desastre con gran número de víctimas; catástrofe de grandes proporciones"
+  },
+  {
+    "rank": 307,
+    "definition": "paroxismo",
+    "word": "Exaltación extrema de un sentimiento o de los síntomas de una enfermedad"
+  },
+  {
+    "rank": 308,
+    "definition": "estupor",
+    "word": "Asombro o pasmo que deja sin capacidad de reacción"
+  },
+  {
+    "rank": 309,
+    "definition": "sopor",
+    "word": "Adormecimiento; somnolencia pesada que embota los sentidos"
+  },
+  {
+    "rank": 310,
+    "definition": "maremágnum",
+    "word": "Confusión o abundancia desordenada de cosas o personas"
+  },
+  {
+    "rank": 311,
+    "definition": "tumulto",
+    "word": "Alboroto o agitación desordenada de una multitud"
+  },
+  {
+    "rank": 312,
+    "definition": "barahúnda",
+    "word": "Ruido y confusión grandes producidos por mucha gente"
+  },
+  {
+    "rank": 313,
+    "definition": "estruendo",
+    "word": "Ruido muy fuerte y estrepitoso; gran conmoción"
+  },
+  {
+    "rank": 314,
+    "definition": "fragor",
+    "word": "Ruido estruendoso y prolongado, como el de un trueno o batalla"
+  },
+  {
+    "rank": 315,
+    "definition": "estrépito",
+    "word": "Ruido fuerte y violento que causa alarma o sobresalto"
+  },
+  {
+    "rank": 316,
+    "definition": "clamor",
+    "word": "Grito o voz colectiva que expresa un sentimiento intenso"
+  },
+  {
+    "rank": 317,
+    "definition": "bullicio",
+    "word": "Ruido y agitación producidos por mucha gente en movimiento"
+  },
+  {
+    "rank": 318,
+    "definition": "algarada",
+    "word": "Vocerío tumultuoso; alboroto provocado por una multitud"
+  },
+  {
+    "rank": 319,
+    "definition": "zafarrancho",
+    "word": "Riña o pelea confusa; desorden y limpieza general"
+  },
+  {
+    "rank": 320,
+    "definition": "advenedizo",
+    "word": "Persona que llega a un lugar o posición sin pertenecer a él por origen o mérito"
+  },
+  {
+    "rank": 321,
+    "definition": "acólito",
+    "word": "Seguidor o acompañante fiel de alguien; ayudante en ceremonias"
+  },
+  {
+    "rank": 322,
+    "definition": "epígono",
+    "word": "Seguidor o imitador de una escuela o estilo, generalmente sin originalidad"
+  },
+  {
+    "rank": 323,
+    "definition": "filántropo",
+    "word": "Persona que ama al género humano y trabaja por su bienestar"
+  },
+  {
+    "rank": 324,
+    "definition": "misántropo",
+    "word": "Persona que siente aversión o rechazo hacia el trato con otros"
+  },
+  {
+    "rank": 325,
+    "definition": "prócer",
+    "word": "Persona ilustre y eminente, especialmente en la vida pública de un país"
+  },
+  {
+    "rank": 326,
+    "definition": "mecenas",
+    "word": "Persona adinerada que patrocina las artes o las ciencias"
+  },
+  {
+    "rank": 327,
+    "definition": "neófito",
+    "word": "Persona recién incorporada a una actividad, grupo o creencia"
+  },
+  {
+    "rank": 328,
+    "definition": "diletante",
+    "word": "Persona que cultiva un arte o una ciencia como aficionado, sin profundidad"
+  },
+  {
+    "rank": 329,
+    "definition": "émulo",
+    "word": "Persona que intenta igualar o superar a otra en méritos o logros"
+  },
+  {
+    "rank": 330,
+    "definition": "adlátere",
+    "word": "Persona que acompaña constantemente a otra como auxiliar o subordinado"
+  },
+  {
+    "rank": 331,
+    "definition": "confidente",
+    "word": "Persona a quien se confían secretos o asuntos íntimos"
+  },
+  {
+    "rank": 332,
+    "definition": "cómplice",
+    "word": "Persona que participa junto con otra en la comisión de un delito o acción reprobable"
+  },
+  {
+    "rank": 333,
+    "definition": "detractor",
+    "word": "Persona que critica, desacredita o habla mal de alguien o algo"
+  },
+  {
+    "rank": 334,
+    "definition": "benefactor",
+    "word": "Persona que hace bien a otra o le presta ayuda generosa"
+  },
+  {
+    "rank": 335,
+    "definition": "bienhechor",
+    "word": "Persona que hace el bien a otros de manera habitual y desinteresada"
+  },
+  {
+    "rank": 336,
+    "definition": "patricio",
+    "word": "Persona perteneciente a la clase noble o aristocrática de una sociedad"
+  },
+  {
+    "rank": 337,
+    "definition": "plebeyo",
+    "word": "Persona del pueblo llano, no perteneciente a la nobleza"
+  },
+  {
+    "rank": 338,
+    "definition": "prosélito",
+    "word": "Persona que se ha convertido recientemente a una doctrina o causa"
+  },
+  {
+    "rank": 339,
+    "definition": "apóstata",
+    "word": "Persona que abandona públicamente su religión, doctrina o partido"
+  },
+  {
+    "rank": 340,
+    "definition": "congoja",
+    "word": "Angustia y aflicción profundas del ánimo"
+  },
+  {
+    "rank": 341,
+    "definition": "zozobra",
+    "word": "Inquietud, desasosiego o temor ante un peligro o incertidumbre"
+  },
+  {
+    "rank": 342,
+    "definition": "desasosiego",
+    "word": "Falta de sosiego; inquietud o intranquilidad persistente"
+  },
+  {
+    "rank": 343,
+    "definition": "añoranza",
+    "word": "Sentimiento de tristeza por la ausencia de algo o alguien querido"
+  },
+  {
+    "rank": 344,
+    "definition": "arrobo",
+    "word": "Estado de éxtasis o admiración profunda que suspende los sentidos"
+  },
+  {
+    "rank": 345,
+    "definition": "embeleso",
+    "word": "Placer intenso que cautiva y absorbe la atención por completo"
+  },
+  {
+    "rank": 346,
+    "definition": "consternación",
+    "word": "Abatimiento y sorpresa causados por algo inesperado y grave"
+  },
+  {
+    "rank": 347,
+    "definition": "turbación",
+    "word": "Alteración del ánimo que produce confusión o vergüenza"
+  },
+  {
+    "rank": 348,
+    "definition": "desconsuelo",
+    "word": "Aflicción profunda por la falta de consuelo o esperanza"
+  },
+  {
+    "rank": 349,
+    "definition": "aflicción",
+    "word": "Pena, dolor moral o sufrimiento intenso del ánimo"
+  },
+  {
+    "rank": 350,
+    "definition": "regocijo",
+    "word": "Alegría intensa y bulliciosa; júbilo manifiesto"
+  },
+  {
+    "rank": 351,
+    "definition": "arrebato",
+    "word": "Impulso violento y súbito de un sentimiento o pasión"
+  },
+  {
+    "rank": 352,
+    "definition": "pesadilla",
+    "word": "Sueño angustioso; situación opresiva y difícil de soportar"
+  },
+  {
+    "rank": 353,
+    "definition": "escalofrío",
+    "word": "Sensación de frío repentino causada por miedo, fiebre o emoción"
+  },
+  {
+    "rank": 354,
+    "definition": "estremecimiento",
+    "word": "Temblor involuntario del cuerpo causado por una emoción intensa"
+  },
+  {
+    "rank": 355,
+    "definition": "sobrecogimiento",
+    "word": "Sensación de asombro mezclada con temor o respeto reverencial"
+  },
+  {
+    "rank": 356,
+    "definition": "embelesamiento",
+    "word": "Estado de arrobamiento causado por algo bello o cautivador"
+  },
+  {
+    "rank": 357,
+    "definition": "arrobamiento",
+    "word": "Enajenación de los sentidos por efecto de la admiración o el éxtasis"
+  },
+  {
+    "rank": 358,
+    "definition": "tribulación",
+    "word": "Congoja, pena o tormento que aflige el ánimo"
+  },
+  {
+    "rank": 359,
+    "definition": "quebranto",
+    "word": "Pérdida grave de la salud o de las fuerzas; gran pesar o aflicción"
+  },
+  {
+    "rank": 360,
+    "definition": "pugna",
+    "word": "Lucha o enfrentamiento entre personas, grupos o ideas"
+  },
+  {
+    "rank": 361,
+    "definition": "contienda",
+    "word": "Enfrentamiento o disputa entre dos o más partes"
+  },
+  {
+    "rank": 362,
+    "definition": "escaramuza",
+    "word": "Combate breve y de poca importancia entre fuerzas menores"
+  },
+  {
+    "rank": 363,
+    "definition": "conflagración",
+    "word": "Conflicto bélico de grandes proporciones; incendio devastador"
+  },
+  {
+    "rank": 364,
+    "definition": "lisonja",
+    "word": "Alabanza exagerada y generalmente interesada para ganar el favor de alguien"
+  },
+  {
+    "rank": 365,
+    "definition": "argucia",
+    "word": "Argumento sutil y engañoso usado para confundir o persuadir"
+  },
+  {
+    "rank": 366,
+    "definition": "ardid",
+    "word": "Estratagema o medio hábil para lograr un fin, especialmente engañoso"
+  },
+  {
+    "rank": 367,
+    "definition": "treta",
+    "word": "Artificio o maniobra ingeniosa para engañar o conseguir algo"
+  },
+  {
+    "rank": 368,
+    "definition": "artimaña",
+    "word": "Trampa o engaño hábil y disimulado para conseguir un propósito"
+  },
+  {
+    "rank": 369,
+    "definition": "estratagema",
+    "word": "Plan astuto ideado para lograr un objetivo, especialmente militar"
+  },
+  {
+    "rank": 370,
+    "definition": "pináculo",
+    "word": "Punto más alto o culminante de algo; remate puntiagudo de un edificio"
+  },
+  {
+    "rank": 371,
+    "definition": "cénit",
+    "word": "Punto más alto del cielo sobre un observador; apogeo o cumbre de algo"
+  },
+  {
+    "rank": 372,
+    "definition": "nadir",
+    "word": "Punto opuesto al cénit; momento más bajo o desfavorable"
+  },
+  {
+    "rank": 373,
+    "definition": "páramo",
+    "word": "Terreno yermo, raso y desabrigado, generalmente elevado"
+  },
+  {
+    "rank": 374,
+    "definition": "erial",
+    "word": "Tierra sin cultivar ni labrar; lugar abandonado e improductivo"
+  },
+  {
+    "rank": 375,
+    "definition": "alcázar",
+    "word": "Fortaleza o palacio fortificado de origen árabe"
+  },
+  {
+    "rank": 376,
+    "definition": "atalaya",
+    "word": "Torre elevada desde la que se vigila el territorio circundante"
+  },
+  {
+    "rank": 377,
+    "definition": "reducto",
+    "word": "Último lugar de resistencia o refugio; fortín"
+  },
+  {
+    "rank": 378,
+    "definition": "bastión",
+    "word": "Baluarte o punto fuerte de defensa; apoyo principal de algo"
+  },
+  {
+    "rank": 379,
+    "definition": "ciudadela",
+    "word": "Recinto fortificado en el interior de una plaza de armas"
+  },
+  {
+    "rank": 380,
+    "definition": "dolencia",
+    "word": "Enfermedad o indisposición, especialmente crónica o leve"
+  },
+  {
+    "rank": 381,
+    "definition": "padecimiento",
+    "word": "Sufrimiento o enfermedad que se soporta durante largo tiempo"
+  },
+  {
+    "rank": 382,
+    "definition": "convalecencia",
+    "word": "Período de recuperación tras una enfermedad o intervención"
+  },
+  {
+    "rank": 383,
+    "definition": "postración",
+    "word": "Estado de abatimiento extremo, físico o moral"
+  },
+  {
+    "rank": 384,
+    "definition": "pócima",
+    "word": "Bebida medicinal preparada con hierbas u otras sustancias"
+  },
+  {
+    "rank": 385,
+    "definition": "ungüento",
+    "word": "Sustancia grasa medicinal que se aplica sobre la piel"
+  },
+  {
+    "rank": 386,
+    "definition": "bálsamo",
+    "word": "Sustancia aromática y curativa; alivio para el dolor o la pena"
+  },
+  {
+    "rank": 387,
+    "definition": "elixir",
+    "word": "Preparado medicinal prodigioso; solución ideal para un problema"
+  },
+  {
+    "rank": 388,
+    "definition": "antídoto",
+    "word": "Sustancia que contrarresta los efectos de un veneno o un mal"
+  },
+  {
+    "rank": 389,
+    "definition": "cataplasma",
+    "word": "Emplasto medicinal blando y húmedo que se aplica sobre la piel como remedio"
+  },
+  {
+    "rank": 390,
+    "definition": "sagaz",
+    "word": "Que muestra agudeza y previsión para entender las cosas"
+  },
+  {
+    "rank": 391,
+    "definition": "tenaz",
+    "word": "Que se mantiene firme en sus propósitos con gran perseverancia"
+  },
+  {
+    "rank": 392,
+    "definition": "locuaz",
+    "word": "Que habla mucho o con gran facilidad"
+  },
+  {
+    "rank": 393,
+    "definition": "magnánimo",
+    "word": "Que tiene grandeza de ánimo y generosidad para perdonar ofensas"
+  },
+  {
+    "rank": 394,
+    "definition": "benévolo",
+    "word": "Que tiene buena voluntad hacia los demás; bondadoso"
+  },
+  {
+    "rank": 395,
+    "definition": "circunspecto",
+    "word": "Que actúa con prudencia y seriedad, midiendo sus palabras y actos"
+  },
+  {
+    "rank": 396,
+    "definition": "taciturno",
+    "word": "Callado, silencioso; de temperamento melancólico"
+  },
+  {
+    "rank": 397,
+    "definition": "flemático",
+    "word": "Que actúa con calma imperturbable y sin alterarse"
+  },
+  {
+    "rank": 398,
+    "definition": "afable",
+    "word": "De trato agradable, amable y cortés"
+  },
+  {
+    "rank": 399,
+    "definition": "parsimonioso",
+    "word": "Que actúa con lentitud y calma excesivas"
+  },
+  {
+    "rank": 400,
+    "definition": "mendaz",
+    "word": "Que tiene costumbre de mentir; falso, engañoso"
+  },
+  {
+    "rank": 401,
+    "definition": "suspicaz",
+    "word": "Inclinado a desconfiar o sospechar de todo y de todos"
+  },
+  {
+    "rank": 402,
+    "definition": "mordaz",
+    "word": "Que critica con agudeza hiriente y sarcasmo"
+  },
+  {
+    "rank": 403,
+    "definition": "voraz",
+    "word": "Que come con ansia desmedida; que consume o destruye con rapidez"
+  },
+  {
+    "rank": 404,
+    "definition": "bellaco",
+    "word": "Astuto, pícaro y de malas intenciones"
+  },
+  {
+    "rank": 405,
+    "definition": "artero",
+    "word": "Que actúa con maña y astucia para engañar"
+  },
+  {
+    "rank": 406,
+    "definition": "taimado",
+    "word": "Astuto, disimulado y que oculta sus verdaderas intenciones"
+  },
+  {
+    "rank": 407,
+    "definition": "ladino",
+    "word": "Sagaz y astuto, especialmente para engañar o salir de apuros"
+  },
+  {
+    "rank": 408,
+    "definition": "solapado",
+    "word": "Que oculta maliciosamente sus intenciones o sentimientos"
+  },
+  {
+    "rank": 409,
+    "definition": "insidioso",
+    "word": "Que prepara asechanzas o trampas de manera encubierta"
+  },
+  {
+    "rank": 410,
+    "definition": "macilento",
+    "word": "Flaco, demacrado y de aspecto enfermizo"
+  },
+  {
+    "rank": 411,
+    "definition": "enjuto",
+    "word": "Delgado, seco y de pocas carnes"
+  },
+  {
+    "rank": 412,
+    "definition": "famélico",
+    "word": "Extremadamente hambriento; muy flaco por falta de alimento"
+  },
+  {
+    "rank": 413,
+    "definition": "lánguido",
+    "word": "Que muestra debilidad, desgana o falta de energía vital"
+  },
+  {
+    "rank": 414,
+    "definition": "demacrado",
+    "word": "Con el rostro deteriorado por enfermedad, cansancio o sufrimiento"
+  },
+  {
+    "rank": 415,
+    "definition": "escuálido",
+    "word": "Sumamente flaco, sucio y desaliñado"
+  },
+  {
+    "rank": 416,
+    "definition": "adusto",
+    "word": "De semblante severo, seco y poco amable"
+  },
+  {
+    "rank": 417,
+    "definition": "cetrino",
+    "word": "De tez de color amarillento verdoso; de aspecto melancólico"
+  },
+  {
+    "rank": 418,
+    "definition": "rubicundo",
+    "word": "De color rojizo, especialmente aplicado al rostro o la tez"
+  },
+  {
+    "rank": 419,
+    "definition": "fornido",
+    "word": "De complexión robusta, fuerte y corpulenta"
+  },
+  {
+    "rank": 420,
+    "definition": "perentorio",
+    "word": "Que es urgente, concluyente y no admite dilación"
+  },
+  {
+    "rank": 421,
+    "definition": "aciago",
+    "word": "De mal agüero; que trae desgracia o infortunio"
+  },
+  {
+    "rank": 422,
+    "definition": "funesto",
+    "word": "Que es origen de pesares o desgracias; luctuoso"
+  },
+  {
+    "rank": 423,
+    "definition": "inexorable",
+    "word": "Que no se puede evitar ni detener; implacable"
+  },
+  {
+    "rank": 424,
+    "definition": "intempestivo",
+    "word": "Que ocurre fuera del tiempo oportuno o conveniente"
+  },
+  {
+    "rank": 425,
+    "definition": "inusitado",
+    "word": "No habitual; que ocurre rara vez o resulta sorprendente"
+  },
+  {
+    "rank": 426,
+    "definition": "insólito",
+    "word": "Raro, desacostumbrado y fuera de lo común"
+  },
+  {
+    "rank": 427,
+    "definition": "primigenio",
+    "word": "Originario, primitivo; que existe desde el principio"
+  },
+  {
+    "rank": 428,
+    "definition": "atávico",
+    "word": "Que procede de antepasados remotos o de instintos ancestrales"
+  },
+  {
+    "rank": 429,
+    "definition": "consuetudinario",
+    "word": "Que se hace por costumbre o tradición establecida"
+  },
+  {
+    "rank": 430,
+    "definition": "arengar",
+    "word": "Dirigir un discurso enérgico para enardecer los ánimos"
+  },
+  {
+    "rank": 431,
+    "definition": "argüir",
+    "word": "Presentar argumentos contra algo; deducir o inferir"
+  },
+  {
+    "rank": 432,
+    "definition": "rebatir",
+    "word": "Rechazar o contradecir un argumento con razones"
+  },
+  {
+    "rank": 433,
+    "definition": "refutar",
+    "word": "Demostrar la falsedad de un argumento o afirmación"
+  },
+  {
+    "rank": 434,
+    "definition": "disertar",
+    "word": "Exponer con amplitud y método un tema ante un auditorio"
+  },
+  {
+    "rank": 435,
+    "definition": "perorar",
+    "word": "Pronunciar un discurso largo, a menudo tedioso o enfático"
+  },
+  {
+    "rank": 436,
+    "definition": "apostillar",
+    "word": "Añadir notas o comentarios breves a un texto o discurso"
+  },
+  {
+    "rank": 437,
+    "definition": "interpelar",
+    "word": "Dirigirse a alguien para exigirle explicaciones sobre su conducta"
+  },
+  {
+    "rank": 438,
+    "definition": "musitar",
+    "word": "Hablar en voz muy baja, casi en susurro"
+  },
+  {
+    "rank": 439,
+    "definition": "vociferar",
+    "word": "Gritar con vehemencia o dar grandes voces"
+  },
+  {
+    "rank": 440,
+    "definition": "cavilar",
+    "word": "Reflexionar con insistencia y profundidad sobre algo"
+  },
+  {
+    "rank": 441,
+    "definition": "rumiar",
+    "word": "Pensar detenida y repetidamente sobre algo; darle vueltas a una idea"
+  },
+  {
+    "rank": 442,
+    "definition": "avizorar",
+    "word": "Observar con atención para descubrir algo oculto o lejano"
+  },
+  {
+    "rank": 443,
+    "definition": "vislumbrar",
+    "word": "Percibir algo de manera confusa o tenue; intuir"
+  },
+  {
+    "rank": 444,
+    "definition": "atisbar",
+    "word": "Mirar con cautela y disimulo; percibir indicios de algo"
+  },
+  {
+    "rank": 445,
+    "definition": "escrutar",
+    "word": "Examinar con atención y minuciosidad algo para descubrir lo oculto"
+  },
+  {
+    "rank": 446,
+    "definition": "otear",
+    "word": "Mirar desde un lugar alto para observar lo que hay a lo lejos"
+  },
+  {
+    "rank": 447,
+    "definition": "columbrar",
+    "word": "Divisar algo a lo lejos de manera imprecisa; conjeturar"
+  },
+  {
+    "rank": 448,
+    "definition": "conjeturar",
+    "word": "Formar juicio u opinión a partir de indicios o datos incompletos"
+  },
+  {
+    "rank": 449,
+    "definition": "barruntar",
+    "word": "Presentir o sospechar algo por indicios o señales"
+  },
+  {
+    "rank": 450,
+    "definition": "sojuzgar",
+    "word": "Someter con violencia; dominar por la fuerza"
+  },
+  {
+    "rank": 451,
+    "definition": "avasallar",
+    "word": "Someter o subyugar a alguien imponiéndole obediencia"
+  },
+  {
+    "rank": 452,
+    "definition": "doblegar",
+    "word": "Hacer ceder a alguien en su voluntad o resistencia"
+  },
+  {
+    "rank": 453,
+    "definition": "arredrar",
+    "word": "Hacer retroceder a alguien por miedo o temor; amedrentar"
+  },
+  {
+    "rank": 454,
+    "definition": "amilanar",
+    "word": "Causar miedo o desánimo que paraliza la acción"
+  },
+  {
+    "rank": 455,
+    "definition": "apabullar",
+    "word": "Abrumar o desconcertar a alguien dejándolo sin respuesta"
+  },
+  {
+    "rank": 456,
+    "definition": "acallar",
+    "word": "Hacer callar a alguien o algo; silenciar protestas u opiniones"
+  },
+  {
+    "rank": 457,
+    "definition": "coaccionar",
+    "word": "Ejercer presión o fuerza sobre alguien para obligarlo a actuar"
+  },
+  {
+    "rank": 458,
+    "definition": "coartar",
+    "word": "Limitar o restringir la libertad o los derechos de alguien"
+  },
+  {
+    "rank": 459,
+    "definition": "constreñir",
+    "word": "Obligar o compeler a alguien a hacer algo; oprimir"
+  },
+  {
+    "rank": 460,
+    "definition": "deambular",
+    "word": "Andar sin rumbo fijo ni destino determinado"
+  },
+  {
+    "rank": 461,
+    "definition": "merodear",
+    "word": "Rondar un lugar con intención sospechosa o a la espera"
+  },
+  {
+    "rank": 462,
+    "definition": "acechar",
+    "word": "Observar o espiar cautelosamente con un propósito hostil"
+  },
+  {
+    "rank": 463,
+    "definition": "surcar",
+    "word": "Navegar por el mar; atravesar un espacio abierto"
+  },
+  {
+    "rank": 464,
+    "definition": "trasegar",
+    "word": "Mudar cosas de un lugar a otro; beber con exceso"
+  },
+  {
+    "rank": 465,
+    "definition": "peregrinar",
+    "word": "Viajar a un lugar sagrado por devoción; andar errante"
+  },
+  {
+    "rank": 466,
+    "definition": "divagar",
+    "word": "Apartarse del tema principal; hablar o pensar sin orden ni concierto"
+  },
+  {
+    "rank": 467,
+    "definition": "escabullirse",
+    "word": "Escapar o irse de un lugar con disimulo y rapidez"
+  },
+  {
+    "rank": 468,
+    "definition": "replegarse",
+    "word": "Retirarse ordenadamente ante el adversario; recogerse sobre sí mismo"
+  },
+  {
+    "rank": 469,
+    "definition": "congregarse",
+    "word": "Reunirse o juntarse varias personas en un lugar"
+  },
+  {
+    "rank": 470,
+    "definition": "catarsis",
+    "word": "Liberación de emociones reprimidas que produce alivio interior"
+  },
+  {
+    "rank": 471,
+    "definition": "narcisismo",
+    "word": "Admiración excesiva y enfermiza de uno mismo"
+  },
+  {
+    "rank": 472,
+    "definition": "megalomanía",
+    "word": "Delirio de grandeza; creencia exagerada en el propio poder"
+  },
+  {
+    "rank": 473,
+    "definition": "paranoia",
+    "word": "Trastorno caracterizado por desconfianza extrema y delirios de persecución"
+  },
+  {
+    "rank": 474,
+    "definition": "sublimación",
+    "word": "Transformación de impulsos instintivos en actividades socialmente valoradas"
+  },
+  {
+    "rank": 475,
+    "definition": "fobia",
+    "word": "Temor intenso e irracional hacia algo específico"
+  },
+  {
+    "rank": 476,
+    "definition": "psicosis",
+    "word": "Trastorno mental grave con pérdida del contacto con la realidad"
+  },
+  {
+    "rank": 477,
+    "definition": "delirio",
+    "word": "Perturbación mental con ideas incoherentes y percepciones falsas"
+  },
+  {
+    "rank": 478,
+    "definition": "histeria",
+    "word": "Estado de excitación nerviosa extrema con reacciones descontroladas"
+  },
+  {
+    "rank": 479,
+    "definition": "alucinación",
+    "word": "Percepción sensorial falsa sin estímulo externo real"
+  },
+  {
+    "rank": 480,
+    "definition": "anomia",
+    "word": "Ausencia de normas sociales o desintegración del orden moral"
+  },
+  {
+    "rank": 481,
+    "definition": "plutocracia",
+    "word": "Sistema de gobierno en que el poder lo ejercen los más ricos"
+  },
+  {
+    "rank": 482,
+    "definition": "oligarquía",
+    "word": "Gobierno ejercido por un grupo reducido y privilegiado"
+  },
+  {
+    "rank": 483,
+    "definition": "autocracia",
+    "word": "Sistema de gobierno en que una sola persona ejerce el poder absoluto"
+  },
+  {
+    "rank": 484,
+    "definition": "teocracia",
+    "word": "Gobierno ejercido directamente por Dios o por los sacerdotes"
+  },
+  {
+    "rank": 485,
+    "definition": "nepotismo",
+    "word": "Favoritismo hacia familiares o amigos en la concesión de cargos"
+  },
+  {
+    "rank": 486,
+    "definition": "caciquismo",
+    "word": "Dominio abusivo de un cacique o jefe local sobre una comunidad"
+  },
+  {
+    "rank": 487,
+    "definition": "clientelismo",
+    "word": "Sistema de relaciones políticas basado en el intercambio de favores"
+  },
+  {
+    "rank": 488,
+    "definition": "estratificación",
+    "word": "División de la sociedad en capas o niveles jerárquicos"
+  },
+  {
+    "rank": 489,
+    "definition": "endogamia",
+    "word": "Práctica de contraer matrimonio dentro del propio grupo social"
+  },
+  {
+    "rank": 490,
+    "definition": "herejía",
+    "word": "Doctrina contraria a los dogmas de una religión establecida"
+  },
+  {
+    "rank": 491,
+    "definition": "cisma",
+    "word": "División o separación en el seno de una iglesia o comunidad"
+  },
+  {
+    "rank": 492,
+    "definition": "blasfemia",
+    "word": "Palabra o expresión injuriosa contra Dios o lo sagrado"
+  },
+  {
+    "rank": 493,
+    "definition": "sacrilegio",
+    "word": "Profanación de algo considerado sagrado o digno de respeto"
+  },
+  {
+    "rank": 494,
+    "definition": "iconoclasta",
+    "word": "Que rechaza o destruye tradiciones, imágenes o valores establecidos"
+  },
+  {
+    "rank": 495,
+    "definition": "heterodoxo",
+    "word": "Que se aparta de la doctrina o las normas aceptadas"
+  },
+  {
+    "rank": 496,
+    "definition": "ortodoxo",
+    "word": "Que se ajusta fielmente a la doctrina o normas establecidas"
+  },
+  {
+    "rank": 497,
+    "definition": "proselitismo",
+    "word": "Afán de ganar seguidores para una causa, doctrina o partido"
+  },
+  {
+    "rank": 498,
+    "definition": "sincretismo",
+    "word": "Fusión de elementos de distintas doctrinas, religiones o culturas"
+  },
+  {
+    "rank": 499,
+    "definition": "panteísmo",
+    "word": "Doctrina que identifica a Dios con el universo y la naturaleza"
+  },
+  {
+    "rank": 500,
+    "definition": "estepa",
+    "word": "Llanura extensa y árida con escasa vegetación herbácea"
+  },
+  {
+    "rank": 501,
+    "definition": "desfiladero",
+    "word": "Paso estrecho entre montañas por donde solo se puede ir en fila"
+  },
+  {
+    "rank": 502,
+    "definition": "collado",
+    "word": "Depresión suave entre dos alturas contiguas de un terreno montañoso"
+  },
+  {
+    "rank": 503,
+    "definition": "otero",
+    "word": "Cerro aislado que domina un llano"
+  },
+  {
+    "rank": 504,
+    "definition": "cañada",
+    "word": "Valle estrecho y alargado entre montañas o lomas"
+  },
+  {
+    "rank": 505,
+    "definition": "vega",
+    "word": "Extensión de tierra baja, llana y fértil junto a un río"
+  },
+  {
+    "rank": 506,
+    "definition": "alcor",
+    "word": "Colina o cerro de poca altura"
+  },
+  {
+    "rank": 507,
+    "definition": "peñasco",
+    "word": "Roca grande y elevada que sobresale en un terreno"
+  },
+  {
+    "rank": 508,
+    "definition": "risco",
+    "word": "Peñasco alto, escarpado y de difícil acceso"
+  },
+  {
+    "rank": 509,
+    "definition": "quebrada",
+    "word": "Abertura estrecha y áspera entre montañas; barranco"
+  },
+  {
+    "rank": 510,
+    "definition": "erario",
+    "word": "Tesoro público de un Estado; conjunto de rentas del Estado"
+  },
+  {
+    "rank": 511,
+    "definition": "peculio",
+    "word": "Dinero o bienes propios de una persona; caudal modesto"
+  },
+  {
+    "rank": 512,
+    "definition": "estipendio",
+    "word": "Remuneración que se da a una persona por un servicio prestado"
+  },
+  {
+    "rank": 513,
+    "definition": "emolumento",
+    "word": "Retribución complementaria que se recibe por un cargo o empleo"
+  },
+  {
+    "rank": 514,
+    "definition": "gravamen",
+    "word": "Carga u obligación que pesa sobre una propiedad o persona"
+  },
+  {
+    "rank": 515,
+    "definition": "plusvalía",
+    "word": "Aumento del valor de un bien por causas externas al propietario"
+  },
+  {
+    "rank": 516,
+    "definition": "arancel",
+    "word": "Tarifa oficial que grava la importación o exportación de mercancías"
+  },
+  {
+    "rank": 517,
+    "definition": "usura",
+    "word": "Cobro de intereses excesivos por un préstamo de dinero"
+  },
+  {
+    "rank": 518,
+    "definition": "insolvencia",
+    "word": "Incapacidad de pagar las deudas contraídas"
+  },
+  {
+    "rank": 519,
+    "definition": "oligopolio",
+    "word": "Situación de mercado en la que unos pocos vendedores controlan la oferta"
+  },
+  {
+    "rank": 520,
+    "definition": "templanza",
+    "word": "Moderación y sobriedad en los apetitos y en el uso de los sentidos"
+  },
+  {
+    "rank": 521,
+    "definition": "magnanimidad",
+    "word": "Grandeza de ánimo para emprender grandes obras y perdonar ofensas"
+  },
+  {
+    "rank": 522,
+    "definition": "munificencia",
+    "word": "Generosidad espléndida en dar o conceder"
+  },
+  {
+    "rank": 523,
+    "definition": "continencia",
+    "word": "Virtud de moderar y refrenar las pasiones y apetitos"
+  },
+  {
+    "rank": 524,
+    "definition": "prodigalidad",
+    "word": "Tendencia a gastar o dar con exceso y sin medida"
+  },
+  {
+    "rank": 525,
+    "definition": "pusilanimidad",
+    "word": "Falta de valor y ánimo para afrontar dificultades o emprender grandes cosas"
+  },
+  {
+    "rank": 526,
+    "definition": "concupiscencia",
+    "word": "Deseo desordenado de placeres, especialmente carnales"
+  },
+  {
+    "rank": 527,
+    "definition": "intemperancia",
+    "word": "Falta de templanza o moderación; exceso en los apetitos"
+  },
+  {
+    "rank": 528,
+    "definition": "abyección",
+    "word": "Estado de degradación moral extrema; bajeza y envilecimiento"
+  },
+  {
+    "rank": 529,
+    "definition": "incuria",
+    "word": "Negligencia y descuido en el cumplimiento de las obligaciones"
   }
 ]

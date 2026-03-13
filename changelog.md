@@ -1,6 +1,32 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.20.0 - 13th March 2026
+
+- Expanded bundled vocabulary from 299 to 529 words across 53 lessons.
+- Added 23 new thematic lessons:
+  - Fenómenos y estados I & II
+  - Personas y tipos I & II
+  - Sentimientos y emociones I & II
+  - Conflictos y estratagemas
+  - Espacios y lugares cultos
+  - Salud y remedios
+  - Adjetivos de carácter I & II
+  - Adjetivos de aspecto físico
+  - Adjetivos de condición
+  - Verbos de comunicación
+  - Verbos de percepción y pensamiento
+  - Verbos de dominio y sometimiento
+  - Verbos de movimiento
+  - Psicología y mente
+  - Sociología y poder
+  - Religión y creencias
+  - Naturaleza y geografía
+  - Economía y hacienda
+  - Virtudes y vicios
+- Updated `scripts/build_vocab.py`: added ~280 manual definitions to eliminate dependency on Wiktionary API availability.
+
+
 ### v0.19.2 - 13th March 2026
 
 - Expanded bundled vocabulary from 203 to 299 words across 30 thematic lessons (all lessons now fully populated).
