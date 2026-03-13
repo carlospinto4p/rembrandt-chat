@@ -1,6 +1,6 @@
 [
   {
-    "title": "Adjetivos cultos",
+    "title": "Adjetivos cultos I",
     "description": "Adjetivos poco comunes de registro culto",
     "language_from": "es",
     "language_to": "es",
@@ -23,14 +23,14 @@
     ]
   },
   {
-    "title": "Adjetivos literarios",
-    "description": "Adjetivos de uso literario y formal",
+    "title": "Adjetivos cultos II",
+    "description": "Más adjetivos de registro culto",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C2",
+    "cefr": "C1",
     "tags": [
       "adjetivos",
-      "literario"
+      "culto"
     ],
     "word_ranks": [
       11,
@@ -46,14 +46,14 @@
     ]
   },
   {
-    "title": "Sustantivos abstractos",
-    "description": "Conceptos abstractos de uso culto",
+    "title": "Adjetivos cultos III",
+    "description": "Adjetivos cultos para descripciones precisas",
     "language_from": "es",
     "language_to": "es",
     "cefr": "C1",
     "tags": [
-      "sustantivos",
-      "abstracto"
+      "adjetivos",
+      "culto"
     ],
     "word_ranks": [
       21,
@@ -69,14 +69,14 @@
     ]
   },
   {
-    "title": "Sustantivos formales",
-    "description": "Sustantivos de registro formal y académico",
+    "title": "Adjetivos literarios I",
+    "description": "Adjetivos de uso literario y formal",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C1",
+    "cefr": "C2",
     "tags": [
-      "sustantivos",
-      "formal"
+      "adjetivos",
+      "literario"
     ],
     "word_ranks": [
       31,
@@ -92,14 +92,14 @@
     ]
   },
   {
-    "title": "Verbos precisos I",
-    "description": "Verbos cultos para expresarse con precisión",
+    "title": "Adjetivos literarios II",
+    "description": "Más adjetivos de uso literario",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C1",
+    "cefr": "C2",
     "tags": [
-      "verbos",
-      "culto"
+      "adjetivos",
+      "literario"
     ],
     "word_ranks": [
       41,
@@ -115,14 +115,14 @@
     ]
   },
   {
-    "title": "Verbos precisos II",
-    "description": "Más verbos cultos de uso formal",
+    "title": "Sustantivos abstractos I",
+    "description": "Conceptos abstractos de uso culto",
     "language_from": "es",
     "language_to": "es",
     "cefr": "C1",
     "tags": [
-      "verbos",
-      "culto"
+      "sustantivos",
+      "abstracto"
     ],
     "word_ranks": [
       51,
@@ -138,14 +138,14 @@
     ]
   },
   {
-    "title": "Verbos literarios",
-    "description": "Verbos de uso literario y poético",
+    "title": "Sustantivos abstractos II",
+    "description": "Más conceptos abstractos de uso culto",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C2",
+    "cefr": "C1",
     "tags": [
-      "verbos",
-      "literario"
+      "sustantivos",
+      "abstracto"
     ],
     "word_ranks": [
       61,
@@ -161,14 +161,14 @@
     ]
   },
   {
-    "title": "Retórica y argumentación",
-    "description": "Vocabulario para el discurso y la persuasión",
+    "title": "Sustantivos abstractos III",
+    "description": "Conceptos abstractos avanzados",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C1",
+    "cefr": "C2",
     "tags": [
-      "retórica",
-      "argumentación"
+      "sustantivos",
+      "abstracto"
     ],
     "word_ranks": [
       71,
@@ -184,13 +184,14 @@
     ]
   },
   {
-    "title": "Filosofía y pensamiento",
-    "description": "Términos filosóficos y del pensamiento crítico",
+    "title": "Sustantivos formales I",
+    "description": "Sustantivos de registro formal y académico",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C2",
+    "cefr": "C1",
     "tags": [
-      "filosofía"
+      "sustantivos",
+      "formal"
     ],
     "word_ranks": [
       81,
@@ -206,14 +207,14 @@
     ]
   },
   {
-    "title": "Figuras retóricas",
-    "description": "Recursos literarios y estilísticos",
+    "title": "Sustantivos formales II",
+    "description": "Más sustantivos de registro formal",
     "language_from": "es",
     "language_to": "es",
     "cefr": "C1",
     "tags": [
-      "literatura",
-      "retórica"
+      "sustantivos",
+      "formal"
     ],
     "word_ranks": [
       91,
@@ -229,14 +230,14 @@
     ]
   },
   {
-    "title": "Derecho y gobierno",
-    "description": "Vocabulario jurídico y político",
+    "title": "Sustantivos formales III",
+    "description": "Sustantivos formales avanzados",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C1",
+    "cefr": "C2",
     "tags": [
-      "derecho",
-      "política"
+      "sustantivos",
+      "formal"
     ],
     "word_ranks": [
       101,
@@ -252,13 +253,14 @@
     ]
   },
   {
-    "title": "Palabras en desuso",
-    "description": "Arcaísmos y palabras poco frecuentes",
+    "title": "Verbos precisos I",
+    "description": "Verbos cultos para expresarse con precisión",
     "language_from": "es",
     "language_to": "es",
-    "cefr": "C2",
+    "cefr": "C1",
     "tags": [
-      "arcaísmo"
+      "verbos",
+      "culto"
     ],
     "word_ranks": [
       111,
@@ -271,6 +273,412 @@
       118,
       119,
       120
+    ]
+  },
+  {
+    "title": "Verbos precisos II",
+    "description": "Más verbos cultos de uso formal",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "verbos",
+      "culto"
+    ],
+    "word_ranks": [
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130
+    ]
+  },
+  {
+    "title": "Verbos precisos III",
+    "description": "Verbos cultos adicionales",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "verbos",
+      "culto"
+    ],
+    "word_ranks": [
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140
+    ]
+  },
+  {
+    "title": "Verbos literarios I",
+    "description": "Verbos de uso literario y poético",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "verbos",
+      "literario"
+    ],
+    "word_ranks": [
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150
+    ]
+  },
+  {
+    "title": "Verbos literarios II",
+    "description": "Más verbos de uso literario",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "verbos",
+      "literario"
+    ],
+    "word_ranks": [
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160
+    ]
+  },
+  {
+    "title": "Verbos literarios III",
+    "description": "Verbos literarios avanzados",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "verbos",
+      "literario"
+    ],
+    "word_ranks": [
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170
+    ]
+  },
+  {
+    "title": "Retórica y argumentación",
+    "description": "Vocabulario para el discurso y la persuasión",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "retórica",
+      "argumentación"
+    ],
+    "word_ranks": [
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180
+    ]
+  },
+  {
+    "title": "Figuras retóricas I",
+    "description": "Recursos literarios y estilísticos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "literatura",
+      "retórica"
+    ],
+    "word_ranks": [
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190
+    ]
+  },
+  {
+    "title": "Figuras retóricas II",
+    "description": "Más recursos literarios",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "literatura",
+      "retórica"
+    ],
+    "word_ranks": [
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200
+    ]
+  },
+  {
+    "title": "Teoría literaria",
+    "description": "Términos de crítica y análisis literario",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "literatura"
+    ],
+    "word_ranks": [
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210
+    ]
+  },
+  {
+    "title": "Filosofía y pensamiento I",
+    "description": "Términos filosóficos fundamentales",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "filosofía"
+    ],
+    "word_ranks": [
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220
+    ]
+  },
+  {
+    "title": "Filosofía y pensamiento II",
+    "description": "Más conceptos filosóficos",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "filosofía"
+    ],
+    "word_ranks": [
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230
+    ]
+  },
+  {
+    "title": "Derecho y gobierno I",
+    "description": "Vocabulario jurídico y político",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "derecho",
+      "política"
+    ],
+    "word_ranks": [
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240
+    ]
+  },
+  {
+    "title": "Derecho y gobierno II",
+    "description": "Más vocabulario jurídico",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "derecho",
+      "política"
+    ],
+    "word_ranks": [
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250
+    ]
+  },
+  {
+    "title": "Ciencia y método",
+    "description": "Vocabulario del método científico",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "ciencia"
+    ],
+    "word_ranks": [
+      251,
+      94,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259
+    ]
+  },
+  {
+    "title": "Medicina culta",
+    "description": "Términos médicos de uso culto",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C1",
+    "tags": [
+      "medicina"
+    ],
+    "word_ranks": [
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269
+    ]
+  },
+  {
+    "title": "Palabras en desuso I",
+    "description": "Arcaísmos y palabras poco frecuentes",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "arcaísmo"
+    ],
+    "word_ranks": [
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279
+    ]
+  },
+  {
+    "title": "Palabras en desuso II",
+    "description": "Más arcaísmos y voces antiguas",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "arcaísmo"
+    ],
+    "word_ranks": [
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289
+    ]
+  },
+  {
+    "title": "Palabras en desuso III",
+    "description": "Voces antiguas y literarias",
+    "language_from": "es",
+    "language_to": "es",
+    "cefr": "C2",
+    "tags": [
+      "arcaísmo"
+    ],
+    "word_ranks": [
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299
     ]
   }
 ]

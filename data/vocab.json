@@ -7,12 +7,12 @@
   {
     "rank": 2,
     "definition": "ubicuo",
-    "word": "Que está presente a un mismo tiempo en todas partes. Dícese solamente de Dios"
+    "word": "Que está presente en todas partes al mismo tiempo"
   },
   {
     "rank": 3,
     "definition": "acérrimo",
-    "word": "Muy tenaz, firme o intransigente en sus ideas o actitudes"
+    "word": "Muy firme, tenaz o extremo en su postura o sentimientos"
   },
   {
     "rank": 4,
@@ -32,7 +32,7 @@
   {
     "rank": 7,
     "definition": "insigne",
-    "word": "Célebre, distinguido por méritos o cualidades sobresalientes"
+    "word": "célebre, distinguido"
   },
   {
     "rank": 8,
@@ -47,556 +47,1451 @@
   {
     "rank": 10,
     "definition": "acucioso",
-    "word": "diligente, solícito, que hace las cosas pronto y con cuidado"
+    "word": "Diligente, solícito; que hace las cosas pronto y con cuidado"
   },
   {
     "rank": 11,
+    "definition": "conspicuo",
+    "word": "notable, llamativo, marcado, evidente, sobresaliente, ilustre"
+  },
+  {
+    "rank": 12,
+    "definition": "inicuo",
+    "word": "Contrario a la equidad"
+  },
+  {
+    "rank": 13,
+    "definition": "ingente",
+    "word": "Muy grande o numeroso"
+  },
+  {
+    "rank": 14,
+    "definition": "pusilánime",
+    "word": "Falto de ánimo y valor para intentar cosas grandes, tolerar las desgracias, enfrentarse a dificultades o defender ideas propias"
+  },
+  {
+    "rank": 15,
+    "definition": "indolente",
+    "word": "Que no se afecta ni se inmuta; perezoso, apático"
+  },
+  {
+    "rank": 16,
+    "definition": "pertinaz",
+    "word": "obstinado, terco o muy tenaz en su dictamen o resolución"
+  },
+  {
+    "rank": 17,
+    "definition": "lacónico",
+    "word": "parco en palabras; breve"
+  },
+  {
+    "rank": 18,
+    "definition": "falaz",
+    "word": "Se dice de quien dice embusteces o emplea falsedades para engañar"
+  },
+  {
+    "rank": 19,
+    "definition": "ecuánime",
+    "word": "Que juzga con imparcialidad y serenidad de ánimo"
+  },
+  {
+    "rank": 20,
+    "definition": "prolijo",
+    "word": "Largo, dilatado y extendido con exceso"
+  },
+  {
+    "rank": 21,
+    "definition": "ecuestre",
+    "word": "Perteneciente o relativo al caballo o a la equitación"
+  },
+  {
+    "rank": 22,
+    "definition": "coetáneo",
+    "word": "Que tiene la misma edad de aquel, aquella o aquello con que se le compara"
+  },
+  {
+    "rank": 23,
+    "definition": "longevo",
+    "word": "Muy anciano o de larga edad"
+  },
+  {
+    "rank": 24,
+    "definition": "inefable",
+    "word": "Que no puede ser expresado o explicado con palabras"
+  },
+  {
+    "rank": 25,
+    "definition": "unívoco",
+    "word": "Que tiene un solo significado"
+  },
+  {
+    "rank": 26,
+    "definition": "ambiguo",
+    "word": "Que puede entenderse de varios modos o admitir distintas interpretaciones, y dar, por consiguiente, motivo a dudas, incertidumbre o confusión"
+  },
+  {
+    "rank": 27,
+    "definition": "pueril",
+    "word": "Propio de o relativo a los niños o a la niñez"
+  },
+  {
+    "rank": 28,
+    "definition": "disímil",
+    "word": "No semejante; diferente"
+  },
+  {
+    "rank": 29,
+    "definition": "subrepticio",
+    "word": "Que se hace o persigue de forma oculta, solapada o con disimulo"
+  },
+  {
+    "rank": 30,
+    "definition": "espurio",
+    "word": "Que simula ser lo que no es, especialmente si es de origen dudoso o incierto"
+  },
+  {
+    "rank": 31,
     "definition": "diáfano",
     "word": "Dicho de un cuerpo, que permite el paso de la luz casi en su totalidad"
   },
   {
-    "rank": 12,
+    "rank": 32,
     "definition": "ignoto",
     "word": "Desconocido, no descubierto ni explorado"
   },
   {
-    "rank": 13,
+    "rank": 33,
     "definition": "vetusto",
     "word": "Muy antiguo o de mucha edad"
   },
   {
-    "rank": 14,
+    "rank": 34,
     "definition": "feraz",
     "word": "Sumamente fértil, copioso en frutos"
   },
   {
-    "rank": 15,
+    "rank": 35,
     "definition": "sempiterno",
     "word": "De duración infinita"
   },
   {
-    "rank": 16,
+    "rank": 36,
     "definition": "iracundo",
-    "word": "Propenso a la ira, que se encoleriza con facilidad"
+    "word": "Propenso a la ira; que se encoleriza con facilidad"
   },
   {
-    "rank": 17,
+    "rank": 37,
     "definition": "ominoso",
     "word": "Que produce temor, rechazo o repugnancia por contener peligro, azar, o mala suerte; que se debe evitar o no desear"
   },
   {
-    "rank": 18,
+    "rank": 38,
     "definition": "cruento",
     "word": "Que implica o provoca gran efusión de sangre"
   },
   {
-    "rank": 19,
+    "rank": 39,
     "definition": "inveterado",
-    "word": "Muy antiguo y arraigado, difícil de cambiar por su larga duración"
+    "word": "antiguo, arraigado"
   },
   {
-    "rank": 20,
+    "rank": 40,
     "definition": "execrable",
     "word": "Que merece condenarse, rechazarse o criticarse con severidad, por profanar algo considerado sagrado o muy valioso moralmente"
   },
   {
-    "rank": 21,
+    "rank": 41,
+    "definition": "yermo",
+    "word": "Que no tiene población"
+  },
+  {
+    "rank": 42,
+    "definition": "álgido",
+    "word": "De una temperatura muy inferior a la normal o deseable; extremadamente frío"
+  },
+  {
+    "rank": 43,
+    "definition": "grandilocuente",
+    "word": "Que escribe o habla con gran elocuencia o con un estilo elevado"
+  },
+  {
+    "rank": 44,
+    "definition": "recalcitrante",
+    "word": "reacio, obstinado en la resistencia"
+  },
+  {
+    "rank": 45,
+    "definition": "pródigo",
+    "word": "Que desperdicia y consume los bienes y caudal propios sin medida y de modo insensato"
+  },
+  {
+    "rank": 46,
+    "definition": "impávido",
+    "word": "Que no siente miedo, impertérrito ante el peligro"
+  },
+  {
+    "rank": 47,
+    "definition": "contumaz",
+    "word": "Que no ceja en una decisión, pese a los pedidos o argumentos razonables en sentido contrario"
+  },
+  {
+    "rank": 48,
+    "definition": "ineluctable",
+    "word": "Se dice de algo que no se puede evitar o evadir"
+  },
+  {
+    "rank": 49,
+    "definition": "avieso",
+    "word": "atravesado, torcido, o fuera de norma"
+  },
+  {
+    "rank": 50,
+    "definition": "dilecto",
+    "word": "Amado con especial afecto y predilección"
+  },
+  {
+    "rank": 51,
     "definition": "desidia",
     "word": "Falta de esfuerzo o dedicación para la realización de las tareas necesarias o prescritas"
   },
   {
-    "rank": 22,
+    "rank": 52,
     "definition": "vehemencia",
     "word": "calidad o cualidad de vehemente o impetuoso"
   },
   {
-    "rank": 23,
+    "rank": 53,
     "definition": "mesura",
-    "word": "Moderación, compostura y gravedad en el comportamiento o las palabras"
+    "word": "gravedad, compostura"
   },
   {
-    "rank": 24,
+    "rank": 54,
     "definition": "displicencia",
     "word": "desagrado o indiferencia en el trato"
   },
   {
-    "rank": 25,
+    "rank": 55,
     "definition": "acervo",
     "word": "Cúmulo de cosas u objetos pequeños colocados desordenadamente unos sobre otros"
   },
   {
-    "rank": 26,
+    "rank": 56,
     "definition": "menoscabo",
-    "word": "Disminución del valor, la importancia o el prestigio de algo o alguien"
+    "word": "Disminución del valor, la importancia o el prestigio de algo"
   },
   {
-    "rank": 27,
+    "rank": 57,
     "definition": "acopio",
-    "word": "Acción de juntar o reunir en cantidad algo, especialmente provisiones o materiales"
+    "word": "acopiar (juntar o acumular en cantidad)"
   },
   {
-    "rank": 28,
+    "rank": 58,
     "definition": "desazón",
-    "word": "Malestar, inquietud o disgusto interior"
+    "word": "falta de sabor y gusto"
   },
   {
-    "rank": 29,
+    "rank": 59,
     "definition": "premura",
     "word": "aprieto, apuro, prisa, urgencia, instancia"
   },
   {
-    "rank": 30,
+    "rank": 60,
     "definition": "denuedo",
     "word": "Empleo de energía, valor, ánimo, vigor para lograr algo, en especial venciendo dificultades"
   },
   {
-    "rank": 31,
-    "definition": "resquicio",
-    "word": "abertura que hay entre el quicio y la puerta"
-  },
-  {
-    "rank": 32,
-    "definition": "cariz",
-    "word": "Aspecto o apariencia que presenta un asunto o situación"
-  },
-  {
-    "rank": 33,
-    "definition": "derrotero",
-    "word": "Camino o rumbo por el que se llega a un fin propuesto"
-  },
-  {
-    "rank": 34,
-    "definition": "coyuntura",
-    "word": "Combinación de circunstancias y factores que caracterizan una situación en un momento dado"
-  },
-  {
-    "rank": 35,
-    "definition": "vestigio",
-    "word": "Señal que queda en un sitio por donde se ha pisado o estado"
-  },
-  {
-    "rank": 36,
-    "definition": "diatriba",
-    "word": "discurso o escrito violento e injurioso contra alguien o algo"
-  },
-  {
-    "rank": 37,
-    "definition": "precepto",
-    "word": "mandamiento u ordenanza dada por una persona que tiene autorización para ello"
-  },
-  {
-    "rank": 38,
-    "definition": "salvedad",
-    "word": "Razonamiento o advertencia que se emplea como excusa, descargo, limitación o cortapisa de lo que se va a decir o hacer"
-  },
-  {
-    "rank": 39,
-    "definition": "envergadura",
-    "word": "distancia que hay entre las puntas de las alas de una nave, de un ave o de cualquier otro animal, cuando éstas están totalmente extendidas"
-  },
-  {
-    "rank": 40,
-    "definition": "menester",
-    "word": "Ocupación habitual de un individuo"
-  },
-  {
-    "rank": 41,
-    "definition": "dilucidar",
-    "word": "explicar un asunto, aclararlo; dejar clara e inteligible alguna cosa"
-  },
-  {
-    "rank": 42,
-    "definition": "esgrimir",
-    "word": "Usar algo, especialmente un argumento o razón, como arma para atacar o defenderse"
-  },
-  {
-    "rank": 43,
-    "definition": "soslayar",
-    "word": "Evitar una dificultad o un asunto, eludirlo o pasarlo por alto"
-  },
-  {
-    "rank": 44,
-    "definition": "ponderar",
-    "word": "Examinar con cuidado y atención algo, sopesando sus ventajas e inconvenientes"
-  },
-  {
-    "rank": 45,
-    "definition": "acaecer",
-    "word": "ocurrir, producirse un hecho, tener lugar un acontecimiento, suceder"
-  },
-  {
-    "rank": 46,
-    "definition": "enmendar",
-    "word": "arreglar, corregir los fallos o defectos"
-  },
-  {
-    "rank": 47,
-    "definition": "socavar",
-    "word": "excavar por debajo alguna cosa, dejándola sin la debida seguridad y resistencia"
-  },
-  {
-    "rank": 48,
-    "definition": "abogar",
-    "word": "defender y dar consejo a alguien que es objeto de un juicio o pleito legal"
-  },
-  {
-    "rank": 49,
-    "definition": "discernir",
-    "word": "diferenciar conceptualmente una cosa de otra"
-  },
-  {
-    "rank": 50,
-    "definition": "aducir",
-    "word": "Presentar razones o pruebas; presentar un alegato o argumentación"
-  },
-  {
-    "rank": 51,
-    "definition": "dirimir",
-    "word": "Resolver o poner fin a una disputa o litigio"
-  },
-  {
-    "rank": 52,
-    "definition": "resarcir",
-    "word": "Reparar un daño, mediante el pago de un bien o la realización de una acción"
-  },
-  {
-    "rank": 53,
-    "definition": "escatimar",
-    "word": "Dar o usar lo menos posible, o solo lo imprescindible, algún recurso"
-  },
-  {
-    "rank": 54,
-    "definition": "desdeñar",
-    "word": "Tratar con desdén a alguien; tratar algo con ostensible indiferencia o menosperecio; considerar inferior algo"
-  },
-  {
-    "rank": 55,
-    "definition": "vindicar",
-    "word": "Defender o reivindicar a alguien o algo que ha sido injustamente atacado o despreciado"
-  },
-  {
-    "rank": 56,
-    "definition": "acusar",
-    "word": "Asignar a alguien la culpa o responsabilidad de algo ilegal. inmoral o reprobable, como un delito, vicio, tacha o falta"
-  },
-  {
-    "rank": 57,
-    "definition": "usurpar",
-    "word": "Apoderarse de una propiedad o de un derecho que pertenece a otro de una forma violenta"
-  },
-  {
-    "rank": 58,
-    "definition": "desistir",
-    "word": "Dejar de insistir, interrumpir un esfuerzo, una acción, etc"
-  },
-  {
-    "rank": 59,
-    "definition": "atenuar",
-    "word": "reducir, disminuir o debilitar la fuerza, el efecto, la potencia o la intensidad de algo"
-  },
-  {
-    "rank": 60,
-    "definition": "amedrentar",
-    "word": "infundir miedo, temor o aprensión"
-  },
-  {
     "rank": 61,
-    "definition": "escindir",
-    "word": "Separar o dividir en dos o más partes de importancia similar"
+    "definition": "parsimonia",
+    "word": "moderación en el gasto y en los placeres"
   },
   {
     "rank": 62,
-    "definition": "holgar",
-    "word": "Descansar, tomar aliento después de alguna fatiga"
+    "definition": "fruición",
+    "word": "Goce intenso; placer o deleite que se experimenta al disfrutar algo"
   },
   {
     "rank": 63,
-    "definition": "increpar",
-    "word": "reprender a una persona con dureza y severidad"
+    "definition": "desavenencia",
+    "word": "discordia o desacuerdo entre personas"
   },
   {
     "rank": 64,
-    "definition": "azuzar",
-    "word": "incitar a un perro a que ladre o ataque"
+    "definition": "resquemor",
+    "word": "Calor mordicante que producen en la lengua y paladar algunos mandajes y bebidas"
   },
   {
     "rank": 65,
-    "definition": "expiar",
-    "word": "Limpiar o enmendar la culpa a través del cumplimiento de un castigo o penitencia"
+    "definition": "desdén",
+    "word": "Frialdad u hostilidad en el trato que reflejan la poca estima que se tiene por alguien"
   },
   {
     "rank": 66,
-    "definition": "zaherir",
-    "word": "Decir a alguien algo que le provoque humillación o dolor moral"
+    "definition": "encono",
+    "word": "rencor arraigado en el ánimo, mala voluntad contra alguien"
   },
   {
     "rank": 67,
-    "definition": "denostar",
-    "word": "Atacar verbalmente a alguien con graves insultos y ofensas"
+    "definition": "inquina",
+    "word": "Antipatía, aversión, rechazo, mala voluntad hacia algo o alguien"
   },
   {
     "rank": 68,
-    "definition": "conminar",
-    "word": "Amenazar a alguien con un castigo si no cumple lo que se le ordena"
+    "definition": "lascivia",
+    "word": "deseo ardiente y censurable"
   },
   {
     "rank": 69,
-    "definition": "medrar",
-    "word": "Mejorar de posición, crecer o prosperar en fortuna o reputación"
+    "definition": "probidad",
+    "word": "integridad y honradez en el obrar"
   },
   {
     "rank": 70,
-    "definition": "fulminar",
-    "word": "Destruir o aniquilar de manera súbita y violenta, como un rayo"
+    "definition": "oprobio",
+    "word": "deshonra o descrédito público"
   },
   {
     "rank": 71,
-    "definition": "falacia",
-    "word": "engaño, fraude o mentira con que se intenta perjudicar a otro"
+    "definition": "diletantismo",
+    "word": "Estado o comportamiento de diletante, de ser un aficionado o de participar superficialmente en algo, usualmente de las artes"
   },
   {
     "rank": 72,
-    "definition": "silogismo",
-    "word": "demostración que consta de tres proposiciones, una de las cuales se deduce del conjunto de las otras dos"
+    "definition": "estulticia",
+    "word": "necedad, estupidez, tontería"
   },
   {
     "rank": 73,
-    "definition": "premisa",
-    "word": "Principio por el cual se logran inferencias y alcanzan conclusiones"
+    "definition": "vileza",
+    "word": "Acción baja, indigna, infame"
   },
   {
     "rank": 74,
-    "definition": "paradoja",
-    "word": "opinión o declaración opuesta a las ideas, opiniones, creencias o sentimientos de la mayoría de las personas"
+    "definition": "contumelia",
+    "word": "oprobio, injuria u ofensa dicha a una persona en su cara"
   },
   {
     "rank": 75,
-    "definition": "retórica",
-    "word": "Arte de dar eficacia al lenguaje para obtener el objetivo deseado, especialmente estético o persuasivo"
+    "definition": "abulia",
+    "word": "falta patológica de voluntad o energía"
   },
   {
     "rank": 76,
-    "definition": "sofisma",
-    "word": "Razón o argumento aparente con que se quiere defender o persuadir lo que es falso"
-  },
-  {
-    "rank": 77,
-    "definition": "aforismo",
-    "word": "declaración o sentencia concisa; acordada por un gran número de personas (foro); que pretende expresar un principio o la verdad en una manera breve, pensativa y aparentemente cerrada"
-  },
-  {
-    "rank": 78,
-    "definition": "elocuencia",
-    "word": "habilidad de expresarse con completa fluidez, con un amplio vocabulario y de modo eficaz para persuadir o producir una respuesta emotiva de quien recibe el mensaje"
-  },
-  {
-    "rank": 79,
-    "definition": "apología",
-    "word": "Discurso de palabra o escrito, en defensa, justificación, alabanza o adulación de personas, actitudes o cosas"
-  },
-  {
-    "rank": 80,
-    "definition": "demagogia",
-    "word": "Práctica política consistente en ganarse con halagos el favor popular"
-  },
-  {
-    "rank": 81,
-    "definition": "ontología",
-    "word": "Parte de la metafísica que estudia el ser en tanto que es y existe. Por ello es llamada la teoría del ser, es decir, el estudio de todo lo que es: qué es, cómo es y cómo es posible"
-  },
-  {
-    "rank": 82,
-    "definition": "epistemología",
-    "word": "campo de la filosofía que trata sobre los fundamentos, límites, y métodos del conocimiento científico"
-  },
-  {
-    "rank": 83,
-    "definition": "axioma",
-    "word": "verdad evidente que no requiere prueba o demostración"
-  },
-  {
-    "rank": 84,
-    "definition": "dialéctica",
-    "word": "Técnica formal de razonamiento que permite llegar a una verdad mediante el diálogo, intercambiando argumentos lógicos"
-  },
-  {
-    "rank": 85,
-    "definition": "teleología",
-    "word": "Doctrina que intenta explicar el universo como un sistema de relaciones causales con un propósito final"
-  },
-  {
-    "rank": 86,
-    "definition": "hermenéutica",
-    "word": "teoría y método para la interpretación de textos, que busca establecer el sentido original de un texto para su autor o para la comunidad en la que se produjo"
-  },
-  {
-    "rank": 87,
-    "definition": "nihilismo",
-    "word": "negación de todo principio, autoridad o dogma filosófico o religioso"
-  },
-  {
-    "rank": 88,
-    "definition": "solipsismo",
-    "word": "teoría subjetiva que sostiene que tan sólo el propio yo es lo único que existe o que puede demostrarse"
-  },
-  {
-    "rank": 89,
-    "definition": "empirismo",
-    "word": "corriente filosófica según la cual el conocimiento se halla fundado en la experiencia. Se contrapone al racionalismo, para el cual el conocimiento se halla fundado en gran parte en la razón"
-  },
-  {
-    "rank": 90,
-    "definition": "altruismo",
-    "word": "esmero y diligencia puesto por una persona en conseguir el bien de los demás, aun a expensas del propio"
-  },
-  {
-    "rank": 91,
-    "definition": "metáfora",
-    "word": "figura retórica consistente en establecer una identidad entre dos términos y emplear uno con el significado del otro, basándose en una comparación no expresada entre las dos realidades que dichos términos designan"
-  },
-  {
-    "rank": 92,
-    "definition": "metonimia",
-    "word": "tropo que designa una cosa con el nombre de otra con la que guarda una relación de causa efecto, de autor a obra, o de algún otro tipo de contigüidad temporal, causal o espacial"
-  },
-  {
-    "rank": 93,
-    "definition": "sinécdoque",
-    "word": "tropo en el que: una parte de algo es usada para representar el todo, el todo es usado por una parte, la especie es usada por el género, el género es usado por la especie, el material de que algo está hecho es usado por la cosa"
-  },
-  {
-    "rank": 94,
-    "definition": "oxímoron",
-    "word": "expresión en la que se emplean dos términos incongruentes o contradictorios"
-  },
-  {
-    "rank": 95,
-    "definition": "hipérbole",
-    "word": "Exageración muy grande e intencional, que consiste en aumentar con el fin de obtener un enunciado más expresivo, como al decir: \"Te llamé un millón de veces\", \"un millón de gracias\" o \"te doy mil besos\""
-  },
-  {
-    "rank": 96,
-    "definition": "antítesis",
-    "word": "Oposición o contrariedad de dos juicios o afirmaciones"
-  },
-  {
-    "rank": 97,
-    "definition": "prosopopeya",
-    "word": "enunciación de un discurso o una proposición por parte de un personaje en una obra literaria"
-  },
-  {
-    "rank": 98,
-    "definition": "elipsis",
-    "word": "Ausencia de alguna palabra en una oración, que no afecta su sentido"
-  },
-  {
-    "rank": 99,
-    "definition": "anáfora",
-    "word": "Figura retórica que consiste en la repetición de una o varias palabras al principio de versos o frases sucesivas"
-  },
-  {
-    "rank": 100,
-    "definition": "pleonasmo",
-    "word": "Figura de construcción, que consiste en emplear en la oración uno o más vocablos innecesarios para que tenga sentido completo, pero con los cuales se da énfasis a lo dicho"
-  },
-  {
-    "rank": 101,
-    "definition": "jurisprudencia",
-    "word": "término jurídico que significa conjunto de las decisiones e interpretaciones de la ley, tomadas por los tribunales. Estas decisiones funcionan como una fuente del derecho sustituyendo la falta de la ley - están basadas en actos y prácticas pasadas que tratan sobre los casos iguales o parecidos"
-  },
-  {
-    "rank": 102,
-    "definition": "potestad",
-    "word": "dominio que se tiene sobre una cosa"
-  },
-  {
-    "rank": 103,
-    "definition": "prerrogativa",
-    "word": "privilegio o exención que se concede a alguien, como beneficio correspondiente a una dignidad o cargo"
-  },
-  {
-    "rank": 104,
-    "definition": "promulgar",
-    "word": "publicar una cosa solemnemente; hacerla saber a todos"
-  },
-  {
-    "rank": 105,
-    "definition": "derogar",
-    "word": "abolir, dejar sin vigencia o modificar una ley, norma o precepto establecido, a menudo reemplazándolos con una orden nueva"
-  },
-  {
-    "rank": 106,
-    "definition": "litigio",
-    "word": "disputa legal, diferendo"
-  },
-  {
-    "rank": 107,
-    "definition": "indulto",
-    "word": "gracia o privilegio concedido a uno para que pueda hacer lo que sin él no podría"
-  },
-  {
-    "rank": 108,
-    "definition": "exhorto",
-    "word": "Escrito que envía un juez o un tribunal a otro con más jurisdicción, para que mande el cumplimiento de lo que le pide"
-  },
-  {
-    "rank": 109,
-    "definition": "fuero",
-    "word": "Ley, o estatuto particular de algun reino o provincia de España"
-  },
-  {
-    "rank": 110,
     "definition": "aquiescencia",
     "word": "acuerdo que se presta pasivamente a una decisión o designio ajeno"
   },
   {
+    "rank": 77,
+    "definition": "clemencia",
+    "word": "moderación en la severidad de un castigo"
+  },
+  {
+    "rank": 78,
+    "definition": "ignominia",
+    "word": "Grave afrenta pública; gran deshonor o humillación"
+  },
+  {
+    "rank": 79,
+    "definition": "inopia",
+    "word": "Dícese de una gran pobreza"
+  },
+  {
+    "rank": 80,
+    "definition": "petulancia",
+    "word": "presunción exagerada y vana"
+  },
+  {
+    "rank": 81,
+    "definition": "resquicio",
+    "word": "abertura que hay entre el quicio y la puerta"
+  },
+  {
+    "rank": 82,
+    "definition": "cariz",
+    "word": "Aspecto o apariencia que toma un asunto o situación"
+  },
+  {
+    "rank": 83,
+    "definition": "derrotero",
+    "word": "Camino o rumbo por el que se llega a un fin propuesto"
+  },
+  {
+    "rank": 84,
+    "definition": "coyuntura",
+    "word": "articulación, enlace móvil de extremidades óseas, revestidas de cartílago, mediante ligamentos elásticos alojados en una cápsula"
+  },
+  {
+    "rank": 85,
+    "definition": "vestigio",
+    "word": "Señal que queda en un sitio por donde se ha pisado o estado"
+  },
+  {
+    "rank": 86,
+    "definition": "diatriba",
+    "word": "discurso o escrito violento e injurioso contra alguien o algo"
+  },
+  {
+    "rank": 87,
+    "definition": "precepto",
+    "word": "mandamiento u ordenanza dada por una persona que tiene autorización para ello"
+  },
+  {
+    "rank": 88,
+    "definition": "salvedad",
+    "word": "Razonamiento o advertencia que se emplea como excusa, descargo, limitación o cortapisa de lo que se va a decir o hacer"
+  },
+  {
+    "rank": 89,
+    "definition": "envergadura",
+    "word": "distancia que hay entre las puntas de las alas de una nave, de un ave o de cualquier otro animal, cuando éstas están totalmente extendidas"
+  },
+  {
+    "rank": 90,
+    "definition": "menester",
+    "word": "Ocupación habitual de un individuo"
+  },
+  {
+    "rank": 91,
+    "definition": "subterfugio",
+    "word": "excusa bien elaborada y artificiosa"
+  },
+  {
+    "rank": 92,
+    "definition": "canon",
+    "word": "regla o serie de reglas establecidas o aceptadas dentro de un arte concreto"
+  },
+  {
+    "rank": 93,
+    "definition": "epítome",
+    "word": "exposición resumida del contenido de una obra"
+  },
+  {
+    "rank": 94,
+    "definition": "paradigma",
+    "word": "modelo según el cual se producen otros objetos"
+  },
+  {
+    "rank": 95,
+    "definition": "prebenda",
+    "word": "Renta aneja a un canonicato u otro oficio eclesiástico"
+  },
+  {
+    "rank": 96,
+    "definition": "corolario",
+    "word": "proposición a la que se llega sin esfuerzo o fácilmente, a partir de las premisas ya demostradas"
+  },
+  {
+    "rank": 97,
+    "definition": "epílogo",
+    "word": "Recapitulación de todo lo dicho en un discurso u otra composición literaria"
+  },
+  {
+    "rank": 98,
+    "definition": "dogma",
+    "word": "creencia o principio cuya validez se da por sentada sin ulterior discusión en un determinado contexto"
+  },
+  {
+    "rank": 99,
+    "definition": "estigma",
+    "word": "Marca que no se puede borrar"
+  },
+  {
+    "rank": 100,
+    "definition": "hegemonía",
+    "word": "dominio o supremacía que un grupo ejerce, de tal modo de dictar los términos y parámetros de la acción social en todos los sentidos y mantener la oposición fuera de la ley o la legitimidad"
+  },
+  {
+    "rank": 101,
+    "definition": "dádiva",
+    "word": "cosa que se da de forma gratuita y sin esperar nada a cambio"
+  },
+  {
+    "rank": 102,
+    "definition": "disyuntiva",
+    "word": "Alternativa entre dos cosas por una de las cuales hay que optar"
+  },
+  {
+    "rank": 103,
+    "definition": "idiosincrasia",
+    "word": "naturaleza, temperamento o costumbres propios de un sujeto o grupo"
+  },
+  {
+    "rank": 104,
+    "definition": "panacea",
+    "word": "medicamento capaz de curar todas o muchas enfermedades, o incluso de prolongar indefinidamente la vida"
+  },
+  {
+    "rank": 105,
+    "definition": "plétora",
+    "word": "Cantidad excesiva de sangre o de glóbulos rojos en un cuerpo"
+  },
+  {
+    "rank": 106,
+    "definition": "quimera",
+    "word": "Animal fantástico con cabeza de león, cuerpo de cabra y cola de dragón, y que según la fábula vomitaba llamas"
+  },
+  {
+    "rank": 107,
+    "definition": "sinecura",
+    "word": "empleo o cargo con sueldo, que requiere poco o ningún trabajo"
+  },
+  {
+    "rank": 108,
+    "definition": "usufructo",
+    "word": "Derecho a utilizar o sacar provecho de bienes ajenos como si fueran propios con la obligación de conservar su esencia para el disfrute del dueño original cuando la ley lo señale"
+  },
+  {
+    "rank": 109,
+    "definition": "pocilga",
+    "word": "recinto o edificio destinado a la vivienda de cerdos"
+  },
+  {
+    "rank": 110,
+    "definition": "baluarte",
+    "word": "Elemento de fortificación de una fortaleza, que consiste en una gola de entrada y un ángulo saliente en dos flancos, los cuales se unen al muro de la fortaleza. a menudo tiene forma pentagonal"
+  },
+  {
     "rank": 111,
+    "definition": "dilucidar",
+    "word": "explicar un asunto, aclararlo; dejar clara e inteligible alguna cosa"
+  },
+  {
+    "rank": 112,
+    "definition": "esgrimir",
+    "word": "jugar o manejar la espada, el sable y otras armas blancas, reparando y deteniendo los golpes del contrario, o acometiéndole"
+  },
+  {
+    "rank": 113,
+    "definition": "soslayar",
+    "word": "colocar un objeto ladeado para cruzar una zona estrecha de un lado a otro"
+  },
+  {
+    "rank": 114,
+    "definition": "ponderar",
+    "word": "Determinar el peso de una cosa"
+  },
+  {
+    "rank": 115,
+    "definition": "acaecer",
+    "word": "ocurrir, producirse un hecho, tener lugar un acontecimiento, suceder"
+  },
+  {
+    "rank": 116,
+    "definition": "enmendar",
+    "word": "arreglar, corregir los fallos o defectos"
+  },
+  {
+    "rank": 117,
+    "definition": "socavar",
+    "word": "excavar por debajo alguna cosa, dejándola sin la debida seguridad y resistencia"
+  },
+  {
+    "rank": 118,
+    "definition": "abogar",
+    "word": "defender y dar consejo a alguien que es objeto de un juicio o pleito legal"
+  },
+  {
+    "rank": 119,
+    "definition": "discernir",
+    "word": "diferenciar conceptualmente una cosa de otra"
+  },
+  {
+    "rank": 120,
+    "definition": "aducir",
+    "word": "Presentar razones o pruebas; presentar un alegato o argumentación"
+  },
+  {
+    "rank": 121,
+    "definition": "dirimir",
+    "word": "Resolver o poner fin a una disputa o litigio"
+  },
+  {
+    "rank": 122,
+    "definition": "resarcir",
+    "word": "Reparar un daño, mediante el pago de un bien o la realización de una acción"
+  },
+  {
+    "rank": 123,
+    "definition": "escatimar",
+    "word": "Dar o usar lo menos posible, o solo lo imprescindible, algún recurso"
+  },
+  {
+    "rank": 124,
+    "definition": "desdeñar",
+    "word": "Tratar con desdén a alguien; tratar algo con ostensible indiferencia o menosperecio; considerar inferior algo"
+  },
+  {
+    "rank": 125,
+    "definition": "vindicar",
+    "word": "Defender a quien ha sido injuriado o calumniado; vengar una ofensa"
+  },
+  {
+    "rank": 126,
+    "definition": "usurpar",
+    "word": "Apoderarse de una propiedad o de un derecho que pertenece a otro de una forma violenta"
+  },
+  {
+    "rank": 127,
+    "definition": "desistir",
+    "word": "Dejar de insistir, interrumpir un esfuerzo, una acción, etc"
+  },
+  {
+    "rank": 128,
+    "definition": "atenuar",
+    "word": "reducir, disminuir o debilitar la fuerza, el efecto, la potencia o la intensidad de algo"
+  },
+  {
+    "rank": 129,
+    "definition": "amedrentar",
+    "word": "infundir miedo, temor o aprensión"
+  },
+  {
+    "rank": 130,
+    "definition": "avocar",
+    "word": "disponer un tribunal de alzada de una causa que obraba en manos de uno inferior competente"
+  },
+  {
+    "rank": 131,
+    "definition": "coadyuvar",
+    "word": "contribuir al logro o realización de una actividad"
+  },
+  {
+    "rank": 132,
+    "definition": "concatenar",
+    "word": "unir o conectar dos o más cosas siguiendo una serie o secuencia, a modo de cadena"
+  },
+  {
+    "rank": 133,
+    "definition": "detentar",
+    "word": "ejercer ilegítimamente un puesto de responsabilidad o de representación en un ente público o privado, o de poder legislativo o gubernamental"
+  },
+  {
+    "rank": 134,
+    "definition": "eludir",
+    "word": "huir la dificultad, salir de ella con algún artificio, etc"
+  },
+  {
+    "rank": 135,
+    "definition": "elucidar",
+    "word": "poner en claro algo"
+  },
+  {
+    "rank": 136,
+    "definition": "infligir",
+    "word": "Causar un daño, castigo o pena a alguien"
+  },
+  {
+    "rank": 137,
+    "definition": "ostentar",
+    "word": "mostrar o hacer patente una cosa. Presentar ante la vista"
+  },
+  {
+    "rank": 138,
+    "definition": "subyugar",
+    "word": "forzar a la obediencia"
+  },
+  {
+    "rank": 139,
+    "definition": "transgredir",
+    "word": "violar o quebrantar alguna norma o ley establecida"
+  },
+  {
+    "rank": 140,
+    "definition": "vincularse",
+    "word": "establecer o crear una conexión un vínculo, lazo o relación con otro u otros"
+  },
+  {
+    "rank": 141,
+    "definition": "escindir",
+    "word": "Separar o dividir en dos o más partes de importancia similar"
+  },
+  {
+    "rank": 142,
+    "definition": "holgar",
+    "word": "Descansar, tomar aliento después de alguna fatiga"
+  },
+  {
+    "rank": 143,
+    "definition": "increpar",
+    "word": "reprender a una persona con dureza y severidad"
+  },
+  {
+    "rank": 144,
+    "definition": "azuzar",
+    "word": "incitar a un perro a que ladre o ataque"
+  },
+  {
+    "rank": 145,
+    "definition": "expiar",
+    "word": "Limpiar o enmendar la culpa a través del cumplimiento de un castigo o penitencia"
+  },
+  {
+    "rank": 146,
+    "definition": "zaherir",
+    "word": "Decir a alguien algo que le provoque humillación o dolor moral"
+  },
+  {
+    "rank": 147,
+    "definition": "denostar",
+    "word": "Atacar verbalmente a alguien con graves insultos y ofensas"
+  },
+  {
+    "rank": 148,
+    "definition": "conminar",
+    "word": "Amenazar con un castigo o una sanción para obligar a cumplir algo"
+  },
+  {
+    "rank": 149,
+    "definition": "medrar",
+    "word": "crecer, tener aumento los animales y plantas"
+  },
+  {
+    "rank": 150,
+    "definition": "fulminar",
+    "word": "Lanzar un castigo o condena de manera repentina y severa"
+  },
+  {
+    "rank": 151,
+    "definition": "hostigar",
+    "word": "azotar, castigar con látigo, vara u cosa semejante"
+  },
+  {
+    "rank": 152,
+    "definition": "cernir",
+    "word": "Separar con el cedazo la parte fina de la gruesa; amenazar algo de forma inminente"
+  },
+  {
+    "rank": 153,
+    "definition": "dilapidar",
+    "word": "destruir o malgastar el patrimonio propio o aquel que se tiene a cargo"
+  },
+  {
+    "rank": 154,
+    "definition": "exacerbar",
+    "word": "Causar ira, causar muy grave enfado o enojo"
+  },
+  {
+    "rank": 155,
+    "definition": "fustigar",
+    "word": "Azotar con un látigo o vara; criticar con dureza"
+  },
+  {
+    "rank": 156,
+    "definition": "vilipendiar",
+    "word": "Tratar con vilipendio a una persona o despreciar algo"
+  },
+  {
+    "rank": 157,
+    "definition": "enajenar",
+    "word": "transferir a otra persona la posesión de un bien, o algún derecho sobre ese bien"
+  },
+  {
+    "rank": 158,
+    "definition": "abjurar",
+    "word": "retractarse solemnemente y con juramento del error en que ha incurrido"
+  },
+  {
+    "rank": 159,
+    "definition": "claudicar",
+    "word": "Terminar por ceder o rendirse a una presión o tentación"
+  },
+  {
+    "rank": 160,
+    "definition": "mancillar",
+    "word": "Poner suciedad u otra sustancia en algo cambiando su aspecto"
+  },
+  {
+    "rank": 161,
+    "definition": "apostatar",
+    "word": "negar la fe cristiana que fue recibida al ser bautizado, declarando por tanto, a través de este acto, la voluntad de dejar de ser cristiano"
+  },
+  {
+    "rank": 162,
+    "definition": "arrogar",
+    "word": "asignar, atribuir o conferir algo"
+  },
+  {
+    "rank": 163,
+    "definition": "colegir",
+    "word": "Juntar cosas o personas esparcidas, en un mismo lugar"
+  },
+  {
+    "rank": 164,
+    "definition": "concitar",
+    "word": "Excitar inquietudes y sediciones"
+  },
+  {
+    "rank": 165,
+    "definition": "diferir",
+    "word": "Postergar o dilatar la realización de algo"
+  },
+  {
+    "rank": 166,
+    "definition": "expoliar",
+    "word": "Despojar con violencia o injusticia de los bienes a alguien"
+  },
+  {
+    "rank": 167,
+    "definition": "lucubrar",
+    "word": "Trabajar intelectualmente con dedicación e intensidad, especialmente de noche"
+  },
+  {
+    "rank": 168,
+    "definition": "paliar",
+    "word": "mitigar, atenuar o mermar algo negativo"
+  },
+  {
+    "rank": 169,
+    "definition": "preconizar",
+    "word": "Encomiar, tributar elogios públicamente a una persona o cosa"
+  },
+  {
+    "rank": 170,
+    "definition": "suscitar",
+    "word": "Provocar o dar origen a un sentimiento, una reacción o un debate"
+  },
+  {
+    "rank": 171,
+    "definition": "falacia",
+    "word": "engaño, fraude o mentira con que se intenta perjudicar a otro"
+  },
+  {
+    "rank": 172,
+    "definition": "silogismo",
+    "word": "demostración que consta de tres proposiciones, una de las cuales se deduce del conjunto de las otras dos"
+  },
+  {
+    "rank": 173,
+    "definition": "premisa",
+    "word": "Principio por el cual se logran inferencias y alcanzan conclusiones"
+  },
+  {
+    "rank": 174,
+    "definition": "paradoja",
+    "word": "opinión o declaración opuesta a las ideas, opiniones, creencias o sentimientos de la mayoría de las personas"
+  },
+  {
+    "rank": 175,
+    "definition": "retórica",
+    "word": "Arte de dar eficacia al lenguaje para obtener el objetivo deseado, especialmente estético o persuasivo"
+  },
+  {
+    "rank": 176,
+    "definition": "sofisma",
+    "word": "Razón o argumento aparente con que se quiere defender o persuadir lo que es falso"
+  },
+  {
+    "rank": 177,
+    "definition": "aforismo",
+    "word": "declaración o sentencia concisa; acordada por un gran número de personas (foro); que pretende expresar un principio o la verdad en una manera breve, pensativa y aparentemente cerrada"
+  },
+  {
+    "rank": 178,
+    "definition": "elocuencia",
+    "word": "habilidad de expresarse con completa fluidez, con un amplio vocabulario y de modo eficaz para persuadir o producir una respuesta emotiva de quien recibe el mensaje"
+  },
+  {
+    "rank": 179,
+    "definition": "apología",
+    "word": "Discurso de palabra o escrito, en defensa, justificación, alabanza o adulación de personas, actitudes o cosas"
+  },
+  {
+    "rank": 180,
+    "definition": "demagogia",
+    "word": "Práctica política consistente en ganarse con halagos el favor popular"
+  },
+  {
+    "rank": 181,
+    "definition": "metáfora",
+    "word": "figura retórica consistente en establecer una identidad entre dos términos y emplear uno con el significado del otro, basándose en una comparación no expresada entre las dos realidades que dichos términos designan"
+  },
+  {
+    "rank": 182,
+    "definition": "metonimia",
+    "word": "tropo que designa una cosa con el nombre de otra con la que guarda una relación de causa efecto, de autor a obra, o de algún otro tipo de contigüidad temporal, causal o espacial"
+  },
+  {
+    "rank": 183,
+    "definition": "sinécdoque",
+    "word": "tropo en el que: una parte de algo es usada para representar el todo, el todo es usado por una parte, la especie es usada por el género, el género es usado por la especie, el material de que algo está hecho es usado por la cosa"
+  },
+  {
+    "rank": 184,
+    "definition": "oxímoron",
+    "word": "expresión en la que se emplean dos términos incongruentes o contradictorios"
+  },
+  {
+    "rank": 185,
+    "definition": "hipérbole",
+    "word": "Exageración muy grande e intencional, que consiste en aumentar con el fin de obtener un enunciado más expresivo, como al decir: \"Te llamé un millón de veces\", \"un millón de gracias\" o \"te doy mil besos\""
+  },
+  {
+    "rank": 186,
+    "definition": "antítesis",
+    "word": "Oposición o contrariedad de dos juicios o afirmaciones"
+  },
+  {
+    "rank": 187,
+    "definition": "prosopopeya",
+    "word": "enunciación de un discurso o una proposición por parte de un personaje en una obra literaria"
+  },
+  {
+    "rank": 188,
+    "definition": "elipsis",
+    "word": "Ausencia de alguna palabra en una oración, que no afecta su sentido"
+  },
+  {
+    "rank": 189,
+    "definition": "anáfora",
+    "word": "Figura retórica que consiste en la repetición de una o varias palabras al inicio de versos o frases sucesivas"
+  },
+  {
+    "rank": 190,
+    "definition": "pleonasmo",
+    "word": "Figura de construcción, que consiste en emplear en la oración uno o más vocablos innecesarios para que tenga sentido completo, pero con los cuales se da énfasis a lo dicho"
+  },
+  {
+    "rank": 191,
+    "definition": "alegoría",
+    "word": "invención o creación ficticia con sentido o significado diferentes al explícito"
+  },
+  {
+    "rank": 192,
+    "definition": "ironía",
+    "word": "mofa o guasa delicada y fingida"
+  },
+  {
+    "rank": 193,
+    "definition": "litote",
+    "word": "Figura retórica que consiste en negar lo contrario de lo que se quiere afirmar"
+  },
+  {
+    "rank": 194,
+    "definition": "perífrasis",
+    "word": "Construcción léxica de múltiples palabras que expresa lo mismo que una sola unidad léxica particular"
+  },
+  {
+    "rank": 195,
+    "definition": "sinestesia",
+    "word": "Figura retórica que atribuye una sensación a un sentido que no le corresponde, como 'color cálido' o 'voz dulce'"
+  },
+  {
+    "rank": 196,
+    "definition": "epíteto",
+    "word": "palabra con función adjetiva cuyo fin principal no es determinar o especificar el objeto o persona, sino caracterizarlo"
+  },
+  {
+    "rank": 197,
+    "definition": "apóstrofe",
+    "word": "Figura retórica que consiste en hacer una interrupción del discurso dirigiéndose a una o varias personas, de manera vehemente, o a seres inanimados, o a personas ausentes o muertas"
+  },
+  {
+    "rank": 198,
+    "definition": "polisíndeton",
+    "word": "Figura que consiste en emplear repetidamente las conjunciones para enfatizar la expresión de los conceptos"
+  },
+  {
+    "rank": 199,
+    "definition": "asíndeton",
+    "word": "figura de dicción consistente en la omisión de las conjunciones entre proposiciones para avivar el ritmo"
+  },
+  {
+    "rank": 200,
+    "definition": "aliteración",
+    "word": "Repetición de sonidos semejantes en palabras próximas dentro de un texto"
+  },
+  {
+    "rank": 201,
+    "definition": "diégesis",
+    "word": "mundo ficticio en el cual ocurre lo expresado"
+  },
+  {
+    "rank": 202,
+    "definition": "verosimilitud",
+    "word": "Apariencia de verdadero o creíble; cualidad de lo que resulta posible dentro de su contexto"
+  },
+  {
+    "rank": 203,
+    "definition": "soliloquio",
+    "word": "Representación teatral en la que un actor habla para sí mismo. Se diferencia del monólogo en que en éste el actor habla dirigiéndose al público"
+  },
+  {
+    "rank": 204,
+    "definition": "hagiografía",
+    "word": "Historia o estudio de la vida de los santos de la Iglesia católica"
+  },
+  {
+    "rank": 205,
+    "definition": "exégesis",
+    "word": "explicación, interpretación"
+  },
+  {
+    "rank": 206,
+    "definition": "epígrafe",
+    "word": "frase descriptiva o explicativa que encabeza un escrito o cada una de las partes del mismo"
+  },
+  {
+    "rank": 207,
+    "definition": "idilio",
+    "word": "Poema bucólico, de carácter tierno y delicado, que tiene como asuntos las cosas del campo y los afectos amorosos de los pastores"
+  },
+  {
+    "rank": 208,
+    "definition": "panegírico",
+    "word": "Perteneciente o relativo a la oración o discurso en alabanza de una persona; laudatorio, encomiástico"
+  },
+  {
+    "rank": 209,
+    "definition": "elegía",
+    "word": "Poema corto y lírico que refleja pérdida, dolor o tristeza, casi siempre lamentando una muerte o ruina"
+  },
+  {
+    "rank": 210,
+    "definition": "sátira",
+    "word": "figura literaria de carácter irónico que tiene como propósito ridiculizar al objeto de la misma"
+  },
+  {
+    "rank": 211,
+    "definition": "ontología",
+    "word": "Parte de la metafísica que estudia el ser en tanto que es y existe. Por ello es llamada la teoría del ser, es decir, el estudio de todo lo que es: qué es, cómo es y cómo es posible"
+  },
+  {
+    "rank": 212,
+    "definition": "epistemología",
+    "word": "campo de la filosofía que trata sobre los fundamentos, límites, y métodos del conocimiento científico"
+  },
+  {
+    "rank": 213,
+    "definition": "axioma",
+    "word": "verdad evidente que no requiere prueba o demostración"
+  },
+  {
+    "rank": 214,
+    "definition": "dialéctica",
+    "word": "Técnica formal de razonamiento que permite llegar a una verdad mediante el diálogo, intercambiando argumentos lógicos"
+  },
+  {
+    "rank": 215,
+    "definition": "teleología",
+    "word": "Doctrina que intenta explicar el universo como un sistema de relaciones causales con un propósito final"
+  },
+  {
+    "rank": 216,
+    "definition": "hermenéutica",
+    "word": "teoría y método para la interpretación de textos, que busca establecer el sentido original de un texto para su autor o para la comunidad en la que se produjo"
+  },
+  {
+    "rank": 217,
+    "definition": "nihilismo",
+    "word": "negación de todo principio, autoridad o dogma filosófico o religioso"
+  },
+  {
+    "rank": 218,
+    "definition": "solipsismo",
+    "word": "teoría subjetiva que sostiene que tan sólo el propio yo es lo único que existe o que puede demostrarse"
+  },
+  {
+    "rank": 219,
+    "definition": "empirismo",
+    "word": "corriente filosófica según la cual el conocimiento se halla fundado en la experiencia. Se contrapone al racionalismo, para el cual el conocimiento se halla fundado en gran parte en la razón"
+  },
+  {
+    "rank": 220,
+    "definition": "altruismo",
+    "word": "esmero y diligencia puesto por una persona en conseguir el bien de los demás, aun a expensas del propio"
+  },
+  {
+    "rank": 221,
+    "definition": "escolástica",
+    "word": "Corriente filosófica y teológica medieval basada en la articulación entre fe y razón"
+  },
+  {
+    "rank": 222,
+    "definition": "hedonismo",
+    "word": "Doctrina filosófica que busca alcanzar una vida llena de placeres y supresión del dolor. El placer supremo es la máxima el fin último de la vida"
+  },
+  {
+    "rank": 223,
+    "definition": "estoicismo",
+    "word": "fortaleza o control sobre la propia emotividad, especialmente ante dolores o adversidades"
+  },
+  {
+    "rank": 224,
+    "definition": "determinismo",
+    "word": "Propiedad o condición de un sistema cuya evolución solo depende de sus condiciones iniciales"
+  },
+  {
+    "rank": 225,
+    "definition": "utilitarismo",
+    "word": "doctrina moral y filosófica que juzga el valor de las acciones por la utilidad &mdash;medida variadamente como el placer, el bienestar o la felicidad&mdash; que producen como consecuencia, no sólo para el autor de la misma sino para el conjunto de los seres racionales. Se opone por lo tanto a toda forma de moral categórica o deontológica, en la que determinados actos poseen valores intrínsecos e independientes de su contexto de realización"
+  },
+  {
+    "rank": 226,
+    "definition": "relativismo",
+    "word": "idea o teoría sobre que algunos aspectos de la experiencia, como la moral o la verdad, son relativos"
+  },
+  {
+    "rank": 227,
+    "definition": "pragmatismo",
+    "word": "Doctrina que adopta como criterio de verdad la utilidad práctica, identificando lo verdadero con lo útil"
+  },
+  {
+    "rank": 228,
+    "definition": "racionalismo",
+    "word": "Sistema de pensamiento que prioriza el papel de la razón en la adquisición del conocimiento, en contraste con el empirismo, que resalta el de la experiencia, sobre todo el sentido de la percepción"
+  },
+  {
+    "rank": 229,
+    "definition": "dogmatismo",
+    "word": "presunción de los que quieren que su doctrina o sus aseveraciones sean tenidas por verdades inconcusas"
+  },
+  {
+    "rank": 230,
+    "definition": "idealismo",
+    "word": "doctrina filosófica que considera las ideas, los ideales y la primacía del espíritu como principio del ser y del conocer"
+  },
+  {
+    "rank": 231,
+    "definition": "jurisprudencia",
+    "word": "término jurídico que significa conjunto de las decisiones e interpretaciones de la ley, tomadas por los tribunales. Estas decisiones funcionan como una fuente del derecho sustituyendo la falta de la ley - están basadas en actos y prácticas pasadas que tratan sobre los casos iguales o parecidos"
+  },
+  {
+    "rank": 232,
+    "definition": "potestad",
+    "word": "dominio que se tiene sobre una cosa"
+  },
+  {
+    "rank": 233,
+    "definition": "prerrogativa",
+    "word": "privilegio o exención que se concede a alguien, como beneficio correspondiente a una dignidad o cargo"
+  },
+  {
+    "rank": 234,
+    "definition": "promulgar",
+    "word": "publicar una cosa solemnemente; hacerla saber a todos"
+  },
+  {
+    "rank": 235,
+    "definition": "derogar",
+    "word": "abolir, dejar sin vigencia o modificar una ley, norma o precepto establecido, a menudo reemplazándolos con una orden nueva"
+  },
+  {
+    "rank": 236,
+    "definition": "litigio",
+    "word": "disputa legal, diferendo"
+  },
+  {
+    "rank": 237,
+    "definition": "indulto",
+    "word": "gracia o privilegio concedido a uno para que pueda hacer lo que sin él no podría"
+  },
+  {
+    "rank": 238,
+    "definition": "exhorto",
+    "word": "Escrito que envía un juez o un tribunal a otro con más jurisdicción, para que mande el cumplimiento de lo que le pide"
+  },
+  {
+    "rank": 239,
+    "definition": "fuero",
+    "word": "Ley, o estatuto particular de algun reino o provincia de España"
+  },
+  {
+    "rank": 240,
+    "definition": "decreto",
+    "word": "disposición o decisión tomada por una autoridad sobre la materia en que tenga competencia. Jerárquicamente suele ser inferior a las leyes"
+  },
+  {
+    "rank": 241,
+    "definition": "fideicomiso",
+    "word": "disposición, generalmente testamentaria, por la cual uno o varios testadores dejan ciertos bienes encomendados a la buena fe de otra persona para que disponga de ellos de acuerdo a ciertos fines pactados"
+  },
+  {
+    "rank": 242,
+    "definition": "contencioso",
+    "word": "Dicho de una persona que disputa o contradice todo lo que otros afirman"
+  },
+  {
+    "rank": 243,
+    "definition": "desacato",
+    "word": "desprecio hacia la justicia"
+  },
+  {
+    "rank": 244,
+    "definition": "prescripción",
+    "word": "Extinción de un derecho o una obligación por el transcurso del tiempo legal"
+  },
+  {
+    "rank": 245,
+    "definition": "edicto",
+    "word": "orden o decreto legal promulgado por un monarca o magistrado judicial"
+  },
+  {
+    "rank": 246,
+    "definition": "tipificar",
+    "word": "Clasificar o ajustar algo a un tipo o norma; definir legalmente como delito una conducta"
+  },
+  {
+    "rank": 247,
+    "definition": "jurisconsulto",
+    "word": "Aquel que se encuentra aplicado al estudio, interpretación o ejercicio del derecho"
+  },
+  {
+    "rank": 248,
+    "definition": "impugnar",
+    "word": "contraponerse a algo y rebatirlo mediante argumentos razonables"
+  },
+  {
+    "rank": 249,
+    "definition": "recusar",
+    "word": "desechar alguna cosa"
+  },
+  {
+    "rank": 250,
+    "definition": "refrendar",
+    "word": "Autorizar un despacho u otro documento por medio de la firma de persona hábil para ello"
+  },
+  {
+    "rank": 251,
+    "definition": "hipótesis",
+    "word": "proposición o conjunto de proposiciones que se establecen para explicar la ocurrencia de un grupo específico de fenómenos, estas pueden ser conjeturas provisionales para guiar una investigación o bien puede tratarse de proposiciones aceptadas universalmente a la luz de los hechos establecidos"
+  },
+  {
+    "rank": 252,
+    "definition": "postulado",
+    "word": "Proposición cuya veracidad no requiere demostración, pues su objetivo no es demostrar, sino sostener ulteriores razonamientos, que derivarán a hipótesis"
+  },
+  {
+    "rank": 253,
+    "definition": "taxonomía",
+    "word": "Es la ciencia de la clasificación"
+  },
+  {
+    "rank": 254,
+    "definition": "anomalía",
+    "word": "Desviación o desplazamiento de cualquier elemento de su estado normal o de su valor medio, tanto en sentido positivo como negativo"
+  },
+  {
+    "rank": 255,
+    "definition": "variable",
+    "word": "Que varía o puede variar"
+  },
+  {
+    "rank": 256,
+    "definition": "correlación",
+    "word": "correspondencia, sucesión inmediata o influencia recíproca entre dos o más elementos, que forman entre sí una serie lógica"
+  },
+  {
+    "rank": 257,
+    "definition": "serendipia",
+    "word": "descubrimiento o hallazgo por accidente e intuición, de cosas por las que uno no se preguntaba"
+  },
+  {
+    "rank": 258,
+    "definition": "heurística",
+    "word": "disciplina que estudia el descubrimiento o la investigación"
+  },
+  {
+    "rank": 259,
+    "definition": "entropía",
+    "word": "magnitud de la energía de un sistema que no puede convertirse en trabajo"
+  },
+  {
+    "rank": 260,
+    "definition": "etiología",
+    "word": "Estudio sobre el origen fundamental o causa de las cosas"
+  },
+  {
+    "rank": 261,
+    "definition": "fisiopatología",
+    "word": "Rama de la medicina que estudia las alteraciones funcionales del organismo causadas por enfermedades"
+  },
+  {
+    "rank": 262,
+    "definition": "profilaxis",
+    "word": "prevención de enfermedades"
+  },
+  {
+    "rank": 263,
+    "definition": "iatrogenia",
+    "word": "Daño no deseado ni buscado en la salud, causado o provocado, como efecto secundario inevitable, por un acto médico legítimo y avalado, destinado a curar o mejorar una patología determinada"
+  },
+  {
+    "rank": 264,
+    "definition": "sintomatología",
+    "word": "Conjunto de síntomas que caracterizan una enfermedad; estudio de los síntomas"
+  },
+  {
+    "rank": 265,
+    "definition": "paliativo",
+    "word": "Que reduce o frena el dolor, una molestia, o un problema, sin eliminar la causa"
+  },
+  {
+    "rank": 266,
+    "definition": "idiopático",
+    "word": "Hablando de una enfermedad, que no tiene causa u origen conocido"
+  },
+  {
+    "rank": 267,
+    "definition": "nosología",
+    "word": "Parte de la medicina, que tiene por objeto describir, diferenciar y clasificar las enfermedades"
+  },
+  {
+    "rank": 268,
+    "definition": "asepsia",
+    "word": "ausencia de materia productora de descomposición, o de gérmenes que puedan producir infecciones o enfermedades"
+  },
+  {
+    "rank": 269,
+    "definition": "prognosis",
+    "word": "pronóstico, estimación del desarrollo probable de eventos en el futuro"
+  },
+  {
+    "rank": 270,
     "definition": "boato",
     "word": "exhibición pública de magnificencia"
   },
   {
-    "rank": 112,
+    "rank": 271,
     "definition": "acaecimiento",
     "word": "Algo que sucede u ocurre"
   },
   {
-    "rank": 113,
+    "rank": 272,
     "definition": "albor",
-    "word": "Luz del amanecer, comienzo o principio de algo"
+    "word": "Luz del alba; comienzo o etapa inicial de algo"
   },
   {
-    "rank": 114,
+    "rank": 273,
     "definition": "solaz",
     "word": "Descanso o recreo del cuerpo o del espíritu"
   },
   {
-    "rank": 115,
+    "rank": 274,
     "definition": "denuesto",
     "word": "injuria grave, de palabra o por escrito"
   },
   {
-    "rank": 116,
+    "rank": 275,
     "definition": "infundio",
     "word": "mentira, información falsa o sin fundamento que se difunde generalmente para perjudicar a alguien"
   },
   {
-    "rank": 117,
+    "rank": 276,
     "definition": "procaz",
-    "word": "Dicho de una persona: Que se comporta o habla de manera desvergonzada o atrevida, en especial en el aspecto sexual"
+    "word": "Que se comporta o habla de manera desvergonzada o atrevida"
   },
   {
-    "rank": 118,
+    "rank": 277,
     "definition": "lozano",
     "word": "Dicho de un vegetal o un terreno poblado de ellos, que abunda en hojas y brotes que muestran su vigor"
   },
   {
-    "rank": 119,
+    "rank": 278,
     "definition": "donaire",
     "word": "Capacidad de expresarse con elegancia e ingenio y de las obras con estas cualidades"
   },
   {
-    "rank": 120,
+    "rank": 279,
     "definition": "prestancia",
-    "word": "Cualidad de excelente, distinguido o superior en su clase"
+    "word": "Excelencia o superioridad entre los de su especie"
+  },
+  {
+    "rank": 280,
+    "definition": "bizarro",
+    "word": "Que muestra valor o bravura"
+  },
+  {
+    "rank": 281,
+    "definition": "gallardo",
+    "word": "desembarazado, airoso y galán"
+  },
+  {
+    "rank": 282,
+    "definition": "hidalgo",
+    "word": "Propio de, relativo o perteneciente a la nobleza, en especial los estamentos inferiores de la misma"
+  },
+  {
+    "rank": 283,
+    "definition": "talante",
+    "word": "Modo o manera de ejecutar una cosa"
+  },
+  {
+    "rank": 284,
+    "definition": "desaguisado",
+    "word": "Destrozo, desafuero"
+  },
+  {
+    "rank": 285,
+    "definition": "ínclito",
+    "word": "famoso por su sobresaliente logro o aptitudes"
+  },
+  {
+    "rank": 286,
+    "definition": "preclaro",
+    "word": "esclarecido, ilustre, famoso y digno de admiración y respeto"
+  },
+  {
+    "rank": 287,
+    "definition": "holganza",
+    "word": "Ociosidad, descanso; estado de quien no trabaja"
+  },
+  {
+    "rank": 288,
+    "definition": "merced",
+    "word": "premio o galardón que se da por el trabajo, especialmente al jornalero"
+  },
+  {
+    "rank": 289,
+    "definition": "abolengo",
+    "word": "ascendencia de abuelos o antepasados"
+  },
+  {
+    "rank": 290,
+    "definition": "antojadizo",
+    "word": "Que constantemente tiene antojos o quiere conseguir muchas cosas"
+  },
+  {
+    "rank": 291,
+    "definition": "desventura",
+    "word": "Suerte adversa; desgracia o infortunio"
+  },
+  {
+    "rank": 292,
+    "definition": "cuita",
+    "word": "trabajo, aflicción, situación que causa preocupación o angustia"
+  },
+  {
+    "rank": 293,
+    "definition": "desaire",
+    "word": "Falta de amabilidad, o de cortesía"
+  },
+  {
+    "rank": 294,
+    "definition": "saña",
+    "word": "enojo ciego; acceso súbito y violento de ira"
+  },
+  {
+    "rank": 295,
+    "definition": "yantar",
+    "word": "tomar la comida de mediodía"
+  },
+  {
+    "rank": 296,
+    "definition": "pesadumbre",
+    "word": "Sentimiento de pesar, aflicción o disgusto"
+  },
+  {
+    "rank": 297,
+    "definition": "algarabía",
+    "word": "ruido generado por un gran conjunto de personas que hablan al mismo tiempo"
+  },
+  {
+    "rank": 298,
+    "definition": "alborozo",
+    "word": "Extraordinario regocijo, placer o alegría"
+  },
+  {
+    "rank": 299,
+    "definition": "desvelo",
+    "word": "Falta de sueño; cuidado o atención solícita por algo o alguien"
   }
 ]

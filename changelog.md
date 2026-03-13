@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.19.2 - 13th March 2026
+
+- Expanded bundled vocabulary from 203 to 299 words across 30 thematic lessons (all lessons now fully populated).
+- Updated `scripts/build_vocab.py`: added `MANUAL_DEFS` override dict with 40 manual definitions for words with broken, circular, or missing Wiktionary entries.
+- Fixed 3 words missing from Wiktionary:
+  - `tipificar`
+  - `fisiopatología`
+  - `sintomatología`
+
+
 ### v0.19.1 - 12th March 2026
 
 - Fixed bundled vocabulary: replaced basic A1–B2 words with 120 advanced words (C1–C2) aimed at Spanish native speakers expanding their vocabulary.

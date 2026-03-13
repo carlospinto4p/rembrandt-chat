@@ -57,5 +57,5 @@
 
 ### 2026.03.12
 
-- [ ] Expand bundled vocabulary to ~300 words — re-run `scripts/build_vocab.py` with retry logic (already updated), fix remaining bad definitions, regenerate CSV, update changelog (v0.19.2)
+- [x] Expand bundled vocabulary to ~300 words — re-run `scripts/build_vocab.py` with retry logic (already updated), fix remaining bad definitions, regenerate CSV, update changelog (v0.19.2)
 - [x] Bundled Spanish vocabulary — curate ES-ES word definitions from Wiktionary (CC BY-SA), create vocabulary CSV and lesson JSON files, load on first run via `load_lessons()`
