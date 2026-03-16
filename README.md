@@ -38,7 +38,7 @@ Set the following environment variables:
 | Variable | Description | Required |
 |---|---|---|
 | `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather | Yes |
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
+| `DATABASE_PATH` | Path to SQLite database file | Yes |
 | `BASE_VOCAB_PATH` | Path to shared vocabulary JSON | No |
 | `MAX_NEW_CARDS` | Max new cards per session (0 = unlimited) | No |
 | `MAX_REVIEW_CARDS` | Max review cards per session (0 = unlimited) | No |
@@ -93,8 +93,8 @@ cp .env.example .env
 docker compose up -d
 ```
 
-This spins up PostgreSQL and the bot. No need to set `DATABASE_URL`
-— Docker Compose handles the database connection internally.
+This spins up the bot with a SQLite database. No need to set
+`DATABASE_PATH` — Docker Compose handles the database path internally.
 
 To view logs:
 

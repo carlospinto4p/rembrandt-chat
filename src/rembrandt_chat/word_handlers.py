@@ -1,6 +1,6 @@
 """Word management handlers."""
 
-from rembrandt import PostgresDatabase
+from rembrandt import Database
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
@@ -220,7 +220,7 @@ async def handle_deleteword_callback(
         return
 
     word_id = int(data[len(DEL_CB_PREFIX):])
-    db: PostgresDatabase = context.bot_data["db"]
+    db: Database = context.bot_data["db"]
     await db.delete_word(word_id)
 
     await query.edit_message_text("Word deleted.")

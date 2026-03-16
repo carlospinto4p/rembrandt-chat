@@ -7,7 +7,7 @@ auto-registered; subsequent calls return the existing user.
 
 import secrets
 
-from rembrandt import PostgresDatabase, User
+from rembrandt import Database, User
 from telegram import User as TelegramUser
 
 
@@ -29,10 +29,10 @@ def _display_name(tg_user: TelegramUser) -> str:
 class UserMapper:
     """Resolve a Telegram user to a rembrandt `User`.
 
-    :param db: An initialised `PostgresDatabase` instance.
+    :param db: An initialised `Database` instance.
     """
 
-    def __init__(self, db: PostgresDatabase) -> None:
+    def __init__(self, db: Database) -> None:
         self._db = db
 
     async def ensure_user(

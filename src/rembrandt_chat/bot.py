@@ -4,7 +4,7 @@ import logging
 
 from pathlib import Path
 
-from rembrandt import PostgresDatabase, import_words_csv
+from rembrandt import Database, import_words_csv
 from rembrandt.lessons import load_lessons
 from telegram.ext import (
     ApplicationBuilder,
@@ -21,7 +21,7 @@ from rembrandt_chat.config import (
     get_base_vocab_path,
     get_bot_token,
     get_bundled_vocab_dir,
-    get_database_url,
+    get_database_path,
 )
 from rembrandt_chat.formatting import DEL_CB_PREFIX, LESSON_CB_PREFIX
 from rembrandt_chat.handlers import (
@@ -65,7 +65,7 @@ from rembrandt_chat.user_mapping import UserMapper
 log = logging.getLogger(__name__)
 
 
-async def _load_base_vocab(db: PostgresDatabase) -> None:
+async def _load_base_vocab(db: Database) -> None:
     """Import shared vocabulary on first run if configured."""
     path = get_base_vocab_path()
     if path is None:
@@ -77,7 +77,7 @@ async def _load_base_vocab(db: PostgresDatabase) -> None:
     log.info("Loaded %d base vocabulary words from %s", len(words), path)
 
 
-async def _load_bundled_lessons(db: PostgresDatabase) -> None:
+async def _load_bundled_lessons(db: Database) -> None:
     """Load bundled vocabulary and lessons on first run."""
     vocab_dir = get_bundled_vocab_dir()
     if vocab_dir is None:
@@ -105,7 +105,7 @@ async def _load_bundled_lessons(db: PostgresDatabase) -> None:
 
 async def _post_init(app) -> None:
     """Connect to the database after the application starts."""
-    db = await PostgresDatabase.connect(get_database_url())
+    db = await Database.connect(get_database_path())
     await _load_base_vocab(db)
     await _load_bundled_lessons(db)
     mapper = UserMapper(db)

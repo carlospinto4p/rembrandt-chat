@@ -20,17 +20,17 @@ def get_bot_token() -> str:
     return token
 
 
-def get_database_url() -> str:
-    """Return the PostgreSQL connection URL.
+def get_database_path() -> str:
+    """Return the SQLite database file path.
 
-    :raises RuntimeError: If ``DATABASE_URL`` is not set.
+    :raises RuntimeError: If ``DATABASE_PATH`` is not set.
     """
-    url = os.environ.get("DATABASE_URL", "")
-    if not url:
+    path = os.environ.get("DATABASE_PATH", "")
+    if not path:
         raise RuntimeError(
-            "DATABASE_URL environment variable is not set"
+            "DATABASE_PATH environment variable is not set"
         )
-    return url
+    return path
 
 
 def get_base_vocab_path() -> str | None:

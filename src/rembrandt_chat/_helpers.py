@@ -4,7 +4,7 @@ from collections.abc import Callable, Coroutine
 from functools import wraps
 from typing import Any
 
-from rembrandt import PostgresDatabase, Session, User
+from rembrandt import Database, Session, User
 from telegram import Update
 from telegram.constants import ChatAction
 from telegram.ext import ContextTypes, ConversationHandler
@@ -106,21 +106,21 @@ async def send_typing(update: Update) -> None:
 async def resolve_user(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
-) -> tuple[User, PostgresDatabase]:
+) -> tuple[User, Database]:
     """Return the rembrandt user and database from context.
 
     Ensures the Telegram user is registered.
     """
     mapper: UserMapper = context.bot_data["user_mapper"]
     user = await mapper.ensure_user(update.effective_user)
-    db: PostgresDatabase = context.bot_data["db"]
+    db: Database = context.bot_data["db"]
     return user, db
 
 
 async def resolve_user_with_typing(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
-) -> tuple[User, PostgresDatabase]:
+) -> tuple[User, Database]:
     """Send a typing indicator, then resolve the user."""
     await send_typing(update)
     return await resolve_user(update, context)

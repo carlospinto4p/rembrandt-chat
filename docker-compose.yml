@@ -1,30 +1,14 @@
 services:
-  db:
-    image: postgres:17
-    environment:
-      POSTGRES_USER: rembrandt
-      POSTGRES_PASSWORD: rembrandt
-      POSTGRES_DB: rembrandt
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U rembrandt"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
   bot:
     build: .
-    depends_on:
-      db:
-        condition: service_healthy
     environment:
       TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
-      DATABASE_URL: "postgresql://rembrandt:rembrandt@db/rembrandt"
+      DATABASE_PATH: "/data/rembrandt.db"
       BASE_VOCAB_PATH: "${BASE_VOCAB_PATH:-}"
     volumes:
+      - botdata:/data
       - "${BASE_VOCAB_PATH:-.}:/data/vocab:ro"
     restart: unless-stopped
 
 volumes:
-  pgdata:
+  botdata:

@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.0 - 16th March 2026
+
+- Switched database backend from PostgreSQL to SQLite:
+  - Replaced `PostgresDatabase` with `Database` across all modules.
+  - Renamed `DATABASE_URL` env var to `DATABASE_PATH`.
+  - Updated `docker-compose.yml` to remove the `db` service.
+- Updated `README.md` with new env var and Docker instructions.
+
+
 ### v0.20.1 - 16th March 2026
 
 - Added `__version__` to `rembrandt_chat.__init__` via `importlib.metadata`.

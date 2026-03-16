@@ -3,7 +3,7 @@
 import asyncio
 from typing import Any
 
-from rembrandt import PostgresDatabase, ReviewConfig, Session, lesson_progress
+from rembrandt import Database, ReviewConfig, Session, lesson_progress
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -60,7 +60,7 @@ def _review_config() -> ReviewConfig | None:
 async def _start_session(
     update: Update,
     user_data: dict,
-    db: PostgresDatabase,
+    db: Database,
     user_id: int,
     *,
     no_words_msg: str,

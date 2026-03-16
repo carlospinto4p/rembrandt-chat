@@ -6,7 +6,7 @@ from rembrandt_chat.config import (
     get_base_vocab_path,
     get_bot_token,
     get_bundled_vocab_dir,
-    get_database_url,
+    get_database_path,
     get_max_new_cards,
     get_max_review_cards,
 )
@@ -26,18 +26,18 @@ def test_get_bot_token_raises_when_missing(monkeypatch):
         get_bot_token()
 
 
-# --- get_database_url ---
+# --- get_database_path ---
 
 
-def test_get_database_url_returns_value(monkeypatch):
-    monkeypatch.setenv("DATABASE_URL", "postgresql://localhost/test")
-    assert get_database_url() == "postgresql://localhost/test"
+def test_get_database_path_returns_value(monkeypatch):
+    monkeypatch.setenv("DATABASE_PATH", "/data/rembrandt.db")
+    assert get_database_path() == "/data/rembrandt.db"
 
 
-def test_get_database_url_raises_when_missing(monkeypatch):
-    monkeypatch.delenv("DATABASE_URL", raising=False)
-    with pytest.raises(RuntimeError, match="DATABASE_URL"):
-        get_database_url()
+def test_get_database_path_raises_when_missing(monkeypatch):
+    monkeypatch.delenv("DATABASE_PATH", raising=False)
+    with pytest.raises(RuntimeError, match="DATABASE_PATH"):
+        get_database_path()
 
 
 # --- get_base_vocab_path ---
