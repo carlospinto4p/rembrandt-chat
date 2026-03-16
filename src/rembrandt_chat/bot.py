@@ -2,7 +2,10 @@
 
 import logging
 
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 from rembrandt import Database, import_words_csv
 from rembrandt.lessons import load_lessons

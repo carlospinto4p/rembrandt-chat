@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.3 - 16th March 2026
+
+- Added `python-dotenv` dependency to load `.env` file on startup.
+
+
 ### v0.21.2 - 16th March 2026
 
 - Updated `get_bundled_vocab_dir()`: defaults to `data/` so bundled
