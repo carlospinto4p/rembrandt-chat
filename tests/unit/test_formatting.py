@@ -65,11 +65,10 @@ def _exercise(
 
 def test_multiple_choice_text():
     ex = _exercise(
-        prompt="Que dura poco tiempo",
-        options=["efimero", "perpetuo", "antiguo", "moderno"],
+        options=["Que dura poco tiempo", "perpetuo", "antiguo", "moderno"],
     )
     text, kb = format_exercise(ex)
-    assert "Que dura poco tiempo" in text
+    assert "efimero" in text
     assert kb is not None
 
 
@@ -84,13 +83,13 @@ def test_multiple_choice_keyboard_buttons():
     assert flat[3].callback_data == f"{MC_PREFIX}3"
 
 
-def test_multiple_choice_two_per_row():
+def test_multiple_choice_one_per_row():
     ex = _exercise(
         options=["a", "b", "c", "d"],
     )
     _, kb = format_exercise(ex)
-    assert len(kb.inline_keyboard) == 2
-    assert len(kb.inline_keyboard[0]) == 2
+    assert len(kb.inline_keyboard) == 4
+    assert len(kb.inline_keyboard[0]) == 1
 
 
 # --- format_exercise: self-graded ---

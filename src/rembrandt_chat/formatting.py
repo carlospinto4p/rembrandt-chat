@@ -62,15 +62,15 @@ def _fmt_multiple_choice(
     ex: Exercise,
 ) -> tuple[str, InlineKeyboardMarkup]:
     text = (
-        f"Which word matches this definition?\n\n"
-        f"\u201c{ex.prompt or ex.word.word_to}\u201d"
+        f"Which definition matches this word?\n\n"
+        f"\u201c{ex.word.word_from}\u201d"
     )
     buttons = [
         InlineKeyboardButton(opt, callback_data=f"{MC_PREFIX}{i}")
         for i, opt in enumerate(ex.options)
     ]
-    # Two buttons per row
-    rows = [buttons[i : i + 2] for i in range(0, len(buttons), 2)]
+    # One button per row — definitions are too long for side-by-side
+    rows = [[b] for b in buttons]
     return text, InlineKeyboardMarkup(rows)
 
 

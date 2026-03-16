@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.4 - 16th March 2026
+
+- Fixed multiple choice formatting: show the word as the prompt and
+  definitions as options (was showing definition as both prompt and option).
+- Changed multiple choice layout to one button per row for long definitions.
+
+
 ### v0.21.3 - 16th March 2026
 
 - Added `python-dotenv` dependency to load `.env` file on startup.
