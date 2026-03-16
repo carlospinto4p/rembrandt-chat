@@ -79,10 +79,7 @@ async def _load_base_vocab(db: Database) -> None:
 
 async def _load_bundled_lessons(db: Database) -> None:
     """Load bundled vocabulary and lessons on first run."""
-    vocab_dir = get_bundled_vocab_dir()
-    if vocab_dir is None:
-        return
-    d = Path(vocab_dir)
+    d = Path(get_bundled_vocab_dir())
     vocab_csv = d / "vocab.csv"
     vocab_json = d / "vocab.json"
     lessons_json = d / "lessons.json"

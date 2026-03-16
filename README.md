@@ -42,7 +42,7 @@ Set the following environment variables:
 | `BASE_VOCAB_PATH` | Path to shared vocabulary JSON | No |
 | `MAX_NEW_CARDS` | Max new cards per session (0 = unlimited) | No |
 | `MAX_REVIEW_CARDS` | Max review cards per session (0 = unlimited) | No |
-| `BUNDLED_VOCAB_DIR` | Path to directory with bundled vocab/lesson files | No |
+| `BUNDLED_VOCAB_DIR` | Path to directory with bundled vocab/lesson files (default: `data/`) | No |
 
 If `BASE_VOCAB_PATH` is set and the words table is empty on first
 run, the shared vocabulary is loaded automatically.

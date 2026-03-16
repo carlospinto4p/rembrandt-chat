@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.2 - 16th March 2026
+
+- Updated `get_bundled_vocab_dir()`: defaults to `data/` so bundled
+  vocabulary and lessons load automatically on first run.
+
+
 ### v0.21.1 - 16th March 2026
 
 - Updated `get_database_path()`: defaults to `data/rembrandt.db` when

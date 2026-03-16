@@ -119,10 +119,10 @@ async def test_load_bundled_lessons_skips_when_words_exist(
 
 
 @pytest.mark.asyncio
-async def test_load_bundled_lessons_skips_when_no_dir(
-    monkeypatch,
+async def test_load_bundled_lessons_skips_when_files_missing(
+    monkeypatch, tmp_path,
 ):
-    monkeypatch.delenv("BUNDLED_VOCAB_DIR", raising=False)
+    monkeypatch.setenv("BUNDLED_VOCAB_DIR", str(tmp_path))
     db = AsyncMock()
 
     await _load_bundled_lessons(db)

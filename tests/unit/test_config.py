@@ -91,15 +91,11 @@ def test_get_bundled_vocab_dir_returns_value(monkeypatch):
     assert get_bundled_vocab_dir() == "/data"
 
 
-def test_get_bundled_vocab_dir_returns_none_when_missing(
-    monkeypatch,
-):
+def test_get_bundled_vocab_dir_defaults_when_missing(monkeypatch):
     monkeypatch.delenv("BUNDLED_VOCAB_DIR", raising=False)
-    assert get_bundled_vocab_dir() is None
+    assert get_bundled_vocab_dir() == "data"
 
 
-def test_get_bundled_vocab_dir_returns_none_when_empty(
-    monkeypatch,
-):
+def test_get_bundled_vocab_dir_defaults_when_empty(monkeypatch):
     monkeypatch.setenv("BUNDLED_VOCAB_DIR", "")
-    assert get_bundled_vocab_dir() is None
+    assert get_bundled_vocab_dir() == "data"
