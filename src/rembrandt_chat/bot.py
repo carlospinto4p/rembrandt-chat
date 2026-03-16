@@ -106,7 +106,10 @@ async def _load_bundled_lessons(db: Database) -> None:
 async def _post_init(app) -> None:
     """Connect to the database after the application starts."""
     db = await Database.connect(get_database_path())
-    await db._conn.execute("PRAGMA journal_mode=WAL")
+    try:
+        await db._conn.execute("PRAGMA journal_mode=WAL")
+    except Exception:
+        log.warning("Could not enable WAL mode")
     await _load_base_vocab(db)
     await _load_bundled_lessons(db)
     mapper = UserMapper(db)

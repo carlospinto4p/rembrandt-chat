@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.7 - 16th March 2026
+
+- Fixed WAL mode setup crashing on startup when database is temporarily locked.
+
+
 ### v0.21.6 - 16th March 2026
 
 - Improved self-graded exercise UX: added descriptive labels to quality
