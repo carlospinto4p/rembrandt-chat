@@ -19,8 +19,15 @@ QUALITY_PREFIX = "q:"
 REVEAL_CB = "reveal"
 DEL_CB_PREFIX = "delw:"
 
-# Quality labels for self-graded buttons
-_QUALITY_LABELS = ["0", "1", "2", "3", "4", "5"]
+# Quality labels for self-graded buttons (0–5 scale)
+_QUALITY_LABELS = [
+    "0 - No idea",
+    "1 - Wrong",
+    "2 - Almost",
+    "3 - Hard",
+    "4 - Good",
+    "5 - Easy",
+]
 
 
 def _cefr_badge(exercise: Exercise) -> str:
@@ -79,7 +86,8 @@ def _fmt_self_graded_prompt(
 ) -> tuple[str, InlineKeyboardMarkup]:
     text = (
         f"Review this word:\n\n"
-        f"{ex.word.word_from} \u2014 {ex.word.word_to}"
+        f"{ex.word.word_from} \u2014 {ex.word.word_to}\n\n"
+        f"How well did you know it?"
     )
     keyboard = _quality_keyboard()
     return text, keyboard
@@ -331,4 +339,5 @@ def _quality_keyboard() -> InlineKeyboardMarkup:
         )
         for i, label in enumerate(_QUALITY_LABELS)
     ]
-    return InlineKeyboardMarkup([buttons])
+    rows = [buttons[i : i + 2] for i in range(0, len(buttons), 2)]
+    return InlineKeyboardMarkup(rows)

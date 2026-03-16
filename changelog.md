@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.6 - 16th March 2026
+
+- Improved self-graded exercise UX: added descriptive labels to quality
+  buttons (e.g. "0 - No idea", "5 - Easy") and "How well did you know it?"
+  prompt. Changed layout to two buttons per row.
+
+
 ### v0.21.5 - 16th March 2026
 
 - Fixed "database is locked" errors by enabling SQLite WAL mode on startup.

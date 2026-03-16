@@ -100,6 +100,7 @@ def test_self_graded_text():
     text, kb = format_exercise(ex)
     assert "efimero" in text
     assert "Que dura poco tiempo" in text
+    assert "How well did you know it?" in text
     assert kb is not None
 
 
@@ -108,8 +109,12 @@ def test_self_graded_quality_buttons():
     _, kb = format_exercise(ex)
     flat = [btn for row in kb.inline_keyboard for btn in row]
     assert len(flat) == 6
+    assert flat[0].text == "0 - No idea"
+    assert flat[5].text == "5 - Easy"
     assert flat[0].callback_data == f"{QUALITY_PREFIX}0"
     assert flat[5].callback_data == f"{QUALITY_PREFIX}5"
+    # Two buttons per row
+    assert len(kb.inline_keyboard) == 3
 
 
 # --- format_exercise: flashcard ---
