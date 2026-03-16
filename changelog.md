@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.5 - 16th March 2026
+
+- Fixed "database is locked" errors by enabling SQLite WAL mode on startup.
+
+
 ### v0.21.4 - 16th March 2026
 
 - Fixed multiple choice formatting: show the word as the prompt and
