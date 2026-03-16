@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.1 - 16th March 2026
+
+- Updated `get_database_path()`: defaults to `data/rembrandt.db` when
+  `DATABASE_PATH` is not set.
+- Added `*.db` to `.gitignore`.
+
+
 ### v0.21.0 - 16th March 2026
 
 - Switched database backend from PostgreSQL to SQLite:

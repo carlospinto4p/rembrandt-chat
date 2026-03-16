@@ -23,14 +23,10 @@ def get_bot_token() -> str:
 def get_database_path() -> str:
     """Return the SQLite database file path.
 
-    :raises RuntimeError: If ``DATABASE_PATH`` is not set.
+    Defaults to ``data/rembrandt.db`` relative to the working
+    directory when ``DATABASE_PATH`` is not set.
     """
-    path = os.environ.get("DATABASE_PATH", "")
-    if not path:
-        raise RuntimeError(
-            "DATABASE_PATH environment variable is not set"
-        )
-    return path
+    return os.environ.get("DATABASE_PATH", "") or "data/rembrandt.db"
 
 
 def get_base_vocab_path() -> str | None:

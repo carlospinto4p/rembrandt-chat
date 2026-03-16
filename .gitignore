@@ -30,6 +30,7 @@ notebooks/
 
 # Data
 */data/
+*.db
 
 # Build artifacts
 build/

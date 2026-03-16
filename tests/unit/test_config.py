@@ -34,10 +34,9 @@ def test_get_database_path_returns_value(monkeypatch):
     assert get_database_path() == "/data/rembrandt.db"
 
 
-def test_get_database_path_raises_when_missing(monkeypatch):
+def test_get_database_path_defaults_when_missing(monkeypatch):
     monkeypatch.delenv("DATABASE_PATH", raising=False)
-    with pytest.raises(RuntimeError, match="DATABASE_PATH"):
-        get_database_path()
+    assert get_database_path() == "data/rembrandt.db"
 
 
 # --- get_base_vocab_path ---

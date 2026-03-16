@@ -38,7 +38,7 @@ Set the following environment variables:
 | Variable | Description | Required |
 |---|---|---|
 | `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather | Yes |
-| `DATABASE_PATH` | Path to SQLite database file | Yes |
+| `DATABASE_PATH` | Path to SQLite database file (default: `data/rembrandt.db`) | No |
 | `BASE_VOCAB_PATH` | Path to shared vocabulary JSON | No |
 | `MAX_NEW_CARDS` | Max new cards per session (0 = unlimited) | No |
 | `MAX_REVIEW_CARDS` | Max review cards per session (0 = unlimited) | No |
