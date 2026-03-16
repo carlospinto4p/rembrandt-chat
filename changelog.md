@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.20.1 - 16th March 2026
+
+- Added `__version__` to `rembrandt_chat.__init__` via `importlib.metadata`.
+
+
 ### v0.20.0 - 13th March 2026
 
 - Expanded bundled vocabulary from 299 to 529 words across 53 lessons.
