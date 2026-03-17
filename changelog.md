@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.8 - 17th March 2026
+
+- Updated `rembrandt` dependency to v3.2.1: removes reverse flashcard
+  from definition mode (synonyms made typing exact words too difficult).
+
+
 ### v0.21.7 - 16th March 2026
 
 - Fixed WAL mode setup crashing on startup when database is temporarily locked.
