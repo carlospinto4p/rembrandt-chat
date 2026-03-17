@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.21.9 - 17th March 2026
+
+- Updated `rembrandt` dependency to v3.2.2: definition mode now 95%
+  multiple choice / 5% self-graded.
+
+
 ### v0.21.8 - 17th March 2026
 
 - Updated `rembrandt` dependency to v3.2.1: removes reverse flashcard
