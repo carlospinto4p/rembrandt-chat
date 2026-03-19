@@ -8,10 +8,10 @@ from rembrandt import Hint, SessionStats
 from rembrandt.models import (
     DailyStats,
     ExerciseType,
-    Lesson,
-    LessonProgress,
     ReviewForecast,
-    WeakWord,
+    Topic,
+    TopicProgress,
+    WeakConcept,
 )
 
 from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
@@ -19,12 +19,12 @@ from rembrandt_chat.handlers import (
     export_progress,
     forecast,
     handle_answer_callback,
-    handle_lesson_callback,
+    handle_topic_callback,
     handle_play_mode,
     history,
     import_file,
     import_start,
-    lessons,
+    topics,
     retention,
     handle_answer_text,
     hint,
@@ -39,10 +39,10 @@ from rembrandt_chat.handlers import (
 from .conftest import (
     make_answer_result,
     make_callback_update,
+    make_concept,
     make_context,
     make_exercise,
     make_update,
-    make_word,
 )
 
 
@@ -425,12 +425,12 @@ async def test_stats_empty():
 
 
 @pytest.mark.asyncio
-async def test_weak_shows_words():
+async def test_weak_shows_concepts():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].weak_words.return_value = [
-        WeakWord(
-            word=make_word(),
+    ctx.bot_data["db"].weak_concepts.return_value = [
+        WeakConcept(
+            concept=make_concept(),
             attempts=10,
             errors=7,
             error_rate=0.7,
@@ -440,7 +440,7 @@ async def test_weak_shows_words():
 
     await weak(update, ctx)
 
-    ctx.bot_data["db"].weak_words.assert_called_once()
+    ctx.bot_data["db"].weak_concepts.assert_called_once()
     text = update.message.reply_text.call_args[0][0]
     assert "efimero" in text
 
@@ -449,7 +449,7 @@ async def test_weak_shows_words():
 async def test_weak_empty():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].weak_words.return_value = []
+    ctx.bot_data["db"].weak_concepts.return_value = []
 
     await weak(update, ctx)
 
@@ -517,72 +517,70 @@ async def test_retention_no_answers():
     assert "No answers recorded" in text
 
 
-# --- /lessons ---
+# --- /topics ---
 
 
-def _lesson(
-    lesson_id: int = 1, title: str = "A1 - Lesson 1",
-) -> Lesson:
-    return Lesson(
-        id=lesson_id,
+def _topic(
+    topic_id: int = 1, title: str = "A1 - Topic 1",
+) -> Topic:
+    return Topic(
+        id=topic_id,
         title=title,
-        language_from="es",
-        language_to="es",
-        word_ids=[1, 2, 3],
-        word_count=3,
+        concept_ids=[1, 2, 3],
+        concept_count=3,
     )
 
 
-def _lesson_progress(lesson_id: int = 1) -> LessonProgress:
-    return LessonProgress(
-        lesson_id=lesson_id,
+def _topic_progress(topic_id: int = 1) -> TopicProgress:
+    return TopicProgress(
+        topic_id=topic_id,
         user_id=1,
-        words_total=3,
-        words_studied=2,
-        words_mastered=1,
+        concepts_total=3,
+        concepts_studied=2,
+        concepts_mastered=1,
         completion_pct=66.7,
         mastery_pct=33.3,
     )
 
 
 @pytest.mark.asyncio
-async def test_lessons_shows_list():
+async def test_topics_shows_list():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_lessons.return_value = [
-        _lesson(),
+    ctx.bot_data["db"].get_topics.return_value = [
+        _topic(),
     ]
 
     with patch(
-        "rembrandt_chat.session_handlers.lesson_progress",
+        "rembrandt_chat.session_handlers.topic_progress",
         new_callable=AsyncMock,
-        return_value=_lesson_progress(),
+        return_value=_topic_progress(),
     ):
-        await lessons(update, ctx)
+        await topics(update, ctx)
 
     text = update.message.reply_text.call_args[0][0]
-    assert "A1 - Lesson 1" in text
+    assert "A1 - Topic 1" in text
     assert "67%" in text
 
 
 @pytest.mark.asyncio
-async def test_lessons_empty():
+async def test_topics_empty():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_lessons.return_value = []
+    ctx.bot_data["db"].get_topics.return_value = []
 
-    await lessons(update, ctx)
+    await topics(update, ctx)
 
     text = update.message.reply_text.call_args[0][0]
-    assert "No lessons available" in text
+    assert "No topics available" in text
 
 
 @pytest.mark.asyncio
-async def test_lesson_callback_starts_session():
-    update = make_callback_update("lesson:1")
+async def test_topic_callback_starts_session():
+    update = make_callback_update("topic:1")
     ctx = make_context()
-    lesson = _lesson()
-    ctx.bot_data["db"].get_lesson.return_value = lesson
+    topic = _topic()
+    ctx.bot_data["db"].get_topic.return_value = topic
     ex = make_exercise()
 
     with patch(
@@ -592,27 +590,25 @@ async def test_lesson_callback_starts_session():
         mock_session.next_exercise = AsyncMock(
             return_value=ex
         )
-        await handle_lesson_callback(update, ctx)
+        await handle_topic_callback(update, ctx)
 
     assert ctx.user_data["session"] is mock_session
     assert ctx.user_data["exercise"] is ex
     MockSession.assert_called_once_with(
         db=ctx.bot_data["db"],
         user_id=1,
-        language_from="es",
-        language_to="es",
-        word_ids=[1, 2, 3],
+        concept_ids=[1, 2, 3],
         review_config=None,
     )
 
 
 @pytest.mark.asyncio
-async def test_lesson_callback_not_found():
-    update = make_callback_update("lesson:99")
+async def test_topic_callback_not_found():
+    update = make_callback_update("topic:99")
     ctx = make_context()
-    ctx.bot_data["db"].get_lesson.return_value = None
+    ctx.bot_data["db"].get_topic.return_value = None
 
-    await handle_lesson_callback(update, ctx)
+    await handle_topic_callback(update, ctx)
 
     text = (
         update.callback_query
@@ -629,7 +625,7 @@ async def test_export_sends_file():
     update = make_update()
     ctx = make_context()
     ctx.bot_data["db"].export_progress.return_value = [
-        {"word_id": 1, "easiness_factor": 2.5},
+        {"concept_id": 1, "easiness_factor": 2.5},
     ]
 
     await export_progress(update, ctx)
@@ -678,7 +674,8 @@ async def test_import_file_success():
     mock_doc = AsyncMock()
     mock_tg_file = AsyncMock()
     mock_tg_file.download_as_bytearray.return_value = (
-        b'[{"word_id":1},{"word_id":2},{"word_id":3}]'
+        b'[{"concept_id":1},{"concept_id":2},'
+        b'{"concept_id":3}]'
     )
     mock_doc.get_file.return_value = mock_tg_file
     update.message.document = mock_doc
@@ -749,14 +746,14 @@ async def test_history_shows_answers():
     ctx.bot_data["db"].get_answer_history.return_value = [
         AnswerHistory(
             user_id=1,
-            word_id=1,
+            concept_id=1,
             exercise_type="multiple_choice",
             correct=True,
             quality=5,
         ),
     ]
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero"),
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero"),
     ]
 
     await history(update, ctx)
@@ -771,7 +768,7 @@ async def test_history_empty():
     update = make_update(text="/history")
     ctx = make_context()
     ctx.bot_data["db"].get_answer_history.return_value = []
-    ctx.bot_data["db"].get_words.return_value = []
+    ctx.bot_data["db"].get_concepts.return_value = []
 
     await history(update, ctx)
 
@@ -784,7 +781,7 @@ async def test_history_with_date_filter():
     update = make_update(text="/history 7d")
     ctx = make_context()
     ctx.bot_data["db"].get_answer_history.return_value = []
-    ctx.bot_data["db"].get_words.return_value = []
+    ctx.bot_data["db"].get_concepts.return_value = []
 
     await history(update, ctx)
 

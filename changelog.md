@@ -1,6 +1,31 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.22.0 - 19th March 2026
+
+- Updated `rembrandt` dependency to v5.0.2.
+- Adapted all source and test files to rembrandt v5 API:
+  - `Word` → `Concept` (`word_from`/`word_to` → `front`/`back`)
+  - `Lesson` → `Topic`, `LessonProgress` → `TopicProgress`
+  - `WeakWord` → `WeakConcept`
+  - `import_words_csv` → `import_concepts_csv`
+  - `load_lessons` → `load_topics`, `lesson_progress` → `topic_progress`
+  - DB methods: `get_words` → `get_concepts`, `add_word` → `add_concept`,
+    `delete_word` → `delete_concept`, `weak_words` → `weak_concepts`,
+    `get_lessons` → `get_topics`, `get_lesson` → `get_topic`
+- Renamed `/lessons` command to `/topics`.
+- Removed `LANG_FROM`/`LANG_TO` config constants (no longer needed
+  by rembrandt v5).
+- Removed CEFR badge display (field no longer in `Concept` model).
+- Removed exercise types no longer in rembrandt v5:
+  - `CONJUGATION`
+  - `CLOZE`
+  - `TRANSLATION_CLOZE`
+  - `GENDER_MATCH`
+  - `ADJECTIVE_AGREEMENT`
+  - `SENTENCE_ORDER`
+
+
 ### v0.21.9 - 17th March 2026
 
 - Updated `rembrandt` dependency to v3.2.2: definition mode now 95%

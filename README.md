@@ -124,7 +124,7 @@ docker compose stop
 | `/weak` | Show your weakest words |
 | `/forecast` | Show upcoming review workload (7 days) |
 | `/retention` | Show overall retention rate (30 days) |
-| `/lessons` | List lessons and start a lesson session |
+| `/topics` | List topics and start a topic session |
 | `/history [1d\|3d\|7d\|30d]` | Show recent answer history |
 | `/export` | Export your progress as a JSON file |
 | `/import` | Import progress from a JSON file |

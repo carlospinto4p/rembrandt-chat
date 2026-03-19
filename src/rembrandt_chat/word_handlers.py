@@ -11,7 +11,6 @@ from rembrandt_chat._helpers import (
     resolve_user,
     resolve_user_with_typing,
 )
-from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import DEL_CB_PREFIX
 
 AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
@@ -98,21 +97,19 @@ async def _save_word(
     tags: list[str],
 ) -> int:
     """Save the word from the conversation state."""
-    word_from = context.user_data.pop("_addword_word", "")
-    word_to = context.user_data.pop("_addword_def", "")
+    front = context.user_data.pop("_addword_word", "")
+    back = context.user_data.pop("_addword_def", "")
 
     user, db = await resolve_user(update, context)
 
-    await db.add_word(
-        language_from=LANG_FROM,
-        language_to=LANG_TO,
-        word_from=word_from,
-        word_to=word_to,
+    await db.add_concept(
+        front=front,
+        back=back,
         tags=tags or None,
         owner_id=user.id,
     )
 
-    msg = f'Added "{word_from}" \u2014 {word_to}'
+    msg = f'Added "{front}" \u2014 {back}'
     if tags:
         msg += f" [{', '.join(tags)}]"
     await update.message.reply_text(msg)
@@ -142,20 +139,18 @@ async def mywords(
     """
     user, db = await resolve_user_with_typing(update, context)
 
-    words = await db.get_words(
-        LANG_FROM, LANG_TO, owner_id=user.id,
-    )
+    concepts = await db.get_concepts(owner_id=user.id)
 
     # Optional tag filter from command argument
     text = (update.message.text or "").strip()
     parts = text.split(maxsplit=1)
     tag_filter = parts[1].strip() if len(parts) > 1 else ""
     if tag_filter:
-        words = [
-            w for w in words if tag_filter in w.tags
+        concepts = [
+            c for c in concepts if tag_filter in c.tags
         ]
 
-    if not words:
+    if not concepts:
         msg = (
             f"No words with tag \u201c{tag_filter}\u201d."
             if tag_filter
@@ -166,12 +161,10 @@ async def mywords(
         return
 
     lines = []
-    for i, w in enumerate(words, 1):
-        line = f"{i}. {w.word_from} \u2014 {w.word_to}"
-        if w.cefr:
-            line += f" ({w.cefr})"
-        if w.tags:
-            line += f" [{', '.join(w.tags)}]"
+    for i, c in enumerate(concepts, 1):
+        line = f"{i}. {c.front} \u2014 {c.back}"
+        if c.tags:
+            line += f" [{', '.join(c.tags)}]"
         lines.append(line)
     await update.message.reply_text("\n".join(lines))
 
@@ -184,10 +177,8 @@ async def deleteword(
     """`/deleteword` — show private words as buttons to delete."""
     user, db = await resolve_user_with_typing(update, context)
 
-    words = await db.get_words(
-        LANG_FROM, LANG_TO, owner_id=user.id,
-    )
-    if not words:
+    concepts = await db.get_concepts(owner_id=user.id)
+    if not concepts:
         await update.message.reply_text(
             "You have no private words to delete."
         )
@@ -196,11 +187,11 @@ async def deleteword(
     buttons = [
         [
             InlineKeyboardButton(
-                w.word_from,
-                callback_data=f"{DEL_CB_PREFIX}{w.id}",
+                c.front,
+                callback_data=f"{DEL_CB_PREFIX}{c.id}",
             )
         ]
-        for w in words
+        for c in concepts
     ]
     await update.message.reply_text(
         "Tap a word to delete it:",
@@ -219,8 +210,8 @@ async def handle_deleteword_callback(
     if not data.startswith(DEL_CB_PREFIX):
         return
 
-    word_id = int(data[len(DEL_CB_PREFIX):])
+    concept_id = int(data[len(DEL_CB_PREFIX):])
     db: Database = context.bot_data["db"]
-    await db.delete_word(word_id)
+    await db.delete_concept(concept_id)
 
     await query.edit_message_text("Word deleted.")

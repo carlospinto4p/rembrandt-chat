@@ -7,8 +7,8 @@ from pathlib import Path
 
 load_dotenv()
 
-from rembrandt import Database, import_words_csv
-from rembrandt.lessons import load_lessons
+from rembrandt import Database, import_concepts_csv
+from rembrandt.topics import load_topics
 from telegram.ext import (
     ApplicationBuilder,
     CallbackQueryHandler,
@@ -19,14 +19,12 @@ from telegram.ext import (
 )
 
 from rembrandt_chat.config import (
-    LANG_FROM,
-    LANG_TO,
     get_base_vocab_path,
     get_bot_token,
     get_bundled_vocab_dir,
     get_database_path,
 )
-from rembrandt_chat.formatting import DEL_CB_PREFIX, LESSON_CB_PREFIX
+from rembrandt_chat.formatting import DEL_CB_PREFIX, TOPIC_CB_PREFIX
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_FILE,
@@ -45,14 +43,14 @@ from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_answer_text,
     handle_deleteword_callback,
-    handle_lesson_callback,
+    handle_topic_callback,
     handle_play_mode,
     hint,
     history,
     import_cancel,
     import_file,
     import_start,
-    lessons,
+    topics,
     mywords,
     play,
     retention,
@@ -73,34 +71,30 @@ async def _load_base_vocab(db: Database) -> None:
     path = get_base_vocab_path()
     if path is None:
         return
-    existing = await db.get_words(LANG_FROM, LANG_TO)
+    existing = await db.get_concepts()
     if existing:
         return
-    words = await import_words_csv(db, path, LANG_FROM, LANG_TO)
-    log.info("Loaded %d base vocabulary words from %s", len(words), path)
+    concepts = await import_concepts_csv(db, path)
+    log.info(
+        "Loaded %d base vocabulary words from %s",
+        len(concepts), path,
+    )
 
 
-async def _load_bundled_lessons(db: Database) -> None:
-    """Load bundled vocabulary and lessons on first run."""
+async def _load_bundled_topics(db: Database) -> None:
+    """Load bundled vocabulary and topics on first run."""
     d = Path(get_bundled_vocab_dir())
     vocab_csv = d / "vocab.csv"
-    vocab_json = d / "vocab.json"
-    lessons_json = d / "lessons.json"
-    if not vocab_csv.exists() or not lessons_json.exists():
+    topics_json = d / "topics.json"
+    if not vocab_csv.exists() or not topics_json.exists():
         return
-    existing = await db.get_words(LANG_FROM, LANG_TO)
+    existing = await db.get_concepts()
     if existing:
         return
-    words = await import_words_csv(db, str(vocab_csv), LANG_FROM, LANG_TO)
-    log.info("Loaded %d bundled vocabulary words", len(words))
-    lessons = await load_lessons(
-        lessons_json,
-        vocab_json,
-        db,
-        language_from=LANG_FROM,
-        language_to=LANG_TO,
-    )
-    log.info("Loaded %d bundled lessons", len(lessons))
+    concepts = await import_concepts_csv(db, str(vocab_csv))
+    log.info("Loaded %d bundled vocabulary words", len(concepts))
+    loaded = await load_topics(topics_json, db)
+    log.info("Loaded %d bundled topics", len(loaded))
 
 
 async def _post_init(app) -> None:
@@ -111,7 +105,7 @@ async def _post_init(app) -> None:
     except Exception:
         log.warning("Could not enable WAL mode")
     await _load_base_vocab(db)
-    await _load_bundled_lessons(db)
+    await _load_bundled_topics(db)
     mapper = UserMapper(db)
     app.bot_data["user_mapper"] = mapper
     app.bot_data["db"] = db
@@ -142,7 +136,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("weak", weak))
     app.add_handler(CommandHandler("forecast", forecast))
     app.add_handler(CommandHandler("retention", retention))
-    app.add_handler(CommandHandler("lessons", lessons))
+    app.add_handler(CommandHandler("topics", topics))
     app.add_handler(CommandHandler("history", history))
     app.add_handler(CommandHandler("export", export_progress))
 
@@ -203,8 +197,8 @@ def create_app() -> None:
     )
     app.add_handler(
         CallbackQueryHandler(
-            handle_lesson_callback,
-            pattern=f"^{LESSON_CB_PREFIX}",
+            handle_topic_callback,
+            pattern=f"^{TOPIC_CB_PREFIX}",
         )
     )
     app.add_handler(

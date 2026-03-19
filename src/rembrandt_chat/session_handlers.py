@@ -3,7 +3,7 @@
 import asyncio
 from typing import Any
 
-from rembrandt import Database, ReviewConfig, Session, lesson_progress
+from rembrandt import Database, ReviewConfig, Session, topic_progress
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -20,13 +20,11 @@ from rembrandt_chat._helpers import (
     send_next,
 )
 from rembrandt_chat.config import (
-    LANG_FROM,
-    LANG_TO,
     get_max_new_cards,
     get_max_review_cards,
 )
 from rembrandt_chat.formatting import (
-    LESSON_CB_PREFIX,
+    TOPIC_CB_PREFIX,
     MC_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
@@ -34,7 +32,7 @@ from rembrandt_chat.formatting import (
     format_answer,
     format_exercise,
     format_hint,
-    format_lessons,
+    format_topics,
     format_summary,
 )
 
@@ -73,14 +71,12 @@ async def _start_session(
     :param confirm_msg: Confirmation sent via
         ``query.edit_message_text``.
     :param session_kwargs: Forwarded to `Session()` (e.g.
-        ``mode`` or ``word_ids``).
+        ``mode`` or ``concept_ids``).
     """
     query = update.callback_query
     session = Session(
         db=db,
         user_id=user_id,
-        language_from=LANG_FROM,
-        language_to=LANG_TO,
         review_config=_review_config(),
         **session_kwargs,
     )
@@ -245,7 +241,7 @@ async def skip(
     session, user_data = result
     skipped = session.skip()
     await update.message.reply_text(
-        f"Skipped: {skipped.word.word_from}"
+        f"Skipped: {skipped.concept.front}"
     )
 
     await send_next(session, user_data, update)
@@ -307,35 +303,35 @@ async def handle_answer_callback(
 
 
 @require_message
-async def lessons(
+async def topics(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/lessons` — list available lessons with progress."""
+    """`/topics` — list available topics with progress."""
     user, db = await resolve_user_with_typing(update, context)
 
-    all_lessons = await db.get_lessons(LANG_FROM, LANG_TO)
+    all_topics = await db.get_topics()
     progress = await asyncio.gather(
         *(
-            lesson_progress(db, user.id, ls)
-            for ls in all_lessons
+            topic_progress(db, user.id, t)
+            for t in all_topics
         )
     )
-    text, keyboard = format_lessons(all_lessons, progress)
+    text, keyboard = format_topics(all_topics, progress)
     await update.message.reply_text(
         text, reply_markup=keyboard
     )
 
 
 @require_callback
-async def handle_lesson_callback(
+async def handle_topic_callback(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """Start a session scoped to a lesson's words."""
+    """Start a session scoped to a topic's concepts."""
     query = update.callback_query
     data = query.data or ""
-    if not data.startswith(LESSON_CB_PREFIX):
+    if not data.startswith(TOPIC_CB_PREFIX):
         return
 
     user_data = context.user_data
@@ -343,17 +339,17 @@ async def handle_lesson_callback(
         await query.edit_message_text(_ACTIVE_SESSION_MSG)
         return
 
-    lesson_id = int(data[len(LESSON_CB_PREFIX):])
+    topic_id = int(data[len(TOPIC_CB_PREFIX):])
     user, db = await resolve_user(update, context)
 
-    lesson = await db.get_lesson(lesson_id)
-    if lesson is None:
-        await query.edit_message_text("Lesson not found.")
+    topic = await db.get_topic(topic_id)
+    if topic is None:
+        await query.edit_message_text("Topic not found.")
         return
 
     await _start_session(
         update, user_data, db, user.id,
-        no_words_msg="No words available in this lesson.",
-        confirm_msg=f"Lesson: {lesson.title}",
-        word_ids=lesson.word_ids,
+        no_words_msg="No words available in this topic.",
+        confirm_msg=f"Topic: {topic.title}",
+        concept_ids=topic.concept_ids,
     )

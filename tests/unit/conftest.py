@@ -3,8 +3,13 @@
 from datetime import datetime, timezone
 from unittest.mock import AsyncMock, MagicMock
 
-from rembrandt import User, Word
-from rembrandt.models import AnswerResult, Exercise, ExerciseType
+from rembrandt import User
+from rembrandt.models import (
+    AnswerResult,
+    Concept,
+    Exercise,
+    ExerciseType,
+)
 
 from rembrandt_chat.user_mapping import UserMapper
 
@@ -19,21 +24,19 @@ def make_user(display_name: str = "Alice") -> User:
     )
 
 
-def make_word(
-    word_id: int = 1,
-    word_from: str = "efimero",
+def make_concept(
+    concept_id: int = 1,
+    front: str = "efimero",
     **kw,
-) -> Word:
+) -> Concept:
     defaults = dict(
-        id=word_id,
-        language_from="es",
-        language_to="es",
-        word_from=word_from,
-        word_to="Que dura poco tiempo",
+        id=concept_id,
+        front=front,
+        back="Que dura poco tiempo",
         tags=[],
     )
     defaults.update(kw)
-    return Word(**defaults)
+    return Concept(**defaults)
 
 
 def make_exercise(
@@ -41,7 +44,7 @@ def make_exercise(
     **kw,
 ) -> Exercise:
     defaults = dict(
-        word=make_word(),
+        concept=make_concept(),
         exercise_type=exercise_type,
         options=["efimero", "perpetuo", "antiguo", "moderno"],
         prompt="Que dura poco tiempo",
@@ -56,7 +59,7 @@ def make_answer_result(correct: bool = True) -> AnswerResult:
         correct=correct,
         expected="efimero",
         given="efimero" if correct else "perpetuo",
-        word=make_word(),
+        concept=make_concept(),
     )
 
 

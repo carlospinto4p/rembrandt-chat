@@ -14,13 +14,12 @@ from rembrandt_chat._helpers import (
     resolve_user,
     resolve_user_with_typing,
 )
-from rembrandt_chat.config import LANG_FROM, LANG_TO
 from rembrandt_chat.formatting import (
     format_daily_stats,
     format_forecast,
     format_history,
     format_retention,
-    format_weak_words,
+    format_weak_concepts,
 )
 
 
@@ -44,10 +43,10 @@ async def weak(
     """`/weak` — show weakest words."""
     user, db = await resolve_user_with_typing(update, context)
 
-    words = await db.weak_words(
-        user.id, LANG_FROM, LANG_TO, limit=10
+    concepts = await db.weak_concepts(user.id, limit=10)
+    await update.message.reply_text(
+        format_weak_concepts(concepts)
     )
-    await update.message.reply_text(format_weak_words(words))
 
 
 @require_message
@@ -95,17 +94,19 @@ async def history(
             days=_DAYS_MAP[arg]
         )
 
-    records, words, user_words = await asyncio.gather(
+    records, concepts, user_concepts = await asyncio.gather(
         db.get_answer_history(
             user.id, limit=50, since=since,
         ),
-        db.get_words(LANG_FROM, LANG_TO),
-        db.get_words(LANG_FROM, LANG_TO, owner_id=user.id),
+        db.get_concepts(),
+        db.get_concepts(owner_id=user.id),
     )
-    word_map = {w.id: w.word_from for w in words + user_words}
+    concept_map = {
+        c.id: c.front for c in concepts + user_concepts
+    }
 
     await update.message.reply_text(
-        format_history(records, word_map)
+        format_history(records, concept_map)
     )
 
 

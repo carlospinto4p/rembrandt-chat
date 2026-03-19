@@ -2,16 +2,17 @@
 
 from datetime import datetime, timezone
 
-from rembrandt import AnswerHistory, Hint, SessionStats, Word
+from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
+    Concept,
     DailyStats,
     Exercise,
     ExerciseType,
-    Lesson,
-    LessonProgress,
     ReviewForecast,
-    WeakWord,
+    Topic,
+    TopicProgress,
+    WeakConcept,
 )
 
 from rembrandt_chat.formatting import (
@@ -26,23 +27,21 @@ from rembrandt_chat.formatting import (
     format_history,
     format_summary,
     format_forecast,
-    format_lessons,
+    format_topics,
     format_retention,
-    format_weak_words,
+    format_weak_concepts,
 )
 
 
-def _word(**kw) -> Word:
+def _concept(**kw) -> Concept:
     defaults = dict(
         id=1,
-        language_from="es",
-        language_to="es",
-        word_from="efimero",
-        word_to="Que dura poco tiempo",
+        front="efimero",
+        back="Que dura poco tiempo",
         tags=[],
     )
     defaults.update(kw)
-    return Word(**defaults)
+    return Concept(**defaults)
 
 
 def _exercise(
@@ -50,7 +49,7 @@ def _exercise(
     **kw,
 ) -> Exercise:
     defaults = dict(
-        word=_word(),
+        concept=_concept(),
         exercise_type=exercise_type,
         options=[],
         prompt="",
@@ -65,7 +64,10 @@ def _exercise(
 
 def test_multiple_choice_text():
     ex = _exercise(
-        options=["Que dura poco tiempo", "perpetuo", "antiguo", "moderno"],
+        options=[
+            "Que dura poco tiempo", "perpetuo",
+            "antiguo", "moderno",
+        ],
     )
     text, kb = format_exercise(ex)
     assert "efimero" in text
@@ -151,27 +153,6 @@ def test_reverse_flashcard_typed():
     assert kb is None
 
 
-def test_conjugation_typed():
-    ex = _exercise(
-        exercise_type=ExerciseType.CONJUGATION,
-        prompt="presente, yo",
-    )
-    text, kb = format_exercise(ex)
-    assert "Conjugate" in text
-    assert "presente, yo" in text
-    assert kb is None
-
-
-def test_cloze_typed():
-    ex = _exercise(
-        exercise_type=ExerciseType.CLOZE,
-        prompt="El gato es muy ___",
-    )
-    text, kb = format_exercise(ex)
-    assert "Fill in the blank" in text
-    assert kb is None
-
-
 # --- format_answer ---
 
 
@@ -180,7 +161,7 @@ def test_format_answer_correct():
         correct=True,
         expected="efimero",
         given="efimero",
-        word=_word(),
+        concept=_concept(),
     )
     text = format_answer(result)
     assert "\u2705" in text
@@ -192,7 +173,7 @@ def test_format_answer_near_miss():
         correct=True,
         expected="efimero",
         given="efemero",
-        word=_word(),
+        concept=_concept(),
         near_miss=True,
     )
     text = format_answer(result)
@@ -204,7 +185,7 @@ def test_format_answer_wrong():
         correct=False,
         expected="efimero",
         given="perpetuo",
-        word=_word(),
+        concept=_concept(),
     )
     text = format_answer(result)
     assert "\u274c" in text
@@ -225,12 +206,12 @@ def test_format_hint_pattern():
     assert "ef_____" in text
 
 
-def test_format_hint_with_sentence():
+def test_format_hint_with_context():
     hint = Hint(
         first_letter="e",
         word_length=7,
         pattern="e______",
-        example_sentence="La belleza es ___.",
+        context="La belleza es ___.",
     )
     text = format_hint(hint)
     assert "La belleza es ___." in text
@@ -281,27 +262,27 @@ def test_format_daily_stats_empty():
     assert "No activity" in text
 
 
-# --- format_weak_words ---
+# --- format_weak_concepts ---
 
 
-def test_format_weak_words():
-    words = [
-        WeakWord(
-            word=_word(),
+def test_format_weak_concepts():
+    concepts = [
+        WeakConcept(
+            concept=_concept(),
             attempts=10,
             errors=7,
             error_rate=0.7,
             last_attempt=datetime.now(timezone.utc),
         ),
     ]
-    text = format_weak_words(words)
+    text = format_weak_concepts(concepts)
     assert "efimero" in text
     assert "7/10" in text
     assert "70%" in text
 
 
-def test_format_weak_words_empty():
-    text = format_weak_words([])
+def test_format_weak_concepts_empty():
+    text = format_weak_concepts([])
     assert "No weak words" in text
 
 
@@ -338,59 +319,35 @@ def test_format_retention_zero():
     assert "No answers recorded" in text
 
 
-# --- format_lessons ---
+# --- format_topics ---
 
 
-def test_format_lessons():
-    ls = [
-        Lesson(
+def test_format_topics():
+    ts = [
+        Topic(
             id=1, title="A1 - Basics",
-            language_from="es", language_to="es",
-            word_count=10, word_ids=[1, 2, 3],
+            concept_count=10, concept_ids=[1, 2, 3],
         ),
     ]
     prog = [
-        LessonProgress(
-            lesson_id=1, user_id=1, words_total=10,
-            words_studied=7, words_mastered=3,
+        TopicProgress(
+            topic_id=1, user_id=1, concepts_total=10,
+            concepts_studied=7, concepts_mastered=3,
             completion_pct=70.0, mastery_pct=30.0,
         ),
     ]
-    text, kb = format_lessons(ls, prog)
+    text, kb = format_topics(ts, prog)
     assert "A1 - Basics" in text
     assert "70%" in text
     assert kb is not None
     flat = [btn for row in kb.inline_keyboard for btn in row]
-    assert flat[0].callback_data == "lesson:1"
+    assert flat[0].callback_data == "topic:1"
 
 
-def test_format_lessons_empty():
-    text, kb = format_lessons([], [])
-    assert "No lessons available" in text
+def test_format_topics_empty():
+    text, kb = format_topics([], [])
+    assert "No topics available" in text
     assert kb is None
-
-
-# --- CEFR badge ---
-
-
-def test_exercise_shows_cefr_badge():
-    w = _word(cefr="B1")
-    ex = _exercise(
-        word=w,
-        exercise_type=ExerciseType.REVERSE_FLASHCARD,
-        prompt="Que dura poco tiempo",
-    )
-    text, _ = format_exercise(ex)
-    assert "[B1]" in text
-
-
-def test_exercise_no_cefr_no_badge():
-    ex = _exercise(
-        exercise_type=ExerciseType.REVERSE_FLASHCARD,
-        prompt="Que dura poco tiempo",
-    )
-    text, _ = format_exercise(ex)
-    assert "[" not in text.split("\n")[0]
 
 
 # --- format_history ---
@@ -400,7 +357,7 @@ def test_format_history():
     records = [
         AnswerHistory(
             user_id=1,
-            word_id=1,
+            concept_id=1,
             exercise_type="multiple_choice",
             correct=True,
             quality=5,
@@ -411,7 +368,7 @@ def test_format_history():
         ),
         AnswerHistory(
             user_id=1,
-            word_id=2,
+            concept_id=2,
             exercise_type="reverse_flashcard",
             correct=False,
             quality=0,
@@ -421,8 +378,8 @@ def test_format_history():
             ),
         ),
     ]
-    word_map = {1: "efimero", 2: "perpetuo"}
-    text = format_history(records, word_map)
+    concept_map = {1: "efimero", 2: "perpetuo"}
+    text = format_history(records, concept_map)
     assert "efimero" in text
     assert "perpetuo" in text
     assert "\u2705" in text
@@ -434,11 +391,11 @@ def test_format_history_empty():
     assert "No answer history" in text
 
 
-def test_format_history_unknown_word():
+def test_format_history_unknown_concept():
     records = [
         AnswerHistory(
             user_id=1,
-            word_id=99,
+            concept_id=99,
             exercise_type="multiple_choice",
             correct=True,
             quality=5,

@@ -21,9 +21,9 @@ from rembrandt_chat.handlers import (
 
 from .conftest import (
     make_callback_update,
+    make_concept,
     make_context,
     make_update,
-    make_word,
 )
 
 
@@ -78,11 +78,9 @@ async def test_addword_tags_saves_word():
     state = await addword_tags(update, ctx)
 
     assert state == ConversationHandler.END
-    ctx.bot_data["db"].add_word.assert_called_once_with(
-        language_from="es",
-        language_to="es",
-        word_from="efimero",
-        word_to="Que dura poco tiempo",
+    ctx.bot_data["db"].add_concept.assert_called_once_with(
+        front="efimero",
+        back="Que dura poco tiempo",
         tags=["vocab", "A1"],
         owner_id=1,
     )
@@ -101,11 +99,9 @@ async def test_addword_skip_tags_saves_without_tags():
     state = await addword_skip_tags(update, ctx)
 
     assert state == ConversationHandler.END
-    ctx.bot_data["db"].add_word.assert_called_once_with(
-        language_from="es",
-        language_to="es",
-        word_from="efimero",
-        word_to="Que dura poco tiempo",
+    ctx.bot_data["db"].add_concept.assert_called_once_with(
+        front="efimero",
+        back="Que dura poco tiempo",
         tags=None,
         owner_id=1,
     )
@@ -120,7 +116,7 @@ async def test_addword_empty_word_aborts():
     state = await addword_definition(update, ctx)
 
     assert state == ConversationHandler.END
-    ctx.bot_data["db"].add_word.assert_not_called()
+    ctx.bot_data["db"].add_concept.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -144,9 +140,9 @@ async def test_addword_cancel():
 async def test_mywords_lists_words():
     update = make_update(text="/mywords")
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero"),
-        make_word(2, "perpetuo"),
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero"),
+        make_concept(2, "perpetuo"),
     ]
 
     await mywords(update, ctx)
@@ -157,25 +153,11 @@ async def test_mywords_lists_words():
 
 
 @pytest.mark.asyncio
-async def test_mywords_shows_cefr():
-    update = make_update(text="/mywords")
-    ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero", cefr="B1"),
-    ]
-
-    await mywords(update, ctx)
-
-    text = update.message.reply_text.call_args[0][0]
-    assert "(B1)" in text
-
-
-@pytest.mark.asyncio
 async def test_mywords_shows_tags():
     update = make_update(text="/mywords")
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero", tags=["vocab", "A1"]),
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero", tags=["vocab", "A1"]),
     ]
 
     await mywords(update, ctx)
@@ -189,9 +171,9 @@ async def test_mywords_shows_tags():
 async def test_mywords_filters_by_tag():
     update = make_update(text="/mywords vocab")
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero", tags=["vocab"]),
-        make_word(2, "perpetuo", tags=["other"]),
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero", tags=["vocab"]),
+        make_concept(2, "perpetuo", tags=["other"]),
     ]
 
     await mywords(update, ctx)
@@ -205,8 +187,8 @@ async def test_mywords_filters_by_tag():
 async def test_mywords_filter_no_match():
     update = make_update(text="/mywords nonexistent")
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero", tags=["vocab"]),
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero", tags=["vocab"]),
     ]
 
     await mywords(update, ctx)
@@ -219,7 +201,7 @@ async def test_mywords_filter_no_match():
 async def test_mywords_empty():
     update = make_update(text="/mywords")
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = []
+    ctx.bot_data["db"].get_concepts.return_value = []
 
     await mywords(update, ctx)
 
@@ -234,8 +216,8 @@ async def test_mywords_empty():
 async def test_deleteword_shows_buttons():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = [
-        make_word(1, "efimero"),
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero"),
     ]
 
     await deleteword(update, ctx)
@@ -251,7 +233,7 @@ async def test_deleteword_shows_buttons():
 async def test_deleteword_empty():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_words.return_value = []
+    ctx.bot_data["db"].get_concepts.return_value = []
 
     await deleteword(update, ctx)
 
@@ -266,5 +248,7 @@ async def test_deleteword_callback_deletes():
 
     await handle_deleteword_callback(update, ctx)
 
-    ctx.bot_data["db"].delete_word.assert_called_once_with(42)
+    ctx.bot_data["db"].delete_concept.assert_called_once_with(
+        42
+    )
     update.callback_query.edit_message_text.assert_called_once()
