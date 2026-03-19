@@ -36,21 +36,15 @@ def format_exercise(
     """Render an exercise as Telegram message text + optional keyboard.
 
     :param exercise: The exercise to format.
-    :return: ``(text, keyboard)`` — keyboard is ``None`` when the
-        user must type a free-text answer.
+    :return: ``(text, keyboard)``.
     """
     et = exercise.exercise_type
 
     if et is ExerciseType.MULTIPLE_CHOICE:
-        text, kb = _fmt_multiple_choice(exercise)
-    elif et is ExerciseType.SELF_GRADED:
-        text, kb = _fmt_self_graded_prompt(exercise)
-    elif et is ExerciseType.FLASHCARD:
-        text, kb = _fmt_flashcard_prompt(exercise)
-    else:
-        text, kb = _fmt_typed(exercise)
-
-    return text, kb
+        return _fmt_multiple_choice(exercise)
+    if et is ExerciseType.SELF_GRADED:
+        return _fmt_self_graded_prompt(exercise)
+    return _fmt_flashcard_prompt(exercise)
 
 
 # ---- exercise formatters ----
@@ -110,24 +104,6 @@ def flashcard_reveal(
         f"How well did you know it?"
     )
     return text, _quality_keyboard()
-
-
-def _fmt_typed(
-    ex: Exercise,
-) -> tuple[str, None]:
-    et = ex.exercise_type
-    if et is ExerciseType.REVERSE_FLASHCARD:
-        text = (
-            f"What word means:\n\n"
-            f"\u201c{ex.prompt or ex.concept.back}\u201d\n\n"
-            f"Type your answer:"
-        )
-    else:
-        text = (
-            f"{ex.prompt or ex.concept.front}\n\n"
-            f"Type your answer:"
-        )
-    return text, None
 
 
 # ---- answer / hint / summary formatters ----

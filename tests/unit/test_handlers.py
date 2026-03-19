@@ -196,7 +196,7 @@ async def test_answer_text_correct():
         return_value=make_exercise()
     )
     ex = make_exercise(
-        exercise_type=ExerciseType.REVERSE_FLASHCARD
+        exercise_type=ExerciseType.MULTIPLE_CHOICE
     )
 
     update = make_update(text="efimero")
@@ -293,7 +293,7 @@ async def test_session_ends_on_last_exercise():
         streak=1, best_streak=1, accuracy_pct=100.0,
     )
     ex = make_exercise(
-        exercise_type=ExerciseType.REVERSE_FLASHCARD
+        exercise_type=ExerciseType.MULTIPLE_CHOICE
     )
 
     update = make_update(text="efimero")
@@ -317,7 +317,7 @@ async def test_hint_returns_pattern():
         reveal_count=2,
     )
     ex = make_exercise(
-        exercise_type=ExerciseType.REVERSE_FLASHCARD
+        exercise_type=ExerciseType.MULTIPLE_CHOICE
     )
     update = make_update()
     ctx = make_context(session=session, exercise=ex)

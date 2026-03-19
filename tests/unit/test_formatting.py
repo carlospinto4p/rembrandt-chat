@@ -140,19 +140,6 @@ def test_flashcard_reveal():
     assert flat[0].callback_data == f"{QUALITY_PREFIX}0"
 
 
-# --- format_exercise: typed answers ---
-
-
-def test_reverse_flashcard_typed():
-    ex = _exercise(
-        exercise_type=ExerciseType.REVERSE_FLASHCARD,
-        prompt="Que dura poco tiempo",
-    )
-    text, kb = format_exercise(ex)
-    assert "Type your answer" in text
-    assert kb is None
-
-
 # --- format_answer ---
 
 
@@ -369,7 +356,7 @@ def test_format_history():
         AnswerHistory(
             user_id=1,
             concept_id=2,
-            exercise_type="reverse_flashcard",
+            exercise_type="flashcard",
             correct=False,
             quality=0,
             answered_at=datetime(

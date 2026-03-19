@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.22.1 - 19th March 2026
+
+- Updated `rembrandt` dependency to v6.0.0.
+- Removed `REVERSE_FLASHCARD` exercise type (dropped in rembrandt v6).
+- Removed `_fmt_typed` formatter and typed-answer formatting branch.
+
+
 ### v0.22.0 - 19th March 2026
 
 - Updated `rembrandt` dependency to v5.0.2.
