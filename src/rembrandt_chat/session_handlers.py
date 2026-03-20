@@ -26,6 +26,7 @@ from rembrandt_chat.config import (
 from rembrandt_chat.formatting import (
     TOPIC_CB_PREFIX,
     MC_PREFIX,
+    QUALITY_PREFIX,
     REVEAL_CB,
     flashcard_reveal,
     format_answer,
@@ -279,8 +280,17 @@ async def handle_answer_callback(
     data = query.data or ""
 
     if data == REVEAL_CB:
-        text = flashcard_reveal(exercise)
-        await query.edit_message_text(text)
+        text, keyboard = flashcard_reveal(exercise)
+        await query.edit_message_text(
+            text, reply_markup=keyboard
+        )
+        return
+
+    if data.startswith(QUALITY_PREFIX):
+        quality = int(data[len(QUALITY_PREFIX):])
+        answer = await session.answer(quality=quality)
+        await query.edit_message_text(format_answer(answer))
+        await send_next(session, user_data, update)
         return
 
     if data.startswith(MC_PREFIX):

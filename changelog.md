@@ -1,17 +1,6 @@
 
 ## Changelog - Rembrandt-Chat
 
-### v0.22.2 - 20th March 2026
-
-- Updated `rembrandt` dependency to v7.0.0.
-- Removed `SELF_GRADED` exercise type (dropped in rembrandt v7).
-- Removed quality buttons and `_quality_keyboard` builder.
-- Updated `flashcard_reveal`: now returns plain text prompting the
-  user to type their answer instead of showing quality buttons.
-- Removed `QUALITY_PREFIX` constant and quality callback branch
-  from `handle_answer_callback`.
-
-
 ### v0.22.1 - 19th March 2026
 
 - Updated `rembrandt` dependency to v6.0.0.

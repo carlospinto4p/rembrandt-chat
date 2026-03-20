@@ -15,8 +15,19 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 # Callback-data prefixes
 MC_PREFIX = "mc:"
+QUALITY_PREFIX = "q:"
 REVEAL_CB = "reveal"
 DEL_CB_PREFIX = "delw:"
+
+# Quality labels for self-graded buttons (0–5 scale)
+_QUALITY_LABELS = [
+    "0 - No idea",
+    "1 - Wrong",
+    "2 - Almost",
+    "3 - Hard",
+    "4 - Good",
+    "5 - Easy",
+]
 
 
 def format_exercise(
@@ -31,6 +42,8 @@ def format_exercise(
 
     if et is ExerciseType.MULTIPLE_CHOICE:
         return _fmt_multiple_choice(exercise)
+    if et is ExerciseType.SELF_GRADED:
+        return _fmt_self_graded_prompt(exercise)
     return _fmt_flashcard_prompt(exercise)
 
 
@@ -53,6 +66,18 @@ def _fmt_multiple_choice(
     return text, InlineKeyboardMarkup(rows)
 
 
+def _fmt_self_graded_prompt(
+    ex: Exercise,
+) -> tuple[str, InlineKeyboardMarkup]:
+    text = (
+        f"Review this word:\n\n"
+        f"{ex.concept.front} \u2014 {ex.concept.back}\n\n"
+        f"How well did you know it?"
+    )
+    keyboard = _quality_keyboard()
+    return text, keyboard
+
+
 def _fmt_flashcard_prompt(
     ex: Exercise,
 ) -> tuple[str, InlineKeyboardMarkup]:
@@ -66,16 +91,19 @@ def _fmt_flashcard_prompt(
     return text, keyboard
 
 
-def flashcard_reveal(ex: Exercise) -> str:
-    """Show the definition after a flashcard reveal.
+def flashcard_reveal(
+    ex: Exercise,
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Show the answer and quality buttons after a flashcard reveal.
 
     :param ex: The current flashcard exercise.
-    :return: Text with concept front and back.
+    :return: ``(text, keyboard)`` with quality buttons.
     """
-    return (
+    text = (
         f"{ex.concept.front} \u2014 {ex.concept.back}\n\n"
-        f"Type your answer:"
+        f"How well did you know it?"
     )
+    return text, _quality_keyboard()
 
 
 # ---- answer / hint / summary formatters ----
@@ -252,3 +280,15 @@ def format_history(
     return "\n".join(lines)
 
 
+# ---- shared keyboard builders ----
+
+
+def _quality_keyboard() -> InlineKeyboardMarkup:
+    buttons = [
+        InlineKeyboardButton(
+            label, callback_data=f"{QUALITY_PREFIX}{i}"
+        )
+        for i, label in enumerate(_QUALITY_LABELS)
+    ]
+    rows = [buttons[i : i + 2] for i in range(0, len(buttons), 2)]
+    return InlineKeyboardMarkup(rows)

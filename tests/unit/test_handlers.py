@@ -14,7 +14,7 @@ from rembrandt.models import (
     WeakConcept,
 )
 
-from rembrandt_chat.formatting import MC_PREFIX, REVEAL_CB
+from rembrandt_chat.formatting import MC_PREFIX, QUALITY_PREFIX, REVEAL_CB
 from rembrandt_chat.handlers import (
     export_progress,
     forecast,
@@ -237,6 +237,28 @@ async def test_callback_multiple_choice():
 
     session.answer.assert_called_once_with(text="efimero")
     update.callback_query.edit_message_text.assert_called_once()
+
+
+# --- handle_answer_callback: quality ---
+
+
+@pytest.mark.asyncio
+async def test_callback_quality():
+    session = MagicMock()
+    session.answer = AsyncMock(
+        return_value=make_answer_result(correct=True)
+    )
+    session.next_exercise = AsyncMock(
+        return_value=make_exercise()
+    )
+    ex = make_exercise(exercise_type=ExerciseType.SELF_GRADED)
+
+    update = make_callback_update(f"{QUALITY_PREFIX}4")
+    ctx = make_context(session=session, exercise=ex)
+
+    await handle_answer_callback(update, ctx)
+
+    session.answer.assert_called_once_with(quality=4)
 
 
 # --- handle_answer_callback: reveal ---
