@@ -17,7 +17,6 @@ from rembrandt.models import (
 
 from rembrandt_chat.formatting import (
     MC_PREFIX,
-    QUALITY_PREFIX,
     REVEAL_CB,
     flashcard_reveal,
     format_answer,
@@ -94,31 +93,6 @@ def test_multiple_choice_one_per_row():
     assert len(kb.inline_keyboard[0]) == 1
 
 
-# --- format_exercise: self-graded ---
-
-
-def test_self_graded_text():
-    ex = _exercise(exercise_type=ExerciseType.SELF_GRADED)
-    text, kb = format_exercise(ex)
-    assert "efimero" in text
-    assert "Que dura poco tiempo" in text
-    assert "How well did you know it?" in text
-    assert kb is not None
-
-
-def test_self_graded_quality_buttons():
-    ex = _exercise(exercise_type=ExerciseType.SELF_GRADED)
-    _, kb = format_exercise(ex)
-    flat = [btn for row in kb.inline_keyboard for btn in row]
-    assert len(flat) == 6
-    assert flat[0].text == "0 - No idea"
-    assert flat[5].text == "5 - Easy"
-    assert flat[0].callback_data == f"{QUALITY_PREFIX}0"
-    assert flat[5].callback_data == f"{QUALITY_PREFIX}5"
-    # Two buttons per row
-    assert len(kb.inline_keyboard) == 3
-
-
 # --- format_exercise: flashcard ---
 
 
@@ -133,11 +107,10 @@ def test_flashcard_prompt():
 
 def test_flashcard_reveal():
     ex = _exercise(exercise_type=ExerciseType.FLASHCARD)
-    text, kb = flashcard_reveal(ex)
+    text = flashcard_reveal(ex)
     assert "efimero" in text
     assert "Que dura poco tiempo" in text
-    flat = [btn for row in kb.inline_keyboard for btn in row]
-    assert flat[0].callback_data == f"{QUALITY_PREFIX}0"
+    assert "Type your answer" in text
 
 
 # --- format_answer ---

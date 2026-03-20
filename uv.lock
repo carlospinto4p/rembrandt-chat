@@ -437,8 +437,8 @@ wheels = [
 
 [[package]]
 name = "rembrandt"
-version = "6.0.0"
-source = { git = "https://github.com/carlospinto4p/rembrandt.git?rev=v6.0.0#da8b787ddb5f9e70bfb910ab77ae655a3034d5a5" }
+version = "7.0.0"
+source = { git = "https://github.com/carlospinto4p/rembrandt.git?rev=v7.0.0#619a937d1c10884e9b7af193ca0d424d7e19ee0e" }
 dependencies = [
     { name = "aiosqlite" },
     { name = "pydantic" },
@@ -448,7 +448,7 @@ dependencies = [
 
 [[package]]
 name = "rembrandt-chat"
-version = "0.22.1"
+version = "0.22.2"
 source = { virtual = "." }
 dependencies = [
     { name = "python-dotenv" },
@@ -475,7 +475,7 @@ requires-dist = [
     { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.14.0" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
     { name = "python-telegram-bot", specifier = ">=21.0" },
-    { name = "rembrandt", git = "https://github.com/carlospinto4p/rembrandt.git?rev=v6.0.0" },
+    { name = "rembrandt", git = "https://github.com/carlospinto4p/rembrandt.git?rev=v7.0.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.12.0" },
 ]
 provides-extras = ["dev"]
