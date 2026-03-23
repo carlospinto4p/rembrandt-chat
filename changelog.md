@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.24.1 - 23rd March 2026
+
+- Added `scripts/load_english_translations.py`: loads 120
+  English translations for the bundled Spanish vocabulary.
+- Fixed `data/vocab.csv` headers: `word_from,word_to` →
+  `front,back` (required by rembrandt v6.2.0).
+
+
 ### v0.24.0 - 23rd March 2026
 
 - Updated `rembrandt` dependency to v6.2.0.
