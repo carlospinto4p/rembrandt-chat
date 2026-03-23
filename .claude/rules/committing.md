@@ -20,6 +20,9 @@
    - **Always include `uv.lock`** in the commit — run `git status` to
      verify it is staged before committing.
    - Use simple `-m "..."` quoting for commit messages (no heredocs).
+   - **One command per Bash call** — never chain git commands with
+     `&&`, `||`, `;`, or pipes. Run `git add`, `git commit`, and
+     `git push` as separate Bash tool calls.
    - The `preCommit` hook will run tests; if they fail the commit is
      aborted — fix and retry.
 7. **Push to remote**: Push the changes with `git push`
