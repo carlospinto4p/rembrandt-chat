@@ -6,8 +6,10 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from rembrandt import Hint, SessionStats
 from rembrandt.models import (
+    ConceptTranslation,
     DailyStats,
     ExerciseType,
+    Language,
     ReviewForecast,
     Topic,
     TopicProgress,
@@ -19,12 +21,15 @@ from rembrandt_chat.handlers import (
     export_progress,
     forecast,
     handle_answer_callback,
+    handle_language_callback,
+    handle_play_language,
     handle_play_topic,
     handle_topic_callback,
     handle_play_mode,
     history,
     import_file,
     import_start,
+    language,
     topics,
     retention,
     handle_answer_text,
@@ -48,6 +53,34 @@ from .conftest import (
 
 
 # --- shared helpers ---
+
+
+def _language(
+    code: str = "es", name: str = "Spanish",
+) -> Language:
+    return Language(code=code, name=name)
+
+
+def _languages() -> list[Language]:
+    return [
+        _language("es", "Spanish"),
+        _language("en", "English"),
+    ]
+
+
+def _translation(
+    concept_id: int = 1,
+    language_code: str = "en",
+    front: str = "ephemeral",
+    back: str = "Lasting for a very short time",
+) -> ConceptTranslation:
+    return ConceptTranslation(
+        concept_id=concept_id,
+        language_code=language_code,
+        front=front,
+        back=back,
+        context="",
+    )
 
 
 def _topic(
@@ -98,8 +131,36 @@ async def test_start_no_effective_user():
 
 
 @pytest.mark.asyncio
-async def test_play_shows_topic_keyboard():
+async def test_play_shows_language_keyboard():
     update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].get_languages.return_value = (
+        _languages()
+    )
+
+    await play(update, ctx)
+
+    call_kwargs = update.message.reply_text.call_args
+    assert "language" in call_kwargs[0][0].lower()
+    kb = call_kwargs[1]["reply_markup"]
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    labels = [btn.text for btn in flat]
+    assert "Spanish" in labels
+    assert "English" in labels
+
+
+@pytest.mark.asyncio
+async def test_play_rejects_when_session_active():
+    update = make_update()
+    ctx = make_context(session=MagicMock())
+    await play(update, ctx)
+    text = update.message.reply_text.call_args[0][0]
+    assert "already have an active session" in text
+
+
+@pytest.mark.asyncio
+async def test_play_language_shows_topic_keyboard():
+    update = make_callback_update("play_lang:es")
     ctx = make_context()
     ctx.bot_data["db"].get_topics.return_value = [
         _topic(),
@@ -110,24 +171,17 @@ async def test_play_shows_topic_keyboard():
         new_callable=AsyncMock,
         return_value=_topic_progress(),
     ):
-        await play(update, ctx)
+        await handle_play_language(update, ctx)
 
-    call_kwargs = update.message.reply_text.call_args
-    assert "topic" in call_kwargs[0][0].lower()
-    kb = call_kwargs[1]["reply_markup"]
+    assert ctx.user_data["language"] == "es"
+    query = update.callback_query
+    call_args = query.edit_message_text.call_args
+    text = call_args[0][0]
+    assert "topic" in text.lower()
+    kb = call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
     assert "All topics" in labels
-    assert "A1 - Topic 1" in labels
-
-
-@pytest.mark.asyncio
-async def test_play_rejects_when_session_active():
-    update = make_update()
-    ctx = make_context(session=MagicMock())
-    await play(update, ctx)
-    text = update.message.reply_text.call_args[0][0]
-    assert "already have an active session" in text
 
 
 @pytest.mark.asyncio
@@ -220,6 +274,34 @@ async def test_play_mode_with_topic_passes_concept_ids():
     call_kw = MockSession.call_args[1]
     assert call_kw["concept_ids"] == [1, 2, 3]
     assert "_play_concept_ids" not in ctx.user_data
+
+
+@pytest.mark.asyncio
+async def test_play_mode_with_language_builds_tr_map():
+    update = make_callback_update("play_mode:mixed")
+    ctx = make_context()
+    ctx.user_data["language"] = "en"
+    ex = make_exercise()
+    tr = _translation()
+    ctx.bot_data["db"].get_translation.return_value = tr
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(),
+    ]
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session"
+    ) as MockSession:
+        mock_session = MockSession.return_value
+        mock_session.next_exercise = AsyncMock(
+            return_value=ex
+        )
+        await handle_play_mode(update, ctx)
+
+    assert ctx.user_data["translation"] is tr
+    assert ctx.user_data["_translation_map"] == {
+        "efimero": "ephemeral",
+        "Que dura poco tiempo": "Lasting for a very short time",
+    }
 
 
 @pytest.mark.asyncio
@@ -900,3 +982,43 @@ async def test_export_sends_typing():
     await export_progress(update, ctx)
 
     update.effective_chat.send_action.assert_called_once()
+
+
+# --- /language ---
+
+
+@pytest.mark.asyncio
+async def test_language_shows_options():
+    update = make_update()
+    ctx = make_context()
+    ctx.bot_data["db"].get_languages.return_value = (
+        _languages()
+    )
+
+    await language(update, ctx)
+
+    call_kwargs = update.message.reply_text.call_args
+    assert "language" in call_kwargs[0][0].lower()
+    kb = call_kwargs[1]["reply_markup"]
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    labels = [btn.text for btn in flat]
+    assert "Spanish" in labels
+    assert "English" in labels
+
+
+@pytest.mark.asyncio
+async def test_language_callback_stores_choice():
+    update = make_callback_update("lang:en")
+    ctx = make_context()
+    ctx.bot_data["db"].get_language.return_value = (
+        _language("en", "English")
+    )
+
+    await handle_language_callback(update, ctx)
+
+    assert ctx.user_data["language"] == "en"
+    text = (
+        update.callback_query
+        .edit_message_text.call_args[0][0]
+    )
+    assert "English" in text

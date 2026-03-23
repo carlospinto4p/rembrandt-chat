@@ -3,9 +3,11 @@
 from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
+    ConceptTranslation,
     DailyStats,
     Exercise,
     ExerciseType,
+    Language,
     ReviewForecast,
     Topic,
     TopicProgress,
@@ -32,19 +34,28 @@ _QUALITY_LABELS = [
 
 def format_exercise(
     exercise: Exercise,
+    *,
+    translation: ConceptTranslation | None = None,
+    tr_map: dict[str, str] | None = None,
 ) -> tuple[str, InlineKeyboardMarkup | None]:
     """Render an exercise as Telegram message text + optional keyboard.
 
     :param exercise: The exercise to format.
+    :param translation: Optional translation for the main
+        concept.
+    :param tr_map: Optional mapping of original text to
+        translated text, used for MC option translation.
     :return: ``(text, keyboard)``.
     """
     et = exercise.exercise_type
 
     if et is ExerciseType.MULTIPLE_CHOICE:
-        return _fmt_multiple_choice(exercise)
+        return _fmt_multiple_choice(
+            exercise, translation, tr_map
+        )
     if et is ExerciseType.SELF_GRADED:
-        return _fmt_self_graded_prompt(exercise)
-    return _fmt_flashcard_prompt(exercise)
+        return _fmt_self_graded_prompt(exercise, translation)
+    return _fmt_flashcard_prompt(exercise, translation)
 
 
 # ---- exercise formatters ----
@@ -52,14 +63,22 @@ def format_exercise(
 
 def _fmt_multiple_choice(
     ex: Exercise,
+    translation: ConceptTranslation | None = None,
+    tr_map: dict[str, str] | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
+    front = translation.front if translation else ex.concept.front
     text = (
         f"Which definition matches this word?\n\n"
-        f"\u201c{ex.concept.front}\u201d"
+        f"\u201c{front}\u201d"
     )
+    options = ex.options
+    if tr_map:
+        options = [tr_map.get(o, o) for o in options]
     buttons = [
-        InlineKeyboardButton(opt, callback_data=f"{MC_PREFIX}{i}")
-        for i, opt in enumerate(ex.options)
+        InlineKeyboardButton(
+            opt, callback_data=f"{MC_PREFIX}{i}"
+        )
+        for i, opt in enumerate(options)
     ]
     # One button per row — definitions are too long for side-by-side
     rows = [[b] for b in buttons]
@@ -68,10 +87,13 @@ def _fmt_multiple_choice(
 
 def _fmt_self_graded_prompt(
     ex: Exercise,
+    translation: ConceptTranslation | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
+    front = translation.front if translation else ex.concept.front
+    back = translation.back if translation else ex.concept.back
     text = (
         f"Review this word:\n\n"
-        f"{ex.concept.front} \u2014 {ex.concept.back}\n\n"
+        f"{front} \u2014 {back}\n\n"
         f"How well did you know it?"
     )
     keyboard = _quality_keyboard()
@@ -80,27 +102,36 @@ def _fmt_self_graded_prompt(
 
 def _fmt_flashcard_prompt(
     ex: Exercise,
+    translation: ConceptTranslation | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
+    front = translation.front if translation else ex.concept.front
     text = (
         f"Do you know this word?\n\n"
-        f"{ex.concept.front}"
+        f"{front}"
     )
     keyboard = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("Reveal", callback_data=REVEAL_CB)]]
+        [[InlineKeyboardButton(
+            "Reveal", callback_data=REVEAL_CB
+        )]]
     )
     return text, keyboard
 
 
 def flashcard_reveal(
     ex: Exercise,
+    translation: ConceptTranslation | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
-    """Show the answer and quality buttons after a flashcard reveal.
+    """Show the answer and quality buttons after a flashcard
+    reveal.
 
     :param ex: The current flashcard exercise.
+    :param translation: Optional translation override.
     :return: ``(text, keyboard)`` with quality buttons.
     """
+    front = translation.front if translation else ex.concept.front
+    back = translation.back if translation else ex.concept.back
     text = (
-        f"{ex.concept.front} \u2014 {ex.concept.back}\n\n"
+        f"{front} \u2014 {back}\n\n"
         f"How well did you know it?"
     )
     return text, _quality_keyboard()
@@ -192,6 +223,46 @@ def format_weak_concepts(
 
 TOPIC_CB_PREFIX = "topic:"
 PLAY_TOPIC_PREFIX = "play_topic:"
+PLAY_LANG_PREFIX = "play_lang:"
+LANG_CB_PREFIX = "lang:"
+
+
+def format_play_languages(
+    languages: list[Language],
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Render language selection for `/play`.
+
+    :param languages: Available languages.
+    :return: Formatted text and inline keyboard.
+    """
+    buttons = [
+        [InlineKeyboardButton(
+            lang.name,
+            callback_data=f"{PLAY_LANG_PREFIX}{lang.code}",
+        )]
+        for lang in languages
+    ]
+    return "Choose a language:", InlineKeyboardMarkup(buttons)
+
+
+def format_languages(
+    languages: list[Language],
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Render language selection for `/language`.
+
+    :param languages: Available languages.
+    :return: Formatted text and inline keyboard.
+    """
+    buttons = [
+        [InlineKeyboardButton(
+            lang.name,
+            callback_data=f"{LANG_CB_PREFIX}{lang.code}",
+        )]
+        for lang in languages
+    ]
+    return "Choose your language:", InlineKeyboardMarkup(
+        buttons
+    )
 
 
 def format_play_topics(

@@ -24,12 +24,17 @@ from rembrandt_chat.config import (
     get_bundled_vocab_dir,
     get_database_path,
 )
-from rembrandt_chat.formatting import DEL_CB_PREFIX, TOPIC_CB_PREFIX
+from rembrandt_chat.formatting import (
+    DEL_CB_PREFIX,
+    LANG_CB_PREFIX,
+    TOPIC_CB_PREFIX,
+)
 from rembrandt_chat.handlers import (
     AWAITING_DEFINITION,
     AWAITING_FILE,
     AWAITING_TAGS,
     AWAITING_WORD,
+    PLAY_LANG_PREFIX,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
     addword_cancel,
@@ -44,6 +49,8 @@ from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_answer_text,
     handle_deleteword_callback,
+    handle_language_callback,
+    handle_play_language,
     handle_play_topic,
     handle_topic_callback,
     handle_play_mode,
@@ -52,6 +59,7 @@ from rembrandt_chat.handlers import (
     import_cancel,
     import_file,
     import_start,
+    language,
     topics,
     mywords,
     play,
@@ -99,6 +107,20 @@ async def _load_bundled_topics(db: Database) -> None:
     log.info("Loaded %d bundled topics", len(loaded))
 
 
+async def _register_default_languages(
+    db: Database,
+) -> None:
+    """Register Spanish and English if not yet present."""
+    existing = await db.get_languages()
+    codes = {lang.code for lang in existing}
+    if "es" not in codes:
+        await db.add_language("es", "Spanish")
+        log.info("Registered language: Spanish (es)")
+    if "en" not in codes:
+        await db.add_language("en", "English")
+        log.info("Registered language: English (en)")
+
+
 async def _post_init(app) -> None:
     """Connect to the database after the application starts."""
     db = await Database.connect(get_database_path())
@@ -108,6 +130,7 @@ async def _post_init(app) -> None:
         log.warning("Could not enable WAL mode")
     await _load_base_vocab(db)
     await _load_bundled_topics(db)
+    await _register_default_languages(db)
     mapper = UserMapper(db)
     app.bot_data["user_mapper"] = mapper
     app.bot_data["db"] = db
@@ -140,6 +163,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("retention", retention))
     app.add_handler(CommandHandler("topics", topics))
     app.add_handler(CommandHandler("history", history))
+    app.add_handler(CommandHandler("language", language))
     app.add_handler(CommandHandler("export", export_progress))
 
     import_conv = ConversationHandler(
@@ -193,6 +217,12 @@ def create_app() -> None:
 
     app.add_handler(
         CallbackQueryHandler(
+            handle_play_language,
+            pattern=f"^{PLAY_LANG_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
             handle_play_topic,
             pattern=f"^{PLAY_TOPIC_PREFIX}",
         )
@@ -201,6 +231,12 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_play_mode,
             pattern=f"^{PLAY_MODE_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_language_callback,
+            pattern=f"^{LANG_CB_PREFIX}",
         )
     )
     app.add_handler(

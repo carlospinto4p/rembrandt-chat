@@ -5,6 +5,7 @@ from functools import wraps
 from typing import Any
 
 from rembrandt import Database, Session, User
+from rembrandt.models import ConceptTranslation
 from telegram import Update
 from telegram.constants import ChatAction
 from telegram.ext import ContextTypes, ConversationHandler
@@ -15,6 +16,9 @@ from rembrandt_chat.user_mapping import UserMapper
 # Keys used in context.user_data
 SESSION = "session"
 EXERCISE = "exercise"
+LANGUAGE = "language"
+TRANSLATION = "translation"
+TRANSLATION_MAP = "_translation_map"
 
 # Type alias for handler functions
 _Handler = Callable[
@@ -149,24 +153,55 @@ def require_session(
     return session, user_data
 
 
+async def _lookup_translation(
+    db: Database,
+    concept_id: int,
+    lang: str | None,
+) -> ConceptTranslation | None:
+    """Fetch a concept translation for the given language.
+
+    Returns ``None`` when no language is set or no
+    translation exists.
+    """
+    if not lang:
+        return None
+    return await db.get_translation(concept_id, lang)
+
+
 async def send_next(
     session: Session,
     user_data: dict,
     update: Update,
+    db: Database | None = None,
 ) -> None:
-    """Advance to the next exercise or end the session."""
+    """Advance to the next exercise or end the session.
+
+    :param db: Database for translation lookups.  Required
+        when the user has a language set.
+    """
     exercise = await session.next_exercise()
     if exercise is None:
         summary = session.summary()
         user_data.pop(SESSION, None)
         user_data.pop(EXERCISE, None)
+        user_data.pop(TRANSLATION, None)
         chat = update.effective_chat
         if chat is not None:
             await chat.send_message(format_summary(summary))
         return
 
     user_data[EXERCISE] = exercise
-    text, keyboard = format_exercise(exercise)
+    lang = user_data.get(LANGUAGE)
+    translation = None
+    if db and lang:
+        translation = await _lookup_translation(
+            db, exercise.concept.id, lang
+        )
+    user_data[TRANSLATION] = translation
+    tr_map = user_data.get(TRANSLATION_MAP)
+    text, keyboard = format_exercise(
+        exercise, translation=translation, tr_map=tr_map
+    )
     chat = update.effective_chat
     if chat is not None:
         await chat.send_message(text, reply_markup=keyboard)

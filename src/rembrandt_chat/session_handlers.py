@@ -10,7 +10,11 @@ from telegram.ext import ContextTypes
 
 from rembrandt_chat._helpers import (
     EXERCISE,
+    LANGUAGE,
     SESSION,
+    TRANSLATION,
+    TRANSLATION_MAP,
+    _lookup_translation,
     get_session,
     require_callback,
     require_message,
@@ -24,6 +28,7 @@ from rembrandt_chat.config import (
     get_max_review_cards,
 )
 from rembrandt_chat.formatting import (
+    LANG_CB_PREFIX,
     TOPIC_CB_PREFIX,
     MC_PREFIX,
     QUALITY_PREFIX,
@@ -32,6 +37,8 @@ from rembrandt_chat.formatting import (
     format_answer,
     format_exercise,
     format_hint,
+    format_languages,
+    format_play_languages,
     format_play_topics,
     format_topics,
     format_summary,
@@ -39,6 +46,7 @@ from rembrandt_chat.formatting import (
 
 PLAY_MODE_PREFIX = "play_mode:"
 PLAY_TOPIC_PREFIX = "play_topic:"
+PLAY_LANG_PREFIX = "play_lang:"
 
 # user_data key for topic concept_ids chosen during /play
 _PLAY_CONCEPT_IDS = "_play_concept_ids"
@@ -59,6 +67,30 @@ def _review_config() -> ReviewConfig | None:
         max_new_cards=new,
         max_review_cards=rev,
     )
+
+async def _build_translation_map(
+    db: Database,
+    lang: str,
+) -> dict[str, str]:
+    """Build a mapping from native text to translated text.
+
+    Maps both ``front`` and ``back`` of every concept that
+    has a translation in `lang`.
+    """
+    concepts = await db.get_concepts()
+    translations = await asyncio.gather(
+        *(
+            db.get_translation(c.id, lang)
+            for c in concepts
+        )
+    )
+    tr_map: dict[str, str] = {}
+    for concept, tr in zip(concepts, translations):
+        if tr is not None:
+            tr_map[concept.front] = tr.front
+            tr_map[concept.back] = tr.back
+    return tr_map
+
 
 async def _start_session(
     update: Update,
@@ -94,8 +126,22 @@ async def _start_session(
         return
 
     user_data[EXERCISE] = exercise
+
+    lang = user_data.get(LANGUAGE)
+    translation = None
+    tr_map = None
+    if lang:
+        translation = await _lookup_translation(
+            db, exercise.concept.id, lang
+        )
+        tr_map = await _build_translation_map(db, lang)
+        user_data[TRANSLATION_MAP] = tr_map
+    user_data[TRANSLATION] = translation
+
     await query.edit_message_text(confirm_msg)
-    text, keyboard = format_exercise(exercise)
+    text, keyboard = format_exercise(
+        exercise, translation=translation, tr_map=tr_map
+    )
     chat = update.effective_chat
     if chat is not None:
         await chat.send_message(text, reply_markup=keyboard)
@@ -128,16 +174,41 @@ async def play(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/play` — pick a topic, then a session mode."""
+    """`/play` — pick language, topic, then session mode."""
     if context.user_data.get(SESSION) is not None:
         await update.message.reply_text(
             _ACTIVE_SESSION_MSG
         )
         return
 
-    user, db = await resolve_user_with_typing(
-        update, context
+    _, db = await resolve_user_with_typing(update, context)
+    languages = await db.get_languages()
+    text, keyboard = format_play_languages(languages)
+    await update.message.reply_text(
+        text, reply_markup=keyboard
     )
+
+
+@require_callback
+async def handle_play_language(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle language selection from `/play`."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(PLAY_LANG_PREFIX):
+        return
+
+    user_data = context.user_data
+    if user_data.get(SESSION) is not None:
+        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+        return
+
+    lang_code = data[len(PLAY_LANG_PREFIX):]
+    user_data[LANGUAGE] = lang_code
+
+    user, db = await resolve_user(update, context)
     all_topics = await db.get_topics()
     progress = await asyncio.gather(
         *(
@@ -148,7 +219,7 @@ async def play(
     text, keyboard = format_play_topics(
         all_topics, progress
     )
-    await update.message.reply_text(
+    await query.edit_message_text(
         text, reply_markup=keyboard
     )
 
@@ -248,6 +319,8 @@ async def stop(
     summary = session.summary()
     user_data.pop(SESSION, None)
     user_data.pop(EXERCISE, None)
+    user_data.pop(TRANSLATION, None)
+    user_data.pop(TRANSLATION_MAP, None)
     await update.message.reply_text(format_summary(summary))
 
 
@@ -298,11 +371,12 @@ async def skip(
 
     session, user_data = result
     skipped = session.skip()
-    await update.message.reply_text(
-        f"Skipped: {skipped.concept.front}"
-    )
+    tr = user_data.get(TRANSLATION)
+    front = tr.front if tr else skipped.concept.front
+    await update.message.reply_text(f"Skipped: {front}")
 
-    await send_next(session, user_data, update)
+    db: Database = context.bot_data["db"]
+    await send_next(session, user_data, update, db=db)
 
 
 @require_message
@@ -316,10 +390,13 @@ async def handle_answer_text(
         return
 
     session, user_data = result
-    answer = await session.answer(text=update.message.text or "")
+    answer = await session.answer(
+        text=update.message.text or ""
+    )
     await update.message.reply_text(format_answer(answer))
 
-    await send_next(session, user_data, update)
+    db: Database = context.bot_data["db"]
+    await send_next(session, user_data, update, db=db)
 
 
 @require_callback
@@ -337,8 +414,13 @@ async def handle_answer_callback(
     exercise = user_data[EXERCISE]
     data = query.data or ""
 
+    db: Database = context.bot_data["db"]
+
     if data == REVEAL_CB:
-        text, keyboard = flashcard_reveal(exercise)
+        tr = user_data.get(TRANSLATION)
+        text, keyboard = flashcard_reveal(
+            exercise, translation=tr
+        )
         await query.edit_message_text(
             text, reply_markup=keyboard
         )
@@ -348,7 +430,7 @@ async def handle_answer_callback(
         quality = int(data[len(QUALITY_PREFIX):])
         answer = await session.answer(quality=quality)
         await query.edit_message_text(format_answer(answer))
-        await send_next(session, user_data, update)
+        await send_next(session, user_data, update, db=db)
         return
 
     if data.startswith(MC_PREFIX):
@@ -356,7 +438,7 @@ async def handle_answer_callback(
         chosen = exercise.options[idx]
         answer = await session.answer(text=chosen)
         await query.edit_message_text(format_answer(answer))
-        await send_next(session, user_data, update)
+        await send_next(session, user_data, update, db=db)
         return
 
 
@@ -410,4 +492,40 @@ async def handle_topic_callback(
         no_words_msg="No words available in this topic.",
         confirm_msg=f"Topic: {topic.title}",
         concept_ids=topic.concept_ids,
+    )
+
+
+@require_message
+async def language(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/language` — set preferred language."""
+    _, db = await resolve_user_with_typing(update, context)
+    languages = await db.get_languages()
+    text, keyboard = format_languages(languages)
+    await update.message.reply_text(
+        text, reply_markup=keyboard
+    )
+
+
+@require_callback
+async def handle_language_callback(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle language selection from `/language`."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(LANG_CB_PREFIX):
+        return
+
+    lang_code = data[len(LANG_CB_PREFIX):]
+    context.user_data[LANGUAGE] = lang_code
+
+    _, db = await resolve_user(update, context)
+    lang = await db.get_language(lang_code)
+    name = lang.name if lang else lang_code
+    await query.edit_message_text(
+        f"Language set to {name}."
     )

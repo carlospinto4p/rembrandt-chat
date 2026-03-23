@@ -1,6 +1,23 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.24.0 - 23rd March 2026
+
+- Updated `rembrandt` dependency to v6.2.0.
+- Added language support to `/play` flow: language → topic → mode.
+- Added `/language` command to set preferred language.
+- Added `handle_play_language()` and `handle_language_callback()`
+  handlers.
+- Added `format_play_languages()` and `format_languages()`
+  formatters.
+- Updated exercise formatters to accept optional
+  `ConceptTranslation` for translated display.
+- Updated `send_next()` to look up translations when a
+  language is set.
+- Added `_build_translation_map()` for MC option translation.
+- Registered default languages (Spanish, English) on first run.
+
+
 ### v0.23.0 - 23rd March 2026
 
 - Added topic-first flow to `/play`: user now picks a topic (or
