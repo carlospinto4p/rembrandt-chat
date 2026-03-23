@@ -113,7 +113,7 @@ docker compose stop
 | Command | Description |
 |---|---|
 | `/start` | Welcome message, auto-register if new |
-| `/play` | Start an exercise session |
+| `/play` | Pick a topic, then a session mode, and start |
 | `/stop` | End session and show summary |
 | `/hint` | Get a hint for the current exercise |
 | `/skip` | Skip the current exercise |

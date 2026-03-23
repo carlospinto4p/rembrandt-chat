@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.23.0 - 23rd March 2026
+
+- Added topic-first flow to `/play`: user now picks a topic (or
+  "All topics") before selecting session mode.
+- Added `handle_play_topic()` handler and `format_play_topics()`
+  formatter.
+- Added `PLAY_TOPIC_PREFIX` callback prefix.
+
+
 ### v0.22.2 - 23rd March 2026
 
 - Updated `.claude/rules/committing.md`: added explicit rule against

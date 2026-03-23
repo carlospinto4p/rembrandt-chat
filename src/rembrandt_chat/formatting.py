@@ -191,6 +191,45 @@ def format_weak_concepts(
 
 
 TOPIC_CB_PREFIX = "topic:"
+PLAY_TOPIC_PREFIX = "play_topic:"
+
+
+def format_play_topics(
+    topics: list[Topic],
+    progress: list[TopicProgress],
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Render topic selection for `/play` with an
+    "All topics" option.
+
+    :param topics: Available topics.
+    :param progress: Progress for each topic (same order).
+    :return: Formatted text and inline keyboard.
+    """
+    prog_map = {p.topic_id: p for p in progress}
+    lines = ["Choose a topic:\n"]
+    buttons: list[list[InlineKeyboardButton]] = [
+        [InlineKeyboardButton(
+            "All topics",
+            callback_data=f"{PLAY_TOPIC_PREFIX}all",
+        )]
+    ]
+    for topic in topics:
+        p = prog_map.get(topic.id)
+        pct = f"{p.completion_pct:.0f}%" if p else "0%"
+        lines.append(
+            f"{topic.id}. {topic.title} ({pct} complete)"
+        )
+        buttons.append([
+            InlineKeyboardButton(
+                topic.title,
+                callback_data=(
+                    f"{PLAY_TOPIC_PREFIX}{topic.id}"
+                ),
+            )
+        ])
+    text = "\n".join(lines)
+    keyboard = InlineKeyboardMarkup(buttons)
+    return text, keyboard
 
 
 def format_topics(

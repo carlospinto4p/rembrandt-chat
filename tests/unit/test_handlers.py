@@ -19,6 +19,7 @@ from rembrandt_chat.handlers import (
     export_progress,
     forecast,
     handle_answer_callback,
+    handle_play_topic,
     handle_topic_callback,
     handle_play_mode,
     history,
@@ -46,6 +47,32 @@ from .conftest import (
 )
 
 
+# --- shared helpers ---
+
+
+def _topic(
+    topic_id: int = 1, title: str = "A1 - Topic 1",
+) -> Topic:
+    return Topic(
+        id=topic_id,
+        title=title,
+        concept_ids=[1, 2, 3],
+        concept_count=3,
+    )
+
+
+def _topic_progress(topic_id: int = 1) -> TopicProgress:
+    return TopicProgress(
+        topic_id=topic_id,
+        user_id=1,
+        concepts_total=3,
+        concepts_studied=2,
+        concepts_mastered=1,
+        completion_pct=66.7,
+        mastery_pct=33.3,
+    )
+
+
 # --- /start ---
 
 
@@ -71,19 +98,27 @@ async def test_start_no_effective_user():
 
 
 @pytest.mark.asyncio
-async def test_play_shows_mode_keyboard():
+async def test_play_shows_topic_keyboard():
     update = make_update()
     ctx = make_context()
-    await play(update, ctx)
+    ctx.bot_data["db"].get_topics.return_value = [
+        _topic(),
+    ]
+
+    with patch(
+        "rembrandt_chat.session_handlers.topic_progress",
+        new_callable=AsyncMock,
+        return_value=_topic_progress(),
+    ):
+        await play(update, ctx)
 
     call_kwargs = update.message.reply_text.call_args
-    assert "mode" in call_kwargs[0][0].lower()
+    assert "topic" in call_kwargs[0][0].lower()
     kb = call_kwargs[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
-    assert "Mixed" in labels
-    assert "Learn new" in labels
-    assert "Review due" in labels
+    assert "All topics" in labels
+    assert "A1 - Topic 1" in labels
 
 
 @pytest.mark.asyncio
@@ -93,6 +128,58 @@ async def test_play_rejects_when_session_active():
     await play(update, ctx)
     text = update.message.reply_text.call_args[0][0]
     assert "already have an active session" in text
+
+
+@pytest.mark.asyncio
+async def test_play_topic_all_shows_mode_keyboard():
+    update = make_callback_update("play_topic:all")
+    ctx = make_context()
+
+    await handle_play_topic(update, ctx)
+
+    query = update.callback_query
+    call_args = query.edit_message_text.call_args
+    text = call_args[0][0]
+    assert "All topics" in text
+    assert "mode" in text.lower()
+    kb = call_args[1]["reply_markup"]
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    labels = [btn.text for btn in flat]
+    assert "Mixed" in labels
+    assert "Learn new" in labels
+    assert "Review due" in labels
+    assert "_play_concept_ids" not in ctx.user_data
+
+
+@pytest.mark.asyncio
+async def test_play_topic_specific_shows_mode_keyboard():
+    update = make_callback_update("play_topic:1")
+    ctx = make_context()
+    topic = _topic()
+    ctx.bot_data["db"].get_topic.return_value = topic
+
+    await handle_play_topic(update, ctx)
+
+    query = update.callback_query
+    call_args = query.edit_message_text.call_args
+    text = call_args[0][0]
+    assert "A1 - Topic 1" in text
+    assert ctx.user_data["_play_concept_ids"] == [1, 2, 3]
+
+
+@pytest.mark.asyncio
+async def test_play_topic_not_found():
+    update = make_callback_update("play_topic:99")
+    ctx = make_context()
+    ctx.bot_data["db"].get_topic.return_value = None
+
+    await handle_play_topic(update, ctx)
+
+    text = (
+        update.callback_query
+        .edit_message_text.call_args[0][0]
+    )
+    assert "not found" in text.lower()
 
 
 @pytest.mark.asyncio
@@ -112,6 +199,27 @@ async def test_play_mode_creates_session():
 
     assert ctx.user_data["session"] is mock_session
     assert ctx.user_data["exercise"] is ex
+
+
+@pytest.mark.asyncio
+async def test_play_mode_with_topic_passes_concept_ids():
+    update = make_callback_update("play_mode:mixed")
+    ctx = make_context()
+    ctx.user_data["_play_concept_ids"] = [1, 2, 3]
+    ex = make_exercise()
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session"
+    ) as MockSession:
+        mock_session = MockSession.return_value
+        mock_session.next_exercise = AsyncMock(
+            return_value=ex
+        )
+        await handle_play_mode(update, ctx)
+
+    call_kw = MockSession.call_args[1]
+    assert call_kw["concept_ids"] == [1, 2, 3]
+    assert "_play_concept_ids" not in ctx.user_data
 
 
 @pytest.mark.asyncio
@@ -518,29 +626,6 @@ async def test_retention_no_answers():
 
 
 # --- /topics ---
-
-
-def _topic(
-    topic_id: int = 1, title: str = "A1 - Topic 1",
-) -> Topic:
-    return Topic(
-        id=topic_id,
-        title=title,
-        concept_ids=[1, 2, 3],
-        concept_count=3,
-    )
-
-
-def _topic_progress(topic_id: int = 1) -> TopicProgress:
-    return TopicProgress(
-        topic_id=topic_id,
-        user_id=1,
-        concepts_total=3,
-        concepts_studied=2,
-        concepts_mastered=1,
-        completion_pct=66.7,
-        mastery_pct=33.3,
-    )
 
 
 @pytest.mark.asyncio

@@ -32,11 +32,16 @@ from rembrandt_chat.formatting import (
     format_answer,
     format_exercise,
     format_hint,
+    format_play_topics,
     format_topics,
     format_summary,
 )
 
 PLAY_MODE_PREFIX = "play_mode:"
+PLAY_TOPIC_PREFIX = "play_topic:"
+
+# user_data key for topic concept_ids chosen during /play
+_PLAY_CONCEPT_IDS = "_play_concept_ids"
 
 _ACTIVE_SESSION_MSG = (
     "You already have an active session. "
@@ -123,12 +128,60 @@ async def play(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/play` — pick a session mode, then start."""
+    """`/play` — pick a topic, then a session mode."""
     if context.user_data.get(SESSION) is not None:
         await update.message.reply_text(
             _ACTIVE_SESSION_MSG
         )
         return
+
+    user, db = await resolve_user_with_typing(
+        update, context
+    )
+    all_topics = await db.get_topics()
+    progress = await asyncio.gather(
+        *(
+            topic_progress(db, user.id, t)
+            for t in all_topics
+        )
+    )
+    text, keyboard = format_play_topics(
+        all_topics, progress
+    )
+    await update.message.reply_text(
+        text, reply_markup=keyboard
+    )
+
+
+@require_callback
+async def handle_play_topic(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle topic selection from `/play`."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(PLAY_TOPIC_PREFIX):
+        return
+
+    user_data = context.user_data
+    if user_data.get(SESSION) is not None:
+        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+        return
+
+    topic_value = data[len(PLAY_TOPIC_PREFIX):]
+    if topic_value == "all":
+        user_data.pop(_PLAY_CONCEPT_IDS, None)
+        topic_label = "All topics"
+    else:
+        topic_id = int(topic_value)
+        _, db = await resolve_user(update, context)
+        topic = await db.get_topic(topic_id)
+        if topic is None:
+            await query.edit_message_text("Topic not found.")
+            return
+        user_data[_PLAY_CONCEPT_IDS] = topic.concept_ids
+        topic_label = topic.title
 
     buttons = [
         InlineKeyboardButton(
@@ -137,8 +190,8 @@ async def play(
         )
         for mode, label in _MODE_LABELS.items()
     ]
-    await update.message.reply_text(
-        "Choose a session mode:",
+    await query.edit_message_text(
+        f"Topic: {topic_label}\n\nChoose a session mode:",
         reply_markup=InlineKeyboardMarkup([buttons]),
     )
 
@@ -165,6 +218,11 @@ async def handle_play_mode(
     user, db = await resolve_user(update, context)
     label = _MODE_LABELS[mode]
 
+    concept_ids = user_data.pop(_PLAY_CONCEPT_IDS, None)
+    session_kwargs: dict[str, Any] = {"mode": mode}
+    if concept_ids is not None:
+        session_kwargs["concept_ids"] = concept_ids
+
     await _start_session(
         update, user_data, db, user.id,
         no_words_msg=(
@@ -172,7 +230,7 @@ async def handle_play_mode(
             "Add words first with /addword."
         ),
         confirm_msg=f"Session started ({label}).",
-        mode=mode,
+        **session_kwargs,
     )
 
 

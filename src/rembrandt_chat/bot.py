@@ -31,6 +31,7 @@ from rembrandt_chat.handlers import (
     AWAITING_TAGS,
     AWAITING_WORD,
     PLAY_MODE_PREFIX,
+    PLAY_TOPIC_PREFIX,
     addword_cancel,
     addword_definition,
     addword_skip_tags,
@@ -43,6 +44,7 @@ from rembrandt_chat.handlers import (
     handle_answer_callback,
     handle_answer_text,
     handle_deleteword_callback,
+    handle_play_topic,
     handle_topic_callback,
     handle_play_mode,
     hint,
@@ -189,6 +191,12 @@ def create_app() -> None:
     )
     app.add_handler(addword_conv)
 
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_play_topic,
+            pattern=f"^{PLAY_TOPIC_PREFIX}",
+        )
+    )
     app.add_handler(
         CallbackQueryHandler(
             handle_play_mode,
