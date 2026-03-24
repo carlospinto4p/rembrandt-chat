@@ -43,6 +43,7 @@ from rembrandt_chat.formatting import (
     format_topics,
     format_summary,
 )
+from rembrandt_chat.topic_translations import topic_title
 
 PLAY_MODE_PREFIX = "play_mode:"
 PLAY_TOPIC_PREFIX = "play_topic:"
@@ -217,7 +218,7 @@ async def handle_play_language(
         )
     )
     text, keyboard = format_play_topics(
-        all_topics, progress
+        all_topics, progress, lang=lang_code
     )
     await query.edit_message_text(
         text, reply_markup=keyboard
@@ -243,7 +244,11 @@ async def handle_play_topic(
     topic_value = data[len(PLAY_TOPIC_PREFIX):]
     if topic_value == "all":
         user_data.pop(_PLAY_CONCEPT_IDS, None)
-        topic_label = "All topics"
+        lang = user_data.get(LANGUAGE)
+        topic_label = (
+            "All topics" if lang == "en"
+            else "Todos los temas"
+        )
     else:
         topic_id = int(topic_value)
         _, db = await resolve_user(update, context)
@@ -252,7 +257,10 @@ async def handle_play_topic(
             await query.edit_message_text("Topic not found.")
             return
         user_data[_PLAY_CONCEPT_IDS] = topic.concept_ids
-        topic_label = topic.title
+        lang = user_data.get(LANGUAGE)
+        topic_label = topic_title(
+            topic.id, topic.title, lang
+        )
 
     buttons = [
         InlineKeyboardButton(
@@ -457,7 +465,10 @@ async def topics(
             for t in all_topics
         )
     )
-    text, keyboard = format_topics(all_topics, progress)
+    lang = context.user_data.get(LANGUAGE)
+    text, keyboard = format_topics(
+        all_topics, progress, lang=lang
+    )
     await update.message.reply_text(
         text, reply_markup=keyboard
     )
@@ -490,7 +501,12 @@ async def handle_topic_callback(
     await _start_session(
         update, user_data, db, user.id,
         no_words_msg="No words available in this topic.",
-        confirm_msg=f"Topic: {topic.title}",
+        confirm_msg="Topic: {}".format(
+            topic_title(
+                topic.id, topic.title,
+                context.user_data.get(LANGUAGE),
+            )
+        ),
         concept_ids=topic.concept_ids,
     )
 

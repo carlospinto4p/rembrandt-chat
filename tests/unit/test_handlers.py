@@ -181,7 +181,7 @@ async def test_play_language_shows_topic_keyboard():
     kb = call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
-    assert "All topics" in labels
+    assert "Todos los temas" in labels
 
 
 @pytest.mark.asyncio
@@ -194,7 +194,7 @@ async def test_play_topic_all_shows_mode_keyboard():
     query = update.callback_query
     call_args = query.edit_message_text.call_args
     text = call_args[0][0]
-    assert "All topics" in text
+    assert "Todos los temas" in text
     assert "mode" in text.lower()
     kb = call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]

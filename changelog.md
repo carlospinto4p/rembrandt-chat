@@ -1,6 +1,19 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.26.0 - 25th March 2026
+
+- Added `topic_translations.py`: English translations for
+  all 54 topic titles.
+- Updated `formatting.py`:
+  - `format_play_topics()`: added `lang` parameter, translates
+    topic titles and "All topics" / "Todos los temas" label.
+  - `format_topics()`: added `lang` parameter, translates
+    topic titles.
+- Updated `session_handlers.py`: passes user language to
+  topic formatting and direct title displays.
+
+
 ### v0.25.1 - 24th March 2026
 
 - Added `scripts/load_all_translations.py`: English translations

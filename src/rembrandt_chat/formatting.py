@@ -15,6 +15,8 @@ from rembrandt.models import (
 )
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from rembrandt_chat.topic_translations import topic_title
+
 # Callback-data prefixes
 MC_PREFIX = "mc:"
 QUALITY_PREFIX = "q:"
@@ -251,31 +253,37 @@ def format_languages(
 def format_play_topics(
     topics: list[Topic],
     progress: list[TopicProgress],
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Render topic selection for `/play` with an
     "All topics" option.
 
     :param topics: Available topics.
     :param progress: Progress for each topic (same order).
+    :param lang: User language code for title translation.
     :return: Formatted text and inline keyboard.
     """
     prog_map = {p.topic_id: p for p in progress}
+    all_label = (
+        "All topics" if lang == "en" else "Todos los temas"
+    )
     lines = ["Choose a topic:\n"]
     buttons: list[list[InlineKeyboardButton]] = [
         [InlineKeyboardButton(
-            "All topics",
+            all_label,
             callback_data=f"{PLAY_TOPIC_PREFIX}all",
         )]
     ]
     for topic in topics:
         p = prog_map.get(topic.id)
         pct = f"{p.completion_pct:.0f}%" if p else "0%"
+        name = topic_title(topic.id, topic.title, lang)
         lines.append(
-            f"{topic.id}. {topic.title} ({pct} complete)"
+            f"{topic.id}. {name} ({pct} complete)"
         )
         buttons.append([
             InlineKeyboardButton(
-                topic.title,
+                name,
                 callback_data=(
                     f"{PLAY_TOPIC_PREFIX}{topic.id}"
                 ),
@@ -289,11 +297,13 @@ def format_play_topics(
 def format_topics(
     topics: list[Topic],
     progress: list[TopicProgress],
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup | None]:
     """Render a list of topics with progress.
 
     :param topics: Available topics.
     :param progress: Progress for each topic (same order).
+    :param lang: User language code for title translation.
     :return: Formatted text and inline keyboard.
     """
     if not topics:
@@ -304,12 +314,13 @@ def format_topics(
     for topic in topics:
         p = prog_map.get(topic.id)
         pct = f"{p.completion_pct:.0f}%" if p else "0%"
+        name = topic_title(topic.id, topic.title, lang)
         lines.append(
-            f"{topic.id}. {topic.title} ({pct} complete)"
+            f"{topic.id}. {name} ({pct} complete)"
         )
         buttons.append([
             InlineKeyboardButton(
-                topic.title,
+                name,
                 callback_data=(
                     f"{TOPIC_CB_PREFIX}{topic.id}"
                 ),
