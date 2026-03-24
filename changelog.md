@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.25.1 - 24th March 2026
+
+- Added `scripts/load_all_translations.py`: English translations
+  for all 589 concepts (60 data science + 529 Spanish).
+- Updated `data/rembrandt.db`: all concepts now have English
+  translations.
+
+
 ### v0.25.0 - 24th March 2026
 
 - Added `scripts/migrate_topics.py`: one-time migration to create
