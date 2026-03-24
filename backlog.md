@@ -62,5 +62,5 @@
 
 ### 2026.03.20
 
-- [ ] Review `SELF_GRADED` and `FLASHCARD` exercise types — evaluate whether both are needed and if the UX flow makes sense (SELF_GRADED shows the answer immediately with no challenge)
+- [x] Review `SELF_GRADED` and `FLASHCARD` exercise types — evaluate whether both are needed and if the UX flow makes sense (SELF_GRADED shows the answer immediately with no challenge)
 - [x] Ask for topic before starting a session — `/play` should prompt the user to pick a topic first, then select the session mode

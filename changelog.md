@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.24.2 - 24th March 2026
+
+- Removed `SELF_GRADED` exercise type support: only `FLASHCARD`
+  (with reveal step) is used for recall-based exercises.
+
+
 ### v0.24.1 - 23rd March 2026
 
 - Added `scripts/load_english_translations.py`: loads 120

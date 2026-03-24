@@ -441,7 +441,7 @@ async def test_callback_quality():
     session.next_exercise = AsyncMock(
         return_value=make_exercise()
     )
-    ex = make_exercise(exercise_type=ExerciseType.SELF_GRADED)
+    ex = make_exercise(exercise_type=ExerciseType.FLASHCARD)
 
     update = make_callback_update(f"{QUALITY_PREFIX}4")
     ctx = make_context(session=session, exercise=ex)

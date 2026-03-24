@@ -53,8 +53,6 @@ def format_exercise(
         return _fmt_multiple_choice(
             exercise, translation, tr_map
         )
-    if et is ExerciseType.SELF_GRADED:
-        return _fmt_self_graded_prompt(exercise, translation)
     return _fmt_flashcard_prompt(exercise, translation)
 
 
@@ -83,21 +81,6 @@ def _fmt_multiple_choice(
     # One button per row — definitions are too long for side-by-side
     rows = [[b] for b in buttons]
     return text, InlineKeyboardMarkup(rows)
-
-
-def _fmt_self_graded_prompt(
-    ex: Exercise,
-    translation: ConceptTranslation | None = None,
-) -> tuple[str, InlineKeyboardMarkup]:
-    front = translation.front if translation else ex.concept.front
-    back = translation.back if translation else ex.concept.back
-    text = (
-        f"Review this word:\n\n"
-        f"{front} \u2014 {back}\n\n"
-        f"How well did you know it?"
-    )
-    keyboard = _quality_keyboard()
-    return text, keyboard
 
 
 def _fmt_flashcard_prompt(
