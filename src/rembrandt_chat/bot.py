@@ -25,6 +25,7 @@ from rembrandt_chat.config import (
     get_database_path,
 )
 from rembrandt_chat.formatting import (
+    CAT_CB_PREFIX,
     DEL_CB_PREFIX,
     LANG_CB_PREFIX,
     TOPIC_CB_PREFIX,
@@ -34,6 +35,7 @@ from rembrandt_chat.handlers import (
     AWAITING_FILE,
     AWAITING_TAGS,
     AWAITING_WORD,
+    PLAY_CAT_PREFIX,
     PLAY_LANG_PREFIX,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
@@ -48,8 +50,10 @@ from rembrandt_chat.handlers import (
     forecast,
     handle_answer_callback,
     handle_answer_text,
+    handle_category_callback,
     handle_deleteword_callback,
     handle_language_callback,
+    handle_play_category,
     handle_play_language,
     handle_play_topic,
     handle_topic_callback,
@@ -223,6 +227,12 @@ def create_app() -> None:
     )
     app.add_handler(
         CallbackQueryHandler(
+            handle_play_category,
+            pattern=f"^{PLAY_CAT_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
             handle_play_topic,
             pattern=f"^{PLAY_TOPIC_PREFIX}",
         )
@@ -237,6 +247,12 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_language_callback,
             pattern=f"^{LANG_CB_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_category_callback,
+            pattern=f"^{CAT_CB_PREFIX}",
         )
     )
     app.add_handler(

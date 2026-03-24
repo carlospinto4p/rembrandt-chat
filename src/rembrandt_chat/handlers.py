@@ -9,12 +9,15 @@ The actual implementations live in:
 """
 
 from rembrandt_chat.session_handlers import (
+    PLAY_CAT_PREFIX,
     PLAY_LANG_PREFIX,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
     handle_answer_callback,
     handle_answer_text,
+    handle_category_callback,
     handle_language_callback,
+    handle_play_category,
     handle_play_language,
     handle_play_topic,
     handle_topic_callback,
@@ -55,13 +58,16 @@ from rembrandt_chat.word_handlers import (
 )
 
 __all__ = [
+    "PLAY_CAT_PREFIX",
     "PLAY_LANG_PREFIX",
     "PLAY_MODE_PREFIX",
     "PLAY_TOPIC_PREFIX",
     "start",
     "play",
     "language",
+    "handle_category_callback",
     "handle_language_callback",
+    "handle_play_category",
     "handle_play_language",
     "handle_play_topic",
     "handle_play_mode",

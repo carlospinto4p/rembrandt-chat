@@ -1,6 +1,27 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.27.0 - 25th March 2026
+
+- Added nested topic selection: users pick a category first
+  (Data Science, Vocabulary, Culture), then a topic within it.
+- Added `topic_translations.py`:
+  - `Category` dataclass with bilingual names.
+  - `CATEGORIES` list grouping 54 topics into 3 categories.
+  - `get_category()` and `category_name()` helpers.
+- Updated `formatting.py`:
+  - `format_play_categories()`: category keyboard for `/play`.
+  - `format_categories()`: category keyboard for `/topics`.
+- Updated `session_handlers.py`:
+  - `handle_play_category()`: new handler for `/play` flow.
+  - `handle_category_callback()`: new handler for `/topics` flow.
+  - `handle_play_language()`: now shows categories instead of
+    the full topic list.
+  - `topics()`: now shows categories instead of the full
+    topic list.
+- Updated `bot.py`: registered new callback handlers.
+
+
 ### v0.26.0 - 25th March 2026
 
 - Added `topic_translations.py`: English translations for

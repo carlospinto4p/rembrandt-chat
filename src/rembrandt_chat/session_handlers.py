@@ -28,22 +28,29 @@ from rembrandt_chat.config import (
     get_max_review_cards,
 )
 from rembrandt_chat.formatting import (
+    CAT_CB_PREFIX,
     LANG_CB_PREFIX,
+    PLAY_CAT_PREFIX,
     TOPIC_CB_PREFIX,
     MC_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
     flashcard_reveal,
     format_answer,
+    format_categories,
     format_exercise,
     format_hint,
     format_languages,
+    format_play_categories,
     format_play_languages,
     format_play_topics,
     format_topics,
     format_summary,
 )
-from rembrandt_chat.topic_translations import topic_title
+from rembrandt_chat.topic_translations import (
+    get_category,
+    topic_title,
+)
 
 PLAY_MODE_PREFIX = "play_mode:"
 PLAY_TOPIC_PREFIX = "play_topic:"
@@ -209,16 +216,48 @@ async def handle_play_language(
     lang_code = data[len(PLAY_LANG_PREFIX):]
     user_data[LANGUAGE] = lang_code
 
+    text, keyboard = format_play_categories(lang=lang_code)
+    await query.edit_message_text(
+        text, reply_markup=keyboard
+    )
+
+
+@require_callback
+async def handle_play_category(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle category selection from `/play`."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(PLAY_CAT_PREFIX):
+        return
+
+    user_data = context.user_data
+    if user_data.get(SESSION) is not None:
+        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+        return
+
+    cat_key = data[len(PLAY_CAT_PREFIX):]
+    cat = get_category(cat_key)
+    if cat is None:
+        await query.edit_message_text("Category not found.")
+        return
+
+    lang = user_data.get(LANGUAGE)
     user, db = await resolve_user(update, context)
     all_topics = await db.get_topics()
+    filtered = [
+        t for t in all_topics if t.id in cat.topic_ids
+    ]
     progress = await asyncio.gather(
         *(
             topic_progress(db, user.id, t)
-            for t in all_topics
+            for t in filtered
         )
     )
     text, keyboard = format_play_topics(
-        all_topics, progress, lang=lang_code
+        filtered, progress, lang=lang
     )
     await query.edit_message_text(
         text, reply_markup=keyboard
@@ -455,21 +494,49 @@ async def topics(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/topics` — list available topics with progress."""
-    user, db = await resolve_user_with_typing(update, context)
+    """`/topics` — list categories, then topics."""
+    lang = context.user_data.get(LANGUAGE)
+    text, keyboard = format_categories(lang=lang)
+    await update.message.reply_text(
+        text, reply_markup=keyboard
+    )
 
+
+@require_callback
+async def handle_category_callback(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Show topics in a category from `/topics`."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(CAT_CB_PREFIX):
+        return
+
+    cat_key = data[len(CAT_CB_PREFIX):]
+    cat = get_category(cat_key)
+    if cat is None:
+        await query.edit_message_text(
+            "Category not found."
+        )
+        return
+
+    lang = context.user_data.get(LANGUAGE)
+    user, db = await resolve_user(update, context)
     all_topics = await db.get_topics()
+    filtered = [
+        t for t in all_topics if t.id in cat.topic_ids
+    ]
     progress = await asyncio.gather(
         *(
             topic_progress(db, user.id, t)
-            for t in all_topics
+            for t in filtered
         )
     )
-    lang = context.user_data.get(LANGUAGE)
     text, keyboard = format_topics(
-        all_topics, progress, lang=lang
+        filtered, progress, lang=lang
     )
-    await update.message.reply_text(
+    await query.edit_message_text(
         text, reply_markup=keyboard
     )
 

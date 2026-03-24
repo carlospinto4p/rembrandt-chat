@@ -159,29 +159,21 @@ async def test_play_rejects_when_session_active():
 
 
 @pytest.mark.asyncio
-async def test_play_language_shows_topic_keyboard():
+async def test_play_language_shows_category_keyboard():
     update = make_callback_update("play_lang:es")
     ctx = make_context()
-    ctx.bot_data["db"].get_topics.return_value = [
-        _topic(),
-    ]
 
-    with patch(
-        "rembrandt_chat.session_handlers.topic_progress",
-        new_callable=AsyncMock,
-        return_value=_topic_progress(),
-    ):
-        await handle_play_language(update, ctx)
+    await handle_play_language(update, ctx)
 
     assert ctx.user_data["language"] == "es"
     query = update.callback_query
     call_args = query.edit_message_text.call_args
     text = call_args[0][0]
-    assert "topic" in text.lower()
+    assert "categoría" in text.lower()
     kb = call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
-    assert "Todos los temas" in labels
+    assert "Vocabulario" in labels
 
 
 @pytest.mark.asyncio
@@ -711,35 +703,21 @@ async def test_retention_no_answers():
 
 
 @pytest.mark.asyncio
-async def test_topics_shows_list():
+async def test_topics_shows_categories():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_topics.return_value = [
-        _topic(),
-    ]
-
-    with patch(
-        "rembrandt_chat.session_handlers.topic_progress",
-        new_callable=AsyncMock,
-        return_value=_topic_progress(),
-    ):
-        await topics(update, ctx)
-
-    text = update.message.reply_text.call_args[0][0]
-    assert "A1 - Topic 1" in text
-    assert "67%" in text
-
-
-@pytest.mark.asyncio
-async def test_topics_empty():
-    update = make_update()
-    ctx = make_context()
-    ctx.bot_data["db"].get_topics.return_value = []
 
     await topics(update, ctx)
 
     text = update.message.reply_text.call_args[0][0]
-    assert "No topics available" in text
+    assert "categoría" in text.lower()
+    kb = update.message.reply_text.call_args[1][
+        "reply_markup"
+    ]
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    labels = [btn.text for btn in flat]
+    assert "Vocabulario" in labels
+    assert "Cultura" in labels
 
 
 @pytest.mark.asyncio

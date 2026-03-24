@@ -15,7 +15,11 @@ from rembrandt.models import (
 )
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from rembrandt_chat.topic_translations import topic_title
+from rembrandt_chat.topic_translations import (
+    CATEGORIES,
+    category_name,
+    topic_title,
+)
 
 # Callback-data prefixes
 MC_PREFIX = "mc:"
@@ -209,6 +213,8 @@ def format_weak_concepts(
 TOPIC_CB_PREFIX = "topic:"
 PLAY_TOPIC_PREFIX = "play_topic:"
 PLAY_LANG_PREFIX = "play_lang:"
+PLAY_CAT_PREFIX = "play_cat:"
+CAT_CB_PREFIX = "cat:"
 LANG_CB_PREFIX = "lang:"
 
 
@@ -248,6 +254,52 @@ def format_languages(
     return "Choose your language:", InlineKeyboardMarkup(
         buttons
     )
+
+
+def format_play_categories(
+    lang: str | None = None,
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Render category selection for `/play`.
+
+    :param lang: User language code.
+    :return: Formatted text and inline keyboard.
+    """
+    prompt = (
+        "Choose a category:"
+        if lang == "en"
+        else "Elige una categoría:"
+    )
+    buttons = [
+        [InlineKeyboardButton(
+            category_name(cat, lang),
+            callback_data=f"{PLAY_CAT_PREFIX}{cat.key}",
+        )]
+        for cat in CATEGORIES
+    ]
+    return prompt, InlineKeyboardMarkup(buttons)
+
+
+def format_categories(
+    lang: str | None = None,
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Render category selection for `/topics`.
+
+    :param lang: User language code.
+    :return: Formatted text and inline keyboard.
+    """
+    prompt = (
+        "Choose a category:"
+        if lang == "en"
+        else "Elige una categoría:"
+    )
+    buttons = [
+        [InlineKeyboardButton(
+            category_name(cat, lang),
+            callback_data=f"{CAT_CB_PREFIX}{cat.key}",
+        )]
+        for cat in CATEGORIES
+    ]
+    return prompt, InlineKeyboardMarkup(buttons)
 
 
 def format_play_topics(
