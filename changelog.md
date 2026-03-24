@@ -1,6 +1,20 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.25.0 - 24th March 2026
+
+- Added `scripts/migrate_topics.py`: one-time migration to create
+  topics for the existing database.
+- Updated `data/vocab.csv`: expanded from 120 to 589 words
+  (60 data science + 529 Spanish).
+- Added `data/topics.json`: 54 topics with `concept_ids`
+  (replaces `lessons.json` format with `word_ranks`):
+  - "Data Science - Basics" (60 concepts)
+  - 53 Spanish vocabulary topics
+- Updated `data/rembrandt.db`: migrated with 409 new Spanish
+  concepts and all 54 topics.
+
+
 ### v0.24.2 - 24th March 2026
 
 - Removed `SELF_GRADED` exercise type support: only `FLASHCARD`

@@ -1,48 +1,178 @@
 front,back
-efímero,Que dura un solo día
-ubicuo,Que está presente a un mismo tiempo en todas partes. Dícese solamente de Dios
-acérrimo,"Muy tenaz, firme o intransigente en sus ideas o actitudes"
-perspicaz,"Que tiene o muestra una percepción mental aguda, penetrante"
+dataset,Conjunto estructurado de datos organizados para su análisis
+dataframe,Estructura tabular de filas y columnas usada para manipular datos
+feature,Variable o atributo individual usado como entrada en un modelo
+outlier,Valor atípico que se desvía significativamente del resto de los datos
+missing value,Dato ausente o no registrado en un conjunto de datos
+data wrangling,Proceso de limpiar y transformar datos crudos en un formato utilizable
+exploratory data analysis,Análisis inicial de datos para descubrir patrones y anomalías
+correlation,Relación estadística entre dos variables que indica cómo cambian juntas
+distribution,Función que describe la probabilidad de los posibles valores de una variable
+standard deviation,Medida de dispersión que indica cuánto se alejan los datos de la media
+normalization,"Proceso de escalar datos a un rango común, típicamente entre 0 y 1"
+data pipeline,Secuencia automatizada de pasos para mover y transformar datos
+ETL,"Proceso de extraer datos de una fuente, transformarlos y cargarlos en un destino"
+hypothesis testing,Método estadístico para determinar si una suposición sobre los datos es válida
+p-value,"Probabilidad de obtener un resultado al menos tan extremo como el observado, asumiendo que la hipótesis nula es cierta"
+confidence interval,Rango de valores que probablemente contiene el verdadero parámetro poblacional
+sampling bias,Error sistemático causado por una selección no representativa de datos
+dimensionality reduction,Técnica para reducir el número de variables manteniendo la información esencial
+cross-validation,Método de evaluación que divide los datos en subconjuntos para entrenar y validar un modelo
+A/B testing,Experimento controlado que compara dos variantes para determinar cuál es más efectiva
+supervised learning,Aprendizaje donde el modelo se entrena con datos etiquetados de entrada y salida esperada
+unsupervised learning,Aprendizaje donde el modelo encuentra patrones en datos sin etiquetas
+reinforcement learning,Aprendizaje donde un agente aprende a tomar decisiones mediante recompensas y penalizaciones
+overfitting,Cuando un modelo se ajusta demasiado a los datos de entrenamiento y pierde capacidad de generalización
+underfitting,Cuando un modelo es demasiado simple para capturar los patrones subyacentes en los datos
+gradient descent,Algoritmo de optimización que ajusta los parámetros del modelo minimizando la función de pérdida
+learning rate,Hiperparámetro que controla el tamaño de los pasos en la actualización de pesos durante el entrenamiento
+loss function,Función que mide la diferencia entre la predicción del modelo y el valor real
+epoch,Una pasada completa del algoritmo de entrenamiento sobre todo el conjunto de datos
+batch size,Número de muestras procesadas antes de actualizar los parámetros del modelo
+regularization,Técnica que penaliza la complejidad del modelo para prevenir el sobreajuste
+hyperparameter,Parámetro cuyo valor se establece antes del entrenamiento y no se aprende de los datos
+decision tree,Modelo que toma decisiones dividiendo los datos en ramas según condiciones sobre las variables
+random forest,Conjunto de árboles de decisión que combina sus predicciones para mejorar la precisión
+neural network,"Modelo computacional inspirado en el cerebro, compuesto por capas de neuronas interconectadas"
+backpropagation,Algoritmo que calcula el gradiente del error y lo propaga hacia atrás para ajustar los pesos de la red
+activation function,"Función que introduce no linealidad en una neurona, determinando si se activa o no"
+convolutional neural network,"Red neuronal especializada en procesar datos con estructura de cuadrícula, como imágenes"
+transfer learning,Técnica que reutiliza un modelo preentrenado en una tarea similar para acelerar el aprendizaje
+ensemble method,Técnica que combina múltiples modelos para obtener predicciones más robustas y precisas
+tokenization,Proceso de dividir un texto en unidades más pequeñas llamadas tokens
+stemming,Técnica que reduce las palabras a su raíz eliminando sufijos morfológicos
+lemmatization,Proceso de reducir una palabra a su forma base o lema usando análisis morfológico
+stop words,Palabras muy frecuentes que generalmente se eliminan del texto por no aportar significado relevante
+bag of words,Representación de texto como un conjunto de palabras sin considerar el orden ni la gramática
+TF-IDF,Medida estadística que evalúa la importancia de una palabra en un documento respecto a un corpus
+word embedding,Representación vectorial densa de palabras que captura relaciones semánticas entre ellas
+named entity recognition,"Tarea de identificar y clasificar entidades como personas, lugares y organizaciones en un texto"
+sentiment analysis,Proceso de determinar la actitud o emoción expresada en un texto
+part-of-speech tagging,Asignación de categorías gramaticales a cada palabra de una oración
+language model,Modelo probabilístico que predice la siguiente palabra o token dada una secuencia de texto
+attention mechanism,Mecanismo que permite al modelo enfocarse en las partes más relevantes de la entrada
+transformer,"Arquitectura de red neuronal basada en mecanismos de atención, sin recurrencia ni convolución"
+sequence-to-sequence,Modelo que transforma una secuencia de entrada en una secuencia de salida de longitud variable
+text classification,Tarea de asignar categorías predefinidas a fragmentos de texto
+machine translation,Traducción automática de texto de un idioma a otro mediante modelos computacionales
+corpus,Colección grande y estructurada de textos usada para entrenar y evaluar modelos de lenguaje
+perplexity,Métrica que mide qué tan bien un modelo de lenguaje predice una muestra de texto
+fine-tuning,Proceso de ajustar un modelo preentrenado con datos específicos de una tarea particular
+hallucination,Generación de texto que parece plausible pero es factualmente incorrecto o inventado
+efímero,"Que dura un solo día; pasajero, de corta duración"
+ubicuo,Que está presente en todas partes al mismo tiempo
+acérrimo,"Muy firme, tenaz o extremo en su postura o sentimientos"
+perspicaz,Que tiene percepción mental aguda y penetrante
 recóndito,"Muy escondido, reservado y oculto"
 prístino,Que mantiene sin cambio alguno su naturaleza original
-insigne,"Célebre, distinguido por méritos o cualidades sobresalientes"
+insigne,"Célebre, distinguido y notable por sus méritos"
 exiguo,Muy escaso en cantidad o dimensión
-incólume,"saludable, sin lesión ni menoscabo"
-acucioso,"diligente, solícito, que hace las cosas pronto y con cuidado"
+incólume,Que no ha sufrido lesión ni menoscabo; ileso
+acucioso,"Diligente, solícito; que hace las cosas pronto y con cuidado"
+conspicuo,"Notable, sobresaliente e ilustre"
+inicuo,Contrario a la equidad
+ingente,Muy grande o numeroso
+pusilánime,"Falto de ánimo y valor para intentar cosas grandes, tolerar las desgracias, enfrentarse a dificultades o defender ideas propias"
+indolente,"Que no se afecta ni se inmuta; perezoso, apático"
+pertinaz,"obstinado, terco o muy tenaz en su dictamen o resolución"
+lacónico,parco en palabras; breve
+falaz,Se dice de quien dice embusteces o emplea falsedades para engañar
+ecuánime,Que juzga con imparcialidad y serenidad de ánimo
+prolijo,"Largo, dilatado y extendido con exceso"
+ecuestre,Perteneciente o relativo al caballo o a la equitación
+coetáneo,"Que tiene la misma edad de aquel, aquella o aquello con que se le compara"
+longevo,Muy anciano o de larga edad
+inefable,Que no puede ser expresado o explicado con palabras
+unívoco,Que tiene un solo significado
+ambiguo,"Que puede entenderse de varios modos o admitir distintas interpretaciones, y dar, por consiguiente, motivo a dudas, incertidumbre o confusión"
+pueril,Propio de o relativo a los niños o a la niñez
+disímil,No semejante; diferente
+subrepticio,"Que se hace o persigue de forma oculta, solapada o con disimulo"
+espurio,"Que simula ser lo que no es, especialmente si es de origen dudoso o incierto"
 diáfano,"Dicho de un cuerpo, que permite el paso de la luz casi en su totalidad"
 ignoto,"Desconocido, no descubierto ni explorado"
 vetusto,Muy antiguo o de mucha edad
 feraz,"Sumamente fértil, copioso en frutos"
 sempiterno,De duración infinita
-iracundo,"Propenso a la ira, que se encoleriza con facilidad"
+iracundo,Propenso a la ira; que se encoleriza con facilidad
 ominoso,"Que produce temor, rechazo o repugnancia por contener peligro, azar, o mala suerte; que se debe evitar o no desear"
 cruento,Que implica o provoca gran efusión de sangre
-inveterado,"Muy antiguo y arraigado, difícil de cambiar por su larga duración"
+inveterado,"antiguo, arraigado"
 execrable,"Que merece condenarse, rechazarse o criticarse con severidad, por profanar algo considerado sagrado o muy valioso moralmente"
+yermo,Que no tiene población
+álgido,De una temperatura muy inferior a la normal o deseable; extremadamente frío
+grandilocuente,Que escribe o habla con gran elocuencia o con un estilo elevado
+recalcitrante,"reacio, obstinado en la resistencia"
+pródigo,Que desperdicia y consume los bienes y caudal propios sin medida y de modo insensato
+impávido,"Que no siente miedo, impertérrito ante el peligro"
+contumaz,"Que no ceja en una decisión, pese a los pedidos o argumentos razonables en sentido contrario"
+ineluctable,Se dice de algo que no se puede evitar o evadir
+avieso,"atravesado, torcido, o fuera de norma"
+dilecto,Amado con especial afecto y predilección
 desidia,Falta de esfuerzo o dedicación para la realización de las tareas necesarias o prescritas
 vehemencia,calidad o cualidad de vehemente o impetuoso
-mesura,"Moderación, compostura y gravedad en el comportamiento o las palabras"
+mesura,"gravedad, compostura"
 displicencia,desagrado o indiferencia en el trato
 acervo,Cúmulo de cosas u objetos pequeños colocados desordenadamente unos sobre otros
-menoscabo,"Disminución del valor, la importancia o el prestigio de algo o alguien"
-acopio,"Acción de juntar o reunir en cantidad algo, especialmente provisiones o materiales"
-desazón,"Malestar, inquietud o disgusto interior"
+menoscabo,"Disminución del valor, la importancia o el prestigio de algo"
+acopio,acopiar (juntar o acumular en cantidad)
+desazón,falta de sabor y gusto
 premura,"aprieto, apuro, prisa, urgencia, instancia"
 denuedo,"Empleo de energía, valor, ánimo, vigor para lograr algo, en especial venciendo dificultades"
+parsimonia,moderación en el gasto y en los placeres
+fruición,Goce intenso; placer o deleite que se experimenta al disfrutar algo
+desavenencia,discordia o desacuerdo entre personas
+resquemor,Calor mordicante que producen en la lengua y paladar algunos mandajes y bebidas
+desdén,Frialdad u hostilidad en el trato que reflejan la poca estima que se tiene por alguien
+encono,"rencor arraigado en el ánimo, mala voluntad contra alguien"
+inquina,"Antipatía, aversión, rechazo, mala voluntad hacia algo o alguien"
+lascivia,deseo ardiente y censurable
+probidad,integridad y honradez en el obrar
+oprobio,deshonra o descrédito público
+diletantismo,"Estado o comportamiento de diletante, de ser un aficionado o de participar superficialmente en algo, usualmente de las artes"
+estulticia,"necedad, estupidez, tontería"
+vileza,"Acción baja, indigna, infame"
+contumelia,"oprobio, injuria u ofensa dicha a una persona en su cara"
+abulia,falta patológica de voluntad o energía
+aquiescencia,acuerdo que se presta pasivamente a una decisión o designio ajeno
+clemencia,moderación en la severidad de un castigo
+ignominia,Grave afrenta pública; gran deshonor o humillación
+inopia,Dícese de una gran pobreza
+petulancia,presunción exagerada y vana
 resquicio,abertura que hay entre el quicio y la puerta
-cariz,Aspecto o apariencia que presenta un asunto o situación
+cariz,Aspecto o apariencia que toma un asunto o situación
 derrotero,Camino o rumbo por el que se llega a un fin propuesto
-coyuntura,Combinación de circunstancias y factores que caracterizan una situación en un momento dado
+coyuntura,"articulación, enlace móvil de extremidades óseas, revestidas de cartílago, mediante ligamentos elásticos alojados en una cápsula"
 vestigio,Señal que queda en un sitio por donde se ha pisado o estado
 diatriba,discurso o escrito violento e injurioso contra alguien o algo
 precepto,mandamiento u ordenanza dada por una persona que tiene autorización para ello
 salvedad,"Razonamiento o advertencia que se emplea como excusa, descargo, limitación o cortapisa de lo que se va a decir o hacer"
 envergadura,"distancia que hay entre las puntas de las alas de una nave, de un ave o de cualquier otro animal, cuando éstas están totalmente extendidas"
 menester,Ocupación habitual de un individuo
+subterfugio,excusa bien elaborada y artificiosa
+canon,regla o serie de reglas establecidas o aceptadas dentro de un arte concreto
+epítome,exposición resumida del contenido de una obra
+paradigma,modelo según el cual se producen otros objetos
+prebenda,Renta aneja a un canonicato u otro oficio eclesiástico
+corolario,"proposición a la que se llega sin esfuerzo o fácilmente, a partir de las premisas ya demostradas"
+epílogo,Recapitulación de todo lo dicho en un discurso u otra composición literaria
+dogma,creencia o principio cuya validez se da por sentada sin ulterior discusión en un determinado contexto
+estigma,Marca que no se puede borrar
+hegemonía,"dominio o supremacía que un grupo ejerce, de tal modo de dictar los términos y parámetros de la acción social en todos los sentidos y mantener la oposición fuera de la ley o la legitimidad"
+dádiva,cosa que se da de forma gratuita y sin esperar nada a cambio
+disyuntiva,Alternativa entre dos cosas por una de las cuales hay que optar
+idiosincrasia,"naturaleza, temperamento o costumbres propios de un sujeto o grupo"
+panacea,"medicamento capaz de curar todas o muchas enfermedades, o incluso de prolongar indefinidamente la vida"
+plétora,Cantidad excesiva de sangre o de glóbulos rojos en un cuerpo
+quimera,"Animal fantástico con cabeza de león, cuerpo de cabra y cola de dragón, y que según la fábula vomitaba llamas"
+sinecura,"empleo o cargo con sueldo, que requiere poco o ningún trabajo"
+usufructo,Derecho a utilizar o sacar provecho de bienes ajenos como si fueran propios con la obligación de conservar su esencia para el disfrute del dueño original cuando la ley lo señale
+pocilga,recinto o edificio destinado a la vivienda de cerdos
+baluarte,"Elemento de fortificación de una fortaleza, que consiste en una gola de entrada y un ángulo saliente en dos flancos, los cuales se unen al muro de la fortaleza. a menudo tiene forma pentagonal"
 dilucidar,"explicar un asunto, aclararlo; dejar clara e inteligible alguna cosa"
-esgrimir,"Usar algo, especialmente un argumento o razón, como arma para atacar o defenderse"
-soslayar,"Evitar una dificultad o un asunto, eludirlo o pasarlo por alto"
-ponderar,"Examinar con cuidado y atención algo, sopesando sus ventajas e inconvenientes"
+esgrimir,"jugar o manejar la espada, el sable y otras armas blancas, reparando y deteniendo los golpes del contrario, o acometiéndole"
+soslayar,colocar un objeto ladeado para cruzar una zona estrecha de un lado a otro
+ponderar,Determinar el peso de una cosa
 acaecer,"ocurrir, producirse un hecho, tener lugar un acontecimiento, suceder"
 enmendar,"arreglar, corregir los fallos o defectos"
 socavar,"excavar por debajo alguna cosa, dejándola sin la debida seguridad y resistencia"
@@ -53,12 +183,22 @@ dirimir,Resolver o poner fin a una disputa o litigio
 resarcir,"Reparar un daño, mediante el pago de un bien o la realización de una acción"
 escatimar,"Dar o usar lo menos posible, o solo lo imprescindible, algún recurso"
 desdeñar,Tratar con desdén a alguien; tratar algo con ostensible indiferencia o menosperecio; considerar inferior algo
-vindicar,Defender o reivindicar a alguien o algo que ha sido injustamente atacado o despreciado
-acusar,"Asignar a alguien la culpa o responsabilidad de algo ilegal. inmoral o reprobable, como un delito, vicio, tacha o falta"
+vindicar,Defender a quien ha sido injuriado o calumniado; vengar una ofensa
 usurpar,Apoderarse de una propiedad o de un derecho que pertenece a otro de una forma violenta
 desistir,"Dejar de insistir, interrumpir un esfuerzo, una acción, etc"
 atenuar,"reducir, disminuir o debilitar la fuerza, el efecto, la potencia o la intensidad de algo"
 amedrentar,"infundir miedo, temor o aprensión"
+avocar,disponer un tribunal de alzada de una causa que obraba en manos de uno inferior competente
+coadyuvar,contribuir al logro o realización de una actividad
+concatenar,"unir o conectar dos o más cosas siguiendo una serie o secuencia, a modo de cadena"
+detentar,"ejercer ilegítimamente un puesto de responsabilidad o de representación en un ente público o privado, o de poder legislativo o gubernamental"
+eludir,"huir la dificultad, salir de ella con algún artificio, etc"
+elucidar,poner en claro algo
+infligir,"Causar un daño, castigo o pena a alguien"
+ostentar,mostrar o hacer patente una cosa. Presentar ante la vista
+subyugar,forzar a la obediencia
+transgredir,violar o quebrantar alguna norma o ley establecida
+vincularse,"establecer o crear una conexión un vínculo, lazo o relación con otro u otros"
 escindir,Separar o dividir en dos o más partes de importancia similar
 holgar,"Descansar, tomar aliento después de alguna fatiga"
 increpar,reprender a una persona con dureza y severidad
@@ -66,9 +206,29 @@ azuzar,incitar a un perro a que ladre o ataque
 expiar,Limpiar o enmendar la culpa a través del cumplimiento de un castigo o penitencia
 zaherir,Decir a alguien algo que le provoque humillación o dolor moral
 denostar,Atacar verbalmente a alguien con graves insultos y ofensas
-conminar,Amenazar a alguien con un castigo si no cumple lo que se le ordena
-medrar,"Mejorar de posición, crecer o prosperar en fortuna o reputación"
-fulminar,"Destruir o aniquilar de manera súbita y violenta, como un rayo"
+conminar,Amenazar con un castigo o una sanción para obligar a cumplir algo
+medrar,"crecer, tener aumento los animales y plantas"
+fulminar,Lanzar un castigo o condena de manera repentina y severa
+hostigar,"azotar, castigar con látigo, vara u cosa semejante"
+cernir,Separar con el cedazo la parte fina de la gruesa; amenazar algo de forma inminente
+dilapidar,destruir o malgastar el patrimonio propio o aquel que se tiene a cargo
+exacerbar,"Causar ira, causar muy grave enfado o enojo"
+fustigar,Azotar con un látigo o vara; criticar con dureza
+vilipendiar,Tratar con vilipendio a una persona o despreciar algo
+enajenar,"transferir a otra persona la posesión de un bien, o algún derecho sobre ese bien"
+abjurar,retractarse solemnemente y con juramento del error en que ha incurrido
+claudicar,Terminar por ceder o rendirse a una presión o tentación
+mancillar,Poner suciedad u otra sustancia en algo cambiando su aspecto
+apostatar,"negar la fe cristiana que fue recibida al ser bautizado, declarando por tanto, a través de este acto, la voluntad de dejar de ser cristiano"
+arrogar,"asignar, atribuir o conferir algo"
+colegir,"Juntar cosas o personas esparcidas, en un mismo lugar"
+concitar,Excitar inquietudes y sediciones
+diferir,Postergar o dilatar la realización de algo
+expoliar,Despojar con violencia o injusticia de los bienes a alguien
+lucubrar,"Trabajar intelectualmente con dedicación e intensidad, especialmente de noche"
+paliar,"mitigar, atenuar o mermar algo negativo"
+preconizar,"Encomiar, tributar elogios públicamente a una persona o cosa"
+suscitar,"Provocar o dar origen a un sentimiento, una reacción o un debate"
 falacia,"engaño, fraude o mentira con que se intenta perjudicar a otro"
 silogismo,"demostración que consta de tres proposiciones, una de las cuales se deduce del conjunto de las otras dos"
 premisa,Principio por el cual se logran inferencias y alcanzan conclusiones
@@ -79,6 +239,36 @@ aforismo,"declaración o sentencia concisa; acordada por un gran número de pers
 elocuencia,"habilidad de expresarse con completa fluidez, con un amplio vocabulario y de modo eficaz para persuadir o producir una respuesta emotiva de quien recibe el mensaje"
 apología,"Discurso de palabra o escrito, en defensa, justificación, alabanza o adulación de personas, actitudes o cosas"
 demagogia,Práctica política consistente en ganarse con halagos el favor popular
+metáfora,"figura retórica consistente en establecer una identidad entre dos términos y emplear uno con el significado del otro, basándose en una comparación no expresada entre las dos realidades que dichos términos designan"
+metonimia,"tropo que designa una cosa con el nombre de otra con la que guarda una relación de causa efecto, de autor a obra, o de algún otro tipo de contigüidad temporal, causal o espacial"
+sinécdoque,"tropo en el que: una parte de algo es usada para representar el todo, el todo es usado por una parte, la especie es usada por el género, el género es usado por la especie, el material de que algo está hecho es usado por la cosa"
+oxímoron,expresión en la que se emplean dos términos incongruentes o contradictorios
+hipérbole,"Exageración muy grande e intencional, que consiste en aumentar con el fin de obtener un enunciado más expresivo, como al decir: ""Te llamé un millón de veces"", ""un millón de gracias"" o ""te doy mil besos"""
+antítesis,Oposición o contrariedad de dos juicios o afirmaciones
+prosopopeya,enunciación de un discurso o una proposición por parte de un personaje en una obra literaria
+elipsis,"Ausencia de alguna palabra en una oración, que no afecta su sentido"
+anáfora,Figura retórica que consiste en la repetición de una o varias palabras al inicio de versos o frases sucesivas
+pleonasmo,"Figura de construcción, que consiste en emplear en la oración uno o más vocablos innecesarios para que tenga sentido completo, pero con los cuales se da énfasis a lo dicho"
+alegoría,invención o creación ficticia con sentido o significado diferentes al explícito
+ironía,mofa o guasa delicada y fingida
+litote,Figura retórica que consiste en negar lo contrario de lo que se quiere afirmar
+perífrasis,Construcción léxica de múltiples palabras que expresa lo mismo que una sola unidad léxica particular
+sinestesia,"Figura retórica que atribuye una sensación a un sentido que no le corresponde, como 'color cálido' o 'voz dulce'"
+epíteto,"palabra con función adjetiva cuyo fin principal no es determinar o especificar el objeto o persona, sino caracterizarlo"
+apóstrofe,"Figura retórica que consiste en hacer una interrupción del discurso dirigiéndose a una o varias personas, de manera vehemente, o a seres inanimados, o a personas ausentes o muertas"
+polisíndeton,Figura que consiste en emplear repetidamente las conjunciones para enfatizar la expresión de los conceptos
+asíndeton,figura de dicción consistente en la omisión de las conjunciones entre proposiciones para avivar el ritmo
+aliteración,Repetición de sonidos semejantes en palabras próximas dentro de un texto
+diégesis,mundo ficticio en el cual ocurre lo expresado
+verosimilitud,Apariencia de verdadero o creíble; cualidad de lo que resulta posible dentro de su contexto
+soliloquio,Representación teatral en la que un actor habla para sí mismo. Se diferencia del monólogo en que en éste el actor habla dirigiéndose al público
+hagiografía,Historia o estudio de la vida de los santos de la Iglesia católica
+exégesis,"explicación, interpretación"
+epígrafe,frase descriptiva o explicativa que encabeza un escrito o cada una de las partes del mismo
+idilio,"Poema bucólico, de carácter tierno y delicado, que tiene como asuntos las cosas del campo y los afectos amorosos de los pastores"
+panegírico,"Perteneciente o relativo a la oración o discurso en alabanza de una persona; laudatorio, encomiástico"
+elegía,"Poema corto y lírico que refleja pérdida, dolor o tristeza, casi siempre lamentando una muerte o ruina"
+sátira,figura literaria de carácter irónico que tiene como propósito ridiculizar al objeto de la misma
 ontología,"Parte de la metafísica que estudia el ser en tanto que es y existe. Por ello es llamada la teoría del ser, es decir, el estudio de todo lo que es: qué es, cómo es y cómo es posible"
 epistemología,"campo de la filosofía que trata sobre los fundamentos, límites, y métodos del conocimiento científico"
 axioma,verdad evidente que no requiere prueba o demostración
@@ -89,16 +279,16 @@ nihilismo,"negación de todo principio, autoridad o dogma filosófico o religios
 solipsismo,teoría subjetiva que sostiene que tan sólo el propio yo es lo único que existe o que puede demostrarse
 empirismo,"corriente filosófica según la cual el conocimiento se halla fundado en la experiencia. Se contrapone al racionalismo, para el cual el conocimiento se halla fundado en gran parte en la razón"
 altruismo,"esmero y diligencia puesto por una persona en conseguir el bien de los demás, aun a expensas del propio"
-metáfora,"figura retórica consistente en establecer una identidad entre dos términos y emplear uno con el significado del otro, basándose en una comparación no expresada entre las dos realidades que dichos términos designan"
-metonimia,"tropo que designa una cosa con el nombre de otra con la que guarda una relación de causa efecto, de autor a obra, o de algún otro tipo de contigüidad temporal, causal o espacial"
-sinécdoque,"tropo en el que: una parte de algo es usada para representar el todo, el todo es usado por una parte, la especie es usada por el género, el género es usado por la especie, el material de que algo está hecho es usado por la cosa"
-oxímoron,expresión en la que se emplean dos términos incongruentes o contradictorios
-hipérbole,"Exageración muy grande e intencional, que consiste en aumentar con el fin de obtener un enunciado más expresivo, como al decir: ""Te llamé un millón de veces"", ""un millón de gracias"" o ""te doy mil besos"""
-antítesis,Oposición o contrariedad de dos juicios o afirmaciones
-prosopopeya,enunciación de un discurso o una proposición por parte de un personaje en una obra literaria
-elipsis,"Ausencia de alguna palabra en una oración, que no afecta su sentido"
-anáfora,Figura retórica que consiste en la repetición de una o varias palabras al principio de versos o frases sucesivas
-pleonasmo,"Figura de construcción, que consiste en emplear en la oración uno o más vocablos innecesarios para que tenga sentido completo, pero con los cuales se da énfasis a lo dicho"
+escolástica,Corriente filosófica y teológica medieval basada en la articulación entre fe y razón
+hedonismo,Doctrina filosófica que busca alcanzar una vida llena de placeres y supresión del dolor. El placer supremo es la máxima el fin último de la vida
+estoicismo,"fortaleza o control sobre la propia emotividad, especialmente ante dolores o adversidades"
+determinismo,Propiedad o condición de un sistema cuya evolución solo depende de sus condiciones iniciales
+utilitarismo,"doctrina moral y filosófica que juzga el valor de las acciones por la utilidad &mdash;medida variadamente como el placer, el bienestar o la felicidad&mdash; que producen como consecuencia, no sólo para el autor de la misma sino para el conjunto de los seres racionales. Se opone por lo tanto a toda forma de moral categórica o deontológica, en la que determinados actos poseen valores intrínsecos e independientes de su contexto de realización"
+relativismo,"idea o teoría sobre que algunos aspectos de la experiencia, como la moral o la verdad, son relativos"
+pragmatismo,"Doctrina que adopta como criterio de verdad la utilidad práctica, identificando lo verdadero con lo útil"
+racionalismo,"Sistema de pensamiento que prioriza el papel de la razón en la adquisición del conocimiento, en contraste con el empirismo, que resalta el de la experiencia, sobre todo el sentido de la percepción"
+dogmatismo,presunción de los que quieren que su doctrina o sus aseveraciones sean tenidas por verdades inconcusas
+idealismo,"doctrina filosófica que considera las ideas, los ideales y la primacía del espíritu como principio del ser y del conocer"
 jurisprudencia,"término jurídico que significa conjunto de las decisiones e interpretaciones de la ley, tomadas por los tribunales. Estas decisiones funcionan como una fuente del derecho sustituyendo la falta de la ley - están basadas en actos y prácticas pasadas que tratan sobre los casos iguales o parecidos"
 potestad,dominio que se tiene sobre una cosa
 prerrogativa,"privilegio o exención que se concede a alguien, como beneficio correspondiente a una dignidad o cargo"
@@ -108,14 +298,293 @@ litigio,"disputa legal, diferendo"
 indulto,gracia o privilegio concedido a uno para que pueda hacer lo que sin él no podría
 exhorto,"Escrito que envía un juez o un tribunal a otro con más jurisdicción, para que mande el cumplimiento de lo que le pide"
 fuero,"Ley, o estatuto particular de algun reino o provincia de España"
-aquiescencia,acuerdo que se presta pasivamente a una decisión o designio ajeno
-boato,exhibición pública de magnificencia
-acaecimiento,Algo que sucede u ocurre
-albor,"Luz del amanecer, comienzo o principio de algo"
+decreto,disposición o decisión tomada por una autoridad sobre la materia en que tenga competencia. Jerárquicamente suele ser inferior a las leyes
+fideicomiso,"disposición, generalmente testamentaria, por la cual uno o varios testadores dejan ciertos bienes encomendados a la buena fe de otra persona para que disponga de ellos de acuerdo a ciertos fines pactados"
+contencioso,Dicho de una persona que disputa o contradice todo lo que otros afirman
+desacato,desprecio hacia la justicia
+prescripción,Extinción de un derecho o una obligación por el transcurso del tiempo legal
+edicto,orden o decreto legal promulgado por un monarca o magistrado judicial
+tipificar,Clasificar o ajustar algo a un tipo o norma; definir legalmente como delito una conducta
+jurisconsulto,"Aquel que se encuentra aplicado al estudio, interpretación o ejercicio del derecho"
+impugnar,contraponerse a algo y rebatirlo mediante argumentos razonables
+recusar,desechar alguna cosa
+refrendar,Autorizar un despacho u otro documento por medio de la firma de persona hábil para ello
+hipótesis,Proposición que se establece provisionalmente como base de una investigación
+postulado,Proposición cuya veracidad se admite sin demostración
+taxonomía,Ciencia de la clasificación según principios sistemáticos
+anomalía,Desviación o irregularidad respecto de lo normal o esperado
+variable,Que varía o puede variar; magnitud que puede tomar distintos valores
+correlación,Correspondencia o influencia recíproca entre dos o más cosas
+serendipia,Descubrimiento o hallazgo afortunado e inesperado que se produce por accidente
+heurística,Disciplina que estudia los métodos de descubrimiento e investigación
+entropía,Magnitud de la energía de un sistema que no puede convertirse en trabajo útil
+etiología,"Estudio sobre el origen fundamental o causa de las cosas, especialmente enfermedades"
+fisiopatología,Rama de la medicina que estudia las alteraciones funcionales del organismo causadas por enfermedades
+profilaxis,Prevención de enfermedades mediante medidas higiénicas o terapéuticas
+iatrogenia,Daño no deseado en la salud causado por una intervención médica
+sintomatología,Conjunto de síntomas que caracterizan una enfermedad; estudio de los síntomas
+paliativo,Que reduce o frena el dolor o un problema sin eliminarlo de raíz
+idiopático,Dicho de una enfermedad que no tiene causa u origen conocido
+nosología,Parte de la medicina que describe y clasifica las enfermedades
+asepsia,Ausencia de gérmenes o materia productora de infecciones
+prognosis,Pronóstico; estimación del desarrollo probable de una enfermedad o situación
+boato,Exhibición pública de magnificencia y ostentación
+acaecimiento,Algo que sucede u ocurre; acontecimiento
+albor,Luz del alba; comienzo o etapa inicial de algo
 solaz,Descanso o recreo del cuerpo o del espíritu
-denuesto,"injuria grave, de palabra o por escrito"
-infundio,"mentira, información falsa o sin fundamento que se difunde generalmente para perjudicar a alguien"
-procaz,"Dicho de una persona: Que se comporta o habla de manera desvergonzada o atrevida, en especial en el aspecto sexual"
-lozano,"Dicho de un vegetal o un terreno poblado de ellos, que abunda en hojas y brotes que muestran su vigor"
-donaire,Capacidad de expresarse con elegancia e ingenio y de las obras con estas cualidades
-prestancia,"Cualidad de excelente, distinguido o superior en su clase"
+denuesto,"Injuria grave, de palabra o por escrito"
+infundio,Mentira o información falsa que se difunde con intención de dañar
+procaz,Que se comporta o habla de manera desvergonzada o atrevida
+lozano,Que abunda en verdor y frescura; que muestra vigor y salud
+donaire,Capacidad de expresarse con elegancia e ingenio; gracia en el porte
+prestancia,Excelencia o superioridad entre los de su especie
+bizarro,Que muestra valor o bravura; gallardo y apuesto
+gallardo,"Desembarazado, airoso y de porte elegante"
+hidalgo,"Perteneciente a la nobleza, especialmente a la baja nobleza castellana"
+talante,Modo o manera de ejecutar una cosa; disposición del ánimo
+desaguisado,"Destrozo, desafuero; acción desatinada o perjudicial"
+ínclito,Famoso por su sobresaliente logro o aptitudes; ilustre
+preclaro,"Esclarecido, ilustre, famoso y digno de admiración y respeto"
+holganza,"Ociosidad, descanso; estado de quien no trabaja"
+merced,Premio o galardón que se da por el trabajo; gracia o favor
+abolengo,Ascendencia de abuelos o antepasados; linaje noble
+antojadizo,Que constantemente tiene antojos o caprichos pasajeros
+desventura,Suerte adversa; desgracia o infortunio
+cuita,"Aflicción, preocupación o angustia del ánimo"
+desaire,Falta de amabilidad o cortesía; desatención despectiva
+saña,Enojo ciego; acceso súbito y violento de ira
+yantar,"Tomar la comida de mediodía; comer, especialmente con apetito"
+pesadumbre,"Sentimiento de pesar, aflicción o disgusto"
+algarabía,Ruido generado por mucha gente que habla al mismo tiempo
+alborozo,"Extraordinario regocijo, placer o alegría"
+desvelo,Falta de sueño; cuidado o atención solícita por algo o alguien
+marasmo,Paralización o estancamiento extremo de la actividad o el ánimo
+letargo,Estado de somnolencia profunda y prolongada; inactividad persistente
+éxtasis,Estado de arrobamiento o admiración intensa que suspende los sentidos
+vorágine,Remolino impetuoso; situación caótica y absorbente
+cataclismo,Trastorno grave del globo terráqueo; gran desastre o catástrofe
+debacle,"Desastre, hundimiento o derrota repentina y estrepitosa"
+hecatombe,Desastre con gran número de víctimas; catástrofe de grandes proporciones
+paroxismo,Exaltación extrema de un sentimiento o de los síntomas de una enfermedad
+estupor,Asombro o pasmo que deja sin capacidad de reacción
+sopor,Adormecimiento; somnolencia pesada que embota los sentidos
+maremágnum,Confusión o abundancia desordenada de cosas o personas
+tumulto,Alboroto o agitación desordenada de una multitud
+barahúnda,Ruido y confusión grandes producidos por mucha gente
+estruendo,Ruido muy fuerte y estrepitoso; gran conmoción
+fragor,"Ruido estruendoso y prolongado, como el de un trueno o batalla"
+estrépito,Ruido fuerte y violento que causa alarma o sobresalto
+clamor,Grito o voz colectiva que expresa un sentimiento intenso
+bullicio,Ruido y agitación producidos por mucha gente en movimiento
+algarada,Vocerío tumultuoso; alboroto provocado por una multitud
+zafarrancho,Riña o pelea confusa; desorden y limpieza general
+advenedizo,Persona que llega a un lugar o posición sin pertenecer a él por origen o mérito
+acólito,Seguidor o acompañante fiel de alguien; ayudante en ceremonias
+epígono,"Seguidor o imitador de una escuela o estilo, generalmente sin originalidad"
+filántropo,Persona que ama al género humano y trabaja por su bienestar
+misántropo,Persona que siente aversión o rechazo hacia el trato con otros
+prócer,"Persona ilustre y eminente, especialmente en la vida pública de un país"
+mecenas,Persona adinerada que patrocina las artes o las ciencias
+neófito,"Persona recién incorporada a una actividad, grupo o creencia"
+diletante,"Persona que cultiva un arte o una ciencia como aficionado, sin profundidad"
+émulo,Persona que intenta igualar o superar a otra en méritos o logros
+adlátere,Persona que acompaña constantemente a otra como auxiliar o subordinado
+confidente,Persona a quien se confían secretos o asuntos íntimos
+cómplice,Persona que participa junto con otra en la comisión de un delito o acción reprobable
+detractor,"Persona que critica, desacredita o habla mal de alguien o algo"
+benefactor,Persona que hace bien a otra o le presta ayuda generosa
+bienhechor,Persona que hace el bien a otros de manera habitual y desinteresada
+patricio,Persona perteneciente a la clase noble o aristocrática de una sociedad
+plebeyo,"Persona del pueblo llano, no perteneciente a la nobleza"
+prosélito,Persona que se ha convertido recientemente a una doctrina o causa
+apóstata,"Persona que abandona públicamente su religión, doctrina o partido"
+congoja,Angustia y aflicción profundas del ánimo
+zozobra,"Inquietud, desasosiego o temor ante un peligro o incertidumbre"
+desasosiego,Falta de sosiego; inquietud o intranquilidad persistente
+añoranza,Sentimiento de tristeza por la ausencia de algo o alguien querido
+arrobo,Estado de éxtasis o admiración profunda que suspende los sentidos
+embeleso,Placer intenso que cautiva y absorbe la atención por completo
+consternación,Abatimiento y sorpresa causados por algo inesperado y grave
+turbación,Alteración del ánimo que produce confusión o vergüenza
+desconsuelo,Aflicción profunda por la falta de consuelo o esperanza
+aflicción,"Pena, dolor moral o sufrimiento intenso del ánimo"
+regocijo,Alegría intensa y bulliciosa; júbilo manifiesto
+arrebato,Impulso violento y súbito de un sentimiento o pasión
+pesadilla,Sueño angustioso; situación opresiva y difícil de soportar
+escalofrío,"Sensación de frío repentino causada por miedo, fiebre o emoción"
+estremecimiento,Temblor involuntario del cuerpo causado por una emoción intensa
+sobrecogimiento,Sensación de asombro mezclada con temor o respeto reverencial
+embelesamiento,Estado de arrobamiento causado por algo bello o cautivador
+arrobamiento,Enajenación de los sentidos por efecto de la admiración o el éxtasis
+tribulación,"Congoja, pena o tormento que aflige el ánimo"
+quebranto,Pérdida grave de la salud o de las fuerzas; gran pesar o aflicción
+pugna,"Lucha o enfrentamiento entre personas, grupos o ideas"
+contienda,Enfrentamiento o disputa entre dos o más partes
+escaramuza,Combate breve y de poca importancia entre fuerzas menores
+conflagración,Conflicto bélico de grandes proporciones; incendio devastador
+lisonja,Alabanza exagerada y generalmente interesada para ganar el favor de alguien
+argucia,Argumento sutil y engañoso usado para confundir o persuadir
+ardid,"Estratagema o medio hábil para lograr un fin, especialmente engañoso"
+treta,Artificio o maniobra ingeniosa para engañar o conseguir algo
+artimaña,Trampa o engaño hábil y disimulado para conseguir un propósito
+estratagema,"Plan astuto ideado para lograr un objetivo, especialmente militar"
+pináculo,Punto más alto o culminante de algo; remate puntiagudo de un edificio
+cénit,Punto más alto del cielo sobre un observador; apogeo o cumbre de algo
+nadir,Punto opuesto al cénit; momento más bajo o desfavorable
+páramo,"Terreno yermo, raso y desabrigado, generalmente elevado"
+erial,Tierra sin cultivar ni labrar; lugar abandonado e improductivo
+alcázar,Fortaleza o palacio fortificado de origen árabe
+atalaya,Torre elevada desde la que se vigila el territorio circundante
+reducto,Último lugar de resistencia o refugio; fortín
+bastión,Baluarte o punto fuerte de defensa; apoyo principal de algo
+ciudadela,Recinto fortificado en el interior de una plaza de armas
+dolencia,"Enfermedad o indisposición, especialmente crónica o leve"
+padecimiento,Sufrimiento o enfermedad que se soporta durante largo tiempo
+convalecencia,Período de recuperación tras una enfermedad o intervención
+postración,"Estado de abatimiento extremo, físico o moral"
+pócima,Bebida medicinal preparada con hierbas u otras sustancias
+ungüento,Sustancia grasa medicinal que se aplica sobre la piel
+bálsamo,Sustancia aromática y curativa; alivio para el dolor o la pena
+elixir,Preparado medicinal prodigioso; solución ideal para un problema
+antídoto,Sustancia que contrarresta los efectos de un veneno o un mal
+cataplasma,Emplasto medicinal blando y húmedo que se aplica sobre la piel como remedio
+sagaz,Que muestra agudeza y previsión para entender las cosas
+tenaz,Que se mantiene firme en sus propósitos con gran perseverancia
+locuaz,Que habla mucho o con gran facilidad
+magnánimo,Que tiene grandeza de ánimo y generosidad para perdonar ofensas
+benévolo,Que tiene buena voluntad hacia los demás; bondadoso
+circunspecto,"Que actúa con prudencia y seriedad, midiendo sus palabras y actos"
+taciturno,"Callado, silencioso; de temperamento melancólico"
+flemático,Que actúa con calma imperturbable y sin alterarse
+afable,"De trato agradable, amable y cortés"
+parsimonioso,Que actúa con lentitud y calma excesivas
+mendaz,"Que tiene costumbre de mentir; falso, engañoso"
+suspicaz,Inclinado a desconfiar o sospechar de todo y de todos
+mordaz,Que critica con agudeza hiriente y sarcasmo
+voraz,Que come con ansia desmedida; que consume o destruye con rapidez
+bellaco,"Astuto, pícaro y de malas intenciones"
+artero,Que actúa con maña y astucia para engañar
+taimado,"Astuto, disimulado y que oculta sus verdaderas intenciones"
+ladino,"Sagaz y astuto, especialmente para engañar o salir de apuros"
+solapado,Que oculta maliciosamente sus intenciones o sentimientos
+insidioso,Que prepara asechanzas o trampas de manera encubierta
+macilento,"Flaco, demacrado y de aspecto enfermizo"
+enjuto,"Delgado, seco y de pocas carnes"
+famélico,Extremadamente hambriento; muy flaco por falta de alimento
+lánguido,"Que muestra debilidad, desgana o falta de energía vital"
+demacrado,"Con el rostro deteriorado por enfermedad, cansancio o sufrimiento"
+escuálido,"Sumamente flaco, sucio y desaliñado"
+adusto,"De semblante severo, seco y poco amable"
+cetrino,De tez de color amarillento verdoso; de aspecto melancólico
+rubicundo,"De color rojizo, especialmente aplicado al rostro o la tez"
+fornido,"De complexión robusta, fuerte y corpulenta"
+perentorio,"Que es urgente, concluyente y no admite dilación"
+aciago,De mal agüero; que trae desgracia o infortunio
+funesto,Que es origen de pesares o desgracias; luctuoso
+inexorable,Que no se puede evitar ni detener; implacable
+intempestivo,Que ocurre fuera del tiempo oportuno o conveniente
+inusitado,No habitual; que ocurre rara vez o resulta sorprendente
+insólito,"Raro, desacostumbrado y fuera de lo común"
+primigenio,"Originario, primitivo; que existe desde el principio"
+atávico,Que procede de antepasados remotos o de instintos ancestrales
+consuetudinario,Que se hace por costumbre o tradición establecida
+arengar,Dirigir un discurso enérgico para enardecer los ánimos
+argüir,Presentar argumentos contra algo; deducir o inferir
+rebatir,Rechazar o contradecir un argumento con razones
+refutar,Demostrar la falsedad de un argumento o afirmación
+disertar,Exponer con amplitud y método un tema ante un auditorio
+perorar,"Pronunciar un discurso largo, a menudo tedioso o enfático"
+apostillar,Añadir notas o comentarios breves a un texto o discurso
+interpelar,Dirigirse a alguien para exigirle explicaciones sobre su conducta
+musitar,"Hablar en voz muy baja, casi en susurro"
+vociferar,Gritar con vehemencia o dar grandes voces
+cavilar,Reflexionar con insistencia y profundidad sobre algo
+rumiar,Pensar detenida y repetidamente sobre algo; darle vueltas a una idea
+avizorar,Observar con atención para descubrir algo oculto o lejano
+vislumbrar,Percibir algo de manera confusa o tenue; intuir
+atisbar,Mirar con cautela y disimulo; percibir indicios de algo
+escrutar,Examinar con atención y minuciosidad algo para descubrir lo oculto
+otear,Mirar desde un lugar alto para observar lo que hay a lo lejos
+columbrar,Divisar algo a lo lejos de manera imprecisa; conjeturar
+conjeturar,Formar juicio u opinión a partir de indicios o datos incompletos
+barruntar,Presentir o sospechar algo por indicios o señales
+sojuzgar,Someter con violencia; dominar por la fuerza
+avasallar,Someter o subyugar a alguien imponiéndole obediencia
+doblegar,Hacer ceder a alguien en su voluntad o resistencia
+arredrar,Hacer retroceder a alguien por miedo o temor; amedrentar
+amilanar,Causar miedo o desánimo que paraliza la acción
+apabullar,Abrumar o desconcertar a alguien dejándolo sin respuesta
+acallar,Hacer callar a alguien o algo; silenciar protestas u opiniones
+coaccionar,Ejercer presión o fuerza sobre alguien para obligarlo a actuar
+coartar,Limitar o restringir la libertad o los derechos de alguien
+constreñir,Obligar o compeler a alguien a hacer algo; oprimir
+deambular,Andar sin rumbo fijo ni destino determinado
+merodear,Rondar un lugar con intención sospechosa o a la espera
+acechar,Observar o espiar cautelosamente con un propósito hostil
+surcar,Navegar por el mar; atravesar un espacio abierto
+trasegar,Mudar cosas de un lugar a otro; beber con exceso
+peregrinar,Viajar a un lugar sagrado por devoción; andar errante
+divagar,Apartarse del tema principal; hablar o pensar sin orden ni concierto
+escabullirse,Escapar o irse de un lugar con disimulo y rapidez
+replegarse,Retirarse ordenadamente ante el adversario; recogerse sobre sí mismo
+congregarse,Reunirse o juntarse varias personas en un lugar
+catarsis,Liberación de emociones reprimidas que produce alivio interior
+narcisismo,Admiración excesiva y enfermiza de uno mismo
+megalomanía,Delirio de grandeza; creencia exagerada en el propio poder
+paranoia,Trastorno caracterizado por desconfianza extrema y delirios de persecución
+sublimación,Transformación de impulsos instintivos en actividades socialmente valoradas
+fobia,Temor intenso e irracional hacia algo específico
+psicosis,Trastorno mental grave con pérdida del contacto con la realidad
+delirio,Perturbación mental con ideas incoherentes y percepciones falsas
+histeria,Estado de excitación nerviosa extrema con reacciones descontroladas
+alucinación,Percepción sensorial falsa sin estímulo externo real
+anomia,Ausencia de normas sociales o desintegración del orden moral
+plutocracia,Sistema de gobierno en que el poder lo ejercen los más ricos
+oligarquía,Gobierno ejercido por un grupo reducido y privilegiado
+autocracia,Sistema de gobierno en que una sola persona ejerce el poder absoluto
+teocracia,Gobierno ejercido directamente por Dios o por los sacerdotes
+nepotismo,Favoritismo hacia familiares o amigos en la concesión de cargos
+caciquismo,Dominio abusivo de un cacique o jefe local sobre una comunidad
+clientelismo,Sistema de relaciones políticas basado en el intercambio de favores
+estratificación,División de la sociedad en capas o niveles jerárquicos
+endogamia,Práctica de contraer matrimonio dentro del propio grupo social
+herejía,Doctrina contraria a los dogmas de una religión establecida
+cisma,División o separación en el seno de una iglesia o comunidad
+blasfemia,Palabra o expresión injuriosa contra Dios o lo sagrado
+sacrilegio,Profanación de algo considerado sagrado o digno de respeto
+iconoclasta,"Que rechaza o destruye tradiciones, imágenes o valores establecidos"
+heterodoxo,Que se aparta de la doctrina o las normas aceptadas
+ortodoxo,Que se ajusta fielmente a la doctrina o normas establecidas
+proselitismo,"Afán de ganar seguidores para una causa, doctrina o partido"
+sincretismo,"Fusión de elementos de distintas doctrinas, religiones o culturas"
+panteísmo,Doctrina que identifica a Dios con el universo y la naturaleza
+estepa,Llanura extensa y árida con escasa vegetación herbácea
+desfiladero,Paso estrecho entre montañas por donde solo se puede ir en fila
+collado,Depresión suave entre dos alturas contiguas de un terreno montañoso
+otero,Cerro aislado que domina un llano
+cañada,Valle estrecho y alargado entre montañas o lomas
+vega,"Extensión de tierra baja, llana y fértil junto a un río"
+alcor,Colina o cerro de poca altura
+peñasco,Roca grande y elevada que sobresale en un terreno
+risco,"Peñasco alto, escarpado y de difícil acceso"
+quebrada,Abertura estrecha y áspera entre montañas; barranco
+erario,Tesoro público de un Estado; conjunto de rentas del Estado
+peculio,Dinero o bienes propios de una persona; caudal modesto
+estipendio,Remuneración que se da a una persona por un servicio prestado
+emolumento,Retribución complementaria que se recibe por un cargo o empleo
+gravamen,Carga u obligación que pesa sobre una propiedad o persona
+plusvalía,Aumento del valor de un bien por causas externas al propietario
+arancel,Tarifa oficial que grava la importación o exportación de mercancías
+usura,Cobro de intereses excesivos por un préstamo de dinero
+insolvencia,Incapacidad de pagar las deudas contraídas
+oligopolio,Situación de mercado en la que unos pocos vendedores controlan la oferta
+templanza,Moderación y sobriedad en los apetitos y en el uso de los sentidos
+magnanimidad,Grandeza de ánimo para emprender grandes obras y perdonar ofensas
+munificencia,Generosidad espléndida en dar o conceder
+continencia,Virtud de moderar y refrenar las pasiones y apetitos
+prodigalidad,Tendencia a gastar o dar con exceso y sin medida
+pusilanimidad,Falta de valor y ánimo para afrontar dificultades o emprender grandes cosas
+concupiscencia,"Deseo desordenado de placeres, especialmente carnales"
+intemperancia,Falta de templanza o moderación; exceso en los apetitos
+abyección,Estado de degradación moral extrema; bajeza y envilecimiento
+incuria,Negligencia y descuido en el cumplimiento de las obligaciones
