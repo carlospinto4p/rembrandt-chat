@@ -195,6 +195,7 @@ _HELP_TEXT = (
     "/history — Recent answer history\n"
     "/export — Export progress as JSON\n"
     "/import — Import progress from JSON\n"
+    "/reminders — Daily review reminders\n"
     "/help — Show this message"
 )
 

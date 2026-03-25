@@ -1,6 +1,24 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.28.0 - 25th March 2026
+
+- Added `/reminders` command: daily review notifications via
+  Telegram's `JobQueue`.
+  - `/reminders on [HH:MM]` — enable at given time (default
+    09:00 UTC).
+  - `/reminders off` — disable.
+  - `/reminders` — show current status.
+  - Sends a message when reviews are due.
+- Updated `stats_handlers.py`:
+  - `reminders()` handler.
+  - `_reminder_callback()` job callback.
+  - `_parse_reminder_args()` argument parser.
+- Updated `bot.py`: registered `/reminders` command and bot menu
+  entry.
+- Updated `session_handlers.py`: added `/reminders` to help text.
+
+
 ### v0.27.3 - 25th March 2026
 
 - Added global error handler: logs unhandled exceptions and

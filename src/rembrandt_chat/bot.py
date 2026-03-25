@@ -67,6 +67,7 @@ from rembrandt_chat.handlers import (
     import_file,
     import_start,
     language,
+    reminders,
     topics,
     mywords,
     play,
@@ -145,6 +146,7 @@ _BOT_COMMANDS = [
     BotCommand("history", "Recent answer history"),
     BotCommand("export", "Export progress as JSON"),
     BotCommand("import", "Import progress from JSON"),
+    BotCommand("reminders", "Daily review reminders"),
     BotCommand("help", "List all commands"),
 ]
 
@@ -195,6 +197,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("history", history))
     app.add_handler(CommandHandler("language", language))
     app.add_handler(CommandHandler("export", export_progress))
+    app.add_handler(CommandHandler("reminders", reminders))
 
     import_conv = ConversationHandler(
         entry_points=[

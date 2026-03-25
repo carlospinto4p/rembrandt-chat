@@ -32,6 +32,7 @@ from rembrandt_chat.handlers import (
     import_start,
     language,
     topics,
+    reminders,
     retention,
     handle_answer_text,
     hint,
@@ -1015,3 +1016,61 @@ async def test_language_callback_stores_choice():
         .edit_message_text.call_args[0][0]
     )
     assert "English" in text
+
+
+# --- /reminders ---
+
+
+@pytest.mark.asyncio
+async def test_reminders_on():
+    update = make_update(text="/reminders on 08:30")
+    ctx = make_context()
+    ctx.job_queue = MagicMock()
+    ctx.job_queue.get_jobs_by_name.return_value = []
+
+    await reminders(update, ctx)
+
+    ctx.job_queue.run_daily.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "08:30" in text
+
+
+@pytest.mark.asyncio
+async def test_reminders_off():
+    update = make_update(text="/reminders off")
+    ctx = make_context()
+    mock_job = MagicMock()
+    ctx.job_queue = MagicMock()
+    ctx.job_queue.get_jobs_by_name.return_value = [mock_job]
+
+    await reminders(update, ctx)
+
+    mock_job.schedule_removal.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "disabled" in text.lower()
+
+
+@pytest.mark.asyncio
+async def test_reminders_status_off():
+    update = make_update(text="/reminders")
+    ctx = make_context()
+    ctx.job_queue = MagicMock()
+    ctx.job_queue.get_jobs_by_name.return_value = []
+
+    await reminders(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "OFF" in text
+
+
+@pytest.mark.asyncio
+async def test_reminders_status_on():
+    update = make_update(text="/reminders")
+    ctx = make_context()
+    ctx.job_queue = MagicMock()
+    ctx.job_queue.get_jobs_by_name.return_value = [MagicMock()]
+
+    await reminders(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "ON" in text

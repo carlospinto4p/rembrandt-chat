@@ -6,7 +6,7 @@
 - [x] `/help` command — list all available commands with brief descriptions (HIGH impact, LOW effort)
 - [x] Telegram bot menu — register commands via `set_my_commands()` in `_post_init()` so `/` shows the command list (HIGH impact, LOW effort)
 - [x] Global error handler — log unhandled exceptions and send user-friendly error message (HIGH impact, LOW effort)
-- [ ] Daily review reminders — notify users when reviews are due, configurable via `/reminders on|off` (HIGH impact, MEDIUM effort)
+- [x] Daily review reminders — notify users when reviews are due, configurable via `/reminders on|off` (HIGH impact, MEDIUM effort)
 - [ ] Session persistence — persist session state so bot restarts don't lose in-progress sessions (HIGH impact, MEDIUM effort)
 - [ ] Streak tracking — track consecutive study days, show in `/stats`, congratulate milestones (HIGH impact, MEDIUM effort)
 - [ ] `/search <term>` command — search vocabulary by front/back text match (MEDIUM impact, LOW effort)
