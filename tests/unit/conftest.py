@@ -106,6 +106,7 @@ def make_update(
     else:
         update.message = None
 
+    update.callback_query = None
     update.effective_chat = AsyncMock()
     return update
 

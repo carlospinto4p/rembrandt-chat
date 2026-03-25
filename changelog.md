@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.4 - 25th March 2026
+
+- Extracted `check_active_session()` helper in `_helpers.py`
+  — deduplicates the active-session guard across 7 call sites
+  in `session_handlers.py`.
+- Removed `_ACTIVE_SESSION_MSG` constant from
+  `session_handlers.py` (moved to `_helpers.py`).
+
+
 ### v0.31.3 - 25th March 2026
 
 - Fixed `send_next()` call indentation in

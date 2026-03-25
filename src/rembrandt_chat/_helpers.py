@@ -176,6 +176,34 @@ async def resolve_user_with_typing(
     return await resolve_user(update, context)
 
 
+_ACTIVE_SESSION_MSG = (
+    "You already have an active session. "
+    "Use /stop to end it first."
+)
+
+
+async def check_active_session(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> bool:
+    """Send an error and return ``True`` if a session exists.
+
+    Works for both message and callback-query updates.
+    """
+    user_data = context.user_data
+    if user_data.get(SESSION) is None:
+        return False
+
+    query = update.callback_query
+    if query is not None:
+        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+    elif update.message is not None:
+        await update.message.reply_text(
+            _ACTIVE_SESSION_MSG
+        )
+    return True
+
+
 def get_session(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> tuple[Session | None, dict]:

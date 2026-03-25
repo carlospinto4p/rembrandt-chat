@@ -19,6 +19,7 @@ from rembrandt_chat._helpers import (
     _build_translation_map,
     _clear_persisted_session,
     _lookup_translation,
+    check_active_session,
     get_session,
     persist_language,
     persist_session_config,
@@ -61,11 +62,6 @@ PLAY_LANG_PREFIX = "play_lang:"
 
 # user_data key for topic concept_ids chosen during /play
 _PLAY_CONCEPT_IDS = "_play_concept_ids"
-
-_ACTIVE_SESSION_MSG = (
-    "You already have an active session. "
-    "Use /stop to end it first."
-)
 
 
 async def _start_session(
@@ -208,10 +204,7 @@ async def play(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/play` — pick language, topic, then session mode."""
-    if context.user_data.get(SESSION) is not None:
-        await update.message.reply_text(
-            _ACTIVE_SESSION_MSG
-        )
+    if await check_active_session(update, context):
         return
 
     _, db = await resolve_user_with_typing(update, context)
@@ -228,10 +221,7 @@ async def review(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/review` — quick review-due session for last topic."""
-    if context.user_data.get(SESSION) is not None:
-        await update.message.reply_text(
-            _ACTIVE_SESSION_MSG
-        )
+    if await check_active_session(update, context):
         return
 
     user, db = await resolve_user_with_typing(update, context)
@@ -307,8 +297,7 @@ async def handle_play_language(
         return
 
     user_data = context.user_data
-    if user_data.get(SESSION) is not None:
-        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+    if await check_active_session(update, context):
         return
 
     lang_code = data[len(PLAY_LANG_PREFIX):]
@@ -335,8 +324,7 @@ async def handle_play_category(
         return
 
     user_data = context.user_data
-    if user_data.get(SESSION) is not None:
-        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+    if await check_active_session(update, context):
         return
 
     cat_key = data[len(PLAY_CAT_PREFIX):]
@@ -377,8 +365,7 @@ async def handle_play_topic(
         return
 
     user_data = context.user_data
-    if user_data.get(SESSION) is not None:
-        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+    if await check_active_session(update, context):
         return
 
     topic_value = data[len(PLAY_TOPIC_PREFIX):]
@@ -430,8 +417,7 @@ async def handle_play_mode(
     mode = SessionMode(mode_value)
 
     user_data = context.user_data
-    if user_data.get(SESSION) is not None:
-        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+    if await check_active_session(update, context):
         return
 
     user, db = await resolve_user(update, context)
@@ -668,8 +654,7 @@ async def handle_topic_callback(
         return
 
     user_data = context.user_data
-    if user_data.get(SESSION) is not None:
-        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+    if await check_active_session(update, context):
         return
 
     topic_id = int(data[len(TOPIC_CB_PREFIX):])
