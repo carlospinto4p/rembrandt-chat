@@ -599,6 +599,7 @@ async def test_stats_shows_daily():
             correct=18, accuracy_pct=90.0,
         ),
     ]
+    ctx.bot_data["db"].get_topics.return_value = []
 
     await stats(update, ctx)
 
@@ -612,6 +613,7 @@ async def test_stats_empty():
     update = make_update()
     ctx = make_context()
     ctx.bot_data["db"].daily_stats.return_value = []
+    ctx.bot_data["db"].get_topics.return_value = []
 
     await stats(update, ctx)
 

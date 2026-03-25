@@ -6,7 +6,7 @@ import json
 import logging
 from datetime import datetime, time, timedelta, timezone
 
-from rembrandt import Database
+from rembrandt import Database, topic_progress
 from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 
@@ -22,6 +22,7 @@ from rembrandt_chat.formatting import (
     format_forecast,
     format_history,
     format_retention,
+    format_topic_progress,
     format_weak_concepts,
 )
 
@@ -33,15 +34,36 @@ async def stats(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """`/stats` — show daily stats."""
+    """`/stats` — show daily stats and topic progress."""
     user, db = await resolve_user_with_typing(update, context)
 
-    daily = await db.daily_stats(user.id, days=7)
-    streak_days = await db.daily_stats(user.id, days=365)
-    streak = compute_streak(streak_days)
-    await update.message.reply_text(
-        format_daily_stats(daily, streak=streak)
+    daily, streak_days, all_topics = await asyncio.gather(
+        db.daily_stats(user.id, days=7),
+        db.daily_stats(user.id, days=365),
+        db.get_topics(),
     )
+    streak = compute_streak(streak_days)
+    text = format_daily_stats(daily, streak=streak)
+
+    if all_topics:
+        progress = await asyncio.gather(
+            *(
+                topic_progress(db, user.id, t)
+                for t in all_topics
+            )
+        )
+        studied = [
+            (t, p) for t, p in zip(all_topics, progress)
+            if p.completion_pct > 0
+        ]
+        if studied:
+            topics_list, prog_list = zip(*studied)
+            tp_text = format_topic_progress(
+                list(topics_list), list(prog_list),
+            )
+            text += "\n\n" + tp_text
+
+    await update.message.reply_text(text)
 
 
 @require_message

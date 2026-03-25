@@ -435,6 +435,26 @@ def format_retention(rate: float) -> str:
     return f"Retention rate (last 30 days): {rate:.0f}%"
 
 
+def format_topic_progress(
+    topics: list[Topic],
+    progress: list[TopicProgress],
+) -> str:
+    """Render per-topic completion percentages.
+
+    :param topics: List of topics.
+    :param progress: Matching list of progress objects.
+    :return: Formatted text, or empty string if no topics.
+    """
+    if not topics:
+        return ""
+    lines = ["Topic progress:\n"]
+    for t, p in zip(topics, progress):
+        lines.append(
+            f"{t.title}: {p.completion_pct:.0f}%"
+        )
+    return "\n".join(lines)
+
+
 def format_forecast(
     forecast: list[ReviewForecast],
 ) -> str:

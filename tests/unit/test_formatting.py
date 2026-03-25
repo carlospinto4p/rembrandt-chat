@@ -23,6 +23,7 @@ from rembrandt_chat.formatting import (
     flashcard_reveal,
     format_answer,
     format_daily_stats,
+    format_topic_progress,
     format_exercise,
     format_hint,
     format_history,
@@ -343,6 +344,33 @@ def test_format_retention():
 def test_format_retention_zero():
     text = format_retention(0.0)
     assert "No answers recorded" in text
+
+
+# --- format_topic_progress ---
+
+
+def test_format_topic_progress():
+    ts = [
+        Topic(
+            id=1, title="A1 - Basics",
+            concept_count=10, concept_ids=[1, 2, 3],
+        ),
+    ]
+    prog = [
+        TopicProgress(
+            topic_id=1, user_id=1,
+            concepts_total=10, concepts_studied=7,
+            concepts_mastered=3,
+            completion_pct=70.0, mastery_pct=30.0,
+        ),
+    ]
+    text = format_topic_progress(ts, prog)
+    assert "A1 - Basics" in text
+    assert "70%" in text
+
+
+def test_format_topic_progress_empty():
+    assert format_topic_progress([], []) == ""
 
 
 # --- format_topics ---

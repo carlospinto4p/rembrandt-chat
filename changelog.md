@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.29.3 - 25th March 2026
+
+- Added per-topic completion percentages to `/stats`: shows
+  progress for all topics the user has studied.
+- Updated `formatting.py`: added `format_topic_progress()`.
+- Updated `stats_handlers.py`: `/stats` fetches topic progress
+  via `asyncio.gather()` and appends it to the output.
+
+
 ### v0.29.2 - 25th March 2026
 
 - Added `/search <term>` command: search shared and user-owned
