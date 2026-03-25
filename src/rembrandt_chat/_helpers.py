@@ -7,8 +7,13 @@ from functools import wraps
 from pathlib import Path
 from typing import Any
 
-from rembrandt import Database, ReviewConfig, Session, User
-from rembrandt.models import ConceptTranslation, SessionMode
+from rembrandt import Database, ReviewConfig, Session, User, topic_progress
+from rembrandt.models import (
+    ConceptTranslation,
+    SessionMode,
+    Topic,
+    TopicProgress,
+)
 from telegram import Update
 from telegram.constants import ChatAction
 from telegram.ext import ContextTypes, ConversationHandler
@@ -292,6 +297,29 @@ async def setup_translations(
         tr_map = await _build_translation_map(db, lang)
         user_data[TRANSLATION_MAP] = tr_map
     user_data[TRANSLATION] = translation
+
+
+async def get_category_topics(
+    db: Database,
+    user_id: int,
+    topic_ids: list[int],
+) -> tuple[list[Topic], list[TopicProgress]]:
+    """Fetch topics in a category with user progress.
+
+    :param topic_ids: IDs of topics belonging to the category.
+    :return: ``(topics, progress)`` lists in matching order.
+    """
+    all_topics = await db.get_topics()
+    filtered = [
+        t for t in all_topics if t.id in topic_ids
+    ]
+    progress = await asyncio.gather(
+        *(
+            topic_progress(db, user_id, t)
+            for t in filtered
+        )
+    )
+    return filtered, list(progress)
 
 
 async def _build_translation_map(

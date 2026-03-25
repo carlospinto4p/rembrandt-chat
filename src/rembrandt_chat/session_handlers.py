@@ -1,9 +1,8 @@
 """Session lifecycle and exercise handlers."""
 
-import asyncio
 from typing import Any
 
-from rembrandt import Database, Session, topic_progress
+from rembrandt import Database, Session
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -18,6 +17,7 @@ from rembrandt_chat._helpers import (
     _build_review_config,
     _clear_persisted_session,
     check_active_session,
+    get_category_topics,
     get_session,
     persist_language,
     persist_session_config,
@@ -320,15 +320,8 @@ async def handle_play_category(
 
     lang = user_data.get(LANGUAGE)
     user, db = await resolve_user(update, context)
-    all_topics = await db.get_topics()
-    filtered = [
-        t for t in all_topics if t.id in cat.topic_ids
-    ]
-    progress = await asyncio.gather(
-        *(
-            topic_progress(db, user.id, t)
-            for t in filtered
-        )
+    filtered, progress = await get_category_topics(
+        db, user.id, cat.topic_ids,
     )
     text, keyboard = format_play_topics(
         filtered, progress, lang=lang
@@ -609,15 +602,8 @@ async def handle_category_callback(
 
     lang = context.user_data.get(LANGUAGE)
     user, db = await resolve_user(update, context)
-    all_topics = await db.get_topics()
-    filtered = [
-        t for t in all_topics if t.id in cat.topic_ids
-    ]
-    progress = await asyncio.gather(
-        *(
-            topic_progress(db, user.id, t)
-            for t in filtered
-        )
+    filtered, progress = await get_category_topics(
+        db, user.id, cat.topic_ids,
     )
     text, keyboard = format_topics(
         filtered, progress, lang=lang

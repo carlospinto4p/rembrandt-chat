@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.6 - 25th March 2026
+
+- Extracted `get_category_topics()` helper in `_helpers.py`
+  — deduplicates category filtering + progress gathering
+  in `handle_play_category()` and `handle_category_callback()`
+  (2 occurrences).
+- Removed unused `asyncio` and `topic_progress` imports from
+  `session_handlers.py`.
+
+
 ### v0.31.5 - 25th March 2026
 
 - Extracted `setup_translations()` helper in `_helpers.py`
