@@ -16,14 +16,13 @@ from rembrandt_chat._helpers import (
     TRANSLATION,
     TRANSLATION_MAP,
     _build_review_config,
-    _build_translation_map,
     _clear_persisted_session,
-    _lookup_translation,
     check_active_session,
     get_session,
     persist_language,
     persist_session_config,
     require_callback,
+    setup_translations,
     require_message,
     require_session,
     resolve_user,
@@ -109,20 +108,13 @@ async def _start_session(
         concept_ids=session_kwargs.get("concept_ids"),
     )
 
-    lang = user_data.get(LANGUAGE)
-    translation = None
-    tr_map = None
-    if lang:
-        translation = await _lookup_translation(
-            db, exercise.concept.id, lang
-        )
-        tr_map = await _build_translation_map(db, lang)
-        user_data[TRANSLATION_MAP] = tr_map
-    user_data[TRANSLATION] = translation
+    await setup_translations(user_data, db, exercise)
 
     await query.edit_message_text(confirm_msg)
     text, keyboard = format_exercise(
-        exercise, translation=translation, tr_map=tr_map
+        exercise,
+        translation=user_data.get(TRANSLATION),
+        tr_map=user_data.get(TRANSLATION_MAP),
     )
     chat = update.effective_chat
     if chat is not None:
@@ -261,22 +253,15 @@ async def review(
         concept_ids=concept_ids,
     )
 
-    lang = user_data.get(LANGUAGE)
-    translation = None
-    tr_map = None
-    if lang:
-        translation = await _lookup_translation(
-            db, exercise.concept.id, lang
-        )
-        tr_map = await _build_translation_map(db, lang)
-        user_data[TRANSLATION_MAP] = tr_map
-    user_data[TRANSLATION] = translation
+    await setup_translations(user_data, db, exercise)
 
     await update.message.reply_text(
         "Review session started."
     )
     text, keyboard = format_exercise(
-        exercise, translation=translation, tr_map=tr_map
+        exercise,
+        translation=user_data.get(TRANSLATION),
+        tr_map=user_data.get(TRANSLATION_MAP),
     )
     chat = update.effective_chat
     if chat is not None:

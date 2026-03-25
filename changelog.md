@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.5 - 25th March 2026
+
+- Extracted `setup_translations()` helper in `_helpers.py`
+  — deduplicates translation lookup + cache pattern across
+  `_start_session()`, `review()`, and `require_session()`
+  restoration (3 occurrences).
+- Removed unused `_lookup_translation` and
+  `_build_translation_map` imports from `session_handlers.py`.
+
+
 ### v0.31.4 - 25th March 2026
 
 - Extracted `check_active_session()` helper in `_helpers.py`

@@ -254,16 +254,7 @@ async def require_session(
         return None
 
     user_data[EXERCISE] = exercise
-
-    # Rebuild translations if language is set
-    lang = user_data.get(LANGUAGE)
-    if lang:
-        translation = await _lookup_translation(
-            db, exercise.concept.id, lang
-        )
-        user_data[TRANSLATION] = translation
-        tr_map = await _build_translation_map(db, lang)
-        user_data[TRANSLATION_MAP] = tr_map
+    await setup_translations(user_data, db, exercise)
 
     log.info("Restored session from persisted config")
     return session, user_data
@@ -279,6 +270,28 @@ def _build_review_config() -> ReviewConfig | None:
         max_new_cards=new,
         max_review_cards=rev,
     )
+
+
+async def setup_translations(
+    user_data: dict,
+    db: Database,
+    exercise: 'Exercise',
+) -> None:
+    """Load and cache translations for the current exercise.
+
+    Sets ``TRANSLATION`` and ``TRANSLATION_MAP`` in
+    *user_data* when the user has a language preference.
+    """
+    lang = user_data.get(LANGUAGE)
+    translation = None
+    tr_map = None
+    if lang:
+        translation = await _lookup_translation(
+            db, exercise.concept.id, lang
+        )
+        tr_map = await _build_translation_map(db, lang)
+        user_data[TRANSLATION_MAP] = tr_map
+    user_data[TRANSLATION] = translation
 
 
 async def _build_translation_map(
