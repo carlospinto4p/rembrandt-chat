@@ -21,8 +21,14 @@ from rembrandt_chat.handlers import (
     bulkimport_start,
     deleteword,
     handle_deleteword_callback,
+    handle_deleteword_cancel,
+    handle_deleteword_confirm,
     mywords,
     search,
+)
+from rembrandt_chat.formatting import (
+    DEL_CANCEL_CB,
+    DEL_CONFIRM_PREFIX,
 )
 from rembrandt_chat.word_handlers import (
     _parse_bulk_file,
@@ -295,16 +301,55 @@ async def test_deleteword_empty():
 
 
 @pytest.mark.asyncio
-async def test_deleteword_callback_deletes():
+async def test_deleteword_callback_shows_confirmation():
     update = make_callback_update(f"{DEL_CB_PREFIX}42")
     ctx = make_context()
 
     await handle_deleteword_callback(update, ctx)
 
+    ctx.bot_data["db"].delete_concept.assert_not_called()
+    call_kwargs = (
+        update.callback_query.edit_message_text.call_args
+    )
+    assert "sure" in call_kwargs[0][0].lower()
+    kb = call_kwargs[1]["reply_markup"]
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert f"{DEL_CONFIRM_PREFIX}42" in flat[0].callback_data
+    assert flat[1].callback_data == DEL_CANCEL_CB
+
+
+@pytest.mark.asyncio
+async def test_deleteword_confirm_deletes():
+    update = make_callback_update(
+        f"{DEL_CONFIRM_PREFIX}42"
+    )
+    ctx = make_context()
+
+    await handle_deleteword_confirm(update, ctx)
+
     ctx.bot_data["db"].delete_concept.assert_called_once_with(
         42
     )
-    update.callback_query.edit_message_text.assert_called_once()
+    text = (
+        update.callback_query
+        .edit_message_text.call_args[0][0]
+    )
+    assert "deleted" in text.lower()
+
+
+@pytest.mark.asyncio
+async def test_deleteword_cancel():
+    update = make_callback_update(DEL_CANCEL_CB)
+    ctx = make_context()
+
+    await handle_deleteword_cancel(update, ctx)
+
+    ctx.bot_data["db"].delete_concept.assert_not_called()
+    text = (
+        update.callback_query
+        .edit_message_text.call_args[0][0]
+    )
+    assert "cancelled" in text.lower()
 
 
 # --- /bulkimport ---

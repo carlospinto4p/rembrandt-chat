@@ -62,6 +62,8 @@ from rembrandt_chat.word_handlers import (
     bulkimport_start,
     deleteword,
     handle_deleteword_callback,
+    handle_deleteword_cancel,
+    handle_deleteword_confirm,
     mywords,
     search,
 )
@@ -107,6 +109,8 @@ __all__ = [
     "deleteword",
     "search",
     "handle_deleteword_callback",
+    "handle_deleteword_confirm",
+    "handle_deleteword_cancel",
     "stats",
     "weak",
     "forecast",

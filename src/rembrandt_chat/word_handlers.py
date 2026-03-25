@@ -14,7 +14,11 @@ from rembrandt_chat._helpers import (
     resolve_user,
     resolve_user_with_typing,
 )
-from rembrandt_chat.formatting import DEL_CB_PREFIX
+from rembrandt_chat.formatting import (
+    DEL_CANCEL_CB,
+    DEL_CB_PREFIX,
+    DEL_CONFIRM_PREFIX,
+)
 
 AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
 AWAITING_BULK_FILE = 20
@@ -388,14 +392,55 @@ async def handle_deleteword_callback(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """Handle a delete-word button press."""
+    """Handle a delete-word button — show confirmation."""
     query = update.callback_query
     data = query.data or ""
     if not data.startswith(DEL_CB_PREFIX):
         return
 
-    concept_id = int(data[len(DEL_CB_PREFIX):])
+    concept_id = data[len(DEL_CB_PREFIX):]
+    keyboard = InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                "Yes, delete",
+                callback_data=(
+                    f"{DEL_CONFIRM_PREFIX}{concept_id}"
+                ),
+            ),
+            InlineKeyboardButton(
+                "No",
+                callback_data=DEL_CANCEL_CB,
+            ),
+        ]
+    ])
+    await query.edit_message_text(
+        "Are you sure?",
+        reply_markup=keyboard,
+    )
+
+
+@require_callback
+async def handle_deleteword_confirm(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle confirmed deletion."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(DEL_CONFIRM_PREFIX):
+        return
+
+    concept_id = int(data[len(DEL_CONFIRM_PREFIX):])
     db: Database = context.bot_data["db"]
     await db.delete_concept(concept_id)
-
     await query.edit_message_text("Word deleted.")
+
+
+@require_callback
+async def handle_deleteword_cancel(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle cancelled deletion."""
+    query = update.callback_query
+    await query.edit_message_text("Deletion cancelled.")

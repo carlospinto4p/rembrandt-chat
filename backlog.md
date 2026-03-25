@@ -16,7 +16,7 @@
 - [x] Bulk word import via file — upload CSV/text to add multiple words at once (MEDIUM impact, MEDIUM effort)
 - [x] ~~Quiz mode with timer~~ — discarded
 - [x] `/cancel` global command — universal escape from any active conversation state (LOW impact, LOW effort)
-- [ ] Confirm before `/deleteword` — add confirmation step to prevent accidental deletion (LOW impact, LOW effort)
+- [x] Confirm before `/deleteword` — add confirmation step to prevent accidental deletion (LOW impact, LOW effort)
 
 ### 2026.03.09 (initial implementation)
 

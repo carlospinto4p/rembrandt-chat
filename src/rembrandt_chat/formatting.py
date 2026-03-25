@@ -28,6 +28,8 @@ MC_PREFIX = "mc:"
 QUALITY_PREFIX = "q:"
 REVEAL_CB = "reveal"
 DEL_CB_PREFIX = "delw:"
+DEL_CONFIRM_PREFIX = "delconfirm:"
+DEL_CANCEL_CB = "delcancel"
 
 # Quality labels for self-graded buttons (0–5 scale)
 _QUALITY_LABELS = [

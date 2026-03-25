@@ -1,6 +1,23 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.2 - 25th March 2026
+
+- Added confirmation step to `/deleteword`: tapping a word
+  now shows "Are you sure? [Yes, delete / No]" before
+  actually deleting.
+- Updated `formatting.py`: added `DEL_CONFIRM_PREFIX` and
+  `DEL_CANCEL_CB` callback-data constants.
+- Updated `word_handlers.py`:
+  - `handle_deleteword_callback()`: now shows confirmation
+    instead of deleting immediately.
+  - `handle_deleteword_confirm()`: performs the actual
+    deletion.
+  - `handle_deleteword_cancel()`: cancels the deletion.
+- Updated `bot.py`: registered confirmation and cancel
+  callback handlers.
+
+
 ### v0.31.1 - 25th March 2026
 
 - Added `/cancel` global command: cancels any active

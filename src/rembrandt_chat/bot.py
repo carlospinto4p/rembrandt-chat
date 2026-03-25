@@ -29,7 +29,9 @@ from rembrandt_chat.config import (
 )
 from rembrandt_chat.formatting import (
     CAT_CB_PREFIX,
+    DEL_CANCEL_CB,
     DEL_CB_PREFIX,
+    DEL_CONFIRM_PREFIX,
     LANG_CB_PREFIX,
     TOPIC_CB_PREFIX,
 )
@@ -61,6 +63,8 @@ from rembrandt_chat.handlers import (
     handle_answer_text,
     handle_category_callback,
     handle_deleteword_callback,
+    handle_deleteword_cancel,
+    handle_deleteword_confirm,
     handle_language_callback,
     handle_play_category,
     handle_play_language,
@@ -331,6 +335,18 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_deleteword_callback,
             pattern=f"^{DEL_CB_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_deleteword_confirm,
+            pattern=f"^{DEL_CONFIRM_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_deleteword_cancel,
+            pattern=f"^{DEL_CANCEL_CB}$",
         )
     )
     app.add_handler(CallbackQueryHandler(handle_answer_callback))
