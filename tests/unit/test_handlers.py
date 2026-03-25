@@ -35,6 +35,7 @@ from rembrandt_chat.handlers import (
     reminders,
     retention,
     handle_answer_text,
+    cancel,
     hint,
     play,
     review,
@@ -142,6 +143,18 @@ async def test_help_lists_commands():
     text = update.message.reply_text.call_args[0][0]
     assert "/play" in text
     assert "/help" in text
+
+
+# --- /cancel ---
+
+
+@pytest.mark.asyncio
+async def test_cancel_outside_conversation():
+    update = make_update()
+    ctx = make_context()
+    await cancel(update, ctx)
+    text = update.message.reply_text.call_args[0][0]
+    assert "Nothing to cancel" in text
 
 
 # --- /play ---

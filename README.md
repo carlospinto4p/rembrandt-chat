@@ -134,6 +134,7 @@ docker compose stop
 | `/history [1d\|3d\|7d\|30d]` | Show recent answer history |
 | `/export` | Export your progress as a JSON file |
 | `/import` | Import progress from a JSON file |
+| `/cancel` | Cancel current operation |
 | `/reminders [on\|off]` | Daily review reminders (default 09:00 UTC) |
 
 ## Exercise Types

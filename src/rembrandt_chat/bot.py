@@ -47,6 +47,7 @@ from rembrandt_chat.handlers import (
     bulkimport_cancel,
     bulkimport_file,
     bulkimport_start,
+    cancel,
     addword_definition,
     addword_skip_tags,
     addword_start,
@@ -157,6 +158,7 @@ _BOT_COMMANDS = [
     BotCommand("export", "Export progress as JSON"),
     BotCommand("import", "Import progress from JSON"),
     BotCommand("reminders", "Daily review reminders"),
+    BotCommand("cancel", "Cancel current operation"),
     BotCommand("help", "List all commands"),
 ]
 
@@ -278,6 +280,10 @@ def create_app() -> None:
         ],
     )
     app.add_handler(bulkimport_conv)
+
+    # Global /cancel — must be after conversation handlers
+    # so their fallbacks take priority.
+    app.add_handler(CommandHandler("cancel", cancel))
 
     app.add_handler(
         CallbackQueryHandler(

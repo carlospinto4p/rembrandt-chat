@@ -177,6 +177,7 @@ _HELP_TEXT = (
     "/export — Export progress as JSON\n"
     "/import — Import progress from JSON\n"
     "/reminders — Daily review reminders\n"
+    "/cancel — Cancel current operation\n"
     "/help — Show this message"
 )
 
@@ -188,6 +189,17 @@ async def help_command(
 ) -> None:
     """`/help` — list available commands."""
     await update.message.reply_text(_HELP_TEXT)
+
+
+@require_message
+async def cancel(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/cancel` — fallback when no conversation is active."""
+    await update.message.reply_text(
+        "Nothing to cancel."
+    )
 
 
 @require_message

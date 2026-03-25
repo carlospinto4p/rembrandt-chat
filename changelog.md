@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.1 - 25th March 2026
+
+- Added `/cancel` global command: cancels any active
+  conversation (addword, import, bulkimport). When no
+  conversation is active, replies "Nothing to cancel."
+- Updated `session_handlers.py`: added `cancel()` handler
+  and `/cancel` in help text.
+- Updated `bot.py`: registered global `/cancel` handler
+  after conversation handlers and added bot menu entry.
+
+
 ### v0.31.0 - 25th March 2026
 
 - Added `/bulkimport` command: upload a file to add multiple
