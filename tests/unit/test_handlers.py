@@ -26,6 +26,7 @@ from rembrandt_chat.handlers import (
     handle_play_topic,
     handle_topic_callback,
     handle_play_mode,
+    help_command,
     history,
     import_file,
     import_start,
@@ -125,6 +126,20 @@ async def test_start_no_effective_user():
     ctx = make_context()
     await start(update, ctx)
     update.message.reply_text.assert_not_called()
+
+
+# --- /help ---
+
+
+@pytest.mark.asyncio
+async def test_help_lists_commands():
+    update = make_update()
+    ctx = make_context()
+    await help_command(update, ctx)
+    update.message.reply_text.assert_called_once()
+    text = update.message.reply_text.call_args[0][0]
+    assert "/play" in text
+    assert "/help" in text
 
 
 # --- /play ---

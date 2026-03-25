@@ -48,6 +48,7 @@ from rembrandt_chat.handlers import (
     deleteword,
     export_progress,
     forecast,
+    help_command,
     handle_answer_callback,
     handle_answer_text,
     handle_category_callback,
@@ -155,6 +156,7 @@ def create_app() -> None:
     )
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("play", play))
     app.add_handler(CommandHandler("stop", stop))
     app.add_handler(CommandHandler("hint", hint))

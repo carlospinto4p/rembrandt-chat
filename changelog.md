@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.27.1 - 25th March 2026
+
+- Added `/help` command: lists all available bot commands with
+  descriptions.
+- Updated `session_handlers.py`: added `help_command()` handler.
+- Updated `bot.py`: registered `/help` command handler.
+
+
 ### v0.27.0 - 25th March 2026
 
 - Added nested topic selection: users pick a category first

@@ -113,6 +113,7 @@ docker compose stop
 | Command | Description |
 |---|---|
 | `/start` | Welcome message, auto-register if new |
+| `/help` | List all available commands |
 | `/play` | Pick language, topic, and mode, then start |
 | `/language` | Set preferred language |
 | `/stop` | End session and show summary |

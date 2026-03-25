@@ -177,6 +177,37 @@ async def start(
     )
 
 
+_HELP_TEXT = (
+    "Available commands:\n\n"
+    "/play — Start an exercise session\n"
+    "/stop — End session and show summary\n"
+    "/hint — Get a hint for the current exercise\n"
+    "/skip — Skip the current exercise\n"
+    "/language — Set preferred language\n"
+    "/topics — Browse topics by category\n"
+    "/addword — Add a new word\n"
+    "/mywords — List your words\n"
+    "/deleteword — Delete one of your words\n"
+    "/stats — Show daily stats\n"
+    "/weak — Show your weakest words\n"
+    "/forecast — Review workload (7 days)\n"
+    "/retention — Retention rate (30 days)\n"
+    "/history — Recent answer history\n"
+    "/export — Export progress as JSON\n"
+    "/import — Import progress from JSON\n"
+    "/help — Show this message"
+)
+
+
+@require_message
+async def help_command(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/help` — list available commands."""
+    await update.message.reply_text(_HELP_TEXT)
+
+
 @require_message
 async def play(
     update: Update,
