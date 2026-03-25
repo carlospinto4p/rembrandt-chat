@@ -1,6 +1,25 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.0 - 25th March 2026
+
+- Added `/bulkimport` command: upload a file to add multiple
+  words at once. Supported formats:
+  - CSV with `front,back` columns (optional `tags` column,
+    semicolon-separated).
+  - Text with one `word — definition` per line (em-dash,
+    en-dash, or hyphen separator).
+- Updated `word_handlers.py`:
+  - `bulkimport_start()`, `bulkimport_file()`,
+    `bulkimport_cancel()` conversation handlers.
+  - `_parse_bulk_file()`, `_parse_csv()`, `_parse_text()`
+    parsers.
+- Updated `bot.py`: registered `/bulkimport` conversation
+  handler and bot menu entry.
+- Updated `session_handlers.py`: added `/bulkimport` to help
+  text.
+
+
 ### v0.30.1 - 25th March 2026
 
 - Added example sentences in exercises: when a

@@ -13,7 +13,7 @@
 - [x] Topic progress in `/stats` — show per-topic completion percentages alongside daily activity (MEDIUM impact, LOW effort)
 - [x] `/review` shortcut — start review-only session for last-used topic, skipping the full selection flow (MEDIUM impact, LOW effort)
 - [x] Example sentences in exercises — display `ConceptTranslation.context` field during exercise prompts (MEDIUM impact, MEDIUM effort)
-- [ ] Bulk word import via file — upload CSV/text to add multiple words at once (MEDIUM impact, MEDIUM effort)
+- [x] Bulk word import via file — upload CSV/text to add multiple words at once (MEDIUM impact, MEDIUM effort)
 - [ ] Quiz mode with timer — time-limited sessions scored on speed and accuracy (MEDIUM impact, MEDIUM effort)
 - [ ] `/cancel` global command — universal escape from any active conversation state (LOW impact, LOW effort)
 - [ ] Confirm before `/deleteword` — add confirmation step to prevent accidental deletion (LOW impact, LOW effort)

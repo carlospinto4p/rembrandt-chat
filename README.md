@@ -125,6 +125,7 @@ docker compose stop
 | `/mywords [tag]` | List your private words, optionally filtered by tag |
 | `/deleteword` | Delete one of your words |
 | `/search <term>` | Search vocabulary by front/back text |
+| `/bulkimport` | Import words from a CSV or text file |
 | `/stats` | Show daily stats and accuracy |
 | `/weak` | Show your weakest words |
 | `/forecast` | Show upcoming review workload (7 days) |

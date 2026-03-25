@@ -46,6 +46,7 @@ from rembrandt_chat.stats_handlers import (
     weak,
 )
 from rembrandt_chat.word_handlers import (
+    AWAITING_BULK_FILE,
     AWAITING_DEFINITION,
     AWAITING_TAGS,
     AWAITING_WORD,
@@ -55,6 +56,9 @@ from rembrandt_chat.word_handlers import (
     addword_start,
     addword_tags,
     addword_word,
+    bulkimport_cancel,
+    bulkimport_file,
+    bulkimport_start,
     deleteword,
     handle_deleteword_callback,
     mywords,
@@ -94,6 +98,10 @@ __all__ = [
     "addword_skip_tags",
     "addword_cancel",
     "mywords",
+    "AWAITING_BULK_FILE",
+    "bulkimport_start",
+    "bulkimport_file",
+    "bulkimport_cancel",
     "deleteword",
     "search",
     "handle_deleteword_callback",

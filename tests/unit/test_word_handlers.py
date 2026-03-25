@@ -4,7 +4,10 @@ import pytest
 from telegram.ext import ConversationHandler
 
 from rembrandt_chat.formatting import DEL_CB_PREFIX
+from unittest.mock import AsyncMock
+
 from rembrandt_chat.handlers import (
+    AWAITING_BULK_FILE,
     AWAITING_DEFINITION,
     AWAITING_TAGS,
     AWAITING_WORD,
@@ -14,10 +17,15 @@ from rembrandt_chat.handlers import (
     addword_start,
     addword_tags,
     addword_word,
+    bulkimport_file,
+    bulkimport_start,
     deleteword,
     handle_deleteword_callback,
     mywords,
     search,
+)
+from rembrandt_chat.word_handlers import (
+    _parse_bulk_file,
 )
 
 from .conftest import (
@@ -297,3 +305,116 @@ async def test_deleteword_callback_deletes():
         42
     )
     update.callback_query.edit_message_text.assert_called_once()
+
+
+# --- /bulkimport ---
+
+
+@pytest.mark.asyncio
+async def test_bulkimport_start_asks_for_file():
+    update = make_update()
+    ctx = make_context()
+    state = await bulkimport_start(update, ctx)
+    assert state == AWAITING_BULK_FILE
+    text = update.message.reply_text.call_args[0][0]
+    assert "file" in text.lower()
+
+
+@pytest.mark.asyncio
+async def test_bulkimport_csv():
+    update = make_update()
+    ctx = make_context()
+
+    csv_content = "front,back\nhello,hola\nbye,adios\n"
+    doc = AsyncMock()
+    tg_file = AsyncMock()
+    tg_file.download_as_bytearray.return_value = (
+        csv_content.encode()
+    )
+    doc.get_file.return_value = tg_file
+    update.message.document = doc
+
+    state = await bulkimport_file(update, ctx)
+
+    assert state == ConversationHandler.END
+    assert ctx.bot_data["db"].add_concept.call_count == 2
+    text = update.message.reply_text.call_args[0][0]
+    assert "2 word" in text
+
+
+@pytest.mark.asyncio
+async def test_bulkimport_text():
+    update = make_update()
+    ctx = make_context()
+
+    content = "hello \u2014 hola\nbye \u2014 adios\n"
+    doc = AsyncMock()
+    tg_file = AsyncMock()
+    tg_file.download_as_bytearray.return_value = (
+        content.encode()
+    )
+    doc.get_file.return_value = tg_file
+    update.message.document = doc
+
+    state = await bulkimport_file(update, ctx)
+
+    assert state == ConversationHandler.END
+    assert ctx.bot_data["db"].add_concept.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_bulkimport_empty_file():
+    update = make_update()
+    ctx = make_context()
+
+    doc = AsyncMock()
+    tg_file = AsyncMock()
+    tg_file.download_as_bytearray.return_value = b""
+    doc.get_file.return_value = tg_file
+    update.message.document = doc
+
+    state = await bulkimport_file(update, ctx)
+
+    assert state == ConversationHandler.END
+    text = update.message.reply_text.call_args[0][0]
+    assert "No valid words" in text
+
+
+# --- _parse_bulk_file ---
+
+
+def test_parse_csv_with_header():
+    text = "front,back,tags\nhello,hola,greetings\n"
+    words = _parse_bulk_file(text)
+    assert len(words) == 1
+    assert words[0] == ("hello", "hola", ["greetings"])
+
+
+def test_parse_csv_without_header():
+    text = "hello,hola\nbye,adios\n"
+    words = _parse_bulk_file(text)
+    assert len(words) == 2
+
+
+def test_parse_csv_tags_semicolon():
+    text = "word,def,a;b;c\n"
+    words = _parse_bulk_file(text)
+    assert words[0][2] == ["a", "b", "c"]
+
+
+def test_parse_text_emdash():
+    text = "hello \u2014 hola\nbye \u2014 adios"
+    words = _parse_bulk_file(text)
+    assert len(words) == 2
+    assert words[0] == ("hello", "hola", [])
+
+
+def test_parse_text_hyphen():
+    text = "hello - hola\n"
+    words = _parse_bulk_file(text)
+    assert len(words) == 1
+
+
+def test_parse_empty():
+    assert _parse_bulk_file("") == []
+    assert _parse_bulk_file("  \n\n ") == []

@@ -1,5 +1,8 @@
 """Word management handlers."""
 
+import csv
+import io
+
 from rembrandt import Database
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
@@ -14,6 +17,7 @@ from rembrandt_chat._helpers import (
 from rembrandt_chat.formatting import DEL_CB_PREFIX
 
 AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
+AWAITING_BULK_FILE = 20
 
 
 @require_message_conv
@@ -126,6 +130,145 @@ async def addword_cancel(
     context.user_data.pop("_addword_word", None)
     context.user_data.pop("_addword_def", None)
     return ConversationHandler.END
+
+
+@require_message_conv
+async def bulkimport_start(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """`/bulkimport` — ask user for a CSV or text file."""
+    await resolve_user(update, context)
+    await update.message.reply_text(
+        "Send a file with words to import.\n\n"
+        "Supported formats:\n"
+        "- CSV: front,back (optional: tags column)\n"
+        '- Text: one "word \u2014 definition" per line'
+    )
+    return AWAITING_BULK_FILE
+
+
+@require_message_conv
+async def bulkimport_file(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """Receive the file and import words."""
+    user, db = await resolve_user_with_typing(update, context)
+
+    doc = update.message.document
+    if doc is None:
+        await update.message.reply_text(
+            "Please send a file."
+        )
+        return AWAITING_BULK_FILE
+
+    tg_file = await doc.get_file()
+    raw = await tg_file.download_as_bytearray()
+
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        await update.message.reply_text(
+            "Could not read the file. "
+            "Please send a UTF-8 text file."
+        )
+        return ConversationHandler.END
+
+    words = _parse_bulk_file(text)
+    if not words:
+        await update.message.reply_text(
+            "No valid words found in the file."
+        )
+        return ConversationHandler.END
+
+    for front, back, tags in words:
+        await db.add_concept(
+            front=front,
+            back=back,
+            tags=tags or None,
+            owner_id=user.id,
+        )
+
+    await update.message.reply_text(
+        f"Imported {len(words)} word(s)."
+    )
+    return ConversationHandler.END
+
+
+async def bulkimport_cancel(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """Cancel the /bulkimport conversation."""
+    if update.message is not None:
+        await update.message.reply_text("Cancelled.")
+    return ConversationHandler.END
+
+
+def _parse_bulk_file(
+    text: str,
+) -> list[tuple[str, str, list[str]]]:
+    """Parse a CSV or text file into word tuples.
+
+    :return: List of ``(front, back, tags)`` tuples.
+    """
+    lines = text.strip().splitlines()
+    if not lines:
+        return []
+
+    # Try CSV first (detect comma in first line)
+    if "," in lines[0]:
+        return _parse_csv(text)
+    return _parse_text(lines)
+
+
+def _parse_csv(
+    text: str,
+) -> list[tuple[str, str, list[str]]]:
+    """Parse CSV with ``front,back[,tags]`` columns."""
+    reader = csv.reader(io.StringIO(text))
+    words: list[tuple[str, str, list[str]]] = []
+    for i, row in enumerate(reader):
+        if len(row) < 2:
+            continue
+        front = row[0].strip()
+        back = row[1].strip()
+        # Skip header row
+        if i == 0 and back.lower() in ("back", "definition"):
+            continue
+        if not front or not back:
+            continue
+        tags: list[str] = []
+        if len(row) >= 3 and row[2].strip():
+            tags = [
+                t.strip()
+                for t in row[2].split(";")
+                if t.strip()
+            ]
+        words.append((front, back, tags))
+    return words
+
+
+def _parse_text(
+    lines: list[str],
+) -> list[tuple[str, str, list[str]]]:
+    """Parse text with ``word \u2014 definition`` per line."""
+    words: list[tuple[str, str, list[str]]] = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        # Try em-dash, en-dash, then hyphen
+        for sep in ("\u2014", "\u2013", " - "):
+            if sep in line:
+                parts = line.split(sep, 1)
+                front = parts[0].strip()
+                back = parts[1].strip()
+                if front and back:
+                    words.append((front, back, []))
+                break
+    return words
 
 
 @require_message

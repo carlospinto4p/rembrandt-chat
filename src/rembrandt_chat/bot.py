@@ -34,6 +34,7 @@ from rembrandt_chat.formatting import (
     TOPIC_CB_PREFIX,
 )
 from rembrandt_chat.handlers import (
+    AWAITING_BULK_FILE,
     AWAITING_DEFINITION,
     AWAITING_FILE,
     AWAITING_TAGS,
@@ -43,6 +44,9 @@ from rembrandt_chat.handlers import (
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
     addword_cancel,
+    bulkimport_cancel,
+    bulkimport_file,
+    bulkimport_start,
     addword_definition,
     addword_skip_tags,
     addword_start,
@@ -144,6 +148,7 @@ _BOT_COMMANDS = [
     BotCommand("mywords", "List your words"),
     BotCommand("deleteword", "Delete one of your words"),
     BotCommand("search", "Search vocabulary"),
+    BotCommand("bulkimport", "Import words from file"),
     BotCommand("stats", "Show daily stats"),
     BotCommand("weak", "Show your weakest words"),
     BotCommand("forecast", "Review workload (7 days)"),
@@ -255,6 +260,24 @@ def create_app() -> None:
         ],
     )
     app.add_handler(addword_conv)
+
+    bulkimport_conv = ConversationHandler(
+        entry_points=[
+            CommandHandler("bulkimport", bulkimport_start),
+        ],
+        states={
+            AWAITING_BULK_FILE: [
+                MessageHandler(
+                    filters.Document.ALL,
+                    bulkimport_file,
+                ),
+            ],
+        },
+        fallbacks=[
+            CommandHandler("cancel", bulkimport_cancel),
+        ],
+    )
+    app.add_handler(bulkimport_conv)
 
     app.add_handler(
         CallbackQueryHandler(
