@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.8 - 25th March 2026
+
+- Moved test factory helpers to `conftest.py`:
+  - `make_language()`, `make_languages()`
+  - `make_translation()`
+  - `make_topic()`, `make_topic_progress()`
+- Removed duplicate definitions from `test_handlers.py`.
+
+
 ### v0.31.7 - 25th March 2026
 
 - Consolidated `format_play_topics()` and `format_topics()`

@@ -6,13 +6,9 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from rembrandt import Hint, SessionStats
 from rembrandt.models import (
-    ConceptTranslation,
     DailyStats,
     ExerciseType,
-    Language,
     ReviewForecast,
-    Topic,
-    TopicProgress,
     WeakConcept,
 )
 
@@ -52,62 +48,14 @@ from .conftest import (
     make_concept,
     make_context,
     make_exercise,
+    make_language,
+    make_languages,
+    make_topic,
+    make_topic_progress,
+    make_translation,
     make_update,
 )
 
-
-# --- shared helpers ---
-
-
-def _language(
-    code: str = "es", name: str = "Spanish",
-) -> Language:
-    return Language(code=code, name=name)
-
-
-def _languages() -> list[Language]:
-    return [
-        _language("es", "Spanish"),
-        _language("en", "English"),
-    ]
-
-
-def _translation(
-    concept_id: int = 1,
-    language_code: str = "en",
-    front: str = "ephemeral",
-    back: str = "Lasting for a very short time",
-) -> ConceptTranslation:
-    return ConceptTranslation(
-        concept_id=concept_id,
-        language_code=language_code,
-        front=front,
-        back=back,
-        context="",
-    )
-
-
-def _topic(
-    topic_id: int = 1, title: str = "A1 - Topic 1",
-) -> Topic:
-    return Topic(
-        id=topic_id,
-        title=title,
-        concept_ids=[1, 2, 3],
-        concept_count=3,
-    )
-
-
-def _topic_progress(topic_id: int = 1) -> TopicProgress:
-    return TopicProgress(
-        topic_id=topic_id,
-        user_id=1,
-        concepts_total=3,
-        concepts_studied=2,
-        concepts_mastered=1,
-        completion_pct=66.7,
-        mastery_pct=33.3,
-    )
 
 
 # --- /start ---
@@ -165,7 +113,7 @@ async def test_play_shows_language_keyboard():
     update = make_update()
     ctx = make_context()
     ctx.bot_data["db"].get_languages.return_value = (
-        _languages()
+        make_languages()
     )
 
     await play(update, ctx)
@@ -231,7 +179,7 @@ async def test_play_topic_all_shows_mode_keyboard():
 async def test_play_topic_specific_shows_mode_keyboard():
     update = make_callback_update("play_topic:1")
     ctx = make_context()
-    topic = _topic()
+    topic = make_topic()
     ctx.bot_data["db"].get_topic.return_value = topic
 
     await handle_play_topic(update, ctx)
@@ -304,7 +252,7 @@ async def test_play_mode_with_language_builds_tr_map():
     ctx = make_context()
     ctx.user_data["language"] = "en"
     ex = make_exercise()
-    tr = _translation()
+    tr = make_translation()
     ctx.bot_data["db"].get_translation.return_value = tr
     ctx.bot_data["db"].get_concepts.return_value = [
         make_concept(),
@@ -813,7 +761,7 @@ async def test_topics_shows_categories():
 async def test_topic_callback_starts_session():
     update = make_callback_update("topic:1")
     ctx = make_context()
-    topic = _topic()
+    topic = make_topic()
     ctx.bot_data["db"].get_topic.return_value = topic
     ex = make_exercise()
 
@@ -1059,7 +1007,7 @@ async def test_language_shows_options():
     update = make_update()
     ctx = make_context()
     ctx.bot_data["db"].get_languages.return_value = (
-        _languages()
+        make_languages()
     )
 
     await language(update, ctx)
@@ -1078,7 +1026,7 @@ async def test_language_callback_stores_choice():
     update = make_callback_update("lang:en")
     ctx = make_context()
     ctx.bot_data["db"].get_language.return_value = (
-        _language("en", "English")
+        make_language("en", "English")
     )
 
     await handle_language_callback(update, ctx)

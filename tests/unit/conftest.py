@@ -7,8 +7,12 @@ from rembrandt import User
 from rembrandt.models import (
     AnswerResult,
     Concept,
+    ConceptTranslation,
     Exercise,
     ExerciseType,
+    Language,
+    Topic,
+    TopicProgress,
 )
 
 from rembrandt_chat.user_mapping import UserMapper
@@ -118,3 +122,57 @@ def make_callback_update(data: str) -> MagicMock:
     update.callback_query = AsyncMock()
     update.callback_query.data = data
     return update
+
+
+def make_language(
+    code: str = "es", name: str = "Spanish",
+) -> Language:
+    return Language(code=code, name=name)
+
+
+def make_languages() -> list[Language]:
+    return [
+        make_language("es", "Spanish"),
+        make_language("en", "English"),
+    ]
+
+
+def make_translation(
+    concept_id: int = 1,
+    language_code: str = "en",
+    front: str = "ephemeral",
+    back: str = "Lasting for a very short time",
+    context: str = "",
+) -> ConceptTranslation:
+    return ConceptTranslation(
+        concept_id=concept_id,
+        language_code=language_code,
+        front=front,
+        back=back,
+        context=context,
+    )
+
+
+def make_topic(
+    topic_id: int = 1, title: str = "A1 - Topic 1",
+) -> Topic:
+    return Topic(
+        id=topic_id,
+        title=title,
+        concept_ids=[1, 2, 3],
+        concept_count=3,
+    )
+
+
+def make_topic_progress(
+    topic_id: int = 1,
+) -> TopicProgress:
+    return TopicProgress(
+        topic_id=topic_id,
+        user_id=1,
+        concepts_total=3,
+        concepts_studied=2,
+        concepts_mastered=1,
+        completion_pct=66.7,
+        mastery_pct=33.3,
+    )
