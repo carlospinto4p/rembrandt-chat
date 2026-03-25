@@ -9,8 +9,9 @@ load_dotenv()
 
 from rembrandt import Database, import_concepts_csv
 from rembrandt.topics import load_topics
-from telegram import BotCommand
+from telegram import BotCommand, Update
 from telegram.ext import (
+    ContextTypes,
     ApplicationBuilder,
     CallbackQueryHandler,
     CommandHandler,
@@ -300,7 +301,25 @@ def create_app() -> None:
         )
     )
 
+    app.add_error_handler(_error_handler)
     app.run_polling()
+
+
+async def _error_handler(
+    update: object, context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Log the error and notify the user."""
+    log.error(
+        "Unhandled exception while processing an update",
+        exc_info=context.error,
+    )
+    if not isinstance(update, Update):
+        return
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_message(
+            "Something went wrong. Please try again."
+        )
 
 
 if __name__ == "__main__":

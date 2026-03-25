@@ -1,11 +1,14 @@
 """Tests for rembrandt_chat.bot."""
 
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
+
+from telegram import Update
 
 import pytest
 
 from rembrandt_chat.bot import (
     _BOT_COMMANDS,
+    _error_handler,
     _load_base_vocab,
     _load_bundled_topics,
     _post_init,
@@ -156,3 +159,28 @@ async def test_load_bundled_topics_skips_when_files_missing(
     await _load_bundled_topics(db)
 
     db.get_concepts.assert_not_called()
+
+
+# --- _error_handler ---
+
+
+@pytest.mark.asyncio
+async def test_error_handler_sends_message():
+    update = MagicMock(spec=Update)
+    update.effective_chat = AsyncMock()
+    ctx = AsyncMock()
+    ctx.error = RuntimeError("test")
+
+    await _error_handler(update, ctx)
+
+    update.effective_chat.send_message.assert_called_once()
+    text = update.effective_chat.send_message.call_args[0][0]
+    assert "wrong" in text.lower()
+
+
+@pytest.mark.asyncio
+async def test_error_handler_no_update():
+    ctx = AsyncMock()
+    ctx.error = RuntimeError("test")
+
+    await _error_handler(None, ctx)

@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.27.3 - 25th March 2026
+
+- Added global error handler: logs unhandled exceptions and
+  sends a user-friendly message.
+- Updated `bot.py`: added `_error_handler()` and registered it
+  via `add_error_handler()`.
+
+
 ### v0.27.2 - 25th March 2026
 
 - Added Telegram bot menu: registers all commands via
