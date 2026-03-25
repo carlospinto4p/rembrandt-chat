@@ -25,6 +25,7 @@ from rembrandt_chat.config import (
     get_bot_token,
     get_bundled_vocab_dir,
     get_database_path,
+    get_state_path,
 )
 from rembrandt_chat.formatting import (
     CAT_CB_PREFIX,
@@ -165,6 +166,7 @@ async def _post_init(app) -> None:
     mapper = UserMapper(db)
     app.bot_data["user_mapper"] = mapper
     app.bot_data["db"] = db
+    app.bot_data["state_path"] = Path(get_state_path())
 
 
 def create_app() -> None:

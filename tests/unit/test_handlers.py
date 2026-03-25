@@ -1074,3 +1074,36 @@ async def test_reminders_status_on():
 
     text = update.message.reply_text.call_args[0][0]
     assert "ON" in text
+
+
+# --- session persistence (require_session restoration) ---
+
+
+@pytest.mark.asyncio
+async def test_require_session_restores_from_config():
+    """After a restart, require_session recreates session."""
+    from rembrandt_chat._helpers import require_session
+    from rembrandt_chat.persistence import SESSION_CONFIG
+
+    ex = make_exercise()
+    session_mock = MagicMock()
+    session_mock.next_exercise = AsyncMock(return_value=ex)
+
+    ctx = make_context()
+    ctx.user_data[SESSION_CONFIG] = {
+        "user_id": 1,
+        "tg_id": 12345,
+        "mode": "mixed",
+        "concept_ids": None,
+    }
+
+    with patch(
+        "rembrandt_chat._helpers.Session",
+        return_value=session_mock,
+    ):
+        result = await require_session(ctx)
+
+    assert result is not None
+    session, user_data = result
+    assert session is session_mock
+    assert user_data["exercise"] is ex

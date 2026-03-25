@@ -1,6 +1,29 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.29.0 - 25th March 2026
+
+- Added session and language persistence: user state survives
+  bot restarts via a JSON file (`data/user_state.json`).
+- Added `persistence.py`:
+  - `save_user_state()`, `load_user_state()`,
+    `clear_session_config()`.
+- Updated `config.py`: added `get_state_path()`.
+- Updated `_helpers.py`:
+  - `require_session()` is now async and auto-restores
+    sessions from persisted config after a restart.
+  - `persist_session_config()`, `persist_language()` helpers.
+  - `_build_review_config()` and `_build_translation_map()`
+    moved from `session_handlers.py`.
+  - `send_next()` clears persisted config on session end.
+- Updated `session_handlers.py`:
+  - `_start_session()` persists session config on creation.
+  - `stop()` clears persisted session config.
+  - `handle_play_language()`, `handle_language_callback()`
+    persist language preference.
+- Updated `bot.py`: stores state file path in `bot_data`.
+
+
 ### v0.28.0 - 25th March 2026
 
 - Added `/reminders` command: daily review notifications via

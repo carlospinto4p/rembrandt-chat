@@ -1,17 +1,32 @@
 """Shared handler helpers and user-data keys."""
 
+import asyncio
+import logging
 from collections.abc import Callable, Coroutine
 from functools import wraps
+from pathlib import Path
 from typing import Any
 
-from rembrandt import Database, Session, User
-from rembrandt.models import ConceptTranslation
+from rembrandt import Database, ReviewConfig, Session, User
+from rembrandt.models import ConceptTranslation, SessionMode
 from telegram import Update
 from telegram.constants import ChatAction
 from telegram.ext import ContextTypes, ConversationHandler
 
+from rembrandt_chat.config import (
+    get_max_new_cards,
+    get_max_review_cards,
+)
 from rembrandt_chat.formatting import format_exercise, format_summary
+from rembrandt_chat.persistence import (
+    SESSION_CONFIG,
+    clear_session_config,
+    load_user_state,
+    save_user_state,
+)
 from rembrandt_chat.user_mapping import UserMapper
+
+log = logging.getLogger(__name__)
 
 # Keys used in context.user_data
 SESSION = "session"
@@ -113,12 +128,36 @@ async def resolve_user(
 ) -> tuple[User, Database]:
     """Return the rembrandt user and database from context.
 
-    Ensures the Telegram user is registered.
+    Ensures the Telegram user is registered.  On the first
+    call after a restart, restores persisted language
+    preference from the state file.
     """
     mapper: UserMapper = context.bot_data["user_mapper"]
     user = await mapper.ensure_user(update.effective_user)
     db: Database = context.bot_data["db"]
+
+    _restore_language(update, context)
     return user, db
+
+
+def _restore_language(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Restore persisted language into ``user_data``."""
+    user_data = context.user_data
+    if LANGUAGE in user_data:
+        return
+    state_path: Path | None = context.bot_data.get(
+        "state_path"
+    )
+    if state_path is None:
+        return
+    tg_id = update.effective_user.id
+    state = load_user_state(state_path, tg_id)
+    lang = state.get(LANGUAGE)
+    if lang:
+        user_data[LANGUAGE] = lang
 
 
 async def resolve_user_with_typing(
@@ -139,18 +178,92 @@ def get_session(
     return session, user_data
 
 
-def require_session(
+async def require_session(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> tuple[Session, dict] | None:
     """Return ``(session, user_data)`` if both session and
     exercise are active, otherwise ``None``.
+
+    If the in-memory session is gone but a persisted
+    `SESSION_CONFIG` exists (e.g. after a restart),
+    the session is silently recreated.
     """
     session, user_data = get_session(context)
-    if session is None:
+    if session is not None and user_data.get(EXERCISE):
+        return session, user_data
+
+    # Try to restore from persisted config
+    config = user_data.get(SESSION_CONFIG)
+    if config is None:
         return None
-    if user_data.get(EXERCISE) is None:
+
+    db: Database = context.bot_data["db"]
+    review_cfg = _build_review_config()
+    session = Session(
+        db=db,
+        user_id=config["user_id"],
+        mode=SessionMode(config["mode"]),
+        concept_ids=config.get("concept_ids"),
+        review_config=review_cfg,
+    )
+    user_data[SESSION] = session
+
+    exercise = await session.next_exercise()
+    if exercise is None:
+        user_data.pop(SESSION, None)
+        user_data.pop(SESSION_CONFIG, None)
+        state_path = context.bot_data.get("state_path")
+        if state_path:
+            tg_id = config.get("tg_id", 0)
+            clear_session_config(state_path, tg_id)
         return None
+
+    user_data[EXERCISE] = exercise
+
+    # Rebuild translations if language is set
+    lang = user_data.get(LANGUAGE)
+    if lang:
+        translation = await _lookup_translation(
+            db, exercise.concept.id, lang
+        )
+        user_data[TRANSLATION] = translation
+        tr_map = await _build_translation_map(db, lang)
+        user_data[TRANSLATION_MAP] = tr_map
+
+    log.info("Restored session from persisted config")
     return session, user_data
+
+
+def _build_review_config() -> ReviewConfig | None:
+    """Build a `ReviewConfig` from env vars, or ``None``."""
+    new = get_max_new_cards()
+    rev = get_max_review_cards()
+    if new == 0 and rev == 0:
+        return None
+    return ReviewConfig(
+        max_new_cards=new,
+        max_review_cards=rev,
+    )
+
+
+async def _build_translation_map(
+    db: Database,
+    lang: str,
+) -> dict[str, str]:
+    """Map native concept text to translated text."""
+    concepts = await db.get_concepts()
+    translations = await asyncio.gather(
+        *(
+            db.get_translation(c.id, lang)
+            for c in concepts
+        )
+    )
+    tr_map: dict[str, str] = {}
+    for concept, tr in zip(concepts, translations):
+        if tr is not None:
+            tr_map[concept.front] = tr.front
+            tr_map[concept.back] = tr.back
+    return tr_map
 
 
 async def _lookup_translation(
@@ -173,11 +286,15 @@ async def send_next(
     user_data: dict,
     update: Update,
     db: Database | None = None,
+    *,
+    context: ContextTypes.DEFAULT_TYPE | None = None,
 ) -> None:
     """Advance to the next exercise or end the session.
 
     :param db: Database for translation lookups.  Required
         when the user has a language set.
+    :param context: Used to clear persisted session config
+        on session end.
     """
     exercise = await session.next_exercise()
     if exercise is None:
@@ -185,6 +302,8 @@ async def send_next(
         user_data.pop(SESSION, None)
         user_data.pop(EXERCISE, None)
         user_data.pop(TRANSLATION, None)
+        user_data.pop(SESSION_CONFIG, None)
+        _clear_persisted_session(update, context)
         chat = update.effective_chat
         if chat is not None:
             await chat.send_message(format_summary(summary))
@@ -205,3 +324,60 @@ async def send_next(
     chat = update.effective_chat
     if chat is not None:
         await chat.send_message(text, reply_markup=keyboard)
+
+
+def _clear_persisted_session(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE | None,
+) -> None:
+    """Remove the persisted session config for this user."""
+    if context is None:
+        return
+    state_path: Path | None = context.bot_data.get(
+        "state_path"
+    )
+    if state_path is None:
+        return
+    tg_user = update.effective_user
+    if tg_user is not None:
+        clear_session_config(state_path, tg_user.id)
+
+
+def persist_session_config(
+    context: ContextTypes.DEFAULT_TYPE,
+    tg_id: int,
+    user_id: int,
+    mode: str,
+    concept_ids: list[int] | None = None,
+) -> None:
+    """Save session config to ``user_data`` and disk."""
+    config = {
+        "user_id": user_id,
+        "tg_id": tg_id,
+        "mode": mode,
+        "concept_ids": concept_ids,
+    }
+    context.user_data[SESSION_CONFIG] = config
+    state_path: Path | None = context.bot_data.get(
+        "state_path"
+    )
+    if state_path:
+        save_user_state(
+            state_path, tg_id,
+            **{SESSION_CONFIG: config},
+        )
+
+
+def persist_language(
+    context: ContextTypes.DEFAULT_TYPE,
+    tg_id: int,
+    lang: str,
+) -> None:
+    """Save language preference to disk."""
+    state_path: Path | None = context.bot_data.get(
+        "state_path"
+    )
+    if state_path:
+        save_user_state(
+            state_path, tg_id, language=lang,
+        )

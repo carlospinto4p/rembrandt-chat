@@ -3,7 +3,7 @@
 import asyncio
 from typing import Any
 
-from rembrandt import Database, ReviewConfig, Session, topic_progress
+from rembrandt import Database, Session, topic_progress
 from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
@@ -14,8 +14,13 @@ from rembrandt_chat._helpers import (
     SESSION,
     TRANSLATION,
     TRANSLATION_MAP,
+    _build_review_config,
+    _build_translation_map,
+    _clear_persisted_session,
     _lookup_translation,
     get_session,
+    persist_language,
+    persist_session_config,
     require_callback,
     require_message,
     require_session,
@@ -23,10 +28,7 @@ from rembrandt_chat._helpers import (
     resolve_user_with_typing,
     send_next,
 )
-from rembrandt_chat.config import (
-    get_max_new_cards,
-    get_max_review_cards,
-)
+from rembrandt_chat.persistence import SESSION_CONFIG
 from rembrandt_chat.formatting import (
     CAT_CB_PREFIX,
     LANG_CB_PREFIX,
@@ -65,44 +67,9 @@ _ACTIVE_SESSION_MSG = (
 )
 
 
-def _review_config() -> ReviewConfig | None:
-    """Build a `ReviewConfig` from env vars, or ``None``."""
-    new = get_max_new_cards()
-    rev = get_max_review_cards()
-    if new == 0 and rev == 0:
-        return None
-    return ReviewConfig(
-        max_new_cards=new,
-        max_review_cards=rev,
-    )
-
-async def _build_translation_map(
-    db: Database,
-    lang: str,
-) -> dict[str, str]:
-    """Build a mapping from native text to translated text.
-
-    Maps both ``front`` and ``back`` of every concept that
-    has a translation in `lang`.
-    """
-    concepts = await db.get_concepts()
-    translations = await asyncio.gather(
-        *(
-            db.get_translation(c.id, lang)
-            for c in concepts
-        )
-    )
-    tr_map: dict[str, str] = {}
-    for concept, tr in zip(concepts, translations):
-        if tr is not None:
-            tr_map[concept.front] = tr.front
-            tr_map[concept.back] = tr.back
-    return tr_map
-
-
 async def _start_session(
     update: Update,
-    user_data: dict,
+    context: ContextTypes.DEFAULT_TYPE,
     db: Database,
     user_id: int,
     *,
@@ -118,11 +85,12 @@ async def _start_session(
     :param session_kwargs: Forwarded to `Session()` (e.g.
         ``mode`` or ``concept_ids``).
     """
+    user_data = context.user_data
     query = update.callback_query
     session = Session(
         db=db,
         user_id=user_id,
-        review_config=_review_config(),
+        review_config=_build_review_config(),
         **session_kwargs,
     )
     user_data[SESSION] = session
@@ -134,6 +102,15 @@ async def _start_session(
         return
 
     user_data[EXERCISE] = exercise
+
+    # Persist session config for restart recovery
+    mode = session_kwargs.get("mode", SessionMode.MIXED)
+    tg_id = update.effective_user.id
+    persist_session_config(
+        context, tg_id, user_id,
+        mode=mode.value,
+        concept_ids=session_kwargs.get("concept_ids"),
+    )
 
     lang = user_data.get(LANGUAGE)
     translation = None
@@ -247,6 +224,9 @@ async def handle_play_language(
 
     lang_code = data[len(PLAY_LANG_PREFIX):]
     user_data[LANGUAGE] = lang_code
+    persist_language(
+        context, update.effective_user.id, lang_code,
+    )
 
     text, keyboard = format_play_categories(lang=lang_code)
     await query.edit_message_text(
@@ -374,7 +354,7 @@ async def handle_play_mode(
         session_kwargs["concept_ids"] = concept_ids
 
     await _start_session(
-        update, user_data, db, user.id,
+        update, context, db, user.id,
         no_words_msg=(
             "No words available. "
             "Add words first with /addword."
@@ -400,6 +380,8 @@ async def stop(
     user_data.pop(EXERCISE, None)
     user_data.pop(TRANSLATION, None)
     user_data.pop(TRANSLATION_MAP, None)
+    user_data.pop(SESSION_CONFIG, None)
+    _clear_persisted_session(update, context)
     await update.message.reply_text(format_summary(summary))
 
 
@@ -410,7 +392,7 @@ async def _require_active_exercise(
     """Return ``(session, user_data)`` or send an error and
     return ``None``.
     """
-    result = require_session(context)
+    result = await require_session(context)
     if result is not None:
         return result
     session, _ = get_session(context)
@@ -455,7 +437,10 @@ async def skip(
     await update.message.reply_text(f"Skipped: {front}")
 
     db: Database = context.bot_data["db"]
-    await send_next(session, user_data, update, db=db)
+    await send_next(
+        session, user_data, update, db=db,
+        context=context,
+    )
 
 
 @require_message
@@ -464,7 +449,7 @@ async def handle_answer_text(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Handle a typed answer."""
-    result = require_session(context)
+    result = await require_session(context)
     if result is None:
         return
 
@@ -475,7 +460,10 @@ async def handle_answer_text(
     await update.message.reply_text(format_answer(answer))
 
     db: Database = context.bot_data["db"]
-    await send_next(session, user_data, update, db=db)
+    await send_next(
+        session, user_data, update, db=db,
+        context=context,
+    )
 
 
 @require_callback
@@ -484,7 +472,7 @@ async def handle_answer_callback(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Handle inline-keyboard button presses."""
-    result = require_session(context)
+    result = await require_session(context)
     if result is None:
         return
 
@@ -509,7 +497,10 @@ async def handle_answer_callback(
         quality = int(data[len(QUALITY_PREFIX):])
         answer = await session.answer(quality=quality)
         await query.edit_message_text(format_answer(answer))
-        await send_next(session, user_data, update, db=db)
+        await send_next(
+        session, user_data, update, db=db,
+        context=context,
+    )
         return
 
     if data.startswith(MC_PREFIX):
@@ -517,7 +508,10 @@ async def handle_answer_callback(
         chosen = exercise.options[idx]
         answer = await session.answer(text=chosen)
         await query.edit_message_text(format_answer(answer))
-        await send_next(session, user_data, update, db=db)
+        await send_next(
+        session, user_data, update, db=db,
+        context=context,
+    )
         return
 
 
@@ -598,7 +592,7 @@ async def handle_topic_callback(
         return
 
     await _start_session(
-        update, user_data, db, user.id,
+        update, context, db, user.id,
         no_words_msg="No words available in this topic.",
         confirm_msg="Topic: {}".format(
             topic_title(
@@ -637,6 +631,9 @@ async def handle_language_callback(
 
     lang_code = data[len(LANG_CB_PREFIX):]
     context.user_data[LANGUAGE] = lang_code
+    persist_language(
+        context, update.effective_user.id, lang_code,
+    )
 
     _, db = await resolve_user(update, context)
     lang = await db.get_language(lang_code)

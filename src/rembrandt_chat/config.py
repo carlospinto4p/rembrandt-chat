@@ -42,6 +42,18 @@ def get_bundled_vocab_dir() -> str:
     return os.environ.get("BUNDLED_VOCAB_DIR", "") or "data"
 
 
+def get_state_path() -> str:
+    """Return the user-state JSON file path.
+
+    Defaults to ``data/user_state.json`` relative to the
+    working directory when ``STATE_PATH`` is not set.
+    """
+    return (
+        os.environ.get("STATE_PATH", "")
+        or "data/user_state.json"
+    )
+
+
 def get_max_new_cards() -> int:
     """Return the maximum new cards per session.
 
