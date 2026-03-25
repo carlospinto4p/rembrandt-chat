@@ -34,6 +34,7 @@ EXERCISE = "exercise"
 LANGUAGE = "language"
 TRANSLATION = "translation"
 TRANSLATION_MAP = "_translation_map"
+LAST_TOPIC = "_last_topic"
 
 # Type alias for handler functions
 _Handler = Callable[
@@ -136,18 +137,19 @@ async def resolve_user(
     user = await mapper.ensure_user(update.effective_user)
     db: Database = context.bot_data["db"]
 
-    _restore_language(update, context)
+    _restore_user_state(update, context)
     return user, db
 
 
-def _restore_language(
+def _restore_user_state(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
-    """Restore persisted language into ``user_data``."""
+    """Restore persisted language and last topic."""
     user_data = context.user_data
-    if LANGUAGE in user_data:
+    if user_data.get("_state_restored"):
         return
+    user_data["_state_restored"] = True
     state_path: Path | None = context.bot_data.get(
         "state_path"
     )
@@ -155,9 +157,14 @@ def _restore_language(
         return
     tg_id = update.effective_user.id
     state = load_user_state(state_path, tg_id)
-    lang = state.get(LANGUAGE)
-    if lang:
-        user_data[LANGUAGE] = lang
+    if LANGUAGE not in user_data:
+        lang = state.get(LANGUAGE)
+        if lang:
+            user_data[LANGUAGE] = lang
+    if LAST_TOPIC not in user_data:
+        lt = state.get(LAST_TOPIC)
+        if lt:
+            user_data[LAST_TOPIC] = lt
 
 
 async def resolve_user_with_typing(
@@ -350,7 +357,10 @@ def persist_session_config(
     mode: str,
     concept_ids: list[int] | None = None,
 ) -> None:
-    """Save session config to ``user_data`` and disk."""
+    """Save session config to ``user_data`` and disk.
+
+    Also saves ``_last_topic`` so ``/review`` can reuse it.
+    """
     config = {
         "user_id": user_id,
         "tg_id": tg_id,
@@ -358,13 +368,18 @@ def persist_session_config(
         "concept_ids": concept_ids,
     }
     context.user_data[SESSION_CONFIG] = config
+    last_topic = {
+        "user_id": user_id,
+        "concept_ids": concept_ids,
+    }
+    context.user_data[LAST_TOPIC] = last_topic
     state_path: Path | None = context.bot_data.get(
         "state_path"
     )
     if state_path:
         save_user_state(
             state_path, tg_id,
-            **{SESSION_CONFIG: config},
+            **{SESSION_CONFIG: config, LAST_TOPIC: last_topic},
         )
 
 

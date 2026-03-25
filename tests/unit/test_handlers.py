@@ -37,6 +37,7 @@ from rembrandt_chat.handlers import (
     handle_answer_text,
     hint,
     play,
+    review,
     skip,
     start,
     stats,
@@ -350,6 +351,63 @@ async def test_play_mode_no_words_available():
         await handle_play_mode(update, ctx)
 
     assert "session" not in ctx.user_data
+
+
+# --- /review ---
+
+
+@pytest.mark.asyncio
+async def test_review_starts_session():
+    update = make_update(text="/review")
+    ex = make_exercise()
+    ctx = make_context()
+    ctx.user_data["_last_topic"] = {
+        "user_id": 1,
+        "concept_ids": [1, 2, 3],
+    }
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session",
+    ) as mock_cls:
+        session = mock_cls.return_value
+        session.next_exercise = AsyncMock(return_value=ex)
+        await review(update, ctx)
+
+    assert ctx.user_data["session"] is session
+    assert ctx.user_data["exercise"] is ex
+
+
+@pytest.mark.asyncio
+async def test_review_no_last_topic():
+    update = make_update(text="/review")
+    ctx = make_context()
+
+    await review(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No previous topic" in text
+
+
+@pytest.mark.asyncio
+async def test_review_no_reviews_due():
+    update = make_update(text="/review")
+    ctx = make_context()
+    ctx.user_data["_last_topic"] = {
+        "user_id": 1,
+        "concept_ids": [1, 2, 3],
+    }
+
+    with patch(
+        "rembrandt_chat.session_handlers.Session",
+    ) as mock_cls:
+        session = mock_cls.return_value
+        session.next_exercise = AsyncMock(
+            return_value=None
+        )
+        await review(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No reviews due" in text
 
 
 # --- /stop ---

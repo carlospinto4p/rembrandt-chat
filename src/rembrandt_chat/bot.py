@@ -73,6 +73,7 @@ from rembrandt_chat.handlers import (
     mywords,
     play,
     retention,
+    review,
     search,
     skip,
     start,
@@ -133,6 +134,7 @@ async def _register_default_languages(
 
 _BOT_COMMANDS = [
     BotCommand("play", "Start an exercise session"),
+    BotCommand("review", "Quick review of last topic"),
     BotCommand("stop", "End session and show summary"),
     BotCommand("hint", "Get a hint"),
     BotCommand("skip", "Skip the current exercise"),
@@ -188,6 +190,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("play", play))
+    app.add_handler(CommandHandler("review", review))
     app.add_handler(CommandHandler("stop", stop))
     app.add_handler(CommandHandler("hint", hint))
     app.add_handler(CommandHandler("skip", skip))

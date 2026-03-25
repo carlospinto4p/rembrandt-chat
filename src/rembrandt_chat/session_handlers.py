@@ -11,6 +11,7 @@ from telegram.ext import ContextTypes
 from rembrandt_chat._helpers import (
     EXERCISE,
     LANGUAGE,
+    LAST_TOPIC,
     SESSION,
     TRANSLATION,
     TRANSLATION_MAP,
@@ -157,6 +158,7 @@ async def start(
 _HELP_TEXT = (
     "Available commands:\n\n"
     "/play — Start an exercise session\n"
+    "/review — Quick review of last topic\n"
     "/stop — End session and show summary\n"
     "/hint — Get a hint for the current exercise\n"
     "/skip — Skip the current exercise\n"
@@ -205,6 +207,79 @@ async def play(
     await update.message.reply_text(
         text, reply_markup=keyboard
     )
+
+
+@require_message
+async def review(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/review` — quick review-due session for last topic."""
+    if context.user_data.get(SESSION) is not None:
+        await update.message.reply_text(
+            _ACTIVE_SESSION_MSG
+        )
+        return
+
+    user, db = await resolve_user_with_typing(update, context)
+
+    last = context.user_data.get(LAST_TOPIC)
+    if last is None:
+        await update.message.reply_text(
+            "No previous topic found. "
+            "Use /play to start a session first."
+        )
+        return
+
+    concept_ids = last.get("concept_ids")
+    session = Session(
+        db=db,
+        user_id=user.id,
+        mode=SessionMode.REVIEW_DUE,
+        concept_ids=concept_ids,
+        review_config=_build_review_config(),
+    )
+    user_data = context.user_data
+    user_data[SESSION] = session
+
+    exercise = await session.next_exercise()
+    if exercise is None:
+        user_data.pop(SESSION, None)
+        await update.message.reply_text(
+            "No reviews due right now!"
+        )
+        return
+
+    user_data[EXERCISE] = exercise
+    tg_id = update.effective_user.id
+    persist_session_config(
+        context, tg_id, user.id,
+        mode=SessionMode.REVIEW_DUE.value,
+        concept_ids=concept_ids,
+    )
+
+    lang = user_data.get(LANGUAGE)
+    translation = None
+    tr_map = None
+    if lang:
+        translation = await _lookup_translation(
+            db, exercise.concept.id, lang
+        )
+        tr_map = await _build_translation_map(db, lang)
+        user_data[TRANSLATION_MAP] = tr_map
+    user_data[TRANSLATION] = translation
+
+    await update.message.reply_text(
+        "Review session started."
+    )
+    text, keyboard = format_exercise(
+        exercise, translation=translation, tr_map=tr_map
+    )
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_message(
+            text, reply_markup=keyboard
+        )
 
 
 @require_callback

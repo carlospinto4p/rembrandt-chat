@@ -116,6 +116,7 @@ docker compose stop
 | `/start` | Welcome message, auto-register if new |
 | `/help` | List all available commands |
 | `/play` | Pick language, topic, and mode, then start |
+| `/review` | Quick review-due session for last-used topic |
 | `/language` | Set preferred language |
 | `/stop` | End session and show summary |
 | `/hint` | Get a hint for the current exercise |

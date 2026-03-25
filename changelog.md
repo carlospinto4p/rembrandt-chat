@@ -1,6 +1,20 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.30.0 - 25th March 2026
+
+- Added `/review` shortcut: starts a review-due session for
+  the last-used topic, skipping the full selection flow.
+- Updated `_helpers.py`:
+  - `LAST_TOPIC` key: persists the last topic's concept IDs.
+  - `persist_session_config()`: now also saves `_last_topic`.
+  - `_restore_user_state()`: restores both language and last
+    topic from the state file (renamed from `_restore_language`).
+- Updated `session_handlers.py`: added `review()` handler.
+- Updated `bot.py`: registered `/review` command and bot menu
+  entry.
+
+
 ### v0.29.3 - 25th March 2026
 
 - Added per-topic completion percentages to `/stats`: shows
