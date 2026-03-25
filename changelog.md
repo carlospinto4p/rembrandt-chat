@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.29.1 - 25th March 2026
+
+- Added study streak tracking: `/stats` now shows the number
+  of consecutive days with at least one answer.
+- Updated `formatting.py`:
+  - `compute_streak()`: counts consecutive study days.
+  - `format_daily_stats()`: added `streak` parameter.
+- Updated `stats_handlers.py`: `/stats` computes and displays
+  the streak.
+
+
 ### v0.29.0 - 25th March 2026
 
 - Added session and language persistence: user state survives

@@ -1,5 +1,7 @@
 """Format rembrandt exercises as Telegram messages and keyboards."""
 
+from datetime import date, timedelta
+
 from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
@@ -173,10 +175,47 @@ def format_summary(stats: SessionStats) -> str:
     )
 
 
-def format_daily_stats(stats: list[DailyStats]) -> str:
+def compute_streak(
+    stats: list[DailyStats],
+    today: date | None = None,
+) -> int:
+    """Count consecutive study days ending today.
+
+    :param stats: Daily stats sorted most-recent first.
+        The `date` field may be a string (``"YYYY-MM-DD"``)
+        or a `date` object.
+    :param today: Override for testability (defaults to
+        ``date.today()``).
+    :return: Number of consecutive days with activity.
+    """
+    if not stats:
+        return 0
+    if today is None:
+        today = date.today()
+    active_dates: set[date] = set()
+    for s in stats:
+        if s.answers > 0:
+            d = s.date
+            if isinstance(d, str):
+                d = date.fromisoformat(d)
+            active_dates.add(d)
+    streak = 0
+    day = today
+    while day in active_dates:
+        streak += 1
+        day -= timedelta(days=1)
+    return streak
+
+
+def format_daily_stats(
+    stats: list[DailyStats],
+    *,
+    streak: int = 0,
+) -> str:
     """Render daily stats for the last few days.
 
     :param stats: List of daily stats (most recent first).
+    :param streak: Current consecutive study-day streak.
     :return: Formatted stats text.
     """
     if not stats:
@@ -187,6 +226,8 @@ def format_daily_stats(stats: list[DailyStats]) -> str:
             f"{s.date}: {s.answers} answers, "
             f"{s.correct} correct ({s.accuracy_pct:.0f}%)"
         )
+    if streak > 0:
+        lines.append(f"\nStudy streak: {streak} day(s)")
     return "\n".join(lines)
 
 

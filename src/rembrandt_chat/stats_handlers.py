@@ -17,6 +17,7 @@ from rembrandt_chat._helpers import (
     resolve_user_with_typing,
 )
 from rembrandt_chat.formatting import (
+    compute_streak,
     format_daily_stats,
     format_forecast,
     format_history,
@@ -36,7 +37,11 @@ async def stats(
     user, db = await resolve_user_with_typing(update, context)
 
     daily = await db.daily_stats(user.id, days=7)
-    await update.message.reply_text(format_daily_stats(daily))
+    streak_days = await db.daily_stats(user.id, days=365)
+    streak = compute_streak(streak_days)
+    await update.message.reply_text(
+        format_daily_stats(daily, streak=streak)
+    )
 
 
 @require_message

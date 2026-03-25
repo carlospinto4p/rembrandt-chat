@@ -1,6 +1,6 @@
 """Tests for rembrandt_chat.formatting."""
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
@@ -19,6 +19,7 @@ from rembrandt_chat.formatting import (
     MC_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
+    compute_streak,
     flashcard_reveal,
     format_answer,
     format_daily_stats,
@@ -222,6 +223,69 @@ def test_format_daily_stats():
 def test_format_daily_stats_empty():
     text = format_daily_stats([])
     assert "No activity" in text
+
+
+def test_format_daily_stats_with_streak():
+    day = DailyStats(
+        date="2026-03-25",
+        answers=10,
+        correct=8,
+        accuracy_pct=80.0,
+    )
+    text = format_daily_stats([day], streak=3)
+    assert "streak: 3 day" in text
+
+
+# --- compute_streak ---
+
+
+def test_compute_streak_consecutive():
+    today = date(2026, 3, 25)
+    stats = [
+        DailyStats(
+            date="2026-03-25",
+            answers=5, correct=4, accuracy_pct=80.0,
+        ),
+        DailyStats(
+            date="2026-03-24",
+            answers=3, correct=2, accuracy_pct=66.7,
+        ),
+        DailyStats(
+            date="2026-03-23",
+            answers=1, correct=1, accuracy_pct=100.0,
+        ),
+    ]
+    assert compute_streak(stats, today=today) == 3
+
+
+def test_compute_streak_gap():
+    today = date(2026, 3, 25)
+    stats = [
+        DailyStats(
+            date="2026-03-25",
+            answers=5, correct=4, accuracy_pct=80.0,
+        ),
+        DailyStats(
+            date="2026-03-23",
+            answers=3, correct=2, accuracy_pct=66.7,
+        ),
+    ]
+    assert compute_streak(stats, today=today) == 1
+
+
+def test_compute_streak_no_today():
+    today = date(2026, 3, 25)
+    stats = [
+        DailyStats(
+            date="2026-03-24",
+            answers=5, correct=4, accuracy_pct=80.0,
+        ),
+    ]
+    assert compute_streak(stats, today=today) == 0
+
+
+def test_compute_streak_empty():
+    assert compute_streak([]) == 0
 
 
 # --- format_weak_concepts ---

@@ -602,7 +602,7 @@ async def test_stats_shows_daily():
 
     await stats(update, ctx)
 
-    ctx.bot_data["db"].daily_stats.assert_called_once()
+    assert ctx.bot_data["db"].daily_stats.call_count == 2
     text = update.message.reply_text.call_args[0][0]
     assert "2026-03-10" in text
 
