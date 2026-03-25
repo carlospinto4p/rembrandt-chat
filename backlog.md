@@ -9,7 +9,7 @@
 - [x] Daily review reminders — notify users when reviews are due, configurable via `/reminders on|off` (HIGH impact, MEDIUM effort)
 - [x] Session persistence — persist session state so bot restarts don't lose in-progress sessions (HIGH impact, MEDIUM effort)
 - [x] Streak tracking — track consecutive study days, show in `/stats`, congratulate milestones (HIGH impact, MEDIUM effort)
-- [ ] `/search <term>` command — search vocabulary by front/back text match (MEDIUM impact, LOW effort)
+- [x] `/search <term>` command — search vocabulary by front/back text match (MEDIUM impact, LOW effort)
 - [ ] Topic progress in `/stats` — show per-topic completion percentages alongside daily activity (MEDIUM impact, LOW effort)
 - [ ] `/review` shortcut — start review-only session for last-used topic, skipping the full selection flow (MEDIUM impact, LOW effort)
 - [ ] Example sentences in exercises — display `ConceptTranslation.context` field during exercise prompts (MEDIUM impact, MEDIUM effort)

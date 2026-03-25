@@ -170,6 +170,47 @@ async def mywords(
 
 
 @require_message
+async def search(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """`/search <term>` — search vocabulary by text match."""
+    user, db = await resolve_user_with_typing(update, context)
+
+    text = (update.message.text or "").strip()
+    parts = text.split(maxsplit=1)
+    term = parts[1].strip().lower() if len(parts) > 1 else ""
+
+    if not term:
+        await update.message.reply_text(
+            "Usage: /search <term>"
+        )
+        return
+
+    shared = await db.get_concepts()
+    own = await db.get_concepts(owner_id=user.id)
+    matches = [
+        c for c in shared + own
+        if term in c.front.lower()
+        or term in c.back.lower()
+    ]
+
+    if not matches:
+        await update.message.reply_text(
+            f'No results for "{term}".'
+        )
+        return
+
+    lines = []
+    for i, c in enumerate(matches[:20], 1):
+        lines.append(f"{i}. {c.front} \u2014 {c.back}")
+    header = f'Results for "{term}" ({len(matches)}):\n\n'
+    await update.message.reply_text(
+        header + "\n".join(lines)
+    )
+
+
+@require_message
 async def deleteword(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,

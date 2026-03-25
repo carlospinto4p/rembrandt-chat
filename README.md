@@ -123,6 +123,7 @@ docker compose stop
 | `/addword` | Add a new word with optional tags |
 | `/mywords [tag]` | List your private words, optionally filtered by tag |
 | `/deleteword` | Delete one of your words |
+| `/search <term>` | Search vocabulary by front/back text |
 | `/stats` | Show daily stats and accuracy |
 | `/weak` | Show your weakest words |
 | `/forecast` | Show upcoming review workload (7 days) |

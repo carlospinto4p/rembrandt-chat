@@ -73,6 +73,7 @@ from rembrandt_chat.handlers import (
     mywords,
     play,
     retention,
+    search,
     skip,
     start,
     stats,
@@ -140,6 +141,7 @@ _BOT_COMMANDS = [
     BotCommand("addword", "Add a new word"),
     BotCommand("mywords", "List your words"),
     BotCommand("deleteword", "Delete one of your words"),
+    BotCommand("search", "Search vocabulary"),
     BotCommand("stats", "Show daily stats"),
     BotCommand("weak", "Show your weakest words"),
     BotCommand("forecast", "Review workload (7 days)"),
@@ -191,6 +193,7 @@ def create_app() -> None:
     app.add_handler(CommandHandler("skip", skip))
     app.add_handler(CommandHandler("mywords", mywords))
     app.add_handler(CommandHandler("deleteword", deleteword))
+    app.add_handler(CommandHandler("search", search))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("weak", weak))
     app.add_handler(CommandHandler("forecast", forecast))

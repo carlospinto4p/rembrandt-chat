@@ -57,6 +57,7 @@ from rembrandt_chat.word_handlers import (
     deleteword,
     handle_deleteword_callback,
     mywords,
+    search,
 )
 
 __all__ = [
@@ -92,6 +93,7 @@ __all__ = [
     "addword_cancel",
     "mywords",
     "deleteword",
+    "search",
     "handle_deleteword_callback",
     "stats",
     "weak",

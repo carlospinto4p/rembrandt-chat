@@ -165,6 +165,7 @@ _HELP_TEXT = (
     "/addword — Add a new word\n"
     "/mywords — List your words\n"
     "/deleteword — Delete one of your words\n"
+    "/search — Search vocabulary\n"
     "/stats — Show daily stats\n"
     "/weak — Show your weakest words\n"
     "/forecast — Review workload (7 days)\n"

@@ -17,6 +17,7 @@ from rembrandt_chat.handlers import (
     deleteword,
     handle_deleteword_callback,
     mywords,
+    search,
 )
 
 from .conftest import (
@@ -207,6 +208,50 @@ async def test_mywords_empty():
 
     text = update.message.reply_text.call_args[0][0]
     assert "no private words" in text.lower()
+
+
+# --- /search ---
+
+
+@pytest.mark.asyncio
+async def test_search_finds_match():
+    update = make_update(text="/search efimero")
+    ctx = make_context()
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero"),
+        make_concept(2, "perpetuo"),
+    ]
+
+    await search(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "efimero" in text
+    assert "perpetuo" not in text
+
+
+@pytest.mark.asyncio
+async def test_search_no_match():
+    update = make_update(text="/search xyz")
+    ctx = make_context()
+    ctx.bot_data["db"].get_concepts.return_value = [
+        make_concept(1, "efimero"),
+    ]
+
+    await search(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "No results" in text
+
+
+@pytest.mark.asyncio
+async def test_search_no_term():
+    update = make_update(text="/search")
+    ctx = make_context()
+
+    await search(update, ctx)
+
+    text = update.message.reply_text.call_args[0][0]
+    assert "Usage" in text
 
 
 # --- /deleteword ---

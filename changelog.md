@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.29.2 - 25th March 2026
+
+- Added `/search <term>` command: search shared and user-owned
+  vocabulary by front/back text match (case-insensitive,
+  up to 20 results).
+- Updated `word_handlers.py`: added `search()` handler.
+- Updated `bot.py`: registered `/search` command and bot menu
+  entry.
+- Updated `session_handlers.py`: added `/search` to help text.
+
+
 ### v0.29.1 - 25th March 2026
 
 - Added study streak tracking: `/stats` now shows the number
