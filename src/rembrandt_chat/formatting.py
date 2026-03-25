@@ -67,6 +67,15 @@ def format_exercise(
 # ---- exercise formatters ----
 
 
+def _context_line(
+    translation: ConceptTranslation | None,
+) -> str:
+    """Return a context/example line, or empty string."""
+    if translation and translation.context:
+        return f"\n\nExample: {translation.context}"
+    return ""
+
+
 def _fmt_multiple_choice(
     ex: Exercise,
     translation: ConceptTranslation | None = None,
@@ -77,6 +86,7 @@ def _fmt_multiple_choice(
         f"Which definition matches this word?\n\n"
         f"\u201c{front}\u201d"
     )
+    text += _context_line(translation)
     options = ex.options
     if tr_map:
         options = [tr_map.get(o, o) for o in options]
@@ -100,6 +110,7 @@ def _fmt_flashcard_prompt(
         f"Do you know this word?\n\n"
         f"{front}"
     )
+    text += _context_line(translation)
     keyboard = InlineKeyboardMarkup(
         [[InlineKeyboardButton(
             "Reveal", callback_data=REVEAL_CB

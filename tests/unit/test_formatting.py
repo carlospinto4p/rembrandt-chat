@@ -6,6 +6,7 @@ from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
     Concept,
+    ConceptTranslation,
     DailyStats,
     Exercise,
     ExerciseType,
@@ -106,6 +107,47 @@ def test_flashcard_prompt():
     assert kb is not None
     flat = [btn for row in kb.inline_keyboard for btn in row]
     assert flat[0].callback_data == REVEAL_CB
+
+
+def test_multiple_choice_with_context():
+    ex = _exercise(options=["a", "b", "c", "d"])
+    tr = ConceptTranslation(
+        concept_id=1,
+        language_code="en",
+        front="ephemeral",
+        back="short-lived",
+        context="The ephemeral beauty of cherry blossoms.",
+    )
+    text, _ = format_exercise(ex, translation=tr)
+    assert "Example:" in text
+    assert "cherry blossoms" in text
+
+
+def test_flashcard_with_context():
+    ex = _exercise(exercise_type=ExerciseType.FLASHCARD)
+    tr = ConceptTranslation(
+        concept_id=1,
+        language_code="en",
+        front="ephemeral",
+        back="short-lived",
+        context="An ephemeral moment.",
+    )
+    text, _ = format_exercise(ex, translation=tr)
+    assert "Example:" in text
+    assert "ephemeral moment" in text
+
+
+def test_exercise_no_context():
+    ex = _exercise(options=["a", "b", "c", "d"])
+    tr = ConceptTranslation(
+        concept_id=1,
+        language_code="en",
+        front="ephemeral",
+        back="short-lived",
+        context="",
+    )
+    text, _ = format_exercise(ex, translation=tr)
+    assert "Example:" not in text
 
 
 def test_flashcard_reveal():

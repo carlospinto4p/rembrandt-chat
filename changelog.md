@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.30.1 - 25th March 2026
+
+- Added example sentences in exercises: when a
+  `ConceptTranslation` has a non-empty `context` field,
+  it is shown below the prompt as "Example: ...".
+- Updated `formatting.py`:
+  - `_context_line()` helper.
+  - `_fmt_multiple_choice()`: appends context line.
+  - `_fmt_flashcard_prompt()`: appends context line.
+
+
 ### v0.30.0 - 25th March 2026
 
 - Added `/review` shortcut: starts a review-due session for
