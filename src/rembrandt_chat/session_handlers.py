@@ -51,6 +51,7 @@ from rembrandt_chat.formatting import (
     format_summary,
 )
 from rembrandt_chat.topic_translations import (
+    all_topics_label,
     get_category,
     topic_title,
 )
@@ -350,10 +351,7 @@ async def handle_play_topic(
     if topic_value == "all":
         user_data.pop(_PLAY_CONCEPT_IDS, None)
         lang = user_data.get(LANGUAGE)
-        topic_label = (
-            "All topics" if lang == "en"
-            else "Todos los temas"
-        )
+        topic_label = all_topics_label(lang)
     else:
         topic_id = int(topic_value)
         _, db = await resolve_user(update, context)

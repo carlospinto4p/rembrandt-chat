@@ -19,6 +19,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from rembrandt_chat.topic_translations import (
     CATEGORIES,
+    all_topics_label,
     category_name,
     topic_title,
 )
@@ -375,10 +376,7 @@ def _format_topic_list(
     lines = [f"{header}\n"]
     buttons: list[list[InlineKeyboardButton]] = []
     if include_all:
-        all_label = (
-            "All topics" if lang == "en"
-            else "Todos los temas"
-        )
+        all_label = all_topics_label(lang)
         buttons.append([InlineKeyboardButton(
             all_label,
             callback_data=f"{button_prefix}all",

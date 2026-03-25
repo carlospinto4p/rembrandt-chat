@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.9 - 25th March 2026
+
+- Added `all_topics_label()` to `topic_translations.py` —
+  deduplicates hardcoded "All topics" / "Todos los temas"
+  strings in `formatting.py` and `session_handlers.py`.
+
+
 ### v0.31.8 - 25th March 2026
 
 - Moved test factory helpers to `conftest.py`:

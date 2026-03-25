@@ -120,6 +120,11 @@ _EN: dict[int, str] = {
 }
 
 
+def all_topics_label(lang: str | None) -> str:
+    """Return the "All topics" label in the user's language."""
+    return "All topics" if lang == "en" else "Todos los temas"
+
+
 def topic_title(
     topic_id: int,
     title: str,
