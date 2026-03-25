@@ -139,7 +139,7 @@ def flashcard_reveal(
         f"{front} \u2014 {back}\n\n"
         f"How well did you know it?"
     )
-    return text, _quality_keyboard()
+    return text, _QUALITY_KEYBOARD
 
 
 # ---- answer / hint / summary formatters ----
@@ -508,12 +508,12 @@ def format_history(
 # ---- shared keyboard builders ----
 
 
-def _quality_keyboard() -> InlineKeyboardMarkup:
-    buttons = [
+_QUALITY_KEYBOARD = InlineKeyboardMarkup([
+    [
         InlineKeyboardButton(
             label, callback_data=f"{QUALITY_PREFIX}{i}"
         )
-        for i, label in enumerate(_QUALITY_LABELS)
+        for i, label in enumerate(_QUALITY_LABELS[j : j + 2], j)
     ]
-    rows = [buttons[i : i + 2] for i in range(0, len(buttons), 2)]
-    return InlineKeyboardMarkup(rows)
+    for j in range(0, len(_QUALITY_LABELS), 2)
+])

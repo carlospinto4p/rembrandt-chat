@@ -29,6 +29,12 @@
 - [x] Add `all_topics_label()` to `topic_translations.py` — deduplicate hardcoded "All topics" / "Todos los temas" strings (2 occurrences)
 - [x] Add `WordEntry` type alias in `word_handlers.py` — replace verbose `tuple[str, str, list[str]]` return type (4 occurrences)
 
+### 2026.03.25 (v0.31.10 optimization review)
+
+- [x] Batch `/search` queries with `asyncio.gather()` — two sequential `db.get_concepts()` calls in `word_handlers.py` (MEDIUM impact, LOW effort)
+- [x] Batch `/bulkimport` word creation with `asyncio.gather()` — sequential `db.add_concept()` loop in `word_handlers.py` (MEDIUM impact, LOW effort)
+- [x] Cache quality keyboard as module constant in `formatting.py` — same 6 buttons rebuilt on every flashcard reveal (LOW impact, TRIVIAL effort)
+
 ### 2026.03.09 (initial implementation)
 
 - [x] User mapping — `/start` handler, auto-registration, telegram-to-rembrandt user mapping

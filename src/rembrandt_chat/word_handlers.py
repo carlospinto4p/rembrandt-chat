@@ -1,5 +1,6 @@
 """Word management handlers."""
 
+import asyncio
 import csv
 import io
 
@@ -189,13 +190,17 @@ async def bulkimport_file(
         )
         return ConversationHandler.END
 
-    for front, back, tags in words:
-        await db.add_concept(
-            front=front,
-            back=back,
-            tags=tags or None,
-            owner_id=user.id,
+    await asyncio.gather(
+        *(
+            db.add_concept(
+                front=front,
+                back=back,
+                tags=tags or None,
+                owner_id=user.id,
+            )
+            for front, back, tags in words
         )
+    )
 
     await update.message.reply_text(
         f"Imported {len(words)} word(s)."
@@ -337,8 +342,10 @@ async def search(
         )
         return
 
-    shared = await db.get_concepts()
-    own = await db.get_concepts(owner_id=user.id)
+    shared, own = await asyncio.gather(
+        db.get_concepts(),
+        db.get_concepts(owner_id=user.id),
+    )
     matches = [
         c for c in shared + own
         if term in c.front.lower()

@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.11 - 26th March 2026
+
+- Optimized `/search`: batched two sequential
+  `db.get_concepts()` calls with `asyncio.gather()`.
+- Optimized `/bulkimport`: batched sequential
+  `db.add_concept()` calls with `asyncio.gather()`.
+- Optimized flashcard reveal: replaced per-call
+  `_quality_keyboard()` function with a pre-built
+  `_QUALITY_KEYBOARD` module constant.
+
+
 ### v0.31.10 - 25th March 2026
 
 - Added `WordEntry` type alias in `word_handlers.py` —
