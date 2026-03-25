@@ -356,6 +356,51 @@ def format_categories(
     return prompt, InlineKeyboardMarkup(buttons)
 
 
+def _format_topic_list(
+    topics: list[Topic],
+    progress: list[TopicProgress],
+    *,
+    header: str,
+    button_prefix: str,
+    lang: str | None = None,
+    include_all: bool = False,
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Render a topic list with progress and buttons.
+
+    :param header: First line of the message.
+    :param button_prefix: Callback-data prefix for buttons.
+    :param include_all: Prepend an "All topics" button.
+    """
+    prog_map = {p.topic_id: p for p in progress}
+    lines = [f"{header}\n"]
+    buttons: list[list[InlineKeyboardButton]] = []
+    if include_all:
+        all_label = (
+            "All topics" if lang == "en"
+            else "Todos los temas"
+        )
+        buttons.append([InlineKeyboardButton(
+            all_label,
+            callback_data=f"{button_prefix}all",
+        )])
+    for topic in topics:
+        p = prog_map.get(topic.id)
+        pct = f"{p.completion_pct:.0f}%" if p else "0%"
+        name = topic_title(topic.id, topic.title, lang)
+        lines.append(
+            f"{topic.id}. {name} ({pct} complete)"
+        )
+        buttons.append([
+            InlineKeyboardButton(
+                name,
+                callback_data=(
+                    f"{button_prefix}{topic.id}"
+                ),
+            )
+        ])
+    return "\n".join(lines), InlineKeyboardMarkup(buttons)
+
+
 def format_play_topics(
     topics: list[Topic],
     progress: list[TopicProgress],
@@ -363,41 +408,14 @@ def format_play_topics(
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Render topic selection for `/play` with an
     "All topics" option.
-
-    :param topics: Available topics.
-    :param progress: Progress for each topic (same order).
-    :param lang: User language code for title translation.
-    :return: Formatted text and inline keyboard.
     """
-    prog_map = {p.topic_id: p for p in progress}
-    all_label = (
-        "All topics" if lang == "en" else "Todos los temas"
+    return _format_topic_list(
+        topics, progress,
+        header="Choose a topic:",
+        button_prefix=PLAY_TOPIC_PREFIX,
+        lang=lang,
+        include_all=True,
     )
-    lines = ["Choose a topic:\n"]
-    buttons: list[list[InlineKeyboardButton]] = [
-        [InlineKeyboardButton(
-            all_label,
-            callback_data=f"{PLAY_TOPIC_PREFIX}all",
-        )]
-    ]
-    for topic in topics:
-        p = prog_map.get(topic.id)
-        pct = f"{p.completion_pct:.0f}%" if p else "0%"
-        name = topic_title(topic.id, topic.title, lang)
-        lines.append(
-            f"{topic.id}. {name} ({pct} complete)"
-        )
-        buttons.append([
-            InlineKeyboardButton(
-                name,
-                callback_data=(
-                    f"{PLAY_TOPIC_PREFIX}{topic.id}"
-                ),
-            )
-        ])
-    text = "\n".join(lines)
-    keyboard = InlineKeyboardMarkup(buttons)
-    return text, keyboard
 
 
 def format_topics(
@@ -405,36 +423,15 @@ def format_topics(
     progress: list[TopicProgress],
     lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup | None]:
-    """Render a list of topics with progress.
-
-    :param topics: Available topics.
-    :param progress: Progress for each topic (same order).
-    :param lang: User language code for title translation.
-    :return: Formatted text and inline keyboard.
-    """
+    """Render a list of topics with progress."""
     if not topics:
         return "No topics available.", None
-    prog_map = {p.topic_id: p for p in progress}
-    lines = ["Topics:\n"]
-    buttons: list[list[InlineKeyboardButton]] = []
-    for topic in topics:
-        p = prog_map.get(topic.id)
-        pct = f"{p.completion_pct:.0f}%" if p else "0%"
-        name = topic_title(topic.id, topic.title, lang)
-        lines.append(
-            f"{topic.id}. {name} ({pct} complete)"
-        )
-        buttons.append([
-            InlineKeyboardButton(
-                name,
-                callback_data=(
-                    f"{TOPIC_CB_PREFIX}{topic.id}"
-                ),
-            )
-        ])
-    text = "\n".join(lines)
-    keyboard = InlineKeyboardMarkup(buttons)
-    return text, keyboard
+    return _format_topic_list(
+        topics, progress,
+        header="Topics:",
+        button_prefix=TOPIC_CB_PREFIX,
+        lang=lang,
+    )
 
 
 def format_retention(rate: float) -> str:

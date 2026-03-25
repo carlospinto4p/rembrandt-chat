@@ -24,7 +24,7 @@
 - [x] Extract `_check_active_session` helper in `_helpers.py` — deduplicate active-session guard (7 occurrences in `session_handlers.py`)
 - [x] Extract `_setup_translations` helper in `_helpers.py` — deduplicate translation lookup + cache pattern (3 occurrences across `session_handlers.py` and `_helpers.py`)
 - [x] Extract `_get_category_topics` helper — deduplicate category filtering + progress gathering (2 occurrences in `session_handlers.py`)
-- [ ] Consolidate `format_play_topics` and `format_topics` in `formatting.py` — near-identical functions differing only in button prefix and "All topics" option
+- [x] Consolidate `format_play_topics` and `format_topics` in `formatting.py` — near-identical functions differing only in button prefix and "All topics" option
 - [ ] Move test factory helpers (`_language`, `_translation`, `_topic`, `_topic_progress`) from `test_handlers.py` to `conftest.py`
 - [ ] Add `all_topics_label()` to `topic_translations.py` — deduplicate hardcoded "All topics" / "Todos los temas" strings (2 occurrences)
 - [ ] Add `WordEntry` type alias in `word_handlers.py` — replace verbose `tuple[str, str, list[str]]` return type (4 occurrences)

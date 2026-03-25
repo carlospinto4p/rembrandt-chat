@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.7 - 25th March 2026
+
+- Consolidated `format_play_topics()` and `format_topics()`
+  into a shared `_format_topic_list()` helper in
+  `formatting.py`. Both public functions are now thin
+  wrappers.
+
+
 ### v0.31.6 - 25th March 2026
 
 - Extracted `get_category_topics()` helper in `_helpers.py`
