@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.10 - 25th March 2026
+
+- Added `WordEntry` type alias in `word_handlers.py` —
+  replaces verbose `tuple[str, str, list[str]]` return type
+  across 5 occurrences in file parsing functions.
+
+
 ### v0.31.9 - 25th March 2026
 
 - Added `all_topics_label()` to `topic_translations.py` —

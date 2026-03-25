@@ -27,7 +27,7 @@
 - [x] Consolidate `format_play_topics` and `format_topics` in `formatting.py` — near-identical functions differing only in button prefix and "All topics" option
 - [x] Move test factory helpers (`_language`, `_translation`, `_topic`, `_topic_progress`) from `test_handlers.py` to `conftest.py`
 - [x] Add `all_topics_label()` to `topic_translations.py` — deduplicate hardcoded "All topics" / "Todos los temas" strings (2 occurrences)
-- [ ] Add `WordEntry` type alias in `word_handlers.py` — replace verbose `tuple[str, str, list[str]]` return type (4 occurrences)
+- [x] Add `WordEntry` type alias in `word_handlers.py` — replace verbose `tuple[str, str, list[str]]` return type (4 occurrences)
 
 ### 2026.03.09 (initial implementation)
 

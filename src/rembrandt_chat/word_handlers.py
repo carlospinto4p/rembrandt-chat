@@ -23,6 +23,9 @@ from rembrandt_chat.formatting import (
 AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
 AWAITING_BULK_FILE = 20
 
+#: ``(front, back, tags)`` tuple returned by file parsers.
+WordEntry = tuple[str, str, list[str]]
+
 
 @require_message_conv
 async def addword_start(
@@ -212,7 +215,7 @@ async def bulkimport_cancel(
 
 def _parse_bulk_file(
     text: str,
-) -> list[tuple[str, str, list[str]]]:
+) -> list[WordEntry]:
     """Parse a CSV or text file into word tuples.
 
     :return: List of ``(front, back, tags)`` tuples.
@@ -229,10 +232,10 @@ def _parse_bulk_file(
 
 def _parse_csv(
     text: str,
-) -> list[tuple[str, str, list[str]]]:
+) -> list[WordEntry]:
     """Parse CSV with ``front,back[,tags]`` columns."""
     reader = csv.reader(io.StringIO(text))
-    words: list[tuple[str, str, list[str]]] = []
+    words: list[WordEntry] = []
     for i, row in enumerate(reader):
         if len(row) < 2:
             continue
@@ -256,9 +259,9 @@ def _parse_csv(
 
 def _parse_text(
     lines: list[str],
-) -> list[tuple[str, str, list[str]]]:
+) -> list[WordEntry]:
     """Parse text with ``word \u2014 definition`` per line."""
-    words: list[tuple[str, str, list[str]]] = []
+    words: list[WordEntry] = []
     for line in lines:
         line = line.strip()
         if not line:
