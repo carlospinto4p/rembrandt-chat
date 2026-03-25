@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.31.3 - 25th March 2026
+
+- Fixed `send_next()` call indentation in
+  `handle_answer_callback()` — arguments were misaligned
+  at two call sites (quality and MC branches).
+
+
 ### v0.31.2 - 25th March 2026
 
 - Added confirmation step to `/deleteword`: tapping a word

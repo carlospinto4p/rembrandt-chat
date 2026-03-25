@@ -587,9 +587,9 @@ async def handle_answer_callback(
         answer = await session.answer(quality=quality)
         await query.edit_message_text(format_answer(answer))
         await send_next(
-        session, user_data, update, db=db,
-        context=context,
-    )
+            session, user_data, update, db=db,
+            context=context,
+        )
         return
 
     if data.startswith(MC_PREFIX):
@@ -598,9 +598,9 @@ async def handle_answer_callback(
         answer = await session.answer(text=chosen)
         await query.edit_message_text(format_answer(answer))
         await send_next(
-        session, user_data, update, db=db,
-        context=context,
-    )
+            session, user_data, update, db=db,
+            context=context,
+        )
         return
 
 
