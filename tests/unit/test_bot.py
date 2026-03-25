@@ -4,7 +4,39 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from rembrandt_chat.bot import _load_base_vocab, _load_bundled_topics
+from rembrandt_chat.bot import (
+    _BOT_COMMANDS,
+    _load_base_vocab,
+    _load_bundled_topics,
+    _post_init,
+)
+
+
+# --- _post_init: bot commands ---
+
+
+@pytest.mark.asyncio
+async def test_post_init_sets_bot_commands(monkeypatch, tmp_path):
+    monkeypatch.delenv("BASE_VOCAB_PATH", raising=False)
+    monkeypatch.setenv("BUNDLED_VOCAB_DIR", str(tmp_path))
+
+    db = AsyncMock()
+    db.get_concepts.return_value = []
+    db._conn = AsyncMock()
+    db.get_languages.return_value = []
+
+    with patch(
+        "rembrandt_chat.bot.Database.connect",
+        new_callable=AsyncMock,
+        return_value=db,
+    ):
+        app = AsyncMock()
+        app.bot_data = {}
+        await _post_init(app)
+
+    app.bot.set_my_commands.assert_called_once_with(
+        _BOT_COMMANDS
+    )
 
 
 # --- _load_base_vocab ---

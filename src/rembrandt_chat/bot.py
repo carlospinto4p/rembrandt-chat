@@ -9,6 +9,7 @@ load_dotenv()
 
 from rembrandt import Database, import_concepts_csv
 from rembrandt.topics import load_topics
+from telegram import BotCommand
 from telegram.ext import (
     ApplicationBuilder,
     CallbackQueryHandler,
@@ -126,8 +127,30 @@ async def _register_default_languages(
         log.info("Registered language: English (en)")
 
 
+_BOT_COMMANDS = [
+    BotCommand("play", "Start an exercise session"),
+    BotCommand("stop", "End session and show summary"),
+    BotCommand("hint", "Get a hint"),
+    BotCommand("skip", "Skip the current exercise"),
+    BotCommand("language", "Set preferred language"),
+    BotCommand("topics", "Browse topics by category"),
+    BotCommand("addword", "Add a new word"),
+    BotCommand("mywords", "List your words"),
+    BotCommand("deleteword", "Delete one of your words"),
+    BotCommand("stats", "Show daily stats"),
+    BotCommand("weak", "Show your weakest words"),
+    BotCommand("forecast", "Review workload (7 days)"),
+    BotCommand("retention", "Retention rate (30 days)"),
+    BotCommand("history", "Recent answer history"),
+    BotCommand("export", "Export progress as JSON"),
+    BotCommand("import", "Import progress from JSON"),
+    BotCommand("help", "List all commands"),
+]
+
+
 async def _post_init(app) -> None:
     """Connect to the database after the application starts."""
+    await app.bot.set_my_commands(_BOT_COMMANDS)
     db = await Database.connect(get_database_path())
     try:
         await db._conn.execute("PRAGMA journal_mode=WAL")

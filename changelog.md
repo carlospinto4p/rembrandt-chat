@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.27.2 - 25th March 2026
+
+- Added Telegram bot menu: registers all commands via
+  `set_my_commands()` on startup so users see autocomplete
+  when typing `/`.
+- Updated `bot.py`:
+  - `_BOT_COMMANDS` list with 17 command descriptions.
+  - `_post_init()`: calls `set_my_commands()` during startup.
+
+
 ### v0.27.1 - 25th March 2026
 
 - Added `/help` command: lists all available bot commands with
