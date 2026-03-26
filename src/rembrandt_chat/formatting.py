@@ -269,8 +269,12 @@ TOPIC_CB_PREFIX = "topic:"
 PLAY_TOPIC_PREFIX = "play_topic:"
 PLAY_LANG_PREFIX = "play_lang:"
 PLAY_CAT_PREFIX = "play_cat:"
+PLAY_TPAGE_PREFIX = "play_tpage:"
 CAT_CB_PREFIX = "cat:"
+TPAGE_PREFIX = "tpage:"
 LANG_CB_PREFIX = "lang:"
+
+_TOPIC_PAGE_SIZE = 5
 
 
 def format_play_languages(
@@ -365,23 +369,48 @@ def _format_topic_list(
     button_prefix: str,
     lang: str | None = None,
     include_all: bool = False,
+    page: int = 0,
+    page_prefix: str = "",
+    cat_key: str = "",
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Render a topic list with progress and buttons.
 
     :param header: First line of the message.
     :param button_prefix: Callback-data prefix for buttons.
     :param include_all: Prepend an "All topics" button.
+    :param page: Zero-based page index for pagination.
+    :param page_prefix: Callback-data prefix for page
+        navigation buttons.
+    :param cat_key: Category key encoded in page callbacks.
     """
+    total = len(topics)
+    needs_paging = total > _TOPIC_PAGE_SIZE
+    if needs_paging:
+        start = page * _TOPIC_PAGE_SIZE
+        end = start + _TOPIC_PAGE_SIZE
+        page_topics = topics[start:end]
+        total_pages = (
+            (total + _TOPIC_PAGE_SIZE - 1)
+            // _TOPIC_PAGE_SIZE
+        )
+    else:
+        page_topics = topics
+        total_pages = 1
+
     prog_map = {p.topic_id: p for p in progress}
-    lines = [f"{header}\n"]
+    page_label = (
+        f" ({page + 1}/{total_pages})"
+        if needs_paging else ""
+    )
+    lines = [f"{header}{page_label}\n"]
     buttons: list[list[InlineKeyboardButton]] = []
-    if include_all:
+    if include_all and page == 0:
         all_label = all_topics_label(lang)
         buttons.append([InlineKeyboardButton(
             all_label,
             callback_data=f"{button_prefix}all",
         )])
-    for topic in topics:
+    for topic in page_topics:
         p = prog_map.get(topic.id)
         pct = f"{p.completion_pct:.0f}%" if p else "0%"
         name = topic_title(topic.id, topic.title, lang)
@@ -396,6 +425,24 @@ def _format_topic_list(
                 ),
             )
         ])
+    if needs_paging and page_prefix:
+        nav: list[InlineKeyboardButton] = []
+        if page > 0:
+            nav.append(InlineKeyboardButton(
+                "\u25c0 Prev",
+                callback_data=(
+                    f"{page_prefix}{cat_key}:{page - 1}"
+                ),
+            ))
+        if page < total_pages - 1:
+            nav.append(InlineKeyboardButton(
+                "Next \u25b6",
+                callback_data=(
+                    f"{page_prefix}{cat_key}:{page + 1}"
+                ),
+            ))
+        if nav:
+            buttons.append(nav)
     return "\n".join(lines), InlineKeyboardMarkup(buttons)
 
 
@@ -403,6 +450,9 @@ def format_play_topics(
     topics: list[Topic],
     progress: list[TopicProgress],
     lang: str | None = None,
+    *,
+    page: int = 0,
+    cat_key: str = "",
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Render topic selection for `/play` with an
     "All topics" option.
@@ -413,6 +463,9 @@ def format_play_topics(
         button_prefix=PLAY_TOPIC_PREFIX,
         lang=lang,
         include_all=True,
+        page=page,
+        page_prefix=PLAY_TPAGE_PREFIX,
+        cat_key=cat_key,
     )
 
 
@@ -420,6 +473,9 @@ def format_topics(
     topics: list[Topic],
     progress: list[TopicProgress],
     lang: str | None = None,
+    *,
+    page: int = 0,
+    cat_key: str = "",
 ) -> tuple[str, InlineKeyboardMarkup | None]:
     """Render a list of topics with progress."""
     if not topics:
@@ -429,6 +485,9 @@ def format_topics(
         header="Topics:",
         button_prefix=TOPIC_CB_PREFIX,
         lang=lang,
+        page=page,
+        page_prefix=TPAGE_PREFIX,
+        cat_key=cat_key,
     )
 
 

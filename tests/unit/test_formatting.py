@@ -18,8 +18,10 @@ from rembrandt.models import (
 
 from rembrandt_chat.formatting import (
     MC_PREFIX,
+    PLAY_TPAGE_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
+    TPAGE_PREFIX,
     compute_streak,
     flashcard_reveal,
     format_answer,
@@ -28,6 +30,7 @@ from rembrandt_chat.formatting import (
     format_exercise,
     format_hint,
     format_history,
+    format_play_topics,
     format_summary,
     format_forecast,
     format_topics,
@@ -444,6 +447,112 @@ def test_format_topics_empty():
     text, kb = format_topics([], [])
     assert "No topics available" in text
     assert kb is None
+
+
+def _make_topics(n):
+    """Create *n* topics with matching progress."""
+    topics = [
+        Topic(
+            id=i, title=f"Topic {i}",
+            concept_count=10, concept_ids=[i],
+        )
+        for i in range(1, n + 1)
+    ]
+    progress = [
+        TopicProgress(
+            topic_id=i, user_id=1, concepts_total=10,
+            concepts_studied=5, concepts_mastered=2,
+            completion_pct=50.0, mastery_pct=20.0,
+        )
+        for i in range(1, n + 1)
+    ]
+    return topics, progress
+
+
+def test_format_topics_no_pagination_when_small():
+    ts, prog = _make_topics(4)
+    text, kb = format_topics(
+        ts, prog, cat_key="vocab",
+    )
+    assert "(1/" not in text
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert len(flat) == 4
+    assert all(
+        not btn.callback_data.startswith(TPAGE_PREFIX)
+        for btn in flat
+    )
+
+
+def test_format_topics_paginated_first_page():
+    ts, prog = _make_topics(8)
+    text, kb = format_topics(
+        ts, prog, page=0, cat_key="vocab",
+    )
+    assert "(1/2)" in text
+    rows = kb.inline_keyboard
+    topic_btns = [
+        btn for row in rows for btn in row
+        if btn.callback_data.startswith("topic:")
+    ]
+    assert len(topic_btns) == 5
+    nav = rows[-1]
+    assert len(nav) == 1
+    assert nav[0].callback_data == f"{TPAGE_PREFIX}vocab:1"
+
+
+def test_format_topics_paginated_last_page():
+    ts, prog = _make_topics(8)
+    text, kb = format_topics(
+        ts, prog, page=1, cat_key="vocab",
+    )
+    assert "(2/2)" in text
+    rows = kb.inline_keyboard
+    topic_btns = [
+        btn for row in rows for btn in row
+        if btn.callback_data.startswith("topic:")
+    ]
+    assert len(topic_btns) == 3
+    nav = rows[-1]
+    assert len(nav) == 1
+    assert nav[0].callback_data == f"{TPAGE_PREFIX}vocab:0"
+
+
+def test_format_play_topics_first_page_has_all():
+    ts, prog = _make_topics(7)
+    text, kb = format_play_topics(
+        ts, prog, page=0, cat_key="vocab",
+    )
+    assert "(1/2)" in text
+    rows = kb.inline_keyboard
+    assert rows[0][0].callback_data == "play_topic:all"
+    nav = rows[-1]
+    assert any(
+        btn.callback_data == f"{PLAY_TPAGE_PREFIX}vocab:1"
+        for btn in nav
+    )
+
+
+def test_format_play_topics_page_two_no_all():
+    ts, prog = _make_topics(7)
+    _, kb = format_play_topics(
+        ts, prog, page=1, cat_key="vocab",
+    )
+    flat = [btn for row in kb.inline_keyboard for btn in row]
+    assert all(
+        btn.callback_data != "play_topic:all"
+        for btn in flat
+    )
+
+
+def test_format_topics_middle_page_has_both_nav():
+    ts, prog = _make_topics(12)
+    _, kb = format_topics(
+        ts, prog, page=1, cat_key="c",
+    )
+    nav = kb.inline_keyboard[-1]
+    assert len(nav) == 2
+    assert nav[0].callback_data == f"{TPAGE_PREFIX}c:0"
+    assert nav[1].callback_data == f"{TPAGE_PREFIX}c:2"
 
 
 # --- format_history ---

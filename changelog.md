@@ -1,6 +1,21 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.32.0 - 26th March 2026
+
+- Added topic list pagination: when a category has more than
+  5 topics, the keyboard is split into pages with Prev/Next
+  navigation buttons instead of showing a flat list.
+- Added new callback prefixes:
+  - `PLAY_TPAGE_PREFIX` for `/play` topic page navigation
+  - `TPAGE_PREFIX` for `/topics` topic page navigation
+- Added handlers:
+  - `handle_play_topic_page`
+  - `handle_topic_page`
+- Updated `format_play_topics()` and `format_topics()` with
+  `page` and `cat_key` parameters.
+
+
 ### v0.31.11 - 26th March 2026
 
 - Optimized `/search`: batched two sequential

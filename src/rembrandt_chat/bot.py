@@ -33,7 +33,9 @@ from rembrandt_chat.formatting import (
     DEL_CB_PREFIX,
     DEL_CONFIRM_PREFIX,
     LANG_CB_PREFIX,
+    PLAY_TPAGE_PREFIX,
     TOPIC_CB_PREFIX,
+    TPAGE_PREFIX,
 )
 from rembrandt_chat.handlers import (
     AWAITING_BULK_FILE,
@@ -69,7 +71,9 @@ from rembrandt_chat.handlers import (
     handle_play_category,
     handle_play_language,
     handle_play_topic,
+    handle_play_topic_page,
     handle_topic_callback,
+    handle_topic_page,
     handle_play_mode,
     hint,
     history,
@@ -309,6 +313,12 @@ def create_app() -> None:
     )
     app.add_handler(
         CallbackQueryHandler(
+            handle_play_topic_page,
+            pattern=f"^{PLAY_TPAGE_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
             handle_play_mode,
             pattern=f"^{PLAY_MODE_PREFIX}",
         )
@@ -323,6 +333,12 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_category_callback,
             pattern=f"^{CAT_CB_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_topic_page,
+            pattern=f"^{TPAGE_PREFIX}",
         )
     )
     app.add_handler(

@@ -34,7 +34,9 @@ from rembrandt_chat.formatting import (
     CAT_CB_PREFIX,
     LANG_CB_PREFIX,
     PLAY_CAT_PREFIX,
+    PLAY_TPAGE_PREFIX,
     TOPIC_CB_PREFIX,
+    TPAGE_PREFIX,
     MC_PREFIX,
     QUALITY_PREFIX,
     REVEAL_CB,
@@ -325,7 +327,7 @@ async def handle_play_category(
         db, user.id, cat.topic_ids,
     )
     text, keyboard = format_play_topics(
-        filtered, progress, lang=lang
+        filtered, progress, lang=lang, cat_key=cat_key,
     )
     await query.edit_message_text(
         text, reply_markup=keyboard
@@ -375,6 +377,41 @@ async def handle_play_topic(
     await query.edit_message_text(
         f"Topic: {topic_label}\n\nChoose a session mode:",
         reply_markup=InlineKeyboardMarkup([buttons]),
+    )
+
+
+@require_callback
+async def handle_play_topic_page(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle page navigation in `/play` topic list."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(PLAY_TPAGE_PREFIX):
+        return
+
+    payload = data[len(PLAY_TPAGE_PREFIX):]
+    cat_key, page_str = payload.rsplit(":", 1)
+    page = int(page_str)
+
+    cat = get_category(cat_key)
+    if cat is None:
+        await query.edit_message_text("Category not found.")
+        return
+
+    user_data = context.user_data
+    lang = user_data.get(LANGUAGE)
+    user, db = await resolve_user(update, context)
+    filtered, progress = await get_category_topics(
+        db, user.id, cat.topic_ids,
+    )
+    text, keyboard = format_play_topics(
+        filtered, progress, lang=lang,
+        page=page, cat_key=cat_key,
+    )
+    await query.edit_message_text(
+        text, reply_markup=keyboard,
     )
 
 
@@ -604,10 +641,46 @@ async def handle_category_callback(
         db, user.id, cat.topic_ids,
     )
     text, keyboard = format_topics(
-        filtered, progress, lang=lang
+        filtered, progress, lang=lang, cat_key=cat_key,
     )
     await query.edit_message_text(
         text, reply_markup=keyboard
+    )
+
+
+@require_callback
+async def handle_topic_page(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle page navigation in `/topics` topic list."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(TPAGE_PREFIX):
+        return
+
+    payload = data[len(TPAGE_PREFIX):]
+    cat_key, page_str = payload.rsplit(":", 1)
+    page = int(page_str)
+
+    cat = get_category(cat_key)
+    if cat is None:
+        await query.edit_message_text(
+            "Category not found."
+        )
+        return
+
+    lang = context.user_data.get(LANGUAGE)
+    user, db = await resolve_user(update, context)
+    filtered, progress = await get_category_topics(
+        db, user.id, cat.topic_ids,
+    )
+    text, keyboard = format_topics(
+        filtered, progress, lang=lang,
+        page=page, cat_key=cat_key,
+    )
+    await query.edit_message_text(
+        text, reply_markup=keyboard,
     )
 
 

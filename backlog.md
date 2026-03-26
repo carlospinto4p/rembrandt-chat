@@ -18,6 +18,10 @@
 - [x] `/cancel` global command — universal escape from any active conversation state (LOW impact, LOW effort)
 - [x] Confirm before `/deleteword` — add confirmation step to prevent accidental deletion (LOW impact, LOW effort)
 
+### 2026.03.26 (UX feedback)
+
+- [x] Paginate topic selection keyboard — when a category has more than 5 topics, group them into pages (or sub-groups) instead of showing a flat list of buttons (HIGH impact, MEDIUM effort)
+
 ### 2026.03.25 (v0.31.2 refactor review)
 
 - [x] Fix `send_next` indentation in `handle_answer_callback` — args at lines 589-592 and 600-603 are misaligned (BUG)
