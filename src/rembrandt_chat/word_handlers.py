@@ -9,7 +9,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import (
-    LANGUAGE,
+    extract_command_arg,
+    get_lang,
     require_callback,
     require_message,
     require_message_conv,
@@ -30,11 +31,6 @@ AWAITING_BULK_FILE = 20
 WordEntry = tuple[str, str, list[str]]
 
 
-def _lang(context: ContextTypes.DEFAULT_TYPE) -> str | None:
-    """Return the user's language code from user_data."""
-    return context.user_data.get(LANGUAGE)
-
-
 @require_message_conv
 async def addword_start(
     update: Update,
@@ -47,7 +43,7 @@ async def addword_start(
 
     await resolve_user(update, context)
 
-    lang = _lang(context)
+    lang = get_lang(context)
     await update.message.reply_text(t("send_word", lang))
     return AWAITING_WORD
 
@@ -61,7 +57,7 @@ async def addword_word(
     context.user_data["_addword_word"] = (
         update.message.text or ""
     ).strip()
-    lang = _lang(context)
+    lang = get_lang(context)
     await update.message.reply_text(
         t("send_definition", lang)
     )
@@ -76,7 +72,7 @@ async def addword_definition(
     """Receive the definition, then ask for optional tags."""
     definition = (update.message.text or "").strip()
     word_from = context.user_data.get("_addword_word", "")
-    lang = _lang(context)
+    lang = get_lang(context)
 
     if not word_from or not definition:
         await update.message.reply_text(
@@ -133,7 +129,7 @@ async def _save_word(
         owner_id=user.id,
     )
 
-    lang = _lang(context)
+    lang = get_lang(context)
     if tags:
         msg = t(
             "word_added_tags", lang,
@@ -152,7 +148,7 @@ async def addword_cancel(
 ) -> int:
     """Cancel the /addword conversation."""
     if update.message is not None:
-        lang = _lang(context)
+        lang = get_lang(context)
         await update.message.reply_text(
             t("cancelled", lang)
         )
@@ -168,7 +164,7 @@ async def bulkimport_start(
 ) -> int:
     """`/bulkimport` — ask user for a CSV or text file."""
     await resolve_user(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
     await update.message.reply_text(
         t("bulkimport_prompt", lang)
     )
@@ -182,7 +178,7 @@ async def bulkimport_file(
 ) -> int:
     """Receive the file and import words."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     doc = update.message.document
     if doc is None:
@@ -233,7 +229,7 @@ async def bulkimport_cancel(
 ) -> int:
     """Cancel the /bulkimport conversation."""
     if update.message is not None:
-        lang = _lang(context)
+        lang = get_lang(context)
         await update.message.reply_text(
             t("cancelled", lang)
         )
@@ -317,14 +313,12 @@ async def mywords(
     If a tag is given, only words with that tag are shown.
     """
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     concepts = await db.get_concepts(owner_id=user.id)
 
     # Optional tag filter from command argument
-    text = (update.message.text or "").strip()
-    parts = text.split(maxsplit=1)
-    tag_filter = parts[1].strip() if len(parts) > 1 else ""
+    tag_filter = extract_command_arg(update.message.text)
     if tag_filter:
         concepts = [
             c for c in concepts if tag_filter in c.tags
@@ -356,11 +350,9 @@ async def search(
 ) -> None:
     """`/search <term>` — search vocabulary by text match."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
-    text = (update.message.text or "").strip()
-    parts = text.split(maxsplit=1)
-    term = parts[1].strip().lower() if len(parts) > 1 else ""
+    term = extract_command_arg(update.message.text).lower()
 
     if not term:
         await update.message.reply_text(
@@ -403,7 +395,7 @@ async def deleteword(
 ) -> None:
     """`/deleteword` — show private words as buttons to delete."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     concepts = await db.get_concepts(owner_id=user.id)
     if not concepts:
@@ -438,7 +430,7 @@ async def handle_deleteword_callback(
     if not data.startswith(DEL_CB_PREFIX):
         return
 
-    lang = _lang(context)
+    lang = get_lang(context)
     concept_id = data[len(DEL_CB_PREFIX):]
     keyboard = InlineKeyboardMarkup([
         [
@@ -471,7 +463,7 @@ async def handle_deleteword_confirm(
     if not data.startswith(DEL_CONFIRM_PREFIX):
         return
 
-    lang = _lang(context)
+    lang = get_lang(context)
     concept_id = int(data[len(DEL_CONFIRM_PREFIX):])
     db: Database = context.bot_data["db"]
     await db.delete_concept(concept_id)
@@ -485,7 +477,7 @@ async def handle_deleteword_cancel(
 ) -> None:
     """Handle cancelled deletion."""
     query = update.callback_query
-    lang = _lang(context)
+    lang = get_lang(context)
     await query.edit_message_text(
         t("deletion_cancelled", lang)
     )

@@ -1,6 +1,20 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.1 - 26th March 2026
+
+- Added shared helpers in `_helpers.py`:
+  - `get_lang()`: replaces 3 identical `_lang()` definitions
+  - `cleanup_session()`: deduplicates 5-line session teardown
+    (was in `stop()` and `send_next()`)
+  - `extract_command_arg()`: deduplicates 3-line argument
+    parsing (was in `mywords`, `search`, `history`)
+  - `require_category()`: deduplicates category lookup +
+    error pattern (4 occurrences in `session_handlers.py`)
+- Updated `session_handlers.py`, `word_handlers.py`,
+  `stats_handlers.py` to use the new shared helpers.
+
+
 ### v0.33.0 - 26th March 2026
 
 - Added `i18n.py` module with centralised translation system

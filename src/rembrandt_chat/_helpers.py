@@ -32,6 +32,8 @@ from rembrandt_chat.persistence import (
 )
 from rembrandt_chat.user_mapping import UserMapper
 
+from rembrandt_chat.topic_translations import Category, get_category
+
 log = logging.getLogger(__name__)
 
 # Keys used in context.user_data
@@ -41,6 +43,55 @@ LANGUAGE = "language"
 TRANSLATION = "translation"
 TRANSLATION_MAP = "_translation_map"
 LAST_TOPIC = "_last_topic"
+
+
+def get_lang(
+    context: ContextTypes.DEFAULT_TYPE,
+) -> str | None:
+    """Return the user's language code from user_data."""
+    return context.user_data.get(LANGUAGE)
+
+
+def cleanup_session(user_data: dict) -> None:
+    """Remove all session-related keys from user_data."""
+    user_data.pop(SESSION, None)
+    user_data.pop(EXERCISE, None)
+    user_data.pop(TRANSLATION, None)
+    user_data.pop(TRANSLATION_MAP, None)
+    user_data.pop(SESSION_CONFIG, None)
+
+
+def extract_command_arg(
+    message_text: str | None,
+) -> str:
+    """Extract the first argument after a ``/command``.
+
+    :param message_text: Raw message text.
+    :return: The argument string, or ``""`` if absent.
+    """
+    text = (message_text or "").strip()
+    parts = text.split(maxsplit=1)
+    return parts[1].strip() if len(parts) > 1 else ""
+
+
+async def require_category(
+    query: object,
+    cat_key: str,
+    lang: str | None,
+) -> Category | None:
+    """Look up a category or send an error message.
+
+    :param query: The callback query to respond on.
+    :param cat_key: Category key string.
+    :param lang: User language code.
+    :return: The `Category`, or ``None`` if not found.
+    """
+    cat = get_category(cat_key)
+    if cat is None:
+        await query.edit_message_text(
+            t("category_not_found", lang)
+        )
+    return cat
 
 # Type alias for handler functions
 _Handler = Callable[
@@ -371,10 +422,7 @@ async def send_next(
     exercise = await session.next_exercise()
     if exercise is None:
         summary = session.summary()
-        user_data.pop(SESSION, None)
-        user_data.pop(EXERCISE, None)
-        user_data.pop(TRANSLATION, None)
-        user_data.pop(SESSION_CONFIG, None)
+        cleanup_session(user_data)
         _clear_persisted_session(update, context)
         chat = update.effective_chat
         if chat is not None:

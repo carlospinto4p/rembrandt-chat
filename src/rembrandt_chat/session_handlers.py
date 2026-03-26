@@ -17,11 +17,14 @@ from rembrandt_chat._helpers import (
     _build_review_config,
     _clear_persisted_session,
     check_active_session,
+    cleanup_session,
     get_category_topics,
+    get_lang,
     get_session,
     persist_language,
     persist_session_config,
     require_callback,
+    require_category,
     setup_translations,
     require_message,
     require_session,
@@ -30,7 +33,6 @@ from rembrandt_chat._helpers import (
     send_next,
 )
 from rembrandt_chat.i18n import t
-from rembrandt_chat.persistence import SESSION_CONFIG
 from rembrandt_chat.formatting import (
     CAT_CB_PREFIX,
     LANG_CB_PREFIX,
@@ -55,7 +57,6 @@ from rembrandt_chat.formatting import (
 )
 from rembrandt_chat.topic_translations import (
     all_topics_label,
-    get_category,
     topic_title,
 )
 
@@ -65,11 +66,6 @@ PLAY_LANG_PREFIX = "play_lang:"
 
 # user_data key for topic concept_ids chosen during /play
 _PLAY_CONCEPT_IDS = "_play_concept_ids"
-
-
-def _lang(context: ContextTypes.DEFAULT_TYPE) -> str | None:
-    """Return the user's language code from user_data."""
-    return context.user_data.get(LANGUAGE)
 
 
 async def _start_session(
@@ -92,7 +88,7 @@ async def _start_session(
     """
     user_data = context.user_data
     query = update.callback_query
-    lang = _lang(context)
+    lang = get_lang(context)
     session = Session(
         db=db,
         user_id=user_id,
@@ -148,7 +144,7 @@ async def start(
     user, _ = await resolve_user(update, context)
 
     name = user.display_name or user.username
-    lang = _lang(context)
+    lang = get_lang(context)
     await update.message.reply_text(
         t("welcome", lang, name=name)
     )
@@ -160,7 +156,7 @@ async def help_command(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/help` — list available commands."""
-    lang = _lang(context)
+    lang = get_lang(context)
     await update.message.reply_text(t("help", lang))
 
 
@@ -170,7 +166,7 @@ async def cancel(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/cancel` — fallback when no conversation is active."""
-    lang = _lang(context)
+    lang = get_lang(context)
     await update.message.reply_text(
         t("nothing_to_cancel", lang)
     )
@@ -186,7 +182,7 @@ async def play(
         return
 
     _, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
     languages = await db.get_languages()
     text, keyboard = format_play_languages(languages, lang)
     await update.message.reply_text(
@@ -204,7 +200,7 @@ async def review(
         return
 
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     last = context.user_data.get(LAST_TOPIC)
     if last is None:
@@ -301,12 +297,9 @@ async def handle_play_category(
         return
 
     cat_key = data[len(PLAY_CAT_PREFIX):]
-    cat = get_category(cat_key)
-    lang = _lang(context)
+    lang = get_lang(context)
+    cat = await require_category(query, cat_key, lang)
     if cat is None:
-        await query.edit_message_text(
-            t("category_not_found", lang)
-        )
         return
 
     user, db = await resolve_user(update, context)
@@ -336,7 +329,7 @@ async def handle_play_topic(
     if await check_active_session(update, context):
         return
 
-    lang = _lang(context)
+    lang = get_lang(context)
     topic_value = data[len(PLAY_TOPIC_PREFIX):]
     if topic_value == "all":
         user_data.pop(_PLAY_CONCEPT_IDS, None)
@@ -386,12 +379,9 @@ async def handle_play_topic_page(
     cat_key, page_str = payload.rsplit(":", 1)
     page = int(page_str)
 
-    lang = _lang(context)
-    cat = get_category(cat_key)
+    lang = get_lang(context)
+    cat = await require_category(query, cat_key, lang)
     if cat is None:
-        await query.edit_message_text(
-            t("category_not_found", lang)
-        )
         return
 
     user, db = await resolve_user(update, context)
@@ -425,7 +415,7 @@ async def handle_play_mode(
     if await check_active_session(update, context):
         return
 
-    lang = _lang(context)
+    lang = get_lang(context)
     user, db = await resolve_user(update, context)
     label = t(_MODE_KEYS[mode], lang)
 
@@ -451,7 +441,7 @@ async def stop(
 ) -> None:
     """`/stop` — end the current session and show summary."""
     session, user_data = get_session(context)
-    lang = _lang(context)
+    lang = get_lang(context)
     if session is None:
         await update.message.reply_text(
             t("no_active_session", lang)
@@ -459,11 +449,7 @@ async def stop(
         return
 
     summary = session.summary()
-    user_data.pop(SESSION, None)
-    user_data.pop(EXERCISE, None)
-    user_data.pop(TRANSLATION, None)
-    user_data.pop(TRANSLATION_MAP, None)
-    user_data.pop(SESSION_CONFIG, None)
+    cleanup_session(user_data)
     _clear_persisted_session(update, context)
     await update.message.reply_text(
         format_summary(summary, lang)
@@ -480,7 +466,7 @@ async def _require_active_exercise(
     result = await require_session(context)
     if result is not None:
         return result
-    lang = _lang(context)
+    lang = get_lang(context)
     session, _ = get_session(context)
     key = (
         "no_active_exercise"
@@ -502,7 +488,7 @@ async def hint(
         return
 
     session, _ = result
-    lang = _lang(context)
+    lang = get_lang(context)
     h = session.hint()
     await update.message.reply_text(format_hint(h, lang))
 
@@ -518,7 +504,7 @@ async def skip(
         return
 
     session, user_data = result
-    lang = _lang(context)
+    lang = get_lang(context)
     skipped = session.skip()
     tr = user_data.get(TRANSLATION)
     front = tr.front if tr else skipped.concept.front
@@ -544,7 +530,7 @@ async def handle_answer_text(
         return
 
     session, user_data = result
-    lang = _lang(context)
+    lang = get_lang(context)
     answer = await session.answer(
         text=update.message.text or ""
     )
@@ -573,7 +559,7 @@ async def handle_answer_callback(
     session, user_data = result
     exercise = user_data[EXERCISE]
     data = query.data or ""
-    lang = _lang(context)
+    lang = get_lang(context)
 
     db: Database = context.bot_data["db"]
 
@@ -619,7 +605,7 @@ async def topics(
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """`/topics` — list categories, then topics."""
-    lang = _lang(context)
+    lang = get_lang(context)
     text, keyboard = format_categories(lang=lang)
     await update.message.reply_text(
         text, reply_markup=keyboard
@@ -638,12 +624,9 @@ async def handle_category_callback(
         return
 
     cat_key = data[len(CAT_CB_PREFIX):]
-    cat = get_category(cat_key)
-    lang = _lang(context)
+    lang = get_lang(context)
+    cat = await require_category(query, cat_key, lang)
     if cat is None:
-        await query.edit_message_text(
-            t("category_not_found", lang)
-        )
         return
 
     user, db = await resolve_user(update, context)
@@ -673,12 +656,9 @@ async def handle_topic_page(
     cat_key, page_str = payload.rsplit(":", 1)
     page = int(page_str)
 
-    lang = _lang(context)
-    cat = get_category(cat_key)
+    lang = get_lang(context)
+    cat = await require_category(query, cat_key, lang)
     if cat is None:
-        await query.edit_message_text(
-            t("category_not_found", lang)
-        )
         return
 
     user, db = await resolve_user(update, context)
@@ -708,7 +688,7 @@ async def handle_topic_callback(
     if await check_active_session(update, context):
         return
 
-    lang = _lang(context)
+    lang = get_lang(context)
     topic_id = int(data[len(TOPIC_CB_PREFIX):])
     user, db = await resolve_user(update, context)
 
@@ -735,7 +715,7 @@ async def language(
 ) -> None:
     """`/language` — set preferred language."""
     _, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
     languages = await db.get_languages()
     text, keyboard = format_languages(languages, lang)
     await update.message.reply_text(

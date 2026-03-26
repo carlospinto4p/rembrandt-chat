@@ -11,7 +11,8 @@ from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import (
-    LANGUAGE,
+    extract_command_arg,
+    get_lang,
     require_message,
     require_message_conv,
     resolve_user,
@@ -31,11 +32,6 @@ from rembrandt_chat.i18n import t
 log = logging.getLogger(__name__)
 
 
-def _lang(context: ContextTypes.DEFAULT_TYPE) -> str | None:
-    """Return the user's language code from user_data."""
-    return context.user_data.get(LANGUAGE)
-
-
 @require_message
 async def stats(
     update: Update,
@@ -43,7 +39,7 @@ async def stats(
 ) -> None:
     """`/stats` — show daily stats and topic progress."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     daily, streak_days, all_topics = await asyncio.gather(
         db.daily_stats(user.id, days=7),
@@ -83,7 +79,7 @@ async def weak(
 ) -> None:
     """`/weak` — show weakest words."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     concepts = await db.weak_concepts(user.id, limit=10)
     await update.message.reply_text(
@@ -98,7 +94,7 @@ async def forecast(
 ) -> None:
     """`/forecast` — show upcoming review workload."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     days = await db.forecast(user.id, days=7)
     await update.message.reply_text(
@@ -113,7 +109,7 @@ async def retention(
 ) -> None:
     """`/retention` — show overall retention rate."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     rate = await db.retention_rate(user.id, days=30)
     await update.message.reply_text(
@@ -131,11 +127,9 @@ async def history(
 ) -> None:
     """`/history [1d|3d|7d|30d]` — show recent answers."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
-    text = (update.message.text or "").strip()
-    parts = text.split(maxsplit=1)
-    arg = parts[1].strip() if len(parts) > 1 else ""
+    arg = extract_command_arg(update.message.text)
 
     since = None
     if arg in _DAYS_MAP:
@@ -166,7 +160,7 @@ async def export_progress(
 ) -> None:
     """`/export` — send progress as a JSON file."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     records = await db.export_progress(user.id)
     if not records:
@@ -194,7 +188,7 @@ async def import_start(
 ) -> int:
     """`/import` — ask the user for a JSON file."""
     await resolve_user(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     await update.message.reply_text(
         t("import_prompt", lang)
@@ -209,7 +203,7 @@ async def import_file(
 ) -> int:
     """Receive the JSON file and restore progress."""
     user, db = await resolve_user_with_typing(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
 
     doc = update.message.document
     if doc is None:
@@ -251,7 +245,7 @@ async def import_cancel(
 ) -> int:
     """Cancel the /import conversation."""
     if update.message is not None:
-        lang = _lang(context)
+        lang = get_lang(context)
         await update.message.reply_text(
             t("cancelled", lang)
         )
@@ -331,7 +325,7 @@ async def reminders(
 ) -> None:
     """`/reminders [on [HH:MM]|off]` — manage reminders."""
     user, _ = await resolve_user(update, context)
-    lang = _lang(context)
+    lang = get_lang(context)
     chat_id = update.effective_chat.id
     job_name = _REMINDER_JOB.format(chat_id=chat_id)
     text = update.message.text or ""

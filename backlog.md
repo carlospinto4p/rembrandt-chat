@@ -18,6 +18,16 @@
 - [x] `/cancel` global command — universal escape from any active conversation state (LOW impact, LOW effort)
 - [x] Confirm before `/deleteword` — add confirmation step to prevent accidental deletion (LOW impact, LOW effort)
 
+### 2026.03.26 (v0.33.0 refactor review)
+
+- [x] Extract `_lang()` to `_helpers.py` — identical 3-line function defined in `session_handlers.py`, `word_handlers.py`, and `stats_handlers.py`
+- [x] Extract `_cleanup_session()` helper in `_helpers.py` — deduplicate 5-line session cleanup pattern (2 occurrences: `stop()` and `send_next()`)
+- [x] Extract `_extract_command_arg()` helper in `_helpers.py` — deduplicate 3-line command argument parsing pattern (3 occurrences across `word_handlers.py` and `stats_handlers.py`)
+- [x] Extract `_require_category()` helper — deduplicate category lookup + "not found" error pattern (4 occurrences in `session_handlers.py`)
+- [ ] Move formatting logic out of `word_handlers.py` — `mywords` and `search` build message text inline; extract to `format_concepts_list()` and `format_search_results()` in `formatting.py`
+- [ ] Centralise callback-data prefixes — `PLAY_MODE_PREFIX`, `PLAY_TOPIC_PREFIX`, `PLAY_LANG_PREFIX` are defined in `session_handlers.py` while the rest live in `formatting.py`; move all to one module
+- [ ] Split `handle_answer_callback` into sub-functions — 3 separate branches (reveal, quality, MC) each ~10 lines; extract to `_handle_reveal()`, `_handle_quality()`, `_handle_mc()`
+
 ### 2026.03.26 (UX feedback)
 
 - [x] Paginate topic selection keyboard — when a category has more than 5 topics, group them into pages (or sub-groups) instead of showing a flat list of buttons (HIGH impact, MEDIUM effort)
