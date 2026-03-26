@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.32.1 - 26th March 2026
+
+- Fixed pagination nav buttons to use the user's selected
+  language (Spanish by default, English when `lang == "en"`).
+
+
 ### v0.32.0 - 26th March 2026
 
 - Added topic list pagination: when a category has more than

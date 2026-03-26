@@ -426,17 +426,25 @@ def _format_topic_list(
             )
         ])
     if needs_paging and page_prefix:
+        prev_label = (
+            "\u25c0 Previous" if lang == "en"
+            else "\u25c0 Anterior"
+        )
+        next_label = (
+            "Next \u25b6" if lang == "en"
+            else "Siguiente \u25b6"
+        )
         nav: list[InlineKeyboardButton] = []
         if page > 0:
             nav.append(InlineKeyboardButton(
-                "\u25c0 Prev",
+                prev_label,
                 callback_data=(
                     f"{page_prefix}{cat_key}:{page - 1}"
                 ),
             ))
         if page < total_pages - 1:
             nav.append(InlineKeyboardButton(
-                "Next \u25b6",
+                next_label,
                 callback_data=(
                     f"{page_prefix}{cat_key}:{page + 1}"
                 ),
