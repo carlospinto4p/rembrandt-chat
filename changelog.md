@@ -1,6 +1,23 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.0 - 26th March 2026
+
+- Added `i18n.py` module with centralised translation system
+  (`t()` function) supporting English and Spanish for all
+  user-facing strings (68+ strings translated).
+- Updated `formatting.py`: all format functions now accept a
+  `lang` parameter; removed hardcoded English strings.
+- Updated `session_handlers.py`: all handler messages use
+  `t()` with the user's selected language.
+- Updated `word_handlers.py`: all prompts, errors, and
+  confirmation messages use `t()`.
+- Updated `stats_handlers.py`: all stats, export/import, and
+  reminder messages use `t()`.
+- Updated `_helpers.py`: `check_active_session()` and
+  `send_next()` use translated messages.
+
+
 ### v0.32.1 - 26th March 2026
 
 - Fixed pagination nav buttons to use the user's selected

@@ -164,7 +164,7 @@ async def test_play_topic_all_shows_mode_keyboard():
     query = update.callback_query
     call_args = query.edit_message_text.call_args
     text = call_args[0][0]
-    assert "Todos los temas" in text
+    assert "All topics" in text
     assert "mode" in text.lower()
     kb = call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
@@ -187,7 +187,8 @@ async def test_play_topic_specific_shows_mode_keyboard():
     query = update.callback_query
     call_args = query.edit_message_text.call_args
     text = call_args[0][0]
-    assert "A1 - Topic 1" in text
+    # topic_id=1 maps to "Data Science - Basics" in EN
+    assert "Data Science - Basics" in text
     assert ctx.user_data["_play_concept_ids"] == [1, 2, 3]
 
 
@@ -747,14 +748,14 @@ async def test_topics_shows_categories():
     await topics(update, ctx)
 
     text = update.message.reply_text.call_args[0][0]
-    assert "categoría" in text.lower()
+    assert "category" in text.lower()
     kb = update.message.reply_text.call_args[1][
         "reply_markup"
     ]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
-    assert "Vocabulario" in labels
-    assert "Cultura" in labels
+    assert "Vocabulary" in labels
+    assert "Culture" in labels
 
 
 @pytest.mark.asyncio

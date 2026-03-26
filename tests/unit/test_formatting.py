@@ -38,6 +38,9 @@ from rembrandt_chat.formatting import (
     format_weak_concepts,
 )
 
+# All tests use lang="en" so assertions match English strings.
+_L = "en"
+
 
 def _concept(**kw) -> Concept:
     defaults = dict(
@@ -75,7 +78,7 @@ def test_multiple_choice_text():
             "antiguo", "moderno",
         ],
     )
-    text, kb = format_exercise(ex)
+    text, kb = format_exercise(ex, lang=_L)
     assert "efimero" in text
     assert kb is not None
 
@@ -83,7 +86,7 @@ def test_multiple_choice_text():
 def test_multiple_choice_keyboard_buttons():
     options = ["efimero", "perpetuo", "antiguo", "moderno"]
     ex = _exercise(options=options)
-    _, kb = format_exercise(ex)
+    _, kb = format_exercise(ex, lang=_L)
     flat = [btn for row in kb.inline_keyboard for btn in row]
     assert len(flat) == 4
     assert flat[0].text == "efimero"
@@ -95,7 +98,7 @@ def test_multiple_choice_one_per_row():
     ex = _exercise(
         options=["a", "b", "c", "d"],
     )
-    _, kb = format_exercise(ex)
+    _, kb = format_exercise(ex, lang=_L)
     assert len(kb.inline_keyboard) == 4
     assert len(kb.inline_keyboard[0]) == 1
 
@@ -105,7 +108,7 @@ def test_multiple_choice_one_per_row():
 
 def test_flashcard_prompt():
     ex = _exercise(exercise_type=ExerciseType.FLASHCARD)
-    text, kb = format_exercise(ex)
+    text, kb = format_exercise(ex, lang=_L)
     assert "efimero" in text
     assert kb is not None
     flat = [btn for row in kb.inline_keyboard for btn in row]
@@ -121,7 +124,7 @@ def test_multiple_choice_with_context():
         back="short-lived",
         context="The ephemeral beauty of cherry blossoms.",
     )
-    text, _ = format_exercise(ex, translation=tr)
+    text, _ = format_exercise(ex, translation=tr, lang=_L)
     assert "Example:" in text
     assert "cherry blossoms" in text
 
@@ -135,7 +138,7 @@ def test_flashcard_with_context():
         back="short-lived",
         context="An ephemeral moment.",
     )
-    text, _ = format_exercise(ex, translation=tr)
+    text, _ = format_exercise(ex, translation=tr, lang=_L)
     assert "Example:" in text
     assert "ephemeral moment" in text
 
@@ -149,13 +152,13 @@ def test_exercise_no_context():
         back="short-lived",
         context="",
     )
-    text, _ = format_exercise(ex, translation=tr)
+    text, _ = format_exercise(ex, translation=tr, lang=_L)
     assert "Example:" not in text
 
 
 def test_flashcard_reveal():
     ex = _exercise(exercise_type=ExerciseType.FLASHCARD)
-    text, kb = flashcard_reveal(ex)
+    text, kb = flashcard_reveal(ex, lang=_L)
     assert "efimero" in text
     assert "Que dura poco tiempo" in text
     flat = [btn for row in kb.inline_keyboard for btn in row]
@@ -172,7 +175,7 @@ def test_format_answer_correct():
         given="efimero",
         concept=_concept(),
     )
-    text = format_answer(result)
+    text = format_answer(result, _L)
     assert "\u2705" in text
     assert "efimero" in text
 
@@ -185,7 +188,7 @@ def test_format_answer_near_miss():
         concept=_concept(),
         near_miss=True,
     )
-    text = format_answer(result)
+    text = format_answer(result, _L)
     assert "efemero" in text
 
 
@@ -196,7 +199,7 @@ def test_format_answer_wrong():
         given="perpetuo",
         concept=_concept(),
     )
-    text = format_answer(result)
+    text = format_answer(result, _L)
     assert "\u274c" in text
     assert "efimero" in text
 
@@ -211,7 +214,7 @@ def test_format_hint_pattern():
         pattern="ef_____",
         reveal_count=2,
     )
-    text = format_hint(hint)
+    text = format_hint(hint, _L)
     assert "ef_____" in text
 
 
@@ -222,7 +225,7 @@ def test_format_hint_with_context():
         pattern="e______",
         context="La belleza es ___.",
     )
-    text = format_hint(hint)
+    text = format_hint(hint, _L)
     assert "La belleza es ___." in text
 
 
@@ -238,7 +241,7 @@ def test_format_summary():
         best_streak=5,
         accuracy_pct=80.0,
     )
-    text = format_summary(stats)
+    text = format_summary(stats, _L)
     assert "Total: 10" in text
     assert "Correct: 8" in text
     assert "80%" in text
@@ -259,7 +262,7 @@ def test_format_daily_stats():
             correct=12, accuracy_pct=80.0,
         ),
     ]
-    text = format_daily_stats(stats)
+    text = format_daily_stats(stats, lang=_L)
     assert "2026-03-10" in text
     assert "20 answers" in text
     assert "90%" in text
@@ -267,7 +270,7 @@ def test_format_daily_stats():
 
 
 def test_format_daily_stats_empty():
-    text = format_daily_stats([])
+    text = format_daily_stats([], lang=_L)
     assert "No activity" in text
 
 
@@ -278,7 +281,7 @@ def test_format_daily_stats_with_streak():
         correct=8,
         accuracy_pct=80.0,
     )
-    text = format_daily_stats([day], streak=3)
+    text = format_daily_stats([day], streak=3, lang=_L)
     assert "streak: 3 day" in text
 
 
@@ -347,14 +350,14 @@ def test_format_weak_concepts():
             last_attempt=datetime.now(timezone.utc),
         ),
     ]
-    text = format_weak_concepts(concepts)
+    text = format_weak_concepts(concepts, _L)
     assert "efimero" in text
     assert "7/10" in text
     assert "70%" in text
 
 
 def test_format_weak_concepts_empty():
-    text = format_weak_concepts([])
+    text = format_weak_concepts([], _L)
     assert "No weak words" in text
 
 
@@ -366,14 +369,14 @@ def test_format_forecast():
         ReviewForecast(date="2026-03-11", due_count=15),
         ReviewForecast(date="2026-03-12", due_count=8),
     ]
-    text = format_forecast(data)
+    text = format_forecast(data, _L)
     assert "2026-03-11" in text
     assert "15 cards due" in text
     assert "2026-03-12" in text
 
 
 def test_format_forecast_empty():
-    text = format_forecast([])
+    text = format_forecast([], _L)
     assert "No reviews scheduled" in text
 
 
@@ -381,13 +384,13 @@ def test_format_forecast_empty():
 
 
 def test_format_retention():
-    text = format_retention(85.0)
+    text = format_retention(85.0, _L)
     assert "85%" in text
     assert "Retention" in text
 
 
 def test_format_retention_zero():
-    text = format_retention(0.0)
+    text = format_retention(0.0, _L)
     assert "No answers recorded" in text
 
 
@@ -409,7 +412,7 @@ def test_format_topic_progress():
             completion_pct=70.0, mastery_pct=30.0,
         ),
     ]
-    text = format_topic_progress(ts, prog)
+    text = format_topic_progress(ts, prog, _L)
     assert "A1 - Basics" in text
     assert "70%" in text
 
@@ -435,8 +438,9 @@ def test_format_topics():
             completion_pct=70.0, mastery_pct=30.0,
         ),
     ]
-    text, kb = format_topics(ts, prog)
-    assert "A1 - Basics" in text
+    text, kb = format_topics(ts, prog, _L)
+    # topic_id=1 maps to "Data Science - Basics" in EN
+    assert "Data Science - Basics" in text
     assert "70%" in text
     assert kb is not None
     flat = [btn for row in kb.inline_keyboard for btn in row]
@@ -444,7 +448,7 @@ def test_format_topics():
 
 
 def test_format_topics_empty():
-    text, kb = format_topics([], [])
+    text, kb = format_topics([], [], _L)
     assert "No topics available" in text
     assert kb is None
 
@@ -472,7 +476,7 @@ def _make_topics(n):
 def test_format_topics_no_pagination_when_small():
     ts, prog = _make_topics(4)
     text, kb = format_topics(
-        ts, prog, cat_key="vocab",
+        ts, prog, _L, cat_key="vocab",
     )
     assert "(1/" not in text
     flat = [btn for row in kb.inline_keyboard for btn in row]
@@ -486,7 +490,7 @@ def test_format_topics_no_pagination_when_small():
 def test_format_topics_paginated_first_page():
     ts, prog = _make_topics(8)
     text, kb = format_topics(
-        ts, prog, page=0, cat_key="vocab",
+        ts, prog, _L, page=0, cat_key="vocab",
     )
     assert "(1/2)" in text
     rows = kb.inline_keyboard
@@ -503,7 +507,7 @@ def test_format_topics_paginated_first_page():
 def test_format_topics_paginated_last_page():
     ts, prog = _make_topics(8)
     text, kb = format_topics(
-        ts, prog, page=1, cat_key="vocab",
+        ts, prog, _L, page=1, cat_key="vocab",
     )
     assert "(2/2)" in text
     rows = kb.inline_keyboard
@@ -520,7 +524,7 @@ def test_format_topics_paginated_last_page():
 def test_format_play_topics_first_page_has_all():
     ts, prog = _make_topics(7)
     text, kb = format_play_topics(
-        ts, prog, page=0, cat_key="vocab",
+        ts, prog, _L, page=0, cat_key="vocab",
     )
     assert "(1/2)" in text
     rows = kb.inline_keyboard
@@ -535,7 +539,7 @@ def test_format_play_topics_first_page_has_all():
 def test_format_play_topics_page_two_no_all():
     ts, prog = _make_topics(7)
     _, kb = format_play_topics(
-        ts, prog, page=1, cat_key="vocab",
+        ts, prog, _L, page=1, cat_key="vocab",
     )
     flat = [btn for row in kb.inline_keyboard for btn in row]
     assert all(
@@ -547,7 +551,7 @@ def test_format_play_topics_page_two_no_all():
 def test_format_topics_middle_page_has_both_nav():
     ts, prog = _make_topics(12)
     _, kb = format_topics(
-        ts, prog, page=1, cat_key="c",
+        ts, prog, _L, page=1, cat_key="c",
     )
     nav = kb.inline_keyboard[-1]
     assert len(nav) == 2
@@ -584,7 +588,7 @@ def test_format_history():
         ),
     ]
     concept_map = {1: "efimero", 2: "perpetuo"}
-    text = format_history(records, concept_map)
+    text = format_history(records, concept_map, _L)
     assert "efimero" in text
     assert "perpetuo" in text
     assert "\u2705" in text
@@ -592,7 +596,7 @@ def test_format_history():
 
 
 def test_format_history_empty():
-    text = format_history([], {})
+    text = format_history([], {}, _L)
     assert "No answer history" in text
 
 
@@ -606,5 +610,5 @@ def test_format_history_unknown_concept():
             quality=5,
         ),
     ]
-    text = format_history(records, {})
+    text = format_history(records, {}, _L)
     assert "#99" in text

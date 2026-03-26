@@ -17,6 +17,7 @@ from rembrandt.models import (
 )
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from rembrandt_chat.i18n import t
 from rembrandt_chat.topic_translations import (
     CATEGORIES,
     all_topics_label,
@@ -32,22 +33,13 @@ DEL_CB_PREFIX = "delw:"
 DEL_CONFIRM_PREFIX = "delconfirm:"
 DEL_CANCEL_CB = "delcancel"
 
-# Quality labels for self-graded buttons (0–5 scale)
-_QUALITY_LABELS = [
-    "0 - No idea",
-    "1 - Wrong",
-    "2 - Almost",
-    "3 - Hard",
-    "4 - Good",
-    "5 - Easy",
-]
-
 
 def format_exercise(
     exercise: Exercise,
     *,
     translation: ConceptTranslation | None = None,
     tr_map: dict[str, str] | None = None,
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup | None]:
     """Render an exercise as Telegram message text + optional keyboard.
 
@@ -56,15 +48,16 @@ def format_exercise(
         concept.
     :param tr_map: Optional mapping of original text to
         translated text, used for MC option translation.
+    :param lang: User language code.
     :return: ``(text, keyboard)``.
     """
     et = exercise.exercise_type
 
     if et is ExerciseType.MULTIPLE_CHOICE:
         return _fmt_multiple_choice(
-            exercise, translation, tr_map
+            exercise, translation, tr_map, lang
         )
-    return _fmt_flashcard_prompt(exercise, translation)
+    return _fmt_flashcard_prompt(exercise, translation, lang)
 
 
 # ---- exercise formatters ----
@@ -72,10 +65,11 @@ def format_exercise(
 
 def _context_line(
     translation: ConceptTranslation | None,
+    lang: str | None = None,
 ) -> str:
     """Return a context/example line, or empty string."""
     if translation and translation.context:
-        return f"\n\nExample: {translation.context}"
+        return t("example", lang, context=translation.context)
     return ""
 
 
@@ -83,13 +77,14 @@ def _fmt_multiple_choice(
     ex: Exercise,
     translation: ConceptTranslation | None = None,
     tr_map: dict[str, str] | None = None,
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
-    front = translation.front if translation else ex.concept.front
-    text = (
-        f"Which definition matches this word?\n\n"
-        f"\u201c{front}\u201d"
+    front = (
+        translation.front if translation
+        else ex.concept.front
     )
-    text += _context_line(translation)
+    text = t("mc_prompt", lang, front=front)
+    text += _context_line(translation, lang)
     options = ex.options
     if tr_map:
         options = [tr_map.get(o, o) for o in options]
@@ -107,16 +102,17 @@ def _fmt_multiple_choice(
 def _fmt_flashcard_prompt(
     ex: Exercise,
     translation: ConceptTranslation | None = None,
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
-    front = translation.front if translation else ex.concept.front
-    text = (
-        f"Do you know this word?\n\n"
-        f"{front}"
+    front = (
+        translation.front if translation
+        else ex.concept.front
     )
-    text += _context_line(translation)
+    text = t("flashcard_prompt", lang, front=front)
+    text += _context_line(translation, lang)
     keyboard = InlineKeyboardMarkup(
         [[InlineKeyboardButton(
-            "Reveal", callback_data=REVEAL_CB
+            t("reveal", lang), callback_data=REVEAL_CB
         )]]
     )
     return text, keyboard
@@ -125,67 +121,87 @@ def _fmt_flashcard_prompt(
 def flashcard_reveal(
     ex: Exercise,
     translation: ConceptTranslation | None = None,
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Show the answer and quality buttons after a flashcard
     reveal.
 
     :param ex: The current flashcard exercise.
     :param translation: Optional translation override.
+    :param lang: User language code.
     :return: ``(text, keyboard)`` with quality buttons.
     """
-    front = translation.front if translation else ex.concept.front
-    back = translation.back if translation else ex.concept.back
-    text = (
-        f"{front} \u2014 {back}\n\n"
-        f"How well did you know it?"
+    front = (
+        translation.front if translation
+        else ex.concept.front
     )
-    return text, _QUALITY_KEYBOARD
+    back = (
+        translation.back if translation
+        else ex.concept.back
+    )
+    text = t(
+        "flashcard_reveal", lang, front=front, back=back,
+    )
+    return text, _quality_keyboard(lang)
 
 
 # ---- answer / hint / summary formatters ----
 
 
-def format_answer(result: AnswerResult) -> str:
+def format_answer(
+    result: AnswerResult,
+    lang: str | None = None,
+) -> str:
     """Render answer feedback.
 
     :param result: The answer evaluation from the session.
+    :param lang: User language code.
     :return: Formatted feedback text.
     """
     if result.correct:
-        msg = f"\u2705 Correct! {result.expected}"
         if result.near_miss:
-            msg += f" (you typed: {result.given})"
-        return msg
-    return (
-        f"\u274c Wrong. The answer was: {result.expected}"
-    )
+            return t(
+                "correct_near_miss", lang,
+                expected=result.expected,
+                given=result.given,
+            )
+        return t("correct", lang, expected=result.expected)
+    return t("wrong", lang, expected=result.expected)
 
 
-def format_hint(hint: Hint) -> str:
+def format_hint(
+    hint: Hint,
+    lang: str | None = None,
+) -> str:
     """Render a hint.
 
     :param hint: The hint from the session.
+    :param lang: User language code.
     :return: Formatted hint text.
     """
-    lines = [f"Hint: {hint.pattern}"]
+    lines = [t("hint", lang, pattern=hint.pattern)]
     if hint.context:
         lines.append(f"\n{hint.context}")
     return "\n".join(lines)
 
 
-def format_summary(stats: SessionStats) -> str:
+def format_summary(
+    stats: SessionStats,
+    lang: str | None = None,
+) -> str:
     """Render an end-of-session summary.
 
     :param stats: The session statistics.
+    :param lang: User language code.
     :return: Formatted summary text.
     """
-    return (
-        f"Session complete!\n\n"
-        f"Total: {stats.total}\n"
-        f"Correct: {stats.correct}\n"
-        f"Incorrect: {stats.incorrect}\n"
-        f"Accuracy: {stats.accuracy_pct:.0f}%\n"
-        f"Best streak: {stats.best_streak}"
+    return t(
+        "session_complete", lang,
+        total=stats.total,
+        correct=stats.correct,
+        incorrect=stats.incorrect,
+        accuracy=f"{stats.accuracy_pct:.0f}",
+        streak=stats.best_streak,
     )
 
 
@@ -225,37 +241,41 @@ def format_daily_stats(
     stats: list[DailyStats],
     *,
     streak: int = 0,
+    lang: str | None = None,
 ) -> str:
     """Render daily stats for the last few days.
 
     :param stats: List of daily stats (most recent first).
     :param streak: Current consecutive study-day streak.
+    :param lang: User language code.
     :return: Formatted stats text.
     """
     if not stats:
-        return "No activity recorded yet."
-    lines = ["Daily stats:\n"]
+        return t("no_activity", lang)
+    lines = [t("daily_stats_header", lang)]
     for s in stats:
         lines.append(
             f"{s.date}: {s.answers} answers, "
             f"{s.correct} correct ({s.accuracy_pct:.0f}%)"
         )
     if streak > 0:
-        lines.append(f"\nStudy streak: {streak} day(s)")
+        lines.append(t("study_streak", lang, streak=streak))
     return "\n".join(lines)
 
 
 def format_weak_concepts(
     concepts: list[WeakConcept],
+    lang: str | None = None,
 ) -> str:
     """Render the user's weakest concepts.
 
     :param concepts: List of weak concepts.
+    :param lang: User language code.
     :return: Formatted weak-concepts text.
     """
     if not concepts:
-        return "No weak words found. Keep practising!"
-    lines = ["Your weakest words:\n"]
+        return t("no_weak_words", lang)
+    lines = [t("weakest_words_header", lang)]
     for i, w in enumerate(concepts, 1):
         lines.append(
             f"{i}. {w.concept.front} \u2014 "
@@ -279,39 +299,45 @@ _TOPIC_PAGE_SIZE = 5
 
 def format_play_languages(
     languages: list[Language],
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Render language selection for `/play`.
 
     :param languages: Available languages.
+    :param lang: User language code.
     :return: Formatted text and inline keyboard.
     """
     buttons = [
         [InlineKeyboardButton(
-            lang.name,
-            callback_data=f"{PLAY_LANG_PREFIX}{lang.code}",
+            lg.name,
+            callback_data=f"{PLAY_LANG_PREFIX}{lg.code}",
         )]
-        for lang in languages
+        for lg in languages
     ]
-    return "Choose a language:", InlineKeyboardMarkup(buttons)
+    return t("choose_language", lang), InlineKeyboardMarkup(
+        buttons,
+    )
 
 
 def format_languages(
     languages: list[Language],
+    lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
     """Render language selection for `/language`.
 
     :param languages: Available languages.
+    :param lang: User language code.
     :return: Formatted text and inline keyboard.
     """
     buttons = [
         [InlineKeyboardButton(
-            lang.name,
-            callback_data=f"{LANG_CB_PREFIX}{lang.code}",
+            lg.name,
+            callback_data=f"{LANG_CB_PREFIX}{lg.code}",
         )]
-        for lang in languages
+        for lg in languages
     ]
-    return "Choose your language:", InlineKeyboardMarkup(
-        buttons
+    return t("choose_your_language", lang), (
+        InlineKeyboardMarkup(buttons)
     )
 
 
@@ -323,11 +349,6 @@ def format_play_categories(
     :param lang: User language code.
     :return: Formatted text and inline keyboard.
     """
-    prompt = (
-        "Choose a category:"
-        if lang == "en"
-        else "Elige una categoría:"
-    )
     buttons = [
         [InlineKeyboardButton(
             category_name(cat, lang),
@@ -335,7 +356,9 @@ def format_play_categories(
         )]
         for cat in CATEGORIES
     ]
-    return prompt, InlineKeyboardMarkup(buttons)
+    return t("choose_category", lang), InlineKeyboardMarkup(
+        buttons,
+    )
 
 
 def format_categories(
@@ -346,11 +369,6 @@ def format_categories(
     :param lang: User language code.
     :return: Formatted text and inline keyboard.
     """
-    prompt = (
-        "Choose a category:"
-        if lang == "en"
-        else "Elige una categoría:"
-    )
     buttons = [
         [InlineKeyboardButton(
             category_name(cat, lang),
@@ -358,7 +376,9 @@ def format_categories(
         )]
         for cat in CATEGORIES
     ]
-    return prompt, InlineKeyboardMarkup(buttons)
+    return t("choose_category", lang), InlineKeyboardMarkup(
+        buttons,
+    )
 
 
 def _format_topic_list(
@@ -415,7 +435,7 @@ def _format_topic_list(
         pct = f"{p.completion_pct:.0f}%" if p else "0%"
         name = topic_title(topic.id, topic.title, lang)
         lines.append(
-            f"{topic.id}. {name} ({pct} complete)"
+            f"{topic.id}. {name} ({pct})"
         )
         buttons.append([
             InlineKeyboardButton(
@@ -426,25 +446,17 @@ def _format_topic_list(
             )
         ])
     if needs_paging and page_prefix:
-        prev_label = (
-            "\u25c0 Previous" if lang == "en"
-            else "\u25c0 Anterior"
-        )
-        next_label = (
-            "Next \u25b6" if lang == "en"
-            else "Siguiente \u25b6"
-        )
         nav: list[InlineKeyboardButton] = []
         if page > 0:
             nav.append(InlineKeyboardButton(
-                prev_label,
+                t("prev", lang),
                 callback_data=(
                     f"{page_prefix}{cat_key}:{page - 1}"
                 ),
             ))
         if page < total_pages - 1:
             nav.append(InlineKeyboardButton(
-                next_label,
+                t("next", lang),
                 callback_data=(
                     f"{page_prefix}{cat_key}:{page + 1}"
                 ),
@@ -467,7 +479,7 @@ def format_play_topics(
     """
     return _format_topic_list(
         topics, progress,
-        header="Choose a topic:",
+        header=t("choose_topic", lang),
         button_prefix=PLAY_TOPIC_PREFIX,
         lang=lang,
         include_all=True,
@@ -487,10 +499,10 @@ def format_topics(
 ) -> tuple[str, InlineKeyboardMarkup | None]:
     """Render a list of topics with progress."""
     if not topics:
-        return "No topics available.", None
+        return t("no_topics", lang), None
     return _format_topic_list(
         topics, progress,
-        header="Topics:",
+        header=t("topics_header", lang),
         button_prefix=TOPIC_CB_PREFIX,
         lang=lang,
         page=page,
@@ -499,48 +511,56 @@ def format_topics(
     )
 
 
-def format_retention(rate: float) -> str:
+def format_retention(
+    rate: float,
+    lang: str | None = None,
+) -> str:
     """Render the overall retention rate.
 
-    :param rate: Retention percentage (0.0–100.0).
+    :param rate: Retention percentage (0.0-100.0).
+    :param lang: User language code.
     :return: Formatted retention text.
     """
     if rate == 0.0:
-        return "No answers recorded yet. Start a session with /play!"
-    return f"Retention rate (last 30 days): {rate:.0f}%"
+        return t("no_answers_yet", lang)
+    return t("retention_rate", lang, rate=f"{rate:.0f}")
 
 
 def format_topic_progress(
     topics: list[Topic],
     progress: list[TopicProgress],
+    lang: str | None = None,
 ) -> str:
     """Render per-topic completion percentages.
 
     :param topics: List of topics.
     :param progress: Matching list of progress objects.
+    :param lang: User language code.
     :return: Formatted text, or empty string if no topics.
     """
     if not topics:
         return ""
-    lines = ["Topic progress:\n"]
-    for t, p in zip(topics, progress):
+    lines = [t("topic_progress_header", lang)]
+    for tp, p in zip(topics, progress):
         lines.append(
-            f"{t.title}: {p.completion_pct:.0f}%"
+            f"{tp.title}: {p.completion_pct:.0f}%"
         )
     return "\n".join(lines)
 
 
 def format_forecast(
     forecast: list[ReviewForecast],
+    lang: str | None = None,
 ) -> str:
     """Render the upcoming review workload.
 
     :param forecast: List of daily forecasts.
+    :param lang: User language code.
     :return: Formatted forecast text.
     """
     if not forecast:
-        return "No reviews scheduled. Add words to get started!"
-    lines = ["Upcoming reviews:\n"]
+        return t("no_reviews_scheduled", lang)
+    lines = [t("upcoming_reviews_header", lang)]
     for f in forecast:
         lines.append(f"{f.date}: {f.due_count} cards due")
     return "\n".join(lines)
@@ -549,38 +569,47 @@ def format_forecast(
 def format_history(
     records: list[AnswerHistory],
     concept_map: dict[int, str],
+    lang: str | None = None,
 ) -> str:
     """Render recent answer history.
 
     :param records: Answer history records (newest first).
     :param concept_map: Mapping of concept id to front text.
+    :param lang: User language code.
     :return: Formatted history text.
     """
     if not records:
-        return (
-            "No answer history yet. "
-            "Start a session with /play!"
-        )
-    lines = ["Recent answers:\n"]
+        return t("no_history", lang)
+    lines = [t("recent_answers_header", lang)]
     for r in records:
         icon = "\u2705" if r.correct else "\u274c"
         word = concept_map.get(
             r.concept_id, f"#{r.concept_id}"
         )
-        date = r.answered_at.strftime("%d %b %H:%M")
-        lines.append(f"{icon} {word} \u2014 {date}")
+        dt = r.answered_at.strftime("%d %b %H:%M")
+        lines.append(f"{icon} {word} \u2014 {dt}")
     return "\n".join(lines)
 
 
 # ---- shared keyboard builders ----
 
 
-_QUALITY_KEYBOARD = InlineKeyboardMarkup([
-    [
-        InlineKeyboardButton(
-            label, callback_data=f"{QUALITY_PREFIX}{i}"
-        )
-        for i, label in enumerate(_QUALITY_LABELS[j : j + 2], j)
-    ]
-    for j in range(0, len(_QUALITY_LABELS), 2)
-])
+def _quality_keyboard(
+    lang: str | None = None,
+) -> InlineKeyboardMarkup:
+    """Build the quality rating keyboard.
+
+    :param lang: User language code.
+    :return: Inline keyboard with 6 quality buttons.
+    """
+    labels = [t(f"quality_{i}", lang) for i in range(6)]
+    return InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                labels[j + k],
+                callback_data=f"{QUALITY_PREFIX}{j + k}",
+            )
+            for k in range(2)
+        ]
+        for j in range(0, 6, 2)
+    ])

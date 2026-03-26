@@ -9,6 +9,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import (
+    LANGUAGE,
     require_callback,
     require_message,
     require_message_conv,
@@ -20,12 +21,18 @@ from rembrandt_chat.formatting import (
     DEL_CB_PREFIX,
     DEL_CONFIRM_PREFIX,
 )
+from rembrandt_chat.i18n import t
 
 AWAITING_WORD, AWAITING_DEFINITION, AWAITING_TAGS = range(3)
 AWAITING_BULK_FILE = 20
 
 #: ``(front, back, tags)`` tuple returned by file parsers.
 WordEntry = tuple[str, str, list[str]]
+
+
+def _lang(context: ContextTypes.DEFAULT_TYPE) -> str | None:
+    """Return the user's language code from user_data."""
+    return context.user_data.get(LANGUAGE)
 
 
 @require_message_conv
@@ -40,7 +47,8 @@ async def addword_start(
 
     await resolve_user(update, context)
 
-    await update.message.reply_text("Send the word:")
+    lang = _lang(context)
+    await update.message.reply_text(t("send_word", lang))
     return AWAITING_WORD
 
 
@@ -53,7 +61,10 @@ async def addword_word(
     context.user_data["_addword_word"] = (
         update.message.text or ""
     ).strip()
-    await update.message.reply_text("Send the definition:")
+    lang = _lang(context)
+    await update.message.reply_text(
+        t("send_definition", lang)
+    )
     return AWAITING_DEFINITION
 
 
@@ -65,19 +76,17 @@ async def addword_definition(
     """Receive the definition, then ask for optional tags."""
     definition = (update.message.text or "").strip()
     word_from = context.user_data.get("_addword_word", "")
+    lang = _lang(context)
 
     if not word_from or not definition:
         await update.message.reply_text(
-            "Word or definition was empty. "
-            "Try /addword again."
+            t("word_empty", lang)
         )
         context.user_data.pop("_addword_word", None)
         return ConversationHandler.END
 
     context.user_data["_addword_def"] = definition
-    await update.message.reply_text(
-        "Send tags (comma-separated) or /skip:"
-    )
+    await update.message.reply_text(t("send_tags", lang))
     return AWAITING_TAGS
 
 
@@ -88,7 +97,10 @@ async def addword_tags(
 ) -> int:
     """Receive tags and save the word."""
     raw = (update.message.text or "").strip()
-    tags = [t.strip() for t in raw.split(",") if t.strip()]
+    tags = [
+        tag.strip() for tag in raw.split(",")
+        if tag.strip()
+    ]
 
     return await _save_word(update, context, tags=tags)
 
@@ -121,9 +133,15 @@ async def _save_word(
         owner_id=user.id,
     )
 
-    msg = f'Added "{front}" \u2014 {back}'
+    lang = _lang(context)
     if tags:
-        msg += f" [{', '.join(tags)}]"
+        msg = t(
+            "word_added_tags", lang,
+            front=front, back=back,
+            tags=", ".join(tags),
+        )
+    else:
+        msg = t("word_added", lang, front=front, back=back)
     await update.message.reply_text(msg)
     return ConversationHandler.END
 
@@ -134,7 +152,10 @@ async def addword_cancel(
 ) -> int:
     """Cancel the /addword conversation."""
     if update.message is not None:
-        await update.message.reply_text("Cancelled.")
+        lang = _lang(context)
+        await update.message.reply_text(
+            t("cancelled", lang)
+        )
     context.user_data.pop("_addword_word", None)
     context.user_data.pop("_addword_def", None)
     return ConversationHandler.END
@@ -147,11 +168,9 @@ async def bulkimport_start(
 ) -> int:
     """`/bulkimport` — ask user for a CSV or text file."""
     await resolve_user(update, context)
+    lang = _lang(context)
     await update.message.reply_text(
-        "Send a file with words to import.\n\n"
-        "Supported formats:\n"
-        "- CSV: front,back (optional: tags column)\n"
-        '- Text: one "word \u2014 definition" per line'
+        t("bulkimport_prompt", lang)
     )
     return AWAITING_BULK_FILE
 
@@ -163,11 +182,12 @@ async def bulkimport_file(
 ) -> int:
     """Receive the file and import words."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     doc = update.message.document
     if doc is None:
         await update.message.reply_text(
-            "Please send a file."
+            t("send_file", lang)
         )
         return AWAITING_BULK_FILE
 
@@ -178,15 +198,14 @@ async def bulkimport_file(
         text = raw.decode("utf-8")
     except UnicodeDecodeError:
         await update.message.reply_text(
-            "Could not read the file. "
-            "Please send a UTF-8 text file."
+            t("file_read_error", lang)
         )
         return ConversationHandler.END
 
     words = _parse_bulk_file(text)
     if not words:
         await update.message.reply_text(
-            "No valid words found in the file."
+            t("no_valid_words", lang)
         )
         return ConversationHandler.END
 
@@ -203,7 +222,7 @@ async def bulkimport_file(
     )
 
     await update.message.reply_text(
-        f"Imported {len(words)} word(s)."
+        t("imported_words", lang, count=len(words))
     )
     return ConversationHandler.END
 
@@ -214,7 +233,10 @@ async def bulkimport_cancel(
 ) -> int:
     """Cancel the /bulkimport conversation."""
     if update.message is not None:
-        await update.message.reply_text("Cancelled.")
+        lang = _lang(context)
+        await update.message.reply_text(
+            t("cancelled", lang)
+        )
     return ConversationHandler.END
 
 
@@ -247,16 +269,18 @@ def _parse_csv(
         front = row[0].strip()
         back = row[1].strip()
         # Skip header row
-        if i == 0 and back.lower() in ("back", "definition"):
+        if i == 0 and back.lower() in (
+            "back", "definition"
+        ):
             continue
         if not front or not back:
             continue
         tags: list[str] = []
         if len(row) >= 3 and row[2].strip():
             tags = [
-                t.strip()
-                for t in row[2].split(";")
-                if t.strip()
+                tag.strip()
+                for tag in row[2].split(";")
+                if tag.strip()
             ]
         words.append((front, back, tags))
     return words
@@ -293,6 +317,7 @@ async def mywords(
     If a tag is given, only words with that tag are shown.
     """
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     concepts = await db.get_concepts(owner_id=user.id)
 
@@ -306,12 +331,12 @@ async def mywords(
         ]
 
     if not concepts:
-        msg = (
-            f"No words with tag \u201c{tag_filter}\u201d."
-            if tag_filter
-            else "You have no private words yet. "
-            "Use /addword to add one."
-        )
+        if tag_filter:
+            msg = t(
+                "no_words_with_tag", lang, tag=tag_filter,
+            )
+        else:
+            msg = t("no_private_words", lang)
         await update.message.reply_text(msg)
         return
 
@@ -331,6 +356,7 @@ async def search(
 ) -> None:
     """`/search <term>` — search vocabulary by text match."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     text = (update.message.text or "").strip()
     parts = text.split(maxsplit=1)
@@ -338,7 +364,7 @@ async def search(
 
     if not term:
         await update.message.reply_text(
-            "Usage: /search <term>"
+            t("search_usage", lang)
         )
         return
 
@@ -354,14 +380,17 @@ async def search(
 
     if not matches:
         await update.message.reply_text(
-            f'No results for "{term}".'
+            t("search_no_results", lang, term=term)
         )
         return
 
     lines = []
     for i, c in enumerate(matches[:20], 1):
         lines.append(f"{i}. {c.front} \u2014 {c.back}")
-    header = f'Results for "{term}" ({len(matches)}):\n\n'
+    header = t(
+        "search_results_header", lang,
+        term=term, count=len(matches),
+    )
     await update.message.reply_text(
         header + "\n".join(lines)
     )
@@ -374,11 +403,12 @@ async def deleteword(
 ) -> None:
     """`/deleteword` — show private words as buttons to delete."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     concepts = await db.get_concepts(owner_id=user.id)
     if not concepts:
         await update.message.reply_text(
-            "You have no private words to delete."
+            t("no_words_to_delete", lang)
         )
         return
 
@@ -392,7 +422,7 @@ async def deleteword(
         for c in concepts
     ]
     await update.message.reply_text(
-        "Tap a word to delete it:",
+        t("tap_to_delete", lang),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
@@ -408,23 +438,24 @@ async def handle_deleteword_callback(
     if not data.startswith(DEL_CB_PREFIX):
         return
 
+    lang = _lang(context)
     concept_id = data[len(DEL_CB_PREFIX):]
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton(
-                "Yes, delete",
+                t("yes_delete", lang),
                 callback_data=(
                     f"{DEL_CONFIRM_PREFIX}{concept_id}"
                 ),
             ),
             InlineKeyboardButton(
-                "No",
+                t("no_keep", lang),
                 callback_data=DEL_CANCEL_CB,
             ),
         ]
     ])
     await query.edit_message_text(
-        "Are you sure?",
+        t("confirm_delete", lang),
         reply_markup=keyboard,
     )
 
@@ -440,10 +471,11 @@ async def handle_deleteword_confirm(
     if not data.startswith(DEL_CONFIRM_PREFIX):
         return
 
+    lang = _lang(context)
     concept_id = int(data[len(DEL_CONFIRM_PREFIX):])
     db: Database = context.bot_data["db"]
     await db.delete_concept(concept_id)
-    await query.edit_message_text("Word deleted.")
+    await query.edit_message_text(t("word_deleted", lang))
 
 
 @require_callback
@@ -453,4 +485,7 @@ async def handle_deleteword_cancel(
 ) -> None:
     """Handle cancelled deletion."""
     query = update.callback_query
-    await query.edit_message_text("Deletion cancelled.")
+    lang = _lang(context)
+    await query.edit_message_text(
+        t("deletion_cancelled", lang)
+    )

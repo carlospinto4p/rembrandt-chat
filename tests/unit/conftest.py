@@ -83,7 +83,7 @@ def make_context(
         "user_mapper": mapper,
         "db": AsyncMock(),
     }
-    ctx.user_data = {}
+    ctx.user_data = {"language": "en"}
     if session is not None:
         ctx.user_data["session"] = session
     if exercise is not None:

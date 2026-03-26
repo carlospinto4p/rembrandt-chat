@@ -23,6 +23,7 @@ from rembrandt_chat.config import (
     get_max_review_cards,
 )
 from rembrandt_chat.formatting import format_exercise, format_summary
+from rembrandt_chat.i18n import t
 from rembrandt_chat.persistence import (
     SESSION_CONFIG,
     clear_session_config,
@@ -181,12 +182,6 @@ async def resolve_user_with_typing(
     return await resolve_user(update, context)
 
 
-_ACTIVE_SESSION_MSG = (
-    "You already have an active session. "
-    "Use /stop to end it first."
-)
-
-
 async def check_active_session(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
@@ -199,13 +194,13 @@ async def check_active_session(
     if user_data.get(SESSION) is None:
         return False
 
+    lang = user_data.get(LANGUAGE)
+    msg = t("active_session", lang)
     query = update.callback_query
     if query is not None:
-        await query.edit_message_text(_ACTIVE_SESSION_MSG)
+        await query.edit_message_text(msg)
     elif update.message is not None:
-        await update.message.reply_text(
-            _ACTIVE_SESSION_MSG
-        )
+        await update.message.reply_text(msg)
     return True
 
 
@@ -372,6 +367,7 @@ async def send_next(
     :param context: Used to clear persisted session config
         on session end.
     """
+    lang = user_data.get(LANGUAGE)
     exercise = await session.next_exercise()
     if exercise is None:
         summary = session.summary()
@@ -382,11 +378,12 @@ async def send_next(
         _clear_persisted_session(update, context)
         chat = update.effective_chat
         if chat is not None:
-            await chat.send_message(format_summary(summary))
+            await chat.send_message(
+                format_summary(summary, lang)
+            )
         return
 
     user_data[EXERCISE] = exercise
-    lang = user_data.get(LANGUAGE)
     translation = None
     if db and lang:
         translation = await _lookup_translation(
@@ -395,7 +392,8 @@ async def send_next(
     user_data[TRANSLATION] = translation
     tr_map = user_data.get(TRANSLATION_MAP)
     text, keyboard = format_exercise(
-        exercise, translation=translation, tr_map=tr_map
+        exercise, translation=translation,
+        tr_map=tr_map, lang=lang,
     )
     chat = update.effective_chat
     if chat is not None:

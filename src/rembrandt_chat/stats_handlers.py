@@ -11,6 +11,7 @@ from telegram import Update
 from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import (
+    LANGUAGE,
     require_message,
     require_message_conv,
     resolve_user,
@@ -25,8 +26,14 @@ from rembrandt_chat.formatting import (
     format_topic_progress,
     format_weak_concepts,
 )
+from rembrandt_chat.i18n import t
 
 log = logging.getLogger(__name__)
+
+
+def _lang(context: ContextTypes.DEFAULT_TYPE) -> str | None:
+    """Return the user's language code from user_data."""
+    return context.user_data.get(LANGUAGE)
 
 
 @require_message
@@ -36,6 +43,7 @@ async def stats(
 ) -> None:
     """`/stats` — show daily stats and topic progress."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     daily, streak_days, all_topics = await asyncio.gather(
         db.daily_stats(user.id, days=7),
@@ -43,23 +51,25 @@ async def stats(
         db.get_topics(),
     )
     streak = compute_streak(streak_days)
-    text = format_daily_stats(daily, streak=streak)
+    text = format_daily_stats(daily, streak=streak, lang=lang)
 
     if all_topics:
         progress = await asyncio.gather(
             *(
-                topic_progress(db, user.id, t)
-                for t in all_topics
+                topic_progress(db, user.id, tp)
+                for tp in all_topics
             )
         )
         studied = [
-            (t, p) for t, p in zip(all_topics, progress)
+            (tp, p)
+            for tp, p in zip(all_topics, progress)
             if p.completion_pct > 0
         ]
         if studied:
             topics_list, prog_list = zip(*studied)
             tp_text = format_topic_progress(
                 list(topics_list), list(prog_list),
+                lang=lang,
             )
             text += "\n\n" + tp_text
 
@@ -73,10 +83,11 @@ async def weak(
 ) -> None:
     """`/weak` — show weakest words."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     concepts = await db.weak_concepts(user.id, limit=10)
     await update.message.reply_text(
-        format_weak_concepts(concepts)
+        format_weak_concepts(concepts, lang)
     )
 
 
@@ -87,9 +98,12 @@ async def forecast(
 ) -> None:
     """`/forecast` — show upcoming review workload."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     days = await db.forecast(user.id, days=7)
-    await update.message.reply_text(format_forecast(days))
+    await update.message.reply_text(
+        format_forecast(days, lang)
+    )
 
 
 @require_message
@@ -99,9 +113,12 @@ async def retention(
 ) -> None:
     """`/retention` — show overall retention rate."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     rate = await db.retention_rate(user.id, days=30)
-    await update.message.reply_text(format_retention(rate))
+    await update.message.reply_text(
+        format_retention(rate, lang)
+    )
 
 
 _DAYS_MAP = {"1d": 1, "3d": 3, "7d": 7, "30d": 30}
@@ -114,6 +131,7 @@ async def history(
 ) -> None:
     """`/history [1d|3d|7d|30d]` — show recent answers."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     text = (update.message.text or "").strip()
     parts = text.split(maxsplit=1)
@@ -137,7 +155,7 @@ async def history(
     }
 
     await update.message.reply_text(
-        format_history(records, concept_map)
+        format_history(records, concept_map, lang)
     )
 
 
@@ -148,12 +166,12 @@ async def export_progress(
 ) -> None:
     """`/export` — send progress as a JSON file."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     records = await db.export_progress(user.id)
     if not records:
         await update.message.reply_text(
-            "No progress to export yet. "
-            "Start a session with /play!"
+            t("no_progress_to_export", lang)
         )
         return
 
@@ -162,7 +180,7 @@ async def export_progress(
     buf.name = "rembrandt_progress.json"
     await update.message.reply_document(
         document=buf,
-        caption=f"Exported {len(records)} card(s).",
+        caption=t("exported_cards", lang, count=len(records)),
     )
 
 
@@ -176,9 +194,10 @@ async def import_start(
 ) -> int:
     """`/import` — ask the user for a JSON file."""
     await resolve_user(update, context)
+    lang = _lang(context)
 
     await update.message.reply_text(
-        "Send the JSON file exported with /export."
+        t("import_prompt", lang)
     )
     return AWAITING_FILE
 
@@ -190,11 +209,12 @@ async def import_file(
 ) -> int:
     """Receive the JSON file and restore progress."""
     user, db = await resolve_user_with_typing(update, context)
+    lang = _lang(context)
 
     doc = update.message.document
     if doc is None:
         await update.message.reply_text(
-            "Please send a JSON file."
+            t("send_json_file", lang)
         )
         return AWAITING_FILE
 
@@ -205,14 +225,13 @@ async def import_file(
         records = json.loads(data)
     except (json.JSONDecodeError, UnicodeDecodeError):
         await update.message.reply_text(
-            "Could not read the file. "
-            "Please send a valid JSON file."
+            t("json_read_error", lang)
         )
         return ConversationHandler.END
 
     if not isinstance(records, list):
         await update.message.reply_text(
-            "Invalid format: expected a JSON array."
+            t("json_invalid_format", lang)
         )
         return ConversationHandler.END
 
@@ -221,7 +240,7 @@ async def import_file(
 
     count = await db.import_progress(records)
     await update.message.reply_text(
-        f"Imported {count} card(s) successfully."
+        t("imported_cards", lang, count=count)
     )
     return ConversationHandler.END
 
@@ -232,7 +251,10 @@ async def import_cancel(
 ) -> int:
     """Cancel the /import conversation."""
     if update.message is not None:
-        await update.message.reply_text("Cancelled.")
+        lang = _lang(context)
+        await update.message.reply_text(
+            t("cancelled", lang)
+        )
     return ConversationHandler.END
 
 
@@ -265,8 +287,12 @@ def _parse_reminder_args(
         try:
             h, m = parts[2].split(":")
             hour, minute = int(h), int(m)
-            if not (0 <= hour <= 23 and 0 <= minute <= 59):
-                hour, minute = _DEFAULT_HOUR, _DEFAULT_MINUTE
+            if not (
+                0 <= hour <= 23 and 0 <= minute <= 59
+            ):
+                hour, minute = (
+                    _DEFAULT_HOUR, _DEFAULT_MINUTE
+                )
         except (ValueError, TypeError):
             pass
 
@@ -281,6 +307,7 @@ async def _reminder_callback(
     chat_id = job.chat_id
     data = job.data or {}
     user_id = data.get("user_id")
+    lang = data.get("lang")
     db: Database = context.bot_data["db"]
 
     try:
@@ -293,8 +320,7 @@ async def _reminder_callback(
     if due > 0:
         await context.bot.send_message(
             chat_id,
-            f"You have {due} review(s) due today! "
-            "Use /play to start.",
+            t("reminder_due", lang, due=due),
         )
 
 
@@ -305,6 +331,7 @@ async def reminders(
 ) -> None:
     """`/reminders [on [HH:MM]|off]` — manage reminders."""
     user, _ = await resolve_user(update, context)
+    lang = _lang(context)
     chat_id = update.effective_chat.id
     job_name = _REMINDER_JOB.format(chat_id=chat_id)
     text = update.message.text or ""
@@ -316,7 +343,7 @@ async def reminders(
         for j in jobs:
             j.schedule_removal()
         await update.message.reply_text(
-            "Daily reminders disabled."
+            t("reminders_disabled", lang)
         )
         return
 
@@ -324,14 +351,11 @@ async def reminders(
         jobs = context.job_queue.get_jobs_by_name(job_name)
         if jobs:
             await update.message.reply_text(
-                "Reminders are ON.\n"
-                "Use /reminders off to disable."
+                t("reminders_on", lang)
             )
         else:
             await update.message.reply_text(
-                "Reminders are OFF.\n"
-                "Use /reminders on [HH:MM] to enable "
-                "(default 09:00 UTC)."
+                t("reminders_off", lang)
             )
         return
 
@@ -342,12 +366,15 @@ async def reminders(
 
     context.job_queue.run_daily(
         _reminder_callback,
-        time=time(hour=hour, minute=minute, tzinfo=timezone.utc),
+        time=time(
+            hour=hour, minute=minute,
+            tzinfo=timezone.utc,
+        ),
         chat_id=chat_id,
         name=job_name,
-        data={"user_id": user.id},
+        data={"user_id": user.id, "lang": lang},
     )
+    time_str = f"{hour:02d}:{minute:02d}"
     await update.message.reply_text(
-        f"Daily reminders enabled at "
-        f"{hour:02d}:{minute:02d} UTC."
+        t("reminders_enabled", lang, time=time_str)
     )
