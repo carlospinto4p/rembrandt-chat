@@ -1,6 +1,20 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.2 - 26th March 2026
+
+- Moved formatting logic out of `word_handlers.py`:
+  - Added `format_concepts_list()` in `formatting.py`
+  - Added `format_search_results()` in `formatting.py`
+- Centralised callback-data prefixes: moved
+  `PLAY_MODE_PREFIX` from `session_handlers.py` to
+  `formatting.py` (joining the other prefixes already there).
+- Split `handle_answer_callback` into sub-functions:
+  - `_handle_reveal()`
+  - `_handle_quality()`
+  - `_handle_mc()`
+
+
 ### v0.33.1 - 26th March 2026
 
 - Added shared helpers in `_helpers.py`:

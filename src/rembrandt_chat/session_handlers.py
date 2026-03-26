@@ -37,6 +37,9 @@ from rembrandt_chat.formatting import (
     CAT_CB_PREFIX,
     LANG_CB_PREFIX,
     PLAY_CAT_PREFIX,
+    PLAY_LANG_PREFIX,
+    PLAY_MODE_PREFIX,
+    PLAY_TOPIC_PREFIX,
     PLAY_TPAGE_PREFIX,
     TOPIC_CB_PREFIX,
     TPAGE_PREFIX,
@@ -59,10 +62,6 @@ from rembrandt_chat.topic_translations import (
     all_topics_label,
     topic_title,
 )
-
-PLAY_MODE_PREFIX = "play_mode:"
-PLAY_TOPIC_PREFIX = "play_topic:"
-PLAY_LANG_PREFIX = "play_lang:"
 
 # user_data key for topic concept_ids chosen during /play
 _PLAY_CONCEPT_IDS = "_play_concept_ids"
@@ -545,6 +544,50 @@ async def handle_answer_text(
     )
 
 
+async def _handle_reveal(query, exercise, user_data, lang):
+    """Show the flashcard answer and quality buttons."""
+    tr = user_data.get(TRANSLATION)
+    text, keyboard = flashcard_reveal(
+        exercise, translation=tr, lang=lang,
+    )
+    await query.edit_message_text(
+        text, reply_markup=keyboard
+    )
+
+
+async def _handle_quality(
+    query, data, session, user_data, update, db, lang,
+    *, context,
+):
+    """Process a self-graded quality rating."""
+    quality = int(data[len(QUALITY_PREFIX):])
+    answer = await session.answer(quality=quality)
+    await query.edit_message_text(
+        format_answer(answer, lang)
+    )
+    await send_next(
+        session, user_data, update, db=db,
+        context=context,
+    )
+
+
+async def _handle_mc(
+    query, data, exercise, session, user_data, update,
+    db, lang, *, context,
+):
+    """Process a multiple-choice button press."""
+    idx = int(data[len(MC_PREFIX):])
+    chosen = exercise.options[idx]
+    answer = await session.answer(text=chosen)
+    await query.edit_message_text(
+        format_answer(answer, lang)
+    )
+    await send_next(
+        session, user_data, update, db=db,
+        context=context,
+    )
+
+
 @require_callback
 async def handle_answer_callback(
     update: Update,
@@ -560,43 +603,23 @@ async def handle_answer_callback(
     exercise = user_data[EXERCISE]
     data = query.data or ""
     lang = get_lang(context)
-
     db: Database = context.bot_data["db"]
 
     if data == REVEAL_CB:
-        tr = user_data.get(TRANSLATION)
-        text, keyboard = flashcard_reveal(
-            exercise, translation=tr, lang=lang,
+        await _handle_reveal(
+            query, exercise, user_data, lang,
         )
-        await query.edit_message_text(
-            text, reply_markup=keyboard
+    elif data.startswith(QUALITY_PREFIX):
+        await _handle_quality(
+            query, data, session, user_data,
+            update, db, lang, context=context,
         )
-        return
-
-    if data.startswith(QUALITY_PREFIX):
-        quality = int(data[len(QUALITY_PREFIX):])
-        answer = await session.answer(quality=quality)
-        await query.edit_message_text(
-            format_answer(answer, lang)
-        )
-        await send_next(
-            session, user_data, update, db=db,
+    elif data.startswith(MC_PREFIX):
+        await _handle_mc(
+            query, data, exercise, session,
+            user_data, update, db, lang,
             context=context,
         )
-        return
-
-    if data.startswith(MC_PREFIX):
-        idx = int(data[len(MC_PREFIX):])
-        chosen = exercise.options[idx]
-        answer = await session.answer(text=chosen)
-        await query.edit_message_text(
-            format_answer(answer, lang)
-        )
-        await send_next(
-            session, user_data, update, db=db,
-            context=context,
-        )
-        return
 
 
 @require_message

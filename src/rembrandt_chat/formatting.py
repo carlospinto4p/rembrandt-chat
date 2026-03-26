@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
     AnswerResult,
+    Concept,
     ConceptTranslation,
     DailyStats,
     Exercise,
@@ -290,6 +291,7 @@ PLAY_TOPIC_PREFIX = "play_topic:"
 PLAY_LANG_PREFIX = "play_lang:"
 PLAY_CAT_PREFIX = "play_cat:"
 PLAY_TPAGE_PREFIX = "play_tpage:"
+PLAY_MODE_PREFIX = "play_mode:"
 CAT_CB_PREFIX = "cat:"
 TPAGE_PREFIX = "tpage:"
 LANG_CB_PREFIX = "lang:"
@@ -589,6 +591,48 @@ def format_history(
         dt = r.answered_at.strftime("%d %b %H:%M")
         lines.append(f"{icon} {word} \u2014 {dt}")
     return "\n".join(lines)
+
+
+# ---- concept list formatters ----
+
+
+def format_concepts_list(
+    concepts: list[Concept],
+) -> str:
+    """Render a numbered list of concepts with tags.
+
+    :param concepts: List of concepts.
+    :return: Formatted text.
+    """
+    lines = []
+    for i, c in enumerate(concepts, 1):
+        line = f"{i}. {c.front} \u2014 {c.back}"
+        if c.tags:
+            line += f" [{', '.join(c.tags)}]"
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def format_search_results(
+    matches: list[Concept],
+    term: str,
+    lang: str | None = None,
+) -> str:
+    """Render search results with a header.
+
+    :param matches: Matching concepts (may be truncated).
+    :param term: The search term.
+    :param lang: User language code.
+    :return: Formatted text.
+    """
+    header = t(
+        "search_results_header", lang,
+        term=term, count=len(matches),
+    )
+    lines = []
+    for i, c in enumerate(matches[:20], 1):
+        lines.append(f"{i}. {c.front} \u2014 {c.back}")
+    return header + "\n".join(lines)
 
 
 # ---- shared keyboard builders ----

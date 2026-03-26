@@ -24,9 +24,9 @@
 - [x] Extract `_cleanup_session()` helper in `_helpers.py` — deduplicate 5-line session cleanup pattern (2 occurrences: `stop()` and `send_next()`)
 - [x] Extract `_extract_command_arg()` helper in `_helpers.py` — deduplicate 3-line command argument parsing pattern (3 occurrences across `word_handlers.py` and `stats_handlers.py`)
 - [x] Extract `_require_category()` helper — deduplicate category lookup + "not found" error pattern (4 occurrences in `session_handlers.py`)
-- [ ] Move formatting logic out of `word_handlers.py` — `mywords` and `search` build message text inline; extract to `format_concepts_list()` and `format_search_results()` in `formatting.py`
-- [ ] Centralise callback-data prefixes — `PLAY_MODE_PREFIX`, `PLAY_TOPIC_PREFIX`, `PLAY_LANG_PREFIX` are defined in `session_handlers.py` while the rest live in `formatting.py`; move all to one module
-- [ ] Split `handle_answer_callback` into sub-functions — 3 separate branches (reveal, quality, MC) each ~10 lines; extract to `_handle_reveal()`, `_handle_quality()`, `_handle_mc()`
+- [x] Move formatting logic out of `word_handlers.py` — `mywords` and `search` build message text inline; extract to `format_concepts_list()` and `format_search_results()` in `formatting.py`
+- [x] Centralise callback-data prefixes — `PLAY_MODE_PREFIX`, `PLAY_TOPIC_PREFIX`, `PLAY_LANG_PREFIX` are defined in `session_handlers.py` while the rest live in `formatting.py`; move all to one module
+- [x] Split `handle_answer_callback` into sub-functions — 3 separate branches (reveal, quality, MC) each ~10 lines; extract to `_handle_reveal()`, `_handle_quality()`, `_handle_mc()`
 
 ### 2026.03.26 (UX feedback)
 

@@ -21,6 +21,8 @@ from rembrandt_chat.formatting import (
     DEL_CANCEL_CB,
     DEL_CB_PREFIX,
     DEL_CONFIRM_PREFIX,
+    format_concepts_list,
+    format_search_results,
 )
 from rembrandt_chat.i18n import t
 
@@ -334,13 +336,9 @@ async def mywords(
         await update.message.reply_text(msg)
         return
 
-    lines = []
-    for i, c in enumerate(concepts, 1):
-        line = f"{i}. {c.front} \u2014 {c.back}"
-        if c.tags:
-            line += f" [{', '.join(c.tags)}]"
-        lines.append(line)
-    await update.message.reply_text("\n".join(lines))
+    await update.message.reply_text(
+        format_concepts_list(concepts)
+    )
 
 
 @require_message
@@ -376,15 +374,8 @@ async def search(
         )
         return
 
-    lines = []
-    for i, c in enumerate(matches[:20], 1):
-        lines.append(f"{i}. {c.front} \u2014 {c.back}")
-    header = t(
-        "search_results_header", lang,
-        term=term, count=len(matches),
-    )
     await update.message.reply_text(
-        header + "\n".join(lines)
+        format_search_results(matches, term, lang)
     )
 
 
