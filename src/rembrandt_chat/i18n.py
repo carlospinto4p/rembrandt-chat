@@ -28,6 +28,17 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": "Cancelled.",
         "es": "Cancelado.",
     },
+    "error_generic": {
+        "en": (
+            "Something went wrong. "
+            "Use /cancel to reset, then try again."
+        ),
+        "es": (
+            "Algo sali\u00f3 mal. "
+            "Usa /cancel para reiniciar e "
+            "intenta de nuevo."
+        ),
+    },
     "expected_text": {
         "en": "Please send a text message.",
         "es": "Por favor, env\u00eda un mensaje de texto.",

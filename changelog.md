@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.20 - 30th March 2026
+
+- Improved global error handler in `bot.py`: now translated
+  via `error_generic` i18n key and suggests `/cancel` to
+  reset state.
+
+
 ### v0.33.19 - 30th March 2026
 
 - Grouped `/help` commands into four categories in `i18n.py`:

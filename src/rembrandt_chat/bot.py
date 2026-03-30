@@ -37,6 +37,7 @@ from rembrandt_chat.formatting import (
     TOPIC_CB_PREFIX,
     TPAGE_PREFIX,
 )
+from rembrandt_chat.i18n import t
 from rembrandt_chat.handlers import (
     AWAITING_BULK_FILE,
     AWAITING_DEFINITION,
@@ -436,8 +437,11 @@ async def _error_handler(
         return
     chat = update.effective_chat
     if chat is not None:
+        lang = None
+        if context.user_data:
+            lang = context.user_data.get("language")
         await chat.send_message(
-            "Something went wrong. Please try again."
+            t("error_generic", lang=lang)
         )
 
 
