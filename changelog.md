@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.3 - 30th March 2026
+
+- Changed default UI language from Spanish to English in
+  `i18n.py`: when no user language is set, the bot now
+  shows English text instead of Spanish.
+
+
 ### v0.33.2 - 26th March 2026
 
 - Moved formatting logic out of `word_handlers.py`:

@@ -639,14 +639,14 @@ def t(
 
     :param key: Translation key.
     :param lang: Language code (``"en"`` or ``"es"``).
-        Defaults to Spanish when ``None``.
+        Defaults to English when ``None``.
     :param kwargs: Format parameters interpolated into the
         string via `str.format()`.
     :return: The translated, formatted string.
     """
     entry = _STRINGS.get(key, {})
-    code = "en" if lang == "en" else "es"
-    text = entry.get(code, entry.get("es", key))
+    code = "es" if lang == "es" else "en"
+    text = entry.get(code, entry.get("en", key))
     if kwargs:
         text = text.format(**kwargs)
     return text
