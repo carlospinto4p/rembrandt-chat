@@ -59,6 +59,7 @@ from rembrandt_chat._helpers import (
     conversation_timeout,
     fallback_expected_file,
     fallback_expected_text,
+    fallback_unknown_callback,
 )
 from rembrandt_chat.word_handlers import (
     AWAITING_BULK_FILE,
@@ -87,6 +88,7 @@ __all__ = [
     "conversation_timeout",
     "fallback_expected_file",
     "fallback_expected_text",
+    "fallback_unknown_callback",
     "CANCEL_CB",
     "PLAY_BACK_PREFIX",
     "PLAY_CAT_PREFIX",

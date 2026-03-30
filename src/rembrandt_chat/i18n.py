@@ -39,6 +39,16 @@ _STRINGS: dict[str, dict[str, str]] = {
             "intenta de nuevo."
         ),
     },
+    "action_expired": {
+        "en": (
+            "This action is no longer available. "
+            "Use /play to start fresh."
+        ),
+        "es": (
+            "Esta acci\u00f3n ya no est\u00e1 disponible. "
+            "Usa /play para empezar de nuevo."
+        ),
+    },
     "expected_text": {
         "en": "Please send a text message.",
         "es": "Por favor, env\u00eda un mensaje de texto.",

@@ -48,6 +48,7 @@ from rembrandt_chat.handlers import (
     conversation_timeout,
     fallback_expected_file,
     fallback_expected_text,
+    fallback_unknown_callback,
     CANCEL_CB,
     PLAY_BACK_PREFIX,
     PLAY_CAT_PREFIX,
@@ -427,6 +428,11 @@ def create_app() -> None:
             filters.TEXT & ~filters.COMMAND,
             handle_answer_text,
         )
+    )
+
+    # Catch-all for unmatched callback queries — must be last
+    app.add_handler(
+        CallbackQueryHandler(fallback_unknown_callback)
     )
 
     app.add_error_handler(_error_handler)

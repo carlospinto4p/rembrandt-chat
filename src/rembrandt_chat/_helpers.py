@@ -187,6 +187,21 @@ async def conversation_timeout(
     return ConversationHandler.END
 
 
+async def fallback_unknown_callback(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Answer unmatched callback queries."""
+    query = update.callback_query
+    if query is None:
+        return
+    await query.answer()
+    lang = get_lang(context)
+    await query.edit_message_text(
+        t("action_expired", lang)
+    )
+
+
 async def fallback_expected_text(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,

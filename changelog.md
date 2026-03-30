@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.34.1 - 30th March 2026
+
+- Added catch-all callback handler in `bot.py`: unmatched
+  button presses now show "This action is no longer available"
+  instead of failing silently.
+- Added `fallback_unknown_callback()` in `_helpers.py` and
+  `action_expired` i18n key.
+
+
 ### v0.34.0 - 30th March 2026
 
 - Added "Study these" button after `/weak` output: starts
