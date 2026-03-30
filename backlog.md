@@ -1,6 +1,34 @@
 
 # Backlog - Rembrandt-Chat
 
+### 2026.03.30 (UX audit)
+
+- [ ] Translate hardcoded English in `formatting.py` — `"cards due"` (line 568) and `"errors"` (line 284) bypass i18n entirely; Spanish users see mixed-language text (HIGH impact, LOW effort)
+- [ ] Bug: `t("language_set", lang_code, name=name)` passes `lang_code` as positional arg instead of `lang=lang_code` in `session_handlers.py:772` — language confirmation may show in wrong language (HIGH impact, LOW effort)
+- [ ] Add next-step hints after session ends — `format_summary` shows stats but no CTA; append "Use /play to start another session" (HIGH impact, LOW effort)
+- [ ] Add next-step hints after `/stop` — same issue; user sees summary with no guidance on what to do next (HIGH impact, LOW effort)
+- [ ] Improve welcome message — currently just "Use /play"; should briefly explain the bot's purpose and mention `/help` for new users (HIGH impact, LOW effort)
+- [ ] Add cancel/back button to `/play` mode selection — after picking a topic, user can't go back to pick a different one; add a "← Back" button (HIGH impact, LOW effort)
+- [ ] Add cancel button to language selection keyboards — both `/play` language step and `/language` have no way to abort (HIGH impact, LOW effort)
+- [ ] Show word name in delete confirmation — "Are you sure?" doesn't say which word; user may have scrolled away and forgotten (HIGH impact, LOW effort)
+- [ ] Fix awkward plurals — `"day(s)"` in streak and `"word(s)"` in bulk import; use proper plural forms in both EN and ES (MEDIUM impact, LOW effort)
+- [ ] Add `/cancel` hint to multi-step flows — `/addword` steps (send word, send definition) and `/bulkimport` don't mention `/cancel` is available (MEDIUM impact, LOW effort)
+- [ ] Add next-step hints after stats commands — `/stats`, `/weak`, `/forecast`, `/retention`, `/history` all end with bare data and no CTA (MEDIUM impact, LOW effort)
+- [ ] Add conversation timeouts — `ConversationHandler` for `/addword`, `/bulkimport`, `/import` have no timeout; stale state persists indefinitely (MEDIUM impact, MEDIUM effort)
+- [ ] Add fallback handler for non-text input in conversations — sending an image during `/addword` is silently ignored; tell user text is expected (MEDIUM impact, LOW effort)
+- [ ] Group `/help` commands by category — 20+ commands in a flat list is overwhelming on mobile; group into Learning, Progress, Words, Settings sections (MEDIUM impact, LOW effort)
+- [ ] Improve error handler message — "Something went wrong" gives no recovery guidance; suggest `/cancel` to reset state (MEDIUM impact, LOW effort)
+- [ ] Add topic count to category buttons — category selection doesn't show how many topics each has; add `(N topics)` suffix (MEDIUM impact, LOW effort)
+- [ ] Improve `/bulkimport` prompt — add inline example of CSV and text format so users don't need to guess (MEDIUM impact, LOW effort)
+- [ ] Allow retry on bulk import file errors — file read error and "no valid words" both END the conversation instead of letting user send another file (MEDIUM impact, LOW effort)
+- [ ] Improve delete confirmation button labels — "Yes, delete" vs "No" is asymmetric; use "Delete" / "Keep" for clarity (LOW impact, LOW effort)
+- [ ] Improve quality button labels — "0 - No idea" through "5 - Easy" could use emoji for faster scanning on mobile (LOW impact, LOW effort)
+- [ ] Simplify weak words display — `"4/10 errors (40%)"` is redundant; show just percentage with emoji indicator (LOW impact, LOW effort)
+- [ ] Improve search usage message — `"Usage: /search <term>"` is terse; add example like `/search hello` (LOW impact, LOW effort)
+- [ ] Improve `/reminders` time format help — `"[HH:MM]"` is developer jargon; show example like `/reminders on 9:00` (LOW impact, LOW effort)
+- [ ] Add "Study these" button after `/weak` — let users start a session targeting their weak words directly (LOW impact, MEDIUM effort)
+- [ ] Catch-all callback handler — unmatched callback button presses fail silently; add fallback that says "Action no longer available, use /play" (LOW impact, LOW effort)
+
 ### 2026.03.25 (improvements pass)
 
 - [x] `/help` command — list all available commands with brief descriptions (HIGH impact, LOW effort)
