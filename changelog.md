@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.24 - 30th March 2026
+
+- Improved delete confirmation button labels in `i18n.py`:
+  "Yes, delete" / "No" → "Delete" / "Keep".
+
+
 ### v0.33.23 - 30th March 2026
 
 - Allow retry on `/bulkimport` file errors in

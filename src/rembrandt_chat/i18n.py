@@ -586,12 +586,12 @@ _STRINGS: dict[str, dict[str, str]] = {
         "es": "\u00bfEliminar \u201c{word}\u201d?",
     },
     "yes_delete": {
-        "en": "Yes, delete",
-        "es": "S\u00ed, eliminar",
+        "en": "Delete",
+        "es": "Eliminar",
     },
     "no_keep": {
-        "en": "No",
-        "es": "No",
+        "en": "Keep",
+        "es": "Conservar",
     },
     "word_deleted": {
         "en": "Word deleted.",
