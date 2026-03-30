@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.6 - 30th March 2026
+
+- Added `/ux-improvements` command:
+  - `.claude/commands/ux-improvements.md`
+  - `.claude/rules/ux_review.md`
+
+
 ### v0.33.5 - 30th March 2026
 
 - Changed session mode buttons (Mixed, Learn new, Review due)
