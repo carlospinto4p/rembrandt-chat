@@ -281,7 +281,7 @@ def format_weak_concepts(
     for i, w in enumerate(concepts, 1):
         lines.append(
             f"{i}. {w.concept.front} \u2014 "
-            f"{w.errors}/{w.attempts} errors "
+            f"{w.errors}/{w.attempts} {t('errors', lang)} "
             f"({w.error_rate:.0%})"
         )
     return "\n".join(lines)
@@ -565,7 +565,10 @@ def format_forecast(
         return t("no_reviews_scheduled", lang)
     lines = [t("upcoming_reviews_header", lang)]
     for f in forecast:
-        lines.append(f"{f.date}: {f.due_count} cards due")
+        lines.append(
+            t("forecast_line", lang,
+              date=f.date, count=f.due_count)
+        )
     return "\n".join(lines)
 
 

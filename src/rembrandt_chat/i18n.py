@@ -313,6 +313,10 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": "Your weakest words:\n",
         "es": "Tus palabras m\u00e1s d\u00e9biles:\n",
     },
+    "errors": {
+        "en": "errors",
+        "es": "errores",
+    },
     "topic_progress_header": {
         "en": "Topic progress:\n",
         "es": "Progreso por tema:\n",
@@ -349,6 +353,10 @@ _STRINGS: dict[str, dict[str, str]] = {
     "upcoming_reviews_header": {
         "en": "Upcoming reviews:\n",
         "es": "Pr\u00f3ximos repasos:\n",
+    },
+    "forecast_line": {
+        "en": "{date}: {count} cards due",
+        "es": "{date}: {count} tarjetas pendientes",
     },
     "no_history": {
         "en": (

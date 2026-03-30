@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.7 - 30th March 2026
+
+- Translated hardcoded English in `formatting.py`:
+  - `"errors"` (weak words list) → `t("errors", lang)`
+  - `"cards due"` (forecast) → `t("forecast_line", lang)`
+- Added i18n keys in `i18n.py`:
+  - `errors`
+  - `forecast_line`
+
+
 ### v0.33.6 - 30th March 2026
 
 - Added `/ux-improvements` command:
