@@ -38,6 +38,7 @@ from rembrandt_chat.formatting import (
     LANG_CB_PREFIX,
     PLAY_CAT_PREFIX,
     PLAY_LANG_PREFIX,
+    CANCEL_CB,
     PLAY_BACK_PREFIX,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
@@ -400,6 +401,17 @@ async def handle_play_topic_page(
     await query.edit_message_text(
         text, reply_markup=keyboard,
     )
+
+
+@require_callback
+async def handle_cancel_action(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Dismiss the current inline keyboard."""
+    query = update.callback_query
+    lang = get_lang(context)
+    await query.edit_message_text(t("cancelled", lang))
 
 
 @require_callback

@@ -649,6 +649,10 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": "\u25c0 Back",
         "es": "\u25c0 Volver",
     },
+    "cancel_btn": {
+        "en": "Cancel",
+        "es": "Cancelar",
+    },
     "prev": {
         "en": "\u25c0 Previous",
         "es": "\u25c0 Anterior",

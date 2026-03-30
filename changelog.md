@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.12 - 30th March 2026
+
+- Added cancel button to both language selection keyboards
+  (`format_play_languages` and `format_languages` in
+  `formatting.py`).
+- Added `CANCEL_CB` constant and `handle_cancel_action()`
+  handler for dismissing inline keyboards.
+- Added `cancel_btn` i18n key.
+
+
 ### v0.33.11 - 30th March 2026
 
 - Added back button to `/play` mode selection keyboard so

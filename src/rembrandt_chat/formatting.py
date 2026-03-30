@@ -294,6 +294,7 @@ PLAY_CAT_PREFIX = "play_cat:"
 PLAY_TPAGE_PREFIX = "play_tpage:"
 PLAY_MODE_PREFIX = "play_mode:"
 PLAY_BACK_PREFIX = "play_back:"
+CANCEL_CB = "cancel_action"
 CAT_CB_PREFIX = "cat:"
 TPAGE_PREFIX = "tpage:"
 LANG_CB_PREFIX = "lang:"
@@ -318,6 +319,10 @@ def format_play_languages(
         )]
         for lg in languages
     ]
+    buttons.append([InlineKeyboardButton(
+        t("cancel_btn", lang),
+        callback_data=CANCEL_CB,
+    )])
     return t("choose_language", lang), InlineKeyboardMarkup(
         buttons,
     )
@@ -340,6 +345,10 @@ def format_languages(
         )]
         for lg in languages
     ]
+    buttons.append([InlineKeyboardButton(
+        t("cancel_btn", lang),
+        callback_data=CANCEL_CB,
+    )])
     return t("choose_your_language", lang), (
         InlineKeyboardMarkup(buttons)
     )
