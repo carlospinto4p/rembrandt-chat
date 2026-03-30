@@ -340,6 +340,17 @@ _STRINGS: dict[str, dict[str, str]] = {
         "es": "Progreso por tema:\n",
     },
 
+    "stats_hint": {
+        "en": (
+            "\n\nUse /play to practice "
+            "or /weak to review difficult words."
+        ),
+        "es": (
+            "\n\nUsa /play para practicar "
+            "o /weak para repasar palabras dif\u00edciles."
+        ),
+    },
+
     # ---- retention / forecast / history ----
     "no_answers_yet": {
         "en": (

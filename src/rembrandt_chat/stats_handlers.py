@@ -69,6 +69,7 @@ async def stats(
             )
             text += "\n\n" + tp_text
 
+    text += t("stats_hint", lang)
     await update.message.reply_text(text)
 
 
@@ -82,9 +83,9 @@ async def weak(
     lang = get_lang(context)
 
     concepts = await db.weak_concepts(user.id, limit=10)
-    await update.message.reply_text(
-        format_weak_concepts(concepts, lang)
-    )
+    text = format_weak_concepts(concepts, lang)
+    text += t("stats_hint", lang)
+    await update.message.reply_text(text)
 
 
 @require_message
@@ -97,9 +98,9 @@ async def forecast(
     lang = get_lang(context)
 
     days = await db.forecast(user.id, days=7)
-    await update.message.reply_text(
-        format_forecast(days, lang)
-    )
+    text = format_forecast(days, lang)
+    text += t("stats_hint", lang)
+    await update.message.reply_text(text)
 
 
 @require_message
@@ -112,9 +113,9 @@ async def retention(
     lang = get_lang(context)
 
     rate = await db.retention_rate(user.id, days=30)
-    await update.message.reply_text(
-        format_retention(rate, lang)
-    )
+    text = format_retention(rate, lang)
+    text += t("stats_hint", lang)
+    await update.message.reply_text(text)
 
 
 _DAYS_MAP = {"1d": 1, "3d": 3, "7d": 7, "30d": 30}
@@ -148,9 +149,9 @@ async def history(
         c.id: c.front for c in concepts + user_concepts
     }
 
-    await update.message.reply_text(
-        format_history(records, concept_map, lang)
-    )
+    text = format_history(records, concept_map, lang)
+    text += t("stats_hint", lang)
+    await update.message.reply_text(text)
 
 
 @require_message

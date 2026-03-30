@@ -1,6 +1,18 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.16 - 30th March 2026
+
+- Added next-step hint footer to all stats commands in
+  `stats_handlers.py`:
+  - `/stats`
+  - `/weak`
+  - `/forecast`
+  - `/retention`
+  - `/history`
+- Added `stats_hint` i18n key.
+
+
 ### v0.33.15 - 30th March 2026
 
 - Added `/cancel` hints to all multi-step flow prompts in
