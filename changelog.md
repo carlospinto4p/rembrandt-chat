@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.25 - 30th March 2026
+
+- Added emoji to quality button labels in `i18n.py` for
+  faster visual scanning on mobile.
+
+
 ### v0.33.24 - 30th March 2026
 
 - Improved delete confirmation button labels in `i18n.py`:

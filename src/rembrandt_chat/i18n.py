@@ -270,22 +270,22 @@ _STRINGS: dict[str, dict[str, str]] = {
 
     # ---- quality labels ----
     "quality_0": {
-        "en": "0 - No idea", "es": "0 - Ni idea",
+        "en": "\u2753 No idea", "es": "\u2753 Ni idea",
     },
     "quality_1": {
-        "en": "1 - Wrong", "es": "1 - Mal",
+        "en": "\u274c Wrong", "es": "\u274c Mal",
     },
     "quality_2": {
-        "en": "2 - Almost", "es": "2 - Casi",
+        "en": "\U0001f7e1 Almost", "es": "\U0001f7e1 Casi",
     },
     "quality_3": {
-        "en": "3 - Hard", "es": "3 - Dif\u00edcil",
+        "en": "\U0001f914 Hard", "es": "\U0001f914 Dif\u00edcil",
     },
     "quality_4": {
-        "en": "4 - Good", "es": "4 - Bien",
+        "en": "\u2705 Good", "es": "\u2705 Bien",
     },
     "quality_5": {
-        "en": "5 - Easy", "es": "5 - F\u00e1cil",
+        "en": "\U0001f929 Easy", "es": "\U0001f929 F\u00e1cil",
     },
 
     # ---- answer feedback ----

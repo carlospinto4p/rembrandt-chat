@@ -22,7 +22,7 @@
 - [x] Improve `/bulkimport` prompt — add inline example of CSV and text format so users don't need to guess (MEDIUM impact, LOW effort)
 - [x] Allow retry on bulk import file errors — file read error and "no valid words" both END the conversation instead of letting user send another file (MEDIUM impact, LOW effort)
 - [x] Improve delete confirmation button labels — "Yes, delete" vs "No" is asymmetric; use "Delete" / "Keep" for clarity (LOW impact, LOW effort)
-- [ ] Improve quality button labels — "0 - No idea" through "5 - Easy" could use emoji for faster scanning on mobile (LOW impact, LOW effort)
+- [x] Improve quality button labels — "0 - No idea" through "5 - Easy" could use emoji for faster scanning on mobile (LOW impact, LOW effort)
 - [ ] Simplify weak words display — `"4/10 errors (40%)"` is redundant; show just percentage with emoji indicator (LOW impact, LOW effort)
 - [ ] Improve search usage message — `"Usage: /search <term>"` is terse; add example like `/search hello` (LOW impact, LOW effort)
 - [ ] Improve `/reminders` time format help — `"[HH:MM]"` is developer jargon; show example like `/reminders on 9:00` (LOW impact, LOW effort)
