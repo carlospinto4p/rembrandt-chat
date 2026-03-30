@@ -52,6 +52,10 @@ from rembrandt_chat.stats_handlers import (
     stats,
     weak,
 )
+from rembrandt_chat._helpers import (
+    CONVERSATION_TIMEOUT,
+    conversation_timeout,
+)
 from rembrandt_chat.word_handlers import (
     AWAITING_BULK_FILE,
     AWAITING_DEFINITION,
@@ -75,6 +79,8 @@ from rembrandt_chat.word_handlers import (
 )
 
 __all__ = [
+    "CONVERSATION_TIMEOUT",
+    "conversation_timeout",
     "CANCEL_CB",
     "PLAY_BACK_PREFIX",
     "PLAY_CAT_PREFIX",

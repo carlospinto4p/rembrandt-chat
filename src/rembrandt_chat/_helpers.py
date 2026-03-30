@@ -170,6 +170,23 @@ def require_callback(
     return wrapper
 
 
+CONVERSATION_TIMEOUT = 300  # 5 minutes
+
+
+async def conversation_timeout(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> int:
+    """Notify user when a conversation times out."""
+    lang = get_lang(context)
+    chat = update.effective_chat
+    if chat is not None:
+        await chat.send_message(
+            t("conversation_timeout", lang)
+        )
+    return ConversationHandler.END
+
+
 async def send_typing(update: Update) -> None:
     """Send a typing indicator to the user's chat.
 

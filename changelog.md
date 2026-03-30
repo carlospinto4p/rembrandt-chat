@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.17 - 30th March 2026
+
+- Added 5-minute conversation timeouts to all
+  `ConversationHandler` instances (`/addword`, `/bulkimport`,
+  `/import`) in `bot.py`.
+- Added `CONVERSATION_TIMEOUT` constant and
+  `conversation_timeout()` handler in `_helpers.py`.
+- Added `conversation_timeout` i18n key.
+
+
 ### v0.33.16 - 30th March 2026
 
 - Added next-step hint footer to all stats commands in

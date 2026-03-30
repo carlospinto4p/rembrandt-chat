@@ -28,6 +28,13 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": "Cancelled.",
         "es": "Cancelado.",
     },
+    "conversation_timeout": {
+        "en": "Session timed out. Please start again.",
+        "es": (
+            "La sesi\u00f3n expir\u00f3. "
+            "Por favor, intenta de nuevo."
+        ),
+    },
 
     # ---- help ----
     "help": {

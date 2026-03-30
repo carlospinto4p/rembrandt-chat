@@ -43,6 +43,8 @@ from rembrandt_chat.handlers import (
     AWAITING_FILE,
     AWAITING_TAGS,
     AWAITING_WORD,
+    CONVERSATION_TIMEOUT,
+    conversation_timeout,
     CANCEL_CB,
     PLAY_BACK_PREFIX,
     PLAY_CAT_PREFIX,
@@ -226,6 +228,14 @@ def create_app() -> None:
     app.add_handler(CommandHandler("export", export_progress))
     app.add_handler(CommandHandler("reminders", reminders))
 
+    _timeout_states = {
+        ConversationHandler.TIMEOUT: [
+            MessageHandler(
+                filters.ALL, conversation_timeout,
+            ),
+        ],
+    }
+
     import_conv = ConversationHandler(
         entry_points=[
             CommandHandler("import", import_start),
@@ -237,10 +247,12 @@ def create_app() -> None:
                     import_file,
                 ),
             ],
+            **_timeout_states,
         },
         fallbacks=[
             CommandHandler("cancel", import_cancel),
         ],
+        conversation_timeout=CONVERSATION_TIMEOUT,
     )
     app.add_handler(import_conv)
 
@@ -268,10 +280,12 @@ def create_app() -> None:
                     addword_tags,
                 ),
             ],
+            **_timeout_states,
         },
         fallbacks=[
             CommandHandler("cancel", addword_cancel),
         ],
+        conversation_timeout=CONVERSATION_TIMEOUT,
     )
     app.add_handler(addword_conv)
 
@@ -286,10 +300,12 @@ def create_app() -> None:
                     bulkimport_file,
                 ),
             ],
+            **_timeout_states,
         },
         fallbacks=[
             CommandHandler("cancel", bulkimport_cancel),
         ],
+        conversation_timeout=CONVERSATION_TIMEOUT,
     )
     app.add_handler(bulkimport_conv)
 
