@@ -769,5 +769,5 @@ async def handle_language_callback(
     lang_obj = await db.get_language(lang_code)
     name = lang_obj.name if lang_obj else lang_code
     await query.edit_message_text(
-        t("language_set", lang_code, name=name)
+        t("language_set", lang=lang_code, name=name)
     )

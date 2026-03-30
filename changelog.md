@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.8 - 30th March 2026
+
+- Fixed `t("language_set", lang_code, ...)` in
+  `session_handlers.py`: passed `lang_code` as keyword
+  `lang=lang_code` so the confirmation shows in the
+  correct language.
+
+
 ### v0.33.7 - 30th March 2026
 
 - Translated hardcoded English in `formatting.py`:

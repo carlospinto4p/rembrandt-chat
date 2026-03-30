@@ -4,7 +4,7 @@
 ### 2026.03.30 (UX audit)
 
 - [x] Translate hardcoded English in `formatting.py` — `"cards due"` (line 568) and `"errors"` (line 284) bypass i18n entirely; Spanish users see mixed-language text (HIGH impact, LOW effort)
-- [ ] Bug: `t("language_set", lang_code, name=name)` passes `lang_code` as positional arg instead of `lang=lang_code` in `session_handlers.py:772` — language confirmation may show in wrong language (HIGH impact, LOW effort)
+- [x] Bug: `t("language_set", lang_code, name=name)` passes `lang_code` as positional arg instead of `lang=lang_code` in `session_handlers.py:772` — language confirmation may show in wrong language (HIGH impact, LOW effort)
 - [ ] Add next-step hints after session ends — `format_summary` shows stats but no CTA; append "Use /play to start another session" (HIGH impact, LOW effort)
 - [ ] Add next-step hints after `/stop` — same issue; user sees summary with no guidance on what to do next (HIGH impact, LOW effort)
 - [ ] Improve welcome message — currently just "Use /play"; should briefly explain the bot's purpose and mention `/help` for new users (HIGH impact, LOW effort)
