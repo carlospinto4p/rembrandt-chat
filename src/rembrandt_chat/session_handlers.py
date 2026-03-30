@@ -359,7 +359,9 @@ async def handle_play_topic(
             "choose_session_mode", lang,
             topic=topic_label,
         ),
-        reply_markup=InlineKeyboardMarkup([buttons]),
+        reply_markup=InlineKeyboardMarkup(
+            [[b] for b in buttons]
+        ),
     )
 
 

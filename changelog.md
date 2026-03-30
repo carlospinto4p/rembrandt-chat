@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.5 - 30th March 2026
+
+- Changed session mode buttons (Mixed, Learn new, Review due)
+  to one per row in `session_handlers.py` for better tap
+  targets on mobile.
+
+
 ### v0.33.4 - 30th March 2026
 
 - Redesigned multiple-choice exercise layout in
