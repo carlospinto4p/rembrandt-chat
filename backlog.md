@@ -12,7 +12,7 @@
 - [x] Add cancel button to language selection keyboards — both `/play` language step and `/language` have no way to abort (HIGH impact, LOW effort)
 - [x] Show word name in delete confirmation — "Are you sure?" doesn't say which word; user may have scrolled away and forgotten (HIGH impact, LOW effort)
 - [x] Fix awkward plurals — `"day(s)"` in streak and `"word(s)"` in bulk import; use proper plural forms in both EN and ES (MEDIUM impact, LOW effort)
-- [ ] Add `/cancel` hint to multi-step flows — `/addword` steps (send word, send definition) and `/bulkimport` don't mention `/cancel` is available (MEDIUM impact, LOW effort)
+- [x] Add `/cancel` hint to multi-step flows — `/addword` steps (send word, send definition) and `/bulkimport` don't mention `/cancel` is available (MEDIUM impact, LOW effort)
 - [ ] Add next-step hints after stats commands — `/stats`, `/weak`, `/forecast`, `/retention`, `/history` all end with bare data and no CTA (MEDIUM impact, LOW effort)
 - [ ] Add conversation timeouts — `ConversationHandler` for `/addword`, `/bulkimport`, `/import` have no timeout; stale state persists indefinitely (MEDIUM impact, MEDIUM effort)
 - [ ] Add fallback handler for non-text input in conversations — sending an image during `/addword` is silently ignored; tell user text is expected (MEDIUM impact, LOW effort)

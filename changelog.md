@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.15 - 30th March 2026
+
+- Added `/cancel` hints to all multi-step flow prompts in
+  `i18n.py`:
+  - `send_word`
+  - `send_definition`
+  - `send_tags`
+  - `bulkimport_prompt`
+  - `import_prompt`
+
+
 ### v0.33.14 - 30th March 2026
 
 - Fixed awkward `(s)` plurals in `i18n.py`: replaced with

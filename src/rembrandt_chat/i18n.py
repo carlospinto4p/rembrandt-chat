@@ -393,12 +393,15 @@ _STRINGS: dict[str, dict[str, str]] = {
 
     # ---- word management ----
     "send_word": {
-        "en": "Send the word:",
-        "es": "Env\u00eda la palabra:",
+        "en": "Send the word (/cancel to abort):",
+        "es": "Env\u00eda la palabra (/cancel para salir):",
     },
     "send_definition": {
-        "en": "Send the definition:",
-        "es": "Env\u00eda la definici\u00f3n:",
+        "en": "Send the definition (/cancel to abort):",
+        "es": (
+            "Env\u00eda la definici\u00f3n "
+            "(/cancel para salir):"
+        ),
     },
     "word_empty": {
         "en": (
@@ -411,10 +414,14 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "send_tags": {
-        "en": "Send tags (comma-separated) or /skip:",
+        "en": (
+            "Send tags (comma-separated), "
+            "/skip, or /cancel:"
+        ),
         "es": (
             "Env\u00eda etiquetas "
-            "(separadas por coma) o /skip:"
+            "(separadas por coma), "
+            "/skip o /cancel:"
         ),
     },
     "word_added": {
@@ -433,14 +440,16 @@ _STRINGS: dict[str, dict[str, str]] = {
     },
     "bulkimport_prompt": {
         "en": (
-            "Send a file with words to import.\n\n"
+            "Send a file with words to import "
+            "(/cancel to abort).\n\n"
             "Supported formats:\n"
             "- CSV: front,back (optional: tags column)\n"
             '- Text: one "word \u2014 definition" per line'
         ),
         "es": (
             "Env\u00eda un archivo con palabras "
-            "para importar.\n\n"
+            "para importar "
+            "(/cancel para salir).\n\n"
             "Formatos soportados:\n"
             "- CSV: frente,reverso "
             "(opcional: columna de etiquetas)\n"
@@ -555,11 +564,11 @@ _STRINGS: dict[str, dict[str, str]] = {
     "import_prompt": {
         "en": (
             "Send the JSON file exported "
-            "with /export."
+            "with /export (/cancel to abort)."
         ),
         "es": (
             "Env\u00eda el archivo JSON exportado "
-            "con /export."
+            "con /export (/cancel para salir)."
         ),
     },
     "send_json_file": {
