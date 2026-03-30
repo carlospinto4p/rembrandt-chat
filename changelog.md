@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.19 - 30th March 2026
+
+- Grouped `/help` commands into four categories in `i18n.py`:
+  Learning, Words, Progress, and Settings.
+
+
 ### v0.33.18 - 30th March 2026
 
 - Added fallback handlers for unexpected input in all
