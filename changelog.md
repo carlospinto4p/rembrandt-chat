@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.10 - 30th March 2026
+
+- Improved welcome message in `i18n.py`: explains the bot's
+  purpose and lists key commands (`/play`, `/addword`, `/help`).
+
+
 ### v0.33.9 - 30th March 2026
 
 - Updated `session_complete` i18n strings to include next-step

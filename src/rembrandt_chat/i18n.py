@@ -3,8 +3,22 @@
 _STRINGS: dict[str, dict[str, str]] = {
     # ---- general ----
     "welcome": {
-        "en": "Welcome, {name}!\n\nUse /play to start an exercise session.",
-        "es": "\u00a1Bienvenido, {name}!\n\nUsa /play para iniciar una sesi\u00f3n.",
+        "en": (
+            "Welcome, {name}!\n\n"
+            "I help you learn vocabulary with spaced "
+            "repetition exercises.\n\n"
+            "/play \u2014 Start a practice session\n"
+            "/addword \u2014 Add your own words\n"
+            "/help \u2014 See all commands"
+        ),
+        "es": (
+            "\u00a1Bienvenido, {name}!\n\n"
+            "Te ayudo a aprender vocabulario con "
+            "ejercicios de repetici\u00f3n espaciada.\n\n"
+            "/play \u2014 Iniciar una sesi\u00f3n\n"
+            "/addword \u2014 Agregar tus palabras\n"
+            "/help \u2014 Ver todos los comandos"
+        ),
     },
     "nothing_to_cancel": {
         "en": "Nothing to cancel.",
