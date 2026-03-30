@@ -15,7 +15,7 @@
 - [x] Add `/cancel` hint to multi-step flows — `/addword` steps (send word, send definition) and `/bulkimport` don't mention `/cancel` is available (MEDIUM impact, LOW effort)
 - [x] Add next-step hints after stats commands — `/stats`, `/weak`, `/forecast`, `/retention`, `/history` all end with bare data and no CTA (MEDIUM impact, LOW effort)
 - [x] Add conversation timeouts — `ConversationHandler` for `/addword`, `/bulkimport`, `/import` have no timeout; stale state persists indefinitely (MEDIUM impact, MEDIUM effort)
-- [ ] Add fallback handler for non-text input in conversations — sending an image during `/addword` is silently ignored; tell user text is expected (MEDIUM impact, LOW effort)
+- [x] Add fallback handler for non-text input in conversations — sending an image during `/addword` is silently ignored; tell user text is expected (MEDIUM impact, LOW effort)
 - [ ] Group `/help` commands by category — 20+ commands in a flat list is overwhelming on mobile; group into Learning, Progress, Words, Settings sections (MEDIUM impact, LOW effort)
 - [ ] Improve error handler message — "Something went wrong" gives no recovery guidance; suggest `/cancel` to reset state (MEDIUM impact, LOW effort)
 - [ ] Add topic count to category buttons — category selection doesn't show how many topics each has; add `(N topics)` suffix (MEDIUM impact, LOW effort)

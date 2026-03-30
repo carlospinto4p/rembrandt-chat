@@ -45,6 +45,8 @@ from rembrandt_chat.handlers import (
     AWAITING_WORD,
     CONVERSATION_TIMEOUT,
     conversation_timeout,
+    fallback_expected_file,
+    fallback_expected_text,
     CANCEL_CB,
     PLAY_BACK_PREFIX,
     PLAY_CAT_PREFIX,
@@ -235,6 +237,14 @@ def create_app() -> None:
             ),
         ],
     }
+    _text_fallback = MessageHandler(
+        ~filters.TEXT & ~filters.COMMAND,
+        fallback_expected_text,
+    )
+    _file_fallback = MessageHandler(
+        filters.TEXT & ~filters.COMMAND,
+        fallback_expected_file,
+    )
 
     import_conv = ConversationHandler(
         entry_points=[
@@ -246,6 +256,7 @@ def create_app() -> None:
                     filters.Document.ALL,
                     import_file,
                 ),
+                _file_fallback,
             ],
             **_timeout_states,
         },
@@ -266,12 +277,14 @@ def create_app() -> None:
                     filters.TEXT & ~filters.COMMAND,
                     addword_word,
                 ),
+                _text_fallback,
             ],
             AWAITING_DEFINITION: [
                 MessageHandler(
                     filters.TEXT & ~filters.COMMAND,
                     addword_definition,
                 ),
+                _text_fallback,
             ],
             AWAITING_TAGS: [
                 CommandHandler("skip", addword_skip_tags),
@@ -279,6 +292,7 @@ def create_app() -> None:
                     filters.TEXT & ~filters.COMMAND,
                     addword_tags,
                 ),
+                _text_fallback,
             ],
             **_timeout_states,
         },
@@ -299,6 +313,7 @@ def create_app() -> None:
                     filters.Document.ALL,
                     bulkimport_file,
                 ),
+                _file_fallback,
             ],
             **_timeout_states,
         },

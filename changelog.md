@@ -1,6 +1,19 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.18 - 30th March 2026
+
+- Added fallback handlers for unexpected input in all
+  conversation states in `bot.py`:
+  - Text-expecting states (`/addword`): replies "Please send
+    a text message" when user sends images, stickers, etc.
+  - File-expecting states (`/bulkimport`, `/import`): replies
+    "Please send a file, not text" when user sends text.
+- Added `fallback_expected_text()` and
+  `fallback_expected_file()` in `_helpers.py`.
+- Added `expected_text` and `expected_file` i18n keys.
+
+
 ### v0.33.17 - 30th March 2026
 
 - Added 5-minute conversation timeouts to all

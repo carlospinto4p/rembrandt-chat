@@ -187,6 +187,30 @@ async def conversation_timeout(
     return ConversationHandler.END
 
 
+async def fallback_expected_text(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Reply when user sends non-text in a text-expecting state."""
+    lang = get_lang(context)
+    if update.message:
+        await update.message.reply_text(
+            t("expected_text", lang)
+        )
+
+
+async def fallback_expected_file(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Reply when user sends text in a file-expecting state."""
+    lang = get_lang(context)
+    if update.message:
+        await update.message.reply_text(
+            t("expected_file", lang)
+        )
+
+
 async def send_typing(update: Update) -> None:
     """Send a typing indicator to the user's chat.
 

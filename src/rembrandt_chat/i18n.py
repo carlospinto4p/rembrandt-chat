@@ -28,6 +28,14 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": "Cancelled.",
         "es": "Cancelado.",
     },
+    "expected_text": {
+        "en": "Please send a text message.",
+        "es": "Por favor, env\u00eda un mensaje de texto.",
+    },
+    "expected_file": {
+        "en": "Please send a file, not text.",
+        "es": "Por favor, env\u00eda un archivo, no texto.",
+    },
     "conversation_timeout": {
         "en": "Session timed out. Please start again.",
         "es": (
