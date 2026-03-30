@@ -645,6 +645,10 @@ _STRINGS: dict[str, dict[str, str]] = {
     },
 
     # ---- pagination ----
+    "back": {
+        "en": "\u25c0 Back",
+        "es": "\u25c0 Volver",
+    },
     "prev": {
         "en": "\u25c0 Previous",
         "es": "\u25c0 Anterior",

@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.11 - 30th March 2026
+
+- Added back button to `/play` mode selection keyboard so
+  users can return to the category list instead of being
+  forced to pick a mode.
+- Added `PLAY_BACK_PREFIX` in `formatting.py` and
+  `handle_play_back()` in `session_handlers.py`.
+- Added `back` i18n key.
+
+
 ### v0.33.10 - 30th March 2026
 
 - Improved welcome message in `i18n.py`: explains the bot's

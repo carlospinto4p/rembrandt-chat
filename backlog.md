@@ -8,7 +8,7 @@
 - [x] Add next-step hints after session ends — `format_summary` shows stats but no CTA; append "Use /play to start another session" (HIGH impact, LOW effort)
 - [x] Add next-step hints after `/stop` — same issue; user sees summary with no guidance on what to do next (HIGH impact, LOW effort)
 - [x] Improve welcome message — currently just "Use /play"; should briefly explain the bot's purpose and mention `/help` for new users (HIGH impact, LOW effort)
-- [ ] Add cancel/back button to `/play` mode selection — after picking a topic, user can't go back to pick a different one; add a "← Back" button (HIGH impact, LOW effort)
+- [x] Add cancel/back button to `/play` mode selection — after picking a topic, user can't go back to pick a different one; add a "← Back" button (HIGH impact, LOW effort)
 - [ ] Add cancel button to language selection keyboards — both `/play` language step and `/language` have no way to abort (HIGH impact, LOW effort)
 - [ ] Show word name in delete confirmation — "Are you sure?" doesn't say which word; user may have scrolled away and forgotten (HIGH impact, LOW effort)
 - [ ] Fix awkward plurals — `"day(s)"` in streak and `"word(s)"` in bulk import; use proper plural forms in both EN and ES (MEDIUM impact, LOW effort)

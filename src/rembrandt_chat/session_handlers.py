@@ -38,6 +38,7 @@ from rembrandt_chat.formatting import (
     LANG_CB_PREFIX,
     PLAY_CAT_PREFIX,
     PLAY_LANG_PREFIX,
+    PLAY_BACK_PREFIX,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
     PLAY_TPAGE_PREFIX,
@@ -354,14 +355,17 @@ async def handle_play_topic(
         )
         for mode, key in _MODE_KEYS.items()
     ]
+    back_btn = InlineKeyboardButton(
+        t("back", lang),
+        callback_data=f"{PLAY_BACK_PREFIX}cat",
+    )
+    rows = [[b] for b in buttons] + [[back_btn]]
     await query.edit_message_text(
         t(
             "choose_session_mode", lang,
             topic=topic_label,
         ),
-        reply_markup=InlineKeyboardMarkup(
-            [[b] for b in buttons]
-        ),
+        reply_markup=InlineKeyboardMarkup(rows),
     )
 
 
@@ -393,6 +397,24 @@ async def handle_play_topic_page(
         filtered, progress, lang=lang,
         page=page, cat_key=cat_key,
     )
+    await query.edit_message_text(
+        text, reply_markup=keyboard,
+    )
+
+
+@require_callback
+async def handle_play_back(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Handle back button press from mode selection."""
+    query = update.callback_query
+    data = query.data or ""
+    if not data.startswith(PLAY_BACK_PREFIX):
+        return
+
+    lang = get_lang(context)
+    text, keyboard = format_play_categories(lang=lang)
     await query.edit_message_text(
         text, reply_markup=keyboard,
     )

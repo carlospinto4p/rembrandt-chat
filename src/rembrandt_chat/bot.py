@@ -43,6 +43,7 @@ from rembrandt_chat.handlers import (
     AWAITING_FILE,
     AWAITING_TAGS,
     AWAITING_WORD,
+    PLAY_BACK_PREFIX,
     PLAY_CAT_PREFIX,
     PLAY_LANG_PREFIX,
     PLAY_MODE_PREFIX,
@@ -68,6 +69,7 @@ from rembrandt_chat.handlers import (
     handle_deleteword_cancel,
     handle_deleteword_confirm,
     handle_language_callback,
+    handle_play_back,
     handle_play_category,
     handle_play_language,
     handle_play_topic,
@@ -321,6 +323,12 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_play_mode,
             pattern=f"^{PLAY_MODE_PREFIX}",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_play_back,
+            pattern=f"^{PLAY_BACK_PREFIX}",
         )
     )
     app.add_handler(
