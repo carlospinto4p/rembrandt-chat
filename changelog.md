@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.28 - 30th March 2026
+
+- Improved `/reminders` off message in `i18n.py`: replaced
+  `[HH:MM]` jargon with a concrete example
+  (`/reminders on 9:00`).
+
+
 ### v0.33.27 - 30th March 2026
 
 - Improved `/search` usage message in `i18n.py`: added

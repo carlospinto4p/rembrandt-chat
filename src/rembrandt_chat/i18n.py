@@ -687,15 +687,15 @@ _STRINGS: dict[str, dict[str, str]] = {
     },
     "reminders_off": {
         "en": (
-            "Reminders are OFF.\n"
-            "Use /reminders on [HH:MM] to enable "
-            "(default 09:00 UTC)."
+            "Reminders are OFF.\n\n"
+            "Enable: /reminders on 9:00\n"
+            "(default 09:00 UTC)"
         ),
         "es": (
             "Los recordatorios est\u00e1n "
-            "desactivados.\n"
-            "Usa /reminders on [HH:MM] para activar "
-            "(por defecto 09:00 UTC)."
+            "desactivados.\n\n"
+            "Activar: /reminders on 9:00\n"
+            "(por defecto 09:00 UTC)"
         ),
     },
     "reminders_enabled": {
