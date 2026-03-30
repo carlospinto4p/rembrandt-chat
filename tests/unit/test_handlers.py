@@ -151,7 +151,7 @@ async def test_play_language_shows_category_keyboard():
     kb = call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
-    assert "Vocabulario" in labels
+    assert any("Vocabulario" in lb for lb in labels)
 
 
 @pytest.mark.asyncio
@@ -754,8 +754,8 @@ async def test_topics_shows_categories():
     ]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
-    assert "Vocabulary" in labels
-    assert "Culture" in labels
+    assert any("Vocabulary" in lb for lb in labels)
+    assert any("Culture" in lb for lb in labels)
 
 
 @pytest.mark.asyncio

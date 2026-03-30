@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.21 - 30th March 2026
+
+- Added topic count to category buttons in `formatting.py`:
+  both `/play` and `/topics` now show e.g. "Vocabulary (5)"
+  instead of just "Vocabulary".
+
+
 ### v0.33.20 - 30th March 2026
 
 - Improved global error handler in `bot.py`: now translated

@@ -21,6 +21,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from rembrandt_chat.i18n import t
 from rembrandt_chat.topic_translations import (
     CATEGORIES,
+    Category,
     all_topics_label,
     category_name,
     topic_title,
@@ -354,6 +355,11 @@ def format_languages(
     )
 
 
+def _cat_label(cat: Category, lang: str | None) -> str:
+    count = len(cat.topic_ids)
+    return f"{category_name(cat, lang)} ({count})"
+
+
 def format_play_categories(
     lang: str | None = None,
 ) -> tuple[str, InlineKeyboardMarkup]:
@@ -364,7 +370,7 @@ def format_play_categories(
     """
     buttons = [
         [InlineKeyboardButton(
-            category_name(cat, lang),
+            _cat_label(cat, lang),
             callback_data=f"{PLAY_CAT_PREFIX}{cat.key}",
         )]
         for cat in CATEGORIES
@@ -384,7 +390,7 @@ def format_categories(
     """
     buttons = [
         [InlineKeyboardButton(
-            category_name(cat, lang),
+            _cat_label(cat, lang),
             callback_data=f"{CAT_CB_PREFIX}{cat.key}",
         )]
         for cat in CATEGORIES

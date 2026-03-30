@@ -18,7 +18,7 @@
 - [x] Add fallback handler for non-text input in conversations — sending an image during `/addword` is silently ignored; tell user text is expected (MEDIUM impact, LOW effort)
 - [x] Group `/help` commands by category — 20+ commands in a flat list is overwhelming on mobile; group into Learning, Progress, Words, Settings sections (MEDIUM impact, LOW effort)
 - [x] Improve error handler message — "Something went wrong" gives no recovery guidance; suggest `/cancel` to reset state (MEDIUM impact, LOW effort)
-- [ ] Add topic count to category buttons — category selection doesn't show how many topics each has; add `(N topics)` suffix (MEDIUM impact, LOW effort)
+- [x] Add topic count to category buttons — category selection doesn't show how many topics each has; add `(N topics)` suffix (MEDIUM impact, LOW effort)
 - [ ] Improve `/bulkimport` prompt — add inline example of CSV and text format so users don't need to guess (MEDIUM impact, LOW effort)
 - [ ] Allow retry on bulk import file errors — file read error and "no valid words" both END the conversation instead of letting user send another file (MEDIUM impact, LOW effort)
 - [ ] Improve delete confirmation button labels — "Yes, delete" vs "No" is asymmetric; use "Delete" / "Keep" for clarity (LOW impact, LOW effort)
