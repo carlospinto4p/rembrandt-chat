@@ -487,19 +487,25 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": (
             "Send a file with words to import "
             "(/cancel to abort).\n\n"
-            "Supported formats:\n"
-            "- CSV: front,back (optional: tags column)\n"
-            '- Text: one "word \u2014 definition" per line'
+            "Supported formats:\n\n"
+            "CSV:\n"
+            "apple,manzana\n"
+            "book,libro,nouns\n\n"
+            "Text:\n"
+            "apple \u2014 manzana\n"
+            "book \u2014 libro"
         ),
         "es": (
             "Env\u00eda un archivo con palabras "
             "para importar "
             "(/cancel para salir).\n\n"
-            "Formatos soportados:\n"
-            "- CSV: frente,reverso "
-            "(opcional: columna de etiquetas)\n"
-            '- Texto: una "palabra \u2014 definici\u00f3n" '
-            "por l\u00ednea"
+            "Formatos soportados:\n\n"
+            "CSV:\n"
+            "apple,manzana\n"
+            "book,libro,sustantivos\n\n"
+            "Texto:\n"
+            "apple \u2014 manzana\n"
+            "book \u2014 libro"
         ),
     },
     "send_file": {

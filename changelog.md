@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.22 - 30th March 2026
+
+- Improved `/bulkimport` prompt in `i18n.py`: replaced
+  format descriptions with inline examples showing CSV
+  and text formats.
+
+
 ### v0.33.21 - 30th March 2026
 
 - Added topic count to category buttons in `formatting.py`:
