@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.27 - 30th March 2026
+
+- Improved `/search` usage message in `i18n.py`: added
+  example (`/search hello`).
+
+
 ### v0.33.26 - 30th March 2026
 
 - Simplified weak words display in `formatting.py`:

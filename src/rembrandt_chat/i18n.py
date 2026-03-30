@@ -556,8 +556,8 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "search_usage": {
-        "en": "Usage: /search <term>",
-        "es": "Uso: /search <t\u00e9rmino>",
+        "en": "Usage: /search <term>\n\nExample: /search hello",
+        "es": "Uso: /search <t\u00e9rmino>\n\nEjemplo: /search hola",
     },
     "search_no_results": {
         "en": 'No results for "{term}".',
