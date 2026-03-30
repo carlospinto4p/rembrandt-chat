@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.9 - 30th March 2026
+
+- Updated `session_complete` i18n strings to include next-step
+  hints ("Use /play for another session or /stats to see your
+  progress") in both EN and ES.
+
+
 ### v0.33.8 - 30th March 2026
 
 - Fixed `t("language_set", lang_code, ...)` in

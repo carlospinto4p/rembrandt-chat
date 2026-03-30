@@ -277,7 +277,9 @@ _STRINGS: dict[str, dict[str, str]] = {
             "Correct: {correct}\n"
             "Incorrect: {incorrect}\n"
             "Accuracy: {accuracy}%\n"
-            "Best streak: {streak}"
+            "Best streak: {streak}\n\n"
+            "Use /play for another session "
+            "or /stats to see your progress."
         ),
         "es": (
             "\u00a1Sesi\u00f3n completada!\n\n"
@@ -285,7 +287,9 @@ _STRINGS: dict[str, dict[str, str]] = {
             "Correctas: {correct}\n"
             "Incorrectas: {incorrect}\n"
             "Precisi\u00f3n: {accuracy}%\n"
-            "Mejor racha: {streak}"
+            "Mejor racha: {streak}\n\n"
+            "Usa /play para otra sesi\u00f3n "
+            "o /stats para ver tu progreso."
         ),
     },
 
