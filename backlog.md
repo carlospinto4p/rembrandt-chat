@@ -20,7 +20,7 @@
 - [x] Improve error handler message — "Something went wrong" gives no recovery guidance; suggest `/cancel` to reset state (MEDIUM impact, LOW effort)
 - [x] Add topic count to category buttons — category selection doesn't show how many topics each has; add `(N topics)` suffix (MEDIUM impact, LOW effort)
 - [x] Improve `/bulkimport` prompt — add inline example of CSV and text format so users don't need to guess (MEDIUM impact, LOW effort)
-- [ ] Allow retry on bulk import file errors — file read error and "no valid words" both END the conversation instead of letting user send another file (MEDIUM impact, LOW effort)
+- [x] Allow retry on bulk import file errors — file read error and "no valid words" both END the conversation instead of letting user send another file (MEDIUM impact, LOW effort)
 - [ ] Improve delete confirmation button labels — "Yes, delete" vs "No" is asymmetric; use "Delete" / "Keep" for clarity (LOW impact, LOW effort)
 - [ ] Improve quality button labels — "0 - No idea" through "5 - Easy" could use emoji for faster scanning on mobile (LOW impact, LOW effort)
 - [ ] Simplify weak words display — `"4/10 errors (40%)"` is redundant; show just percentage with emoji indicator (LOW impact, LOW effort)

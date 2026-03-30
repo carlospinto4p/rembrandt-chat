@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.23 - 30th March 2026
+
+- Allow retry on `/bulkimport` file errors in
+  `word_handlers.py`: file read errors and "no valid words"
+  now return to `AWAITING_BULK_FILE` instead of ending the
+  conversation.
+- Updated `file_read_error` and `no_valid_words` i18n keys
+  to suggest retrying or `/cancel`.
+
+
 ### v0.33.22 - 30th March 2026
 
 - Improved `/bulkimport` prompt in `i18n.py`: replaced

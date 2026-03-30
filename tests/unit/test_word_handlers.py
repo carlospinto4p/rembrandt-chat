@@ -423,7 +423,7 @@ async def test_bulkimport_empty_file():
 
     state = await bulkimport_file(update, ctx)
 
-    assert state == ConversationHandler.END
+    assert state == AWAITING_BULK_FILE
     text = update.message.reply_text.call_args[0][0]
     assert "No valid words" in text
 

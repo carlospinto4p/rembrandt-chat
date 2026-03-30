@@ -198,14 +198,14 @@ async def bulkimport_file(
         await update.message.reply_text(
             t("file_read_error", lang)
         )
-        return ConversationHandler.END
+        return AWAITING_BULK_FILE
 
     words = _parse_bulk_file(text)
     if not words:
         await update.message.reply_text(
             t("no_valid_words", lang)
         )
-        return ConversationHandler.END
+        return AWAITING_BULK_FILE
 
     await asyncio.gather(
         *(

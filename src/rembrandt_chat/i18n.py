@@ -515,18 +515,23 @@ _STRINGS: dict[str, dict[str, str]] = {
     "file_read_error": {
         "en": (
             "Could not read the file. "
-            "Please send a UTF-8 text file."
+            "Please send a UTF-8 text file, "
+            "or /cancel to abort."
         ),
         "es": (
             "No se pudo leer el archivo. "
-            "Por favor env\u00eda un archivo de texto UTF-8."
+            "Env\u00eda un archivo de texto UTF-8, "
+            "o /cancel para salir."
         ),
     },
     "no_valid_words": {
-        "en": "No valid words found in the file.",
+        "en": (
+            "No valid words found in the file. "
+            "Try another file, or /cancel."
+        ),
         "es": (
-            "No se encontraron palabras v\u00e1lidas "
-            "en el archivo."
+            "No se encontraron palabras v\u00e1lidas. "
+            "Intenta con otro archivo, o /cancel."
         ),
     },
     "imported_words": {
