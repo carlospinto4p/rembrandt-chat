@@ -282,8 +282,7 @@ def format_weak_concepts(
     for i, w in enumerate(concepts, 1):
         lines.append(
             f"{i}. {w.concept.front} \u2014 "
-            f"{w.errors}/{w.attempts} {t('errors', lang)} "
-            f"({w.error_rate:.0%})"
+            f"{w.error_rate:.0%} \u274c"
         )
     return "\n".join(lines)
 

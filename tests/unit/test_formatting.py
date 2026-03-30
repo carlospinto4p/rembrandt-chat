@@ -355,7 +355,6 @@ def test_format_weak_concepts():
     ]
     text = format_weak_concepts(concepts, _L)
     assert "efimero" in text
-    assert "7/10" in text
     assert "70%" in text
 
 

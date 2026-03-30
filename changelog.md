@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.26 - 30th March 2026
+
+- Simplified weak words display in `formatting.py`:
+  `"4/10 errors (40%)"` → `"40% ❌"`.
+
+
 ### v0.33.25 - 30th March 2026
 
 - Added emoji to quality button labels in `i18n.py` for
