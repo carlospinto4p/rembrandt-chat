@@ -76,6 +76,8 @@ from rembrandt_chat.handlers import (
     handle_deleteword_confirm,
     handle_language_callback,
     handle_cancel_action,
+    handle_study_weak,
+    STUDY_WEAK_CB,
     handle_play_back,
     handle_play_category,
     handle_play_language,
@@ -369,6 +371,12 @@ def create_app() -> None:
         CallbackQueryHandler(
             handle_cancel_action,
             pattern=f"^{CANCEL_CB}$",
+        )
+    )
+    app.add_handler(
+        CallbackQueryHandler(
+            handle_study_weak,
+            pattern=f"^{STUDY_WEAK_CB}$",
         )
     )
     app.add_handler(

@@ -40,6 +40,7 @@ from rembrandt_chat.formatting import (
     PLAY_LANG_PREFIX,
     CANCEL_CB,
     PLAY_BACK_PREFIX,
+    STUDY_WEAK_CB,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
     PLAY_TPAGE_PREFIX,
@@ -412,6 +413,48 @@ async def handle_cancel_action(
     query = update.callback_query
     lang = get_lang(context)
     await query.edit_message_text(t("cancelled", lang))
+
+
+@require_callback
+async def handle_study_weak(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+    """Start a session targeting weak words."""
+    query = update.callback_query
+    user_data = context.user_data
+
+    if await check_active_session(update, context):
+        return
+
+    lang = get_lang(context)
+    concept_ids = user_data.pop("_weak_concept_ids", None)
+    if not concept_ids:
+        await query.edit_message_text(
+            t("cancelled", lang)
+        )
+        return
+
+    user_data[_PLAY_CONCEPT_IDS] = concept_ids
+    buttons = [
+        InlineKeyboardButton(
+            t(key, lang),
+            callback_data=f"{PLAY_MODE_PREFIX}{mode.value}",
+        )
+        for mode, key in _MODE_KEYS.items()
+    ]
+    back_btn = InlineKeyboardButton(
+        t("back", lang),
+        callback_data=f"{PLAY_BACK_PREFIX}cat",
+    )
+    rows = [[b] for b in buttons] + [[back_btn]]
+    await query.edit_message_text(
+        t(
+            "choose_session_mode", lang,
+            topic=t("weakest_words_header", lang).strip(),
+        ),
+        reply_markup=InlineKeyboardMarkup(rows),
+    )
 
 
 @require_callback

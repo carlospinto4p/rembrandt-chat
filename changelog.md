@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.34.0 - 30th March 2026
+
+- Added "Study these" button after `/weak` output: starts
+  a session targeting the user's weak words.
+- Added `STUDY_WEAK_CB` in `formatting.py` and
+  `handle_study_weak()` in `session_handlers.py`.
+- Added `study_these` i18n key.
+
+
 ### v0.33.28 - 30th March 2026
 
 - Improved `/reminders` off message in `i18n.py`: replaced

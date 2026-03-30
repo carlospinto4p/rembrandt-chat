@@ -374,6 +374,10 @@ _STRINGS: dict[str, dict[str, str]] = {
         "es": "Progreso por tema:\n",
     },
 
+    "study_these": {
+        "en": "Study these",
+        "es": "Practicar estas",
+    },
     "stats_hint": {
         "en": (
             "\n\nUse /play to practice "

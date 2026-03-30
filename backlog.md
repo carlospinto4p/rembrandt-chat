@@ -26,7 +26,7 @@
 - [x] Simplify weak words display — `"4/10 errors (40%)"` is redundant; show just percentage with emoji indicator (LOW impact, LOW effort)
 - [x] Improve search usage message — `"Usage: /search <term>"` is terse; add example like `/search hello` (LOW impact, LOW effort)
 - [x] Improve `/reminders` time format help — `"[HH:MM]"` is developer jargon; show example like `/reminders on 9:00` (LOW impact, LOW effort)
-- [ ] Add "Study these" button after `/weak` — let users start a session targeting their weak words directly (LOW impact, MEDIUM effort)
+- [x] Add "Study these" button after `/weak` — let users start a session targeting their weak words directly (LOW impact, MEDIUM effort)
 - [ ] Catch-all callback handler — unmatched callback button presses fail silently; add fallback that says "Action no longer available, use /play" (LOW impact, LOW effort)
 
 ### 2026.03.25 (improvements pass)

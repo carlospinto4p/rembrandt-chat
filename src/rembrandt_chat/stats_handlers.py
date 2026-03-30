@@ -7,7 +7,7 @@ import logging
 from datetime import datetime, time, timedelta, timezone
 
 from rembrandt import Database, topic_progress
-from telegram import Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes, ConversationHandler
 
 from rembrandt_chat._helpers import (
@@ -19,6 +19,7 @@ from rembrandt_chat._helpers import (
     resolve_user_with_typing,
 )
 from rembrandt_chat.formatting import (
+    STUDY_WEAK_CB,
     compute_streak,
     format_daily_stats,
     format_forecast,
@@ -85,7 +86,21 @@ async def weak(
     concepts = await db.weak_concepts(user.id, limit=10)
     text = format_weak_concepts(concepts, lang)
     text += t("stats_hint", lang)
-    await update.message.reply_text(text)
+    if concepts:
+        context.user_data["_weak_concept_ids"] = [
+            w.concept.id for w in concepts
+        ]
+        keyboard = InlineKeyboardMarkup([[
+            InlineKeyboardButton(
+                t("study_these", lang),
+                callback_data=STUDY_WEAK_CB,
+            ),
+        ]])
+        await update.message.reply_text(
+            text, reply_markup=keyboard,
+        )
+    else:
+        await update.message.reply_text(text)
 
 
 @require_message
