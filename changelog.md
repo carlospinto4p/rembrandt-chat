@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.14 - 30th March 2026
+
+- Fixed awkward `(s)` plurals in `i18n.py`: replaced with
+  plain plural forms in:
+  - `study_streak`
+  - `imported_words`
+  - `exported_cards`
+  - `imported_cards`
+  - `reminder_due`
+
+
 ### v0.33.13 - 30th March 2026
 
 - Updated delete confirmation to show the word name:

@@ -317,8 +317,8 @@ _STRINGS: dict[str, dict[str, str]] = {
         "es": "Estad\u00edsticas diarias:\n",
     },
     "study_streak": {
-        "en": "\nStudy streak: {streak} day(s)",
-        "es": "\nRacha de estudio: {streak} d\u00eda(s)",
+        "en": "\nStudy streak: {streak} days",
+        "es": "\nRacha de estudio: {streak} d\u00edas",
     },
     "no_weak_words": {
         "en": "No weak words found. Keep practising!",
@@ -470,8 +470,8 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "imported_words": {
-        "en": "Imported {count} word(s).",
-        "es": "{count} palabra(s) importada(s).",
+        "en": "Imported {count} words.",
+        "es": "{count} palabras importadas.",
     },
     "no_words_with_tag": {
         "en": 'No words with tag "{tag}".',
@@ -549,8 +549,8 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "exported_cards": {
-        "en": "Exported {count} card(s).",
-        "es": "{count} tarjeta(s) exportada(s).",
+        "en": "Exported {count} cards.",
+        "es": "{count} tarjetas exportadas.",
     },
     "import_prompt": {
         "en": (
@@ -587,9 +587,9 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "imported_cards": {
-        "en": "Imported {count} card(s) successfully.",
+        "en": "Imported {count} cards successfully.",
         "es": (
-            "{count} tarjeta(s) importada(s) "
+            "{count} tarjetas importadas "
             "exitosamente."
         ),
     },
@@ -597,12 +597,12 @@ _STRINGS: dict[str, dict[str, str]] = {
     # ---- reminders ----
     "reminder_due": {
         "en": (
-            "You have {due} review(s) due today! "
+            "You have {due} reviews due today! "
             "Use /play to start."
         ),
         "es": (
-            "\u00a1Tienes {due} repaso(s) "
-            "pendiente(s) hoy! "
+            "\u00a1Tienes {due} repasos "
+            "pendientes hoy! "
             "Usa /play para comenzar."
         ),
     },
