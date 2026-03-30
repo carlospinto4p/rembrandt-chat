@@ -86,21 +86,24 @@ def test_multiple_choice_text():
 def test_multiple_choice_keyboard_buttons():
     options = ["efimero", "perpetuo", "antiguo", "moderno"]
     ex = _exercise(options=options)
-    _, kb = format_exercise(ex, lang=_L)
+    text, kb = format_exercise(ex, lang=_L)
     flat = [btn for row in kb.inline_keyboard for btn in row]
     assert len(flat) == 4
-    assert flat[0].text == "efimero"
+    assert flat[0].text == "1"
     assert flat[0].callback_data == f"{MC_PREFIX}0"
+    assert flat[3].text == "4"
     assert flat[3].callback_data == f"{MC_PREFIX}3"
+    for opt in options:
+        assert opt in text
 
 
-def test_multiple_choice_one_per_row():
+def test_multiple_choice_single_row():
     ex = _exercise(
         options=["a", "b", "c", "d"],
     )
     _, kb = format_exercise(ex, lang=_L)
-    assert len(kb.inline_keyboard) == 4
-    assert len(kb.inline_keyboard[0]) == 1
+    assert len(kb.inline_keyboard) == 1
+    assert len(kb.inline_keyboard[0]) == 4
 
 
 # --- format_exercise: flashcard ---

@@ -1,6 +1,17 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.4 - 30th March 2026
+
+- Redesigned multiple-choice exercise layout in
+  `formatting.py`: options now appear as a numbered list in
+  the message body with compact `1 2 3 4` buttons in a
+  single row, preventing Telegram from truncating long
+  definitions.
+- Added `.claude/rules/telegram_design.md`: guidelines for
+  Telegram-friendly button and message design.
+
+
 ### v0.33.3 - 30th March 2026
 
 - Changed default UI language from Spanish to English in

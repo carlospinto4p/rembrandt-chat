@@ -89,15 +89,16 @@ def _fmt_multiple_choice(
     options = ex.options
     if tr_map:
         options = [tr_map.get(o, o) for o in options]
+    for i, opt in enumerate(options, 1):
+        text += f"\n{i}. {opt}"
     buttons = [
         InlineKeyboardButton(
-            opt, callback_data=f"{MC_PREFIX}{i}"
+            str(i), callback_data=f"{MC_PREFIX}{i - 1}"
         )
-        for i, opt in enumerate(options)
+        for i in range(1, len(options) + 1)
     ]
-    # One button per row — definitions are too long for side-by-side
-    rows = [[b] for b in buttons]
-    return text, InlineKeyboardMarkup(rows)
+    # Compact numbered buttons fit side-by-side
+    return text, InlineKeyboardMarkup([buttons])
 
 
 def _fmt_flashcard_prompt(
