@@ -517,8 +517,8 @@ _STRINGS: dict[str, dict[str, str]] = {
         "es": "Toca una palabra para eliminarla:",
     },
     "confirm_delete": {
-        "en": "Are you sure?",
-        "es": "\u00bfEst\u00e1s seguro?",
+        "en": "Delete \u201c{word}\u201d?",
+        "es": "\u00bfEliminar \u201c{word}\u201d?",
     },
     "yes_delete": {
         "en": "Yes, delete",

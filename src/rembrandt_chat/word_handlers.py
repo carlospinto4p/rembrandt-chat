@@ -423,6 +423,9 @@ async def handle_deleteword_callback(
 
     lang = get_lang(context)
     concept_id = data[len(DEL_CB_PREFIX):]
+    _, db = await resolve_user(update, context)
+    concept = await db.get_concept(int(concept_id))
+    word = concept.front if concept else concept_id
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton(
@@ -438,7 +441,7 @@ async def handle_deleteword_callback(
         ]
     ])
     await query.edit_message_text(
-        t("confirm_delete", lang),
+        t("confirm_delete", lang, word=word),
         reply_markup=keyboard,
     )
 

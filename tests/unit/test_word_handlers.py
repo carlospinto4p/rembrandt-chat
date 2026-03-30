@@ -304,6 +304,9 @@ async def test_deleteword_empty():
 async def test_deleteword_callback_shows_confirmation():
     update = make_callback_update(f"{DEL_CB_PREFIX}42")
     ctx = make_context()
+    mock_concept = AsyncMock()
+    mock_concept.front = "gato"
+    ctx.bot_data["db"].get_concept.return_value = mock_concept
 
     await handle_deleteword_callback(update, ctx)
 
@@ -311,7 +314,7 @@ async def test_deleteword_callback_shows_confirmation():
     call_kwargs = (
         update.callback_query.edit_message_text.call_args
     )
-    assert "sure" in call_kwargs[0][0].lower()
+    assert "gato" in call_kwargs[0][0]
     kb = call_kwargs[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     assert f"{DEL_CONFIRM_PREFIX}42" in flat[0].callback_data

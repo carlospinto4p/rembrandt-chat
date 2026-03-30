@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.33.13 - 30th March 2026
+
+- Updated delete confirmation to show the word name:
+  `"Delete \u201cgato\u201d?"` instead of `"Are you sure?"`.
+- Updated `confirm_delete` i18n key to accept `{word}` param.
+- Updated `handle_deleteword_callback` in `word_handlers.py`
+  to fetch the concept before confirming.
+
+
 ### v0.33.12 - 30th March 2026
 
 - Added cancel button to both language selection keyboards
