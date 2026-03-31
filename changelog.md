@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.0 - 31st March 2026
+
+- Bumped `rembrandt` dependency to v6.3.0: multiple-choice
+  exercises now prefer same-topic distractors, making options
+  harder by keeping them within the same domain.
+
+
 ### v0.35.4 - 31st March 2026
 
 - Added extra blank line between keyword and options in
