@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.35.4 - 31st March 2026
+
+- Added extra blank line between keyword and options in
+  `mc_prompt` i18n template for better readability.
+
+
 ### v0.35.3 - 31st March 2026
 
 - Bumped `rembrandt` dependency to v6.2.1: fixes quality-based

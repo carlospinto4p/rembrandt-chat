@@ -249,12 +249,12 @@ _STRINGS: dict[str, dict[str, str]] = {
     "mc_prompt": {
         "en": (
             "Which definition matches this word?\n\n"
-            "\u201c<b>{front}</b>\u201d"
+            "\u201c<b>{front}</b>\u201d\n"
         ),
         "es": (
             "\u00bfCu\u00e1l definici\u00f3n corresponde "
             "a esta palabra?\n\n"
-            "\u201c<b>{front}</b>\u201d"
+            "\u201c<b>{front}</b>\u201d\n"
         ),
     },
     "flashcard_prompt": {
