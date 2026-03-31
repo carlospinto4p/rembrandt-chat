@@ -1,6 +1,7 @@
 """Format rembrandt exercises as Telegram messages and keyboards."""
 
 from datetime import date, timedelta
+from html import escape as esc
 
 from rembrandt import AnswerHistory, Hint, SessionStats
 from rembrandt.models import (
@@ -91,7 +92,7 @@ def _fmt_multiple_choice(
     if tr_map:
         options = [tr_map.get(o, o) for o in options]
     for i, opt in enumerate(options, 1):
-        text += f"\n{i}. {opt}"
+        text += f"\n{i}. {esc(opt)}"
     buttons = [
         InlineKeyboardButton(
             str(i), callback_data=f"{MC_PREFIX}{i - 1}"
@@ -184,7 +185,7 @@ def format_hint(
     """
     lines = [t("hint", lang, pattern=hint.pattern)]
     if hint.context:
-        lines.append(f"\n{hint.context}")
+        lines.append(f"\n{esc(hint.context)}")
     return "\n".join(lines)
 
 
@@ -281,7 +282,7 @@ def format_weak_concepts(
     lines = [t("weakest_words_header", lang)]
     for i, w in enumerate(concepts, 1):
         lines.append(
-            f"{i}. {w.concept.front} \u2014 "
+            f"{i}. {esc(w.concept.front)} \u2014 "
             f"{w.error_rate:.0%} \u274c"
         )
     return "\n".join(lines)
@@ -562,7 +563,7 @@ def format_topic_progress(
     lines = [t("topic_progress_header", lang)]
     for tp, p in zip(topics, progress):
         lines.append(
-            f"{tp.title}: {p.completion_pct:.0f}%"
+            f"{esc(tp.title)}: {p.completion_pct:.0f}%"
         )
     return "\n".join(lines)
 
@@ -609,7 +610,7 @@ def format_history(
             r.concept_id, f"#{r.concept_id}"
         )
         dt = r.answered_at.strftime("%d %b %H:%M")
-        lines.append(f"{icon} {word} \u2014 {dt}")
+        lines.append(f"{icon} {esc(word)} \u2014 {dt}")
     return "\n".join(lines)
 
 
@@ -626,9 +627,9 @@ def format_concepts_list(
     """
     lines = []
     for i, c in enumerate(concepts, 1):
-        line = f"{i}. {c.front} \u2014 {c.back}"
+        line = f"{i}. {esc(c.front)} \u2014 {esc(c.back)}"
         if c.tags:
-            line += f" [{', '.join(c.tags)}]"
+            line += f" [{', '.join(esc(tg) for tg in c.tags)}]"
         lines.append(line)
     return "\n".join(lines)
 
@@ -651,7 +652,9 @@ def format_search_results(
     )
     lines = []
     for i, c in enumerate(matches[:20], 1):
-        lines.append(f"{i}. {c.front} \u2014 {c.back}")
+        lines.append(
+            f"{i}. {esc(c.front)} \u2014 {esc(c.back)}"
+        )
     return header + "\n".join(lines)
 
 

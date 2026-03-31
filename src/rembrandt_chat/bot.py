@@ -10,12 +10,14 @@ load_dotenv()
 from rembrandt import Database, import_concepts_csv
 from rembrandt.topics import load_topics
 from telegram import BotCommand, Update
+from telegram.constants import ParseMode
 from telegram.ext import (
     ContextTypes,
     ApplicationBuilder,
     CallbackQueryHandler,
     CommandHandler,
     ConversationHandler,
+    Defaults,
     MessageHandler,
     filters,
 )
@@ -210,6 +212,7 @@ def create_app() -> None:
     app = (
         ApplicationBuilder()
         .token(get_bot_token())
+        .defaults(Defaults(parse_mode=ParseMode.HTML))
         .post_init(_post_init)
         .build()
     )

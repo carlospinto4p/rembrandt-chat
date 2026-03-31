@@ -1,5 +1,7 @@
 """Internationalisation \u2014 all user-facing strings."""
 
+from html import escape as _html_escape
+
 _STRINGS: dict[str, dict[str, str]] = {
     # ---- general ----
     "welcome": {
@@ -183,8 +185,8 @@ _STRINGS: dict[str, dict[str, str]] = {
         "es": "No hay palabras disponibles en este tema.",
     },
     "skipped": {
-        "en": "Skipped: {front}",
-        "es": "Saltado: {front}",
+        "en": "Skipped: <b>{front}</b>",
+        "es": "Saltado: <b>{front}</b>",
     },
 
     # ---- selection prompts ----
@@ -247,17 +249,23 @@ _STRINGS: dict[str, dict[str, str]] = {
     "mc_prompt": {
         "en": (
             "Which definition matches this word?\n\n"
-            "\u201c{front}\u201d"
+            "\u201c<b>{front}</b>\u201d"
         ),
         "es": (
             "\u00bfCu\u00e1l definici\u00f3n corresponde "
             "a esta palabra?\n\n"
-            "\u201c{front}\u201d"
+            "\u201c<b>{front}</b>\u201d"
         ),
     },
     "flashcard_prompt": {
-        "en": "Do you know this word?\n\n{front}",
-        "es": "\u00bfConoces esta palabra?\n\n{front}",
+        "en": (
+            "Do you know this word?\n\n"
+            "<b>{front}</b>"
+        ),
+        "es": (
+            "\u00bfConoces esta palabra?\n\n"
+            "<b>{front}</b>"
+        ),
     },
     "reveal": {
         "en": "Reveal",
@@ -265,11 +273,11 @@ _STRINGS: dict[str, dict[str, str]] = {
     },
     "flashcard_reveal": {
         "en": (
-            "{front} \u2014 {back}\n\n"
+            "<b>{front}</b> \u2014 {back}\n\n"
             "How well did you know it?"
         ),
         "es": (
-            "{front} \u2014 {back}\n\n"
+            "<b>{front}</b> \u2014 {back}\n\n"
             "\u00bfQu\u00e9 tan bien la conoc\u00edas?"
         ),
     },
@@ -300,31 +308,34 @@ _STRINGS: dict[str, dict[str, str]] = {
 
     # ---- answer feedback ----
     "correct": {
-        "en": "\u2705 Correct! {expected}",
-        "es": "\u2705 \u00a1Correcto! {expected}",
+        "en": "\u2705 Correct! <b>{expected}</b>",
+        "es": "\u2705 \u00a1Correcto! <b>{expected}</b>",
     },
     "correct_near_miss": {
         "en": (
-            "\u2705 Correct! {expected} "
+            "\u2705 Correct! <b>{expected}</b> "
             "(you typed: {given})"
         ),
         "es": (
-            "\u2705 \u00a1Correcto! {expected} "
+            "\u2705 \u00a1Correcto! <b>{expected}</b> "
             "(escribiste: {given})"
         ),
     },
     "wrong": {
-        "en": "\u274c Wrong. The answer was: {expected}",
+        "en": (
+            "\u274c Wrong. The answer was: "
+            "<b>{expected}</b>"
+        ),
         "es": (
             "\u274c Incorrecto. "
-            "La respuesta era: {expected}"
+            "La respuesta era: <b>{expected}</b>"
         ),
     },
 
     # ---- hint ----
     "hint": {
-        "en": "Hint: {pattern}",
-        "es": "Pista: {pattern}",
+        "en": "Hint: <b>{pattern}</b>",
+        "es": "Pista: <b>{pattern}</b>",
     },
 
     # ---- summary ----
@@ -484,16 +495,21 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "word_added": {
-        "en": 'Added "{front}" \u2014 {back}',
-        "es": 'Agregada "{front}" \u2014 {back}',
+        "en": 'Added \u201c<b>{front}</b>\u201d \u2014 {back}',
+        "es": (
+            'Agregada \u201c<b>{front}</b>\u201d '
+            '\u2014 {back}'
+        ),
     },
     "word_added_tags": {
         "en": (
-            'Added "{front}" \u2014 {back}\n'
+            'Added \u201c<b>{front}</b>\u201d '
+            '\u2014 {back}\n'
             'Tags: {tags}'
         ),
         "es": (
-            'Agregada "{front}" \u2014 {back}\n'
+            'Agregada \u201c<b>{front}</b>\u201d '
+            '\u2014 {back}\n'
             'Etiquetas: {tags}'
         ),
     },
@@ -570,8 +586,14 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
     },
     "search_usage": {
-        "en": "Usage: /search <term>\n\nExample: /search hello",
-        "es": "Uso: /search <t\u00e9rmino>\n\nEjemplo: /search hola",
+        "en": (
+            "Usage: /search &lt;term&gt;\n\n"
+            "Example: /search hello"
+        ),
+        "es": (
+            "Uso: /search &lt;t\u00e9rmino&gt;\n\n"
+            "Ejemplo: /search hola"
+        ),
     },
     "search_no_results": {
         "en": 'No results for "{term}".',
@@ -754,12 +776,18 @@ def t(
     :param lang: Language code (``"en"`` or ``"es"``).
         Defaults to English when ``None``.
     :param kwargs: Format parameters interpolated into the
-        string via `str.format()`.
+        string via `str.format()`. String values are
+        HTML-escaped automatically.
     :return: The translated, formatted string.
     """
     entry = _STRINGS.get(key, {})
     code = "es" if lang == "es" else "en"
     text = entry.get(code, entry.get("en", key))
     if kwargs:
-        text = text.format(**kwargs)
+        safe = {
+            k: _html_escape(str(v)) if isinstance(v, str)
+            else v
+            for k, v in kwargs.items()
+        }
+        text = text.format(**safe)
     return text

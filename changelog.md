@@ -1,6 +1,20 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.35.0 - 31st March 2026
+
+- Enabled HTML `parse_mode` globally in `bot.py` via
+  `Defaults(parse_mode=ParseMode.HTML)`.
+- Updated `i18n.py`:
+  - Added `html.escape` auto-escaping for all `t()` kwargs.
+  - Styled exercise prompts, answer feedback, hints, skipped,
+    and word-added messages with `<b>` bold tags.
+  - Escaped `<term>` in `search_usage` to prevent HTML parsing.
+- Updated `formatting.py`: added `html.escape` for user-generated
+  content in list formatters (options, concepts, history, search
+  results, topics).
+
+
 ### v0.34.1 - 30th March 2026
 
 - Added catch-all callback handler in `bot.py`: unmatched
