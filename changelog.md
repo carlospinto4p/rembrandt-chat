@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.35.3 - 31st March 2026
+
+- Bumped `rembrandt` dependency to v6.2.1: fixes quality-based
+  evaluation for `FLASHCARD` exercises (quality was silently
+  ignored, causing all flashcard answers to be recorded as
+  incorrect).
+
+
 ### v0.35.2 - 31st March 2026
 
 - Fixed flashcard quality feedback in `session_handlers.py`:
