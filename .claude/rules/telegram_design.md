@@ -26,7 +26,10 @@ phone screen.
 ## Message Content
 
 - Telegram supports HTML and Markdown V2. The bot uses HTML
-  (`parse_mode=HTML`).
+  (`parse_mode=HTML` set globally via `Defaults`).
+- All `t()` kwargs are auto-escaped by `html.escape()`.
+  Use raw HTML tags only in template strings, never in
+  user-generated content.
 - Keep messages concise — mobile screens show ~40-50 characters
   per line.
 - Use blank lines to separate logical sections (prompt, options,

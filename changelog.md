@@ -1,6 +1,15 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.35.1 - 31st March 2026
+
+- Updated `.claude/rules/`:
+  - `ux_review.md`: added bold emphasis check to message content
+    audit.
+  - `telegram_design.md`: documented global HTML parse_mode and
+    auto-escaping in `t()`.
+
+
 ### v0.35.0 - 31st March 2026
 
 - Enabled HTML `parse_mode` globally in `bot.py` via

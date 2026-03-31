@@ -20,6 +20,8 @@ Think like a user on a small phone screen with fat fingers.
   with a helpful prompt ("Try /addword to get started")
 - Numbers, dates, and stats are formatted for readability
   (e.g., "42 words" not "42", locale-aware date formatting)
+- Key words and values use HTML `<b>` bold for emphasis
+  (keywords in exercises, expected answers, hints, added words)
 
 ### Inline keyboards
 - Follow `.claude/rules/telegram_design.md` constraints
