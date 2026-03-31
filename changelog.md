@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.35.2 - 31st March 2026
+
+- Fixed flashcard quality feedback in `session_handlers.py`:
+  self-rated quality buttons now show neutral "Recorded" instead
+  of misleading "Wrong"/"Correct" messages.
+- Added `quality_recorded` i18n key.
+
+
 ### v0.35.1 - 31st March 2026
 
 - Updated `.claude/rules/`:

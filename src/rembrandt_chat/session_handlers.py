@@ -3,7 +3,7 @@
 from typing import Any
 
 from rembrandt import Database, Session
-from rembrandt.models import SessionMode
+from rembrandt.models import ExerciseType, SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
@@ -642,7 +642,7 @@ async def _handle_quality(
     quality = int(data[len(QUALITY_PREFIX):])
     answer = await session.answer(quality=quality)
     await query.edit_message_text(
-        format_answer(answer, lang)
+        t("quality_recorded", lang)
     )
     await send_next(
         session, user_data, update, db=db,

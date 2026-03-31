@@ -307,6 +307,10 @@ _STRINGS: dict[str, dict[str, str]] = {
     },
 
     # ---- answer feedback ----
+    "quality_recorded": {
+        "en": "\u270f\ufe0f Recorded.",
+        "es": "\u270f\ufe0f Registrado.",
+    },
     "correct": {
         "en": "\u2705 Correct! <b>{expected}</b>",
         "es": "\u2705 \u00a1Correcto! <b>{expected}</b>",
