@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.4 - 2nd April 2026
+
+- Added `/i18n-review` skill for auditing linguistic quality
+  of all translations in `i18n.py`.
+
+
 ### v0.36.3 - 2nd April 2026
 
 - Fixed Spanish translations in `i18n.py`:
