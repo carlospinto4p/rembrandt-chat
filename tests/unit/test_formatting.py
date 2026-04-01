@@ -94,7 +94,22 @@ def test_multiple_choice_keyboard_buttons():
     assert flat[3].text == "4"
     assert flat[3].callback_data == f"{MC_PREFIX}3"
     for opt in options:
-        assert opt in text
+        cap = opt[0].upper() + opt[1:]
+        assert cap in text
+
+
+def test_multiple_choice_capitalizes_options():
+    ex = _exercise(
+        options=[
+            "diligente, solícito", "Muy escondido",
+            "saludable", "Que dura un solo día",
+        ],
+    )
+    text, _ = format_exercise(ex, lang=_L)
+    assert "Diligente, solícito" in text
+    assert "Muy escondido" in text
+    assert "Saludable" in text
+    assert "Que dura un solo día" in text
 
 
 def test_multiple_choice_single_row():

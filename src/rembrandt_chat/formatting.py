@@ -92,7 +92,8 @@ def _fmt_multiple_choice(
     if tr_map:
         options = [tr_map.get(o, o) for o in options]
     for i, opt in enumerate(options, 1):
-        text += f"\n{i}. {esc(opt)}"
+        cap = opt[:1].upper() + opt[1:] if opt else opt
+        text += f"\n{i}. {esc(cap)}"
     buttons = [
         InlineKeyboardButton(
             str(i), callback_data=f"{MC_PREFIX}{i - 1}"

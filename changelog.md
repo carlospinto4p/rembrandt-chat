@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.1 - 1st April 2026
+
+- Fixed inconsistent capitalization in multiple-choice options:
+  all options now start with an uppercase letter regardless of
+  source data.
+
+
 ### v0.36.0 - 31st March 2026
 
 - Bumped `rembrandt` dependency to v6.3.0: multiple-choice
