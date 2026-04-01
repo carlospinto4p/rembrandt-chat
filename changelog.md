@@ -1,6 +1,16 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.3 - 2nd April 2026
+
+- Fixed Spanish translations in `i18n.py`:
+  - `no_weak_words`: fixed misplaced ¡ spanning two sentences
+  - `word_empty`: "estaba vacía" → "está vacía" (present tense)
+  - `imported_cards`: "exitosamente" → "correctamente" (anglicism)
+  - `send_file`, `json_read_error`: added missing comma after
+    "Por favor"
+
+
 ### v0.36.2 - 1st April 2026
 
 - Fixed Spanish `mc_prompt` translation: "¿Cuál definición

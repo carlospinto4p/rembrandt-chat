@@ -382,8 +382,8 @@ _STRINGS: dict[str, dict[str, str]] = {
     "no_weak_words": {
         "en": "No weak words found. Keep practising!",
         "es": (
-            "\u00a1No se encontraron palabras d\u00e9biles. "
-            "Sigue practicando!"
+            "No se encontraron palabras d\u00e9biles. "
+            "\u00a1Sigue practicando!"
         ),
     },
     "weakest_words_header": {
@@ -483,7 +483,7 @@ _STRINGS: dict[str, dict[str, str]] = {
             "Try /addword again."
         ),
         "es": (
-            "La palabra o definici\u00f3n estaba vac\u00eda. "
+            "La palabra o definici\u00f3n est\u00e1 vac\u00eda. "
             "Intenta /addword de nuevo."
         ),
     },
@@ -544,7 +544,7 @@ _STRINGS: dict[str, dict[str, str]] = {
     },
     "send_file": {
         "en": "Please send a file.",
-        "es": "Por favor env\u00eda un archivo.",
+        "es": "Por favor, env\u00eda un archivo.",
     },
     "file_read_error": {
         "en": (
@@ -680,7 +680,7 @@ _STRINGS: dict[str, dict[str, str]] = {
         ),
         "es": (
             "No se pudo leer el archivo. "
-            "Por favor env\u00eda un archivo JSON "
+            "Por favor, env\u00eda un archivo JSON "
             "v\u00e1lido."
         ),
     },
@@ -695,7 +695,7 @@ _STRINGS: dict[str, dict[str, str]] = {
         "en": "Imported {count} cards successfully.",
         "es": (
             "{count} tarjetas importadas "
-            "exitosamente."
+            "correctamente."
         ),
     },
 
