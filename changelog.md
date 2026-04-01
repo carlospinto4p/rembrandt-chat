@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.2 - 1st April 2026
+
+- Fixed Spanish `mc_prompt` translation: "¿Cuál definición
+  corresponde a esta palabra?" → "¿Cuál es la definición de
+  esta palabra?" for more natural phrasing.
+
+
 ### v0.36.1 - 1st April 2026
 
 - Fixed inconsistent capitalization in multiple-choice options:

@@ -252,8 +252,8 @@ _STRINGS: dict[str, dict[str, str]] = {
             "\u201c<b>{front}</b>\u201d\n"
         ),
         "es": (
-            "\u00bfCu\u00e1l definici\u00f3n corresponde "
-            "a esta palabra?\n\n"
+            "\u00bfCu\u00e1l es la definici\u00f3n "
+            "de esta palabra?\n\n"
             "\u201c<b>{front}</b>\u201d\n"
         ),
     },
