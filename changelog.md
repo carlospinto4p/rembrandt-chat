@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.5 - 2nd April 2026
+
+- Added `/backlog` skill in `.claude/skills/backlog/`.
+
+
 ### v0.36.4 - 2nd April 2026
 
 - Added `/i18n-review` skill for auditing linguistic quality
