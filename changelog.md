@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.6 - 2nd April 2026
+
+- `CLAUDE.md`:
+  - Added Shell Commands, Project Configuration, Versioning / Release,
+    and Testing sections.
+
+
 ### v0.36.5 - 2nd April 2026
 
 - Added `/backlog` skill in `.claude/skills/backlog/`.

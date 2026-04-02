@@ -18,6 +18,22 @@ Rembrandt Chat is a Telegram bot client for the [rembrandt](https://github.com/c
 
 - `rembrandt` provides the exercise engine, spaced repetition, and database layer. This package adds only Telegram-specific concerns.
 
+## Shell Commands
+
+Never use compound shell commands with `cd && git` or `cd &&` chaining. Always use separate commands or `cd` first, then run the git/shell command independently.
+
+## Project Configuration
+
+Store project rules and preferences in project config files (e.g., `.claude/settings.json`, `CLAUDE.md`), NOT in memory files. Never save user instructions as memory files.
+
+## Versioning / Release
+
+After version bumps, always stage and commit `uv.lock` along with the version change. Never forget the lock file.
+
+## Testing
+
+After any code change, run the full test suite and fix all failures before committing. Pay special attention to mock patching paths, fixture values, and assertion text that may need updating after refactors.
+
 ## Common Commands
 
 **IMPORTANT**: Always use `uv run` to execute Python commands. Never run raw `python` commands.
