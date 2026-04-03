@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.8 - 3rd April 2026
+
+- `.claude/`:
+  - Updated hooks to v2: read stdin JSON instead of
+    broken `$CLAUDE_TOOL_INPUT`/`$CLAUDE_FILE` env vars.
+  - Added script files in `.claude/hooks/`.
+
+
 ### v0.36.7 - 2nd April 2026
 
 - `.claude/settings.json`:
