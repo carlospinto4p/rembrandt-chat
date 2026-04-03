@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.15 - 3rd April 2026
+
+- `.claude/rules/`:
+  - Normalized `committing.md` to canonical template.
+
+
 ### v0.36.14 - 3rd April 2026
 
 - `CLAUDE.md`:
