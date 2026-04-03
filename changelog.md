@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.14 - 3rd April 2026
+
+- `CLAUDE.md`:
+  - Normalized to canonical template: added missing
+    shared sections, removed low-value sections.
+
+
 ### v0.36.13 - 3rd April 2026
 
 - `.claude/`:
