@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.16 - 4th April 2026
+
+- `.claude/rules/`:
+  - Normalized `versioning.md` to enhanced canonical
+    with detailed sub-bullet guidance.
+
+
 ### v0.36.15 - 3rd April 2026
 
 - `.claude/rules/`:
