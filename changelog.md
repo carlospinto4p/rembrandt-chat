@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.9 - 3rd April 2026
+
+- `.claude/`:
+  - Migrated `/refactor` from command to skill (v1.0.0)
+    for version tracking.
+
+
 ### v0.36.8 - 3rd April 2026
 
 - `.claude/`:
