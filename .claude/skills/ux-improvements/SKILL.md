@@ -1,3 +1,10 @@
+---
+name: ux-improvements
+version: 1.0.0
+description: >-
+  Audit every user-facing interaction and suggest UX improvements for the Telegram bot.
+---
+
 Check your guidelines in `.claude/rules/ux_review.md`,
 and audit every user-facing interaction in the bot — messages,
 keyboards, conversation flows, error handling, empty states,

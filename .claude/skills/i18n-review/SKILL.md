@@ -1,3 +1,10 @@
+---
+name: i18n-review
+version: 1.0.0
+description: >-
+  Audit user-facing strings in i18n.py for grammar, punctuation, and natural phrasing.
+---
+
 Audit every user-facing string in `src/rembrandt_chat/i18n.py`
 for linguistic quality in both English and Spanish. Read the
 entire file and check each translation for:
