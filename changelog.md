@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.12 - 3rd April 2026
+
+- `.claude/`:
+  - Migrated `/self-refinement` from command to skill
+    (v1.0.0) for version tracking.
+
+
 ### v0.36.11 - 3rd April 2026
 
 - `.claude/`:
