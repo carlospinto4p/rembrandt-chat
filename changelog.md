@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.17 - 4th April 2026
+
+- `.claude/hooks/`:
+  - Added `block-raw-python.sh`: enforces `uv run python`
+    over bare `python`.
+
+
 ### v0.36.16 - 4th April 2026
 
 - `.claude/rules/`:
