@@ -1,12 +1,12 @@
 [project]
 name = "rembrandt-chat"
-version = "0.36.18"
+version = "0.33.4"
 description = "A Client for chat sessions of Rembrandt."
 authors = [{ name = "Carlos Pinto", email = "carlospinto4p@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "rembrandt @ git+https://github.com/carlospinto4p/rembrandt.git@v6.3.0",
+    "rembrandt @ git+https://github.com/carlospinto4p/rembrandt.git@v6.2.0",
     "python-telegram-bot>=21.0",
     "python-dotenv>=1.0.0",
 ]
