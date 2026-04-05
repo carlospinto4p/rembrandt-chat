@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.21 - 5th April 2026
+
+- `.claude/`:
+  - Updated `backlog` skill (v1.4.0): tables now
+    always include Priority and Effort columns.
+
+
 ### v0.36.20 - 5th April 2026
 
 - `.claude/hooks/`:
