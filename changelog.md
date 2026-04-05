@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.24 - 5th April 2026
+
+- `.claude/rules/`:
+  - Updated `versioning.md`: added changelog
+    rotation section (30-version limit, yearly
+    archives in `changelog/YYYY.md`).
+
+
 ### v0.36.23 - 5th April 2026
 
 - `.claude/rules/`:
