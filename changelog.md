@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.20 - 5th April 2026
+
+- `.claude/hooks/`:
+  - Fixed stdin consumption: all hooks now
+    capture stdin before piping to python.
+
+
 ### v0.36.19 - 5th April 2026
 
 - `.claude/`:
