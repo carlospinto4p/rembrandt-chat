@@ -1,6 +1,18 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.27 - 11th April 2026
+
+- `.claude/rules/`:
+  - Decoupled `/refactor` rule: canonical
+    `refactoring.md` is now procedural only.
+  - Added `refactoring-areas.md` with
+    project-specific code smells to watch.
+- `.claude/skills/refactor/`:
+  - Updated `SKILL.md` to read both canonical
+    procedure and per-project areas.
+
+
 ### v0.36.26 - 11th April 2026
 
 - `.claude/rules/`:
