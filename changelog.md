@@ -1,6 +1,18 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.26 - 11th April 2026
+
+- `.claude/rules/`:
+  - Decoupled `/optimize` rule: canonical
+    `optimization.md` is now procedural only.
+  - Added `optimization-areas.md` with
+    project-specific performance areas.
+- `.claude/skills/optimize/`:
+  - Updated `SKILL.md` to read both canonical
+    procedure and per-project areas.
+
+
 ### v0.36.25 - 10th April 2026
 
 - `.claude/rules/`:
