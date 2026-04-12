@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.28 - 12th April 2026
+
+- Updated `.claude/hooks/block-chained-commands.sh`:
+  propagated newline-chaining block from the
+  programme canonical.
+
+
 ### v0.36.27 - 11th April 2026
 
 - `.claude/rules/`:
