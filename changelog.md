@@ -1,6 +1,10 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.30 - 17th April 2026
+
+- `.gitattributes`: Added LF line ending normalization.
+
 ### v0.36.29 - 15th April 2026
 
 - `.claude/`: cross-project migration landed today:
