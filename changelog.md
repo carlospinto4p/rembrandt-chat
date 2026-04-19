@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.33 - 20th April 2026
+
+- Synced canonical `.gitignore` from programme (direnv block).
+
+
 ### v0.36.32 - 20th April 2026
 
 - Synced canonical `.claude/rules/*.md` from programme.

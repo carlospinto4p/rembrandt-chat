@@ -1,4 +1,4 @@
-# Set up
+# Pycharm
 .idea/
 .project
 
@@ -21,6 +21,8 @@ credentials/
 # Sketches
 sketches/
 notebooks/
+*.local.*
+*.tmp.*
 
 # AWS / Cloud
 .aws-sam/
@@ -30,8 +32,18 @@ notebooks/
 
 # Data
 */data/
-*.db
+
+# Large data files (suffix _all)
+*_all.*
+
+# Agent Builder workspace
+workspace/
 
 # Build artifacts
 build/
-.claude/settings.local.json
+
+# Ruff cache
+.ruff_cache/
+
+# direnv
+.envrc
