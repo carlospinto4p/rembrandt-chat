@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.36 - 2nd May 2026
+
+- Rotated changelog: archived 2 entries to , keeping 30.
+
+
+
 ### v0.36.35 - 26th April 2026
 
 - Updated `.claude/rules/committing.md`: remove SKIP workaround, ruff now runs via `uv run ruff` in all projects.
@@ -220,16 +226,5 @@
 - `CLAUDE.md`:
   - Added Shell Commands, Project Configuration, Versioning / Release,
     and Testing sections.
-
-
-### v0.36.5 - 2nd April 2026
-
-- Added `/backlog` skill in `.claude/skills/backlog/`.
-
-
-### v0.36.4 - 2nd April 2026
-
-- Added `/i18n-review` skill for auditing linguistic quality
-  of all translations in `i18n.py`.
 
 
