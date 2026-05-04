@@ -29,10 +29,18 @@ credentials/
 # Logs / Output
 *.log
 
+# Data
+data/*.db
+data/rembrandt.db
+
+# Claude Code runtime
+.claude/scheduled_tasks.lock
+
 # Build artifacts
 build/
 
 # Ruff cache
 .ruff_cache/
 
+# direnv / PowerShell venv env files
 .claude/settings.local.json
