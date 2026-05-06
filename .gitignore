@@ -1,4 +1,4 @@
-# Pycharm
+# Set up
 .idea/
 .project
 
@@ -18,10 +18,9 @@ credentials/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# Temp / local overrides
-*.local.*
-*.tmp.*
-*.bak.*
+# Sketches
+sketches/
+notebooks/
 
 # AWS / Cloud
 .aws-sam/
@@ -30,17 +29,9 @@ credentials/
 *.log
 
 # Data
-data/*.db
-data/rembrandt.db
-
-# Claude Code runtime
-.claude/scheduled_tasks.lock
+*/data/
+*.db
 
 # Build artifacts
 build/
-
-# Ruff cache
-.ruff_cache/
-
-# direnv / PowerShell venv env files
 .claude/settings.local.json
