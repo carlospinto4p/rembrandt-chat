@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.39 - 9th May 2026
+
+- Regrouped 1 historical changelog entry flagged by `/changelog-review` (programme v2.52.143):
+  - `changelog/2026.md` v0.25.0: 3 top-level bullets touching `data/` collapsed under one parent.
+
+
 ### v0.36.38 - 9th May 2026
 
 - Updated `.claude/rules/versioning.md` (1.0 → 1.1): rewrote changelog-format section to fix rule/example contradiction; threshold now stated as "3+ top-level bullets touching the same module → group under a parent"; sub-bullet patterns reorganised; added "When NOT to group" section. Synced from programme v2.52.144.
