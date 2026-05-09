@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.40 - 9th May 2026
+
+- Added `When to Skip Tests` section to `.claude/rules/committing.md`: explicit allowlist (markdown, version bump, lock file, `.claude/` config, `CLAUDE.md`) of diffs where tests can be safely skipped.
+
+
+
 ### v0.36.39 - 9th May 2026
 
 - Regrouped 1 historical changelog entry flagged by `/changelog-review` (programme v2.52.143):
