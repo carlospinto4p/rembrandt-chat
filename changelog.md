@@ -1,6 +1,12 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.41 - 17th May 2026
+
+- Rotated changelog: archived 5 old entries to `changelog/2026.md`.
+
+
+
 ### v0.36.40 - 9th May 2026
 
 - Added `When to Skip Tests` section to `.claude/rules/committing.md`: explicit allowlist (markdown, version bump, lock file, `.claude/` config, `CLAUDE.md`) of diffs where tests can be safely skipped.
@@ -215,40 +221,5 @@
 - `.claude/`:
   - Migrated `/improvements` from command to skill (v1.0.0)
     for version tracking.
-
-
-### v0.36.10 - 3rd April 2026
-
-- `.claude/`:
-  - Migrated `/optimize` from command to skill (v1.0.0)
-    for version tracking.
-
-
-### v0.36.9 - 3rd April 2026
-
-- `.claude/`:
-  - Migrated `/refactor` from command to skill (v1.0.0)
-    for version tracking.
-
-
-### v0.36.8 - 3rd April 2026
-
-- `.claude/`:
-  - Updated hooks to v2: read stdin JSON instead of
-    broken `$CLAUDE_TOOL_INPUT`/`$CLAUDE_FILE` env vars.
-  - Added script files in `.claude/hooks/`.
-
-
-### v0.36.7 - 2nd April 2026
-
-- `.claude/settings.json`:
-  - Added PreToolUse hook to block compound git commands.
-
-
-### v0.36.6 - 2nd April 2026
-
-- `CLAUDE.md`:
-  - Added Shell Commands, Project Configuration, Versioning / Release,
-    and Testing sections.
 
 
