@@ -448,8 +448,8 @@ dependencies = [
 
 [[package]]
 name = "rembrandt-chat"
-version = "0.36.42"
-source = { virtual = "." }
+version = "0.36.43"
+source = { editable = "." }
 dependencies = [
     { name = "python-dotenv" },
     { name = "python-telegram-bot" },

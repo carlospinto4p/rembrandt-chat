@@ -1,6 +1,6 @@
 [project]
 name = "rembrandt-chat"
-version = "0.36.42"
+version = "0.36.43"
 description = "A Client for chat sessions of Rembrandt."
 authors = [{ name = "Carlos Pinto", email = "carlospinto4p@gmail.com" }]
 readme = "README.md"
@@ -26,3 +26,7 @@ dev = [
 
 [tool.ruff]
 line-length = 78
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

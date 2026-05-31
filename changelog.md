@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.43 - 31st May 2026
+
+- Added `[build-system]` to `pyproject.toml`; `uv sync --all-extras` now handles the editable install automatically.
+
+
 ### v0.36.42 - 31st May 2026
 
 - Added `scripts/backup_db.py`: snapshots `data/rembrandt.db` to
