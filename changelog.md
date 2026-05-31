@@ -1,6 +1,14 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.42 - 31st May 2026
+
+- Added `scripts/backup_db.py`: snapshots `data/rembrandt.db` to
+  `~/Dropbox/home/development/db/rembrandt_chat/` using the SQLite
+  online backup API (atomic write; source opened read-only). Destination
+  overridable via `REMBRANDT_CHAT_BACKUP_DEST` env var or `--dest` flag.
+
+
 ### v0.36.41 - 17th May 2026
 
 - Rotated changelog: archived 5 old entries to `changelog/2026.md`.
