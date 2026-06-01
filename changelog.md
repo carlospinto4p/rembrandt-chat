@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.44 - 1st June 2026
+
+- Updated `.claude/rules/committing.md`: no-parallel-git-command rule and `-m` flag guidance.
+
+
 ### v0.36.43 - 31st May 2026
 
 - Added `[build-system]` to `pyproject.toml`; `uv sync --all-extras` now handles the editable install automatically.
