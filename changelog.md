@@ -1,6 +1,13 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.45 - 3rd June 2026
+
+- Updated `.gitignore`: ignore SQLite WAL-mode sidecars
+  (`*.db-shm`, `*.db-wal`, `*.db-journal`) so transient files
+  stop appearing as untracked.
+
+
 ### v0.36.44 - 1st June 2026
 
 - Updated `.claude/rules/committing.md`: no-parallel-git-command rule and `-m` flag guidance.

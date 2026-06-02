@@ -31,6 +31,10 @@ notebooks/
 # Data
 */data/
 *.db
+# SQLite WAL-mode sidecars (transient, never commit)
+*.db-shm
+*.db-wal
+*.db-journal
 
 # Build artifacts
 build/
