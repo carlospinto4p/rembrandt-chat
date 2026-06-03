@@ -1,6 +1,10 @@
 
 ## Changelog - Rembrandt-Chat
 
+### v0.36.46 - 3rd June 2026
+
+- Synced `.claude/rules/testing.md` from the programme registry: added the SQLite-backed fixtures pointer to the session-scoped template pattern (see the shared `testing-python` rule).
+
 ### v0.36.45 - 3rd June 2026
 
 - Updated `.gitignore`: ignore SQLite WAL-mode sidecars
