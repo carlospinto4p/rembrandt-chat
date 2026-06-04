@@ -1,6 +1,11 @@
 
 ## Changelog - Rembrandt-Chat
 
+
+### v0.36.48 - 4th June 2026
+
+- Rotated changelog: archived 7 entries to `changelog/2026.md`.
+
 ### v0.36.47 - 4th June 2026
 
 - Synced `.claude/rules/committing.md` from the programme registry: step 6 now scopes `uv.lock` regeneration to code-related bumps only — non-code patch bumps (`.claude/` config, docs, changelog, rule syncs) skip `uv lock`.
@@ -206,53 +211,5 @@
     completed items when 5+ accumulate.
   - Updated `backlog` rule: added auto-cleanup
     section.
-
-
-### v0.36.17 - 4th April 2026
-
-- `.claude/hooks/`:
-  - Added `block-raw-python.sh`: enforces `uv run python`
-    over bare `python`.
-
-
-### v0.36.16 - 4th April 2026
-
-- `.claude/rules/`:
-  - Normalized `versioning.md` to enhanced canonical
-    with detailed sub-bullet guidance.
-
-
-### v0.36.15 - 3rd April 2026
-
-- `.claude/rules/`:
-  - Normalized `committing.md` to canonical template.
-
-
-### v0.36.14 - 3rd April 2026
-
-- `CLAUDE.md`:
-  - Normalized to canonical template: added missing
-    shared sections, removed low-value sections.
-
-
-### v0.36.13 - 3rd April 2026
-
-- `.claude/`:
-  - Migrated `/i18n-review`, `/ux-improvements` from command to skill (v1.0.0)
-    for version tracking.
-
-
-### v0.36.12 - 3rd April 2026
-
-- `.claude/`:
-  - Migrated `/self-refinement` from command to skill
-    (v1.0.0) for version tracking.
-
-
-### v0.36.11 - 3rd April 2026
-
-- `.claude/`:
-  - Migrated `/improvements` from command to skill (v1.0.0)
-    for version tracking.
 
 
