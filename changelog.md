@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+
+### v0.36.49 - 7th June 2026
+
+- Rotated changelog: archived 1 entries to `changelog/2026.md`.
+
 ### v0.36.48 - 4th June 2026
 
 - Rotated changelog: archived 7 entries to `changelog/2026.md`.
@@ -200,15 +205,6 @@
   - Updated `backlog` skill (v1.3.0): auto-cleans
     completed items before display, shows per-section
     tables when backlog has multiple sections.
-  - Updated `backlog` rule: added auto-cleanup
-    section.
-
-
-### v0.36.18 - 5th April 2026
-
-- `.claude/`:
-  - Updated `backlog` skill (v1.1.0): auto-cleans
-    completed items when 5+ accumulate.
   - Updated `backlog` rule: added auto-cleanup
     section.
 
