@@ -1,6 +1,6 @@
 [project]
 name = "rembrandt-chat"
-version = "0.36.49"
+version = "0.36.50"
 description = "A Client for chat sessions of Rembrandt."
 authors = [{ name = "Carlos Pinto", email = "carlospinto4p@gmail.com" }]
 readme = "README.md"

@@ -3,6 +3,11 @@
 
 
 
+### v0.36.50 - 8th June 2026
+
+- Synced from programme: reworded `versioning.md` changelog-prepend guidance (insert a new entry above the top header, never replace it) and added universal `.gitignore` entries (`*.bak.*`, `*.tmp.*`, etc.).
+
+
 ### v0.36.49 - 7th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.

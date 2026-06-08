@@ -39,3 +39,9 @@ notebooks/
 # Build artifacts
 build/
 .claude/settings.local.json
+
+# Universal entries (programme sync)
+*.bak.*
+*.tmp.*
+.ruff_cache/
+.claude/scheduled_tasks.lock
