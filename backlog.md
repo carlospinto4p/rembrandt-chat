@@ -1,6 +1,10 @@
 
 # Backlog - Rembrandt-Chat
 
+### 2026.06.09 (logging pattern)
+
+- [ ] Logging: adopt the canonical file-based error/warning pattern (global rule `~/.claude/rules/docker-compose-error-logging.md`; reference impl: casanova v1.44.0). The `bot` service currently uses `logging.basicConfig` console-only (`src/rembrandt_chat/bot.py:~207`) — replace with explicit handlers writing WARNING → `logs/warnings/` and ERROR → `logs/errors/` via `RotatingFileHandler`, clean level split (WARNING-only filter on the warning handler), one file per process start, UTC timestamps. Gitignore `logs/`, bind-mount `./logs` in compose. Optionally add `fix-errors`/`fix-warnings` skills. — MEDIUM — M
+
 ### 2026.03.30 (UX audit)
 
 - [x] Translate hardcoded English in `formatting.py` — `"cards due"` (line 568) and `"errors"` (line 284) bypass i18n entirely; Spanish users see mixed-language text (HIGH impact, LOW effort)
