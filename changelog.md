@@ -4,6 +4,11 @@
 
 
 
+
+### v0.36.52 - 13th June 2026
+
+- Rotated changelog: archived 1 entries to `changelog/2026.md`.
+
 ### v0.36.51 - 10th June 2026
 
 - Rotated changelog: archived 2 entries to `changelog/2026.md`.
@@ -193,12 +198,5 @@
 
 - Rotated changelog: archived 110 old
   entries to `changelog/` yearly files.
-
-
-### v0.36.21 - 5th April 2026
-
-- `.claude/`:
-  - Updated `backlog` skill (v1.4.0): tables now
-    always include Priority and Effort columns.
 
 
