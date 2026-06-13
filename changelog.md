@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.53 - 13th June 2026
+
+- Rotated changelog: archived 1 entries to `changelog/2026.md`.
+
+
 ### v0.36.52 - 13th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.
@@ -189,9 +194,3 @@
   - Updated `versioning.md`: added changelog
     rotation section (30-version limit, yearly
     archives in `changelog/YYYY.md`).
-
-
-### v0.36.22 - 5th April 2026
-
-- Rotated changelog: archived 110 old
-  entries to `changelog/` yearly files.
