@@ -45,3 +45,6 @@ build/
 *.tmp.*
 .ruff_cache/
 .claude/scheduled_tasks.lock
+
+.claude/wip
+.claude/docs-ok
