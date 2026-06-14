@@ -2,6 +2,14 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.54 - 14th June 2026
+
+- Added the `check-changelog-headers` pre-commit guard
+  (`.pre-commit-scripts/check_changelog_headers.sh` + the `.pre-commit-config.yaml`
+  stanza): blocks a changelog edit that overwrites an existing version
+  header (the bug that silently lost manifold's `v0.1.35`).
+
+
 ### v0.36.53 - 13th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.
