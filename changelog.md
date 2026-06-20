@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.58 - 20th June 2026
+
+- Added `scripts/changelog-add.sh` (safe changelog-prepend helper) and the `check-version-changelog` pre-commit guard, distributed in the programme fleet rollout.
+
+
 ### v0.36.57 - 20th June 2026
 
 - `scripts/backup_db.py`: tightened the shrink guard to refuse **any**
