@@ -2,6 +2,15 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.56 - 20th June 2026
+
+- `scripts/backup_db.py`: guard `backup_one` against clobbering a good
+  Dropbox backup with empty/fresh-machine data — refuse a missing or
+  zero-byte source, and refuse a snapshot under 50% of the existing
+  backup unless `--allow-shrink`. Added `tests/unit/test_backup_db.py`
+  (5 tests). Mirrors programme's `backup_guard`.
+
+
 ### v0.36.55 - 20th June 2026
 
 - Added `[tool.hatch.metadata] allow-direct-references = true` to
