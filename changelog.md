@@ -2,6 +2,14 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.55 - 20th June 2026
+
+- Added `[tool.hatch.metadata] allow-direct-references = true` to
+  `pyproject.toml`: the `rembrandt` git direct-reference dependency made
+  `uv sync` fail at the editable build step (`Dependency #1 ... cannot be
+  a direct reference unless ...`), blocking the venv on a fresh machine.
+
+
 ### v0.36.54 - 14th June 2026
 
 - Added the `check-changelog-headers` pre-commit guard
