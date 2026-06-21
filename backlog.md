@@ -3,7 +3,7 @@
 
 ### 2026.06.09 (logging pattern)
 
-- [ ] Logging: adopt the canonical file-based error/warning pattern (global rule `~/.claude/rules/docker-compose-error-logging.md`; reference impl: casanova v1.44.0). The `bot` service currently uses `logging.basicConfig` console-only (`src/rembrandt_chat/bot.py:~207`) — replace with explicit handlers writing WARNING → `logs/warnings/` and ERROR → `logs/errors/` via `RotatingFileHandler`, clean level split (WARNING-only filter on the warning handler), one file per process start, UTC timestamps. Gitignore `logs/`, bind-mount `./logs` in compose. Optionally add `fix-errors`/`fix-warnings` skills. — MEDIUM — M
+- [ ] Logging: adopt the canonical file-based error/warning pattern (global rule `~/.claude/rules/docker-compose-error-logging.md`; reference impl: casanova v1.44.0). The `bot` service currently uses `logging.basicConfig` console-only (`src/rembrandt_chat/bot.py:~207`) — replace with explicit handlers writing WARNING → `logs/warnings/` and ERROR → `logs/errors/` via `RotatingFileHandler`, clean level split (WARNING-only filter on the warning handler), one file per process start, UTC timestamps. Gitignore `logs/`, bind-mount `./logs` in compose. Optionally add `fix-errors`/`fix-warnings` skills. — HIGH — M *(raised MEDIUM→HIGH by the 2026.06.21 docker-compose rule compliance audit — this is the stack's only docker-compose-rule gap; the `bot` service publishes no host ports, so the port/banner rules don't apply.)*
 
 ### 2026.03.30 (UX audit)
 
