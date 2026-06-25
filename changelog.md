@@ -2,6 +2,16 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.60 - 25th June 2026
+
+- Rotated changelog: archived 1 entries to `changelog/2026.md`.
+
+
+### v0.36.59 - 25th June 2026
+
+- Rotated changelog: archived 6 entries to `changelog/2026.md`.
+
+
 ### v0.36.58 - 20th June 2026
 
 - Added `scripts/changelog-add.sh` (safe changelog-prepend helper) and the `check-version-changelog` pre-commit guard, distributed in the programme fleet rollout.
@@ -165,71 +175,3 @@
 ### v0.36.30 - 17th April 2026
 
 - `.gitattributes`: Added LF line ending normalization.
-
-
-### v0.36.29 - 15th April 2026
-
-- `.claude/`: cross-project migration landed today:
-  - Removed `.claude/hooks/block-raw-python.sh`; now provided globally at `~/.claude/hooks/` (PreToolUse Bash guard).
-  - Removed `.claude/hooks/block-chained-commands.sh` and `.claude/skills/{refactor,improvements,optimize,self-refinement,backlog}/`; the hook and the five periodic-review skills are now provided globally under `~/.claude/`.
-  - Removed `.claude/hooks/format-python.sh`; the ruff auto-format PostToolUse hook is now provided globally at `~/.claude/hooks/`.
-  - Removed `.claude/hooks/pre-commit-tests.sh`; replaced by a global dispatcher at `~/.claude/hooks/pre-commit-tests.sh` that invokes `scripts/pre-commit.sh` on `git commit`. Added `scripts/pre-commit.sh` with the project-local test command.
-
-
-### v0.36.28 - 12th April 2026
-
-- Updated `.claude/hooks/block-chained-commands.sh`:
-  propagated newline-chaining block from the
-  programme canonical.
-
-
-### v0.36.27 - 11th April 2026
-
-- `.claude/rules/`:
-  - Decoupled `/refactor` rule: canonical
-    `refactoring.md` is now procedural only.
-  - Added `refactoring-areas.md` with
-    project-specific code smells to watch.
-- `.claude/skills/refactor/`:
-  - Updated `SKILL.md` to read both canonical
-    procedure and per-project areas.
-
-
-### v0.36.26 - 11th April 2026
-
-- `.claude/rules/`:
-  - Decoupled `/optimize` rule: canonical
-    `optimization.md` is now procedural only.
-  - Added `optimization-areas.md` with
-    project-specific performance areas.
-- `.claude/skills/optimize/`:
-  - Updated `SKILL.md` to read both canonical
-    procedure and per-project areas.
-
-
-### v0.36.25 - 10th April 2026
-
-- `.claude/rules/`:
-  - Decoupled `/improvements` rule: canonical
-    `improvements.md` is now procedural only.
-  - Added `improvement-areas.md` with
-    project-specific areas to watch.
-- `.claude/skills/improvements/`:
-  - Updated `SKILL.md` to read both canonical
-    procedure and per-project areas.
-
-
-### v0.36.24 - 5th April 2026
-
-- `.claude/rules/`:
-  - Updated `versioning.md`: added changelog
-    rotation section (30-version limit, yearly
-    archives in `changelog/YYYY.md`).
-
-
-### v0.36.23 - 5th April 2026
-
-- `.claude/rules/`:
-  - Updated `versioning.md`: added changelog
-    rotation section (30-version limit, yearly
-    archives in `changelog/YYYY.md`).
