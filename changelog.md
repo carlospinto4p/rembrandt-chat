@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.61 - 28th June 2026
+
+- Rotated changelog: archived 1 entries to `changelog/2026.md`.
+
+
 ### v0.36.60 - 25th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.
@@ -170,8 +175,3 @@
 ### v0.36.31 - 19th April 2026
 
 - Updated `scripts/pre-commit.sh`: canonical now auto-detects `tests/unit/` vs `tests/` and no-ops if neither exists. Synced from programme.
-
-
-### v0.36.30 - 17th April 2026
-
-- `.gitattributes`: Added LF line ending normalization.
