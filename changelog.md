@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.64 - 4th July 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.63 - 3rd July 2026
 
 - Updated `.pre-commit-scripts/check_version_changelog.sh` to canonical:
@@ -173,13 +178,3 @@
 ### v0.36.34 - 26th April 2026
 
 - Updated `.claude/rules/committing.md`: add Windows `SKIP=ruff-format,ruff-fix` pattern for pre-commit hook failures when ruff is not in PATH.
-
-
-### v0.36.33 - 20th April 2026
-
-- Synced canonical `.gitignore` from programme (direnv block).
-
-
-### v0.36.32 - 20th April 2026
-
-- Synced canonical `.claude/rules/*.md` from programme.
