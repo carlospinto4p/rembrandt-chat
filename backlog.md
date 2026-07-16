@@ -1,6 +1,23 @@
 
 # Backlog - Rembrandt-Chat
 
+### 2026.07.16 (roadmap)
+
+- [ ] **Define this project's roadmap.** `roadmap.md` was scaffolded as
+  an empty stub — its phase is a placeholder and its invariant and
+  refuted-direction sections read `_None yet._`, so it currently records
+  no direction and every consumer ignores it. Fill in the three
+  sections: the **current phase** (the work in order, each step naming
+  its gate where one applies — "no X before Y ships"), the **standing
+  invariants** that hold whatever item is picked, and the **refuted
+  directions** already tried and measured. Once filled,
+  `/guided-backlog` recommends the earliest unmet step and refuses
+  gate-blocked items, `/show-backlog` leads with the phase, and
+  `/improvements` stops re-proposing refuted directions — until then all
+  three fall back to recency. Keep it short: ordering and gates only,
+  rationale stays in the docs or ADRs it cites. See the `roadmap` rule
+  for the format. Priority: MEDIUM. Effort: Small.
+
 ### 2026.06.09 (logging pattern)
 
 - [ ] Logging: adopt the canonical file-based error/warning pattern (global rule `~/.claude/rules/docker-compose-error-logging.md`; reference impl: casanova v1.44.0). The `bot` service currently uses `logging.basicConfig` console-only (`src/rembrandt_chat/bot.py:~207`) — replace with explicit handlers writing WARNING → `logs/warnings/` and ERROR → `logs/errors/` via `RotatingFileHandler`, clean level split (WARNING-only filter on the warning handler), one file per process start, UTC timestamps. Gitignore `logs/`, bind-mount `./logs` in compose. Optionally add `fix-errors`/`fix-warnings` skills. — HIGH — M *(raised MEDIUM→HIGH by the 2026.06.21 docker-compose rule compliance audit — this is the stack's only docker-compose-rule gap; the `bot` service publishes no host ports, so the port/banner rules don't apply.)*
