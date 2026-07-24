@@ -2,6 +2,14 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.68 - 24th July 2026
+
+- Updated `.claude/rules/committing.md`: adds the canonical
+  `Pull First — Before Any Work` section — `git pull` is the first step
+  of every session, run before reading, planning, or editing, not just
+  before pushing. Synced from the programme registry (rule v1.4).
+
+
 ### v0.36.67 - 24th July 2026
 
 - Updated `.claude/rules/committing.md` from canonical: `uv.lock` is
