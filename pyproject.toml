@@ -1,6 +1,6 @@
 [project]
 name = "rembrandt-chat"
-version = "0.36.70"
+version = "0.36.71"
 description = "A Client for chat sessions of Rembrandt."
 authors = [{ name = "Carlos Pinto", email = "carlospinto4p@gmail.com" }]
 readme = "README.md"
@@ -26,6 +26,12 @@ dev = [
 
 [tool.ruff]
 line-length = 78
+
+[tool.ruff.lint]
+# Pins ruff's default rule set explicitly (verified via
+# `ruff check --show-settings` against 0.15.5) so a future ruff
+# release can't silently turn on new default rules underneath us.
+select = ["E4", "E7", "E9", "F"]
 
 [tool.hatch.metadata]
 # The `rembrandt` dependency is a git direct reference; hatchling

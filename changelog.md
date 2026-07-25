@@ -2,6 +2,17 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.71 - 25th July 2026
+
+- Added `[tool.ruff.lint] select = ["E4", "E7", "E9", "F"]` to
+  `pyproject.toml`, pinning ruff's default rule set explicitly
+  (verified via `ruff check --show-settings` against the project's
+  locked 0.15.5 — identical enabled-rule list before and after). A
+  future ruff release can no longer silently turn on new default
+  rules underneath the project. Part of a fleet-wide pass; see
+  programme's backlog and v4.91.1/v4.92.0.
+
+
 ### v0.36.70 - 25th July 2026
 
 - Rotated changelog: archived 5 entries to `changelog/2026.md`.
