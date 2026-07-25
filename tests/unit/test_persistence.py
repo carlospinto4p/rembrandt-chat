@@ -1,9 +1,5 @@
 """Tests for rembrandt_chat.persistence."""
 
-import json
-
-import pytest
-
 from rembrandt_chat.persistence import (
     SESSION_CONFIG,
     clear_session_config,
@@ -44,7 +40,8 @@ def test_save_merges(tmp_path):
 def test_clear_session_config(tmp_path):
     path = tmp_path / "state.json"
     save_user_state(
-        path, 1,
+        path,
+        1,
         language="en",
         **{SESSION_CONFIG: {"mode": "mixed"}},
     )

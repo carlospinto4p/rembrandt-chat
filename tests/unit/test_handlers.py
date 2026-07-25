@@ -51,11 +51,9 @@ from .conftest import (
     make_language,
     make_languages,
     make_topic,
-    make_topic_progress,
     make_translation,
     make_update,
 )
-
 
 
 # --- /start ---
@@ -112,9 +110,7 @@ async def test_cancel_outside_conversation():
 async def test_play_shows_language_keyboard():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_languages.return_value = (
-        make_languages()
-    )
+    ctx.bot_data["db"].get_languages.return_value = make_languages()
 
     await play(update, ctx)
 
@@ -200,10 +196,7 @@ async def test_play_topic_not_found():
 
     await handle_play_topic(update, ctx)
 
-    text = (
-        update.callback_query
-        .edit_message_text.call_args[0][0]
-    )
+    text = update.callback_query.edit_message_text.call_args[0][0]
     assert "not found" in text.lower()
 
 
@@ -213,13 +206,9 @@ async def test_play_mode_creates_session():
     ctx = make_context()
     ex = make_exercise()
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
+    with patch("rembrandt_chat.session_handlers.Session") as MockSession:
         mock_session = MockSession.return_value
-        mock_session.next_exercise = AsyncMock(
-            return_value=ex
-        )
+        mock_session.next_exercise = AsyncMock(return_value=ex)
         await handle_play_mode(update, ctx)
 
     assert ctx.user_data["session"] is mock_session
@@ -233,13 +222,9 @@ async def test_play_mode_with_topic_passes_concept_ids():
     ctx.user_data["_play_concept_ids"] = [1, 2, 3]
     ex = make_exercise()
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
+    with patch("rembrandt_chat.session_handlers.Session") as MockSession:
         mock_session = MockSession.return_value
-        mock_session.next_exercise = AsyncMock(
-            return_value=ex
-        )
+        mock_session.next_exercise = AsyncMock(return_value=ex)
         await handle_play_mode(update, ctx)
 
     call_kw = MockSession.call_args[1]
@@ -259,13 +244,9 @@ async def test_play_mode_with_language_builds_tr_map():
         make_concept(),
     ]
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
+    with patch("rembrandt_chat.session_handlers.Session") as MockSession:
         mock_session = MockSession.return_value
-        mock_session.next_exercise = AsyncMock(
-            return_value=ex
-        )
+        mock_session.next_exercise = AsyncMock(return_value=ex)
         await handle_play_mode(update, ctx)
 
     assert ctx.user_data["translation"] is tr
@@ -284,13 +265,9 @@ async def test_play_mode_passes_review_config(monkeypatch):
     ctx = make_context()
     ex = make_exercise()
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
+    with patch("rembrandt_chat.session_handlers.Session") as MockSession:
         mock_session = MockSession.return_value
-        mock_session.next_exercise = AsyncMock(
-            return_value=ex
-        )
+        mock_session.next_exercise = AsyncMock(return_value=ex)
         await handle_play_mode(update, ctx)
 
     call_kw = MockSession.call_args[1]
@@ -304,12 +281,8 @@ async def test_play_mode_no_words_available():
     update = make_callback_update("play_mode:learn_new")
     ctx = make_context()
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
-        MockSession.return_value.next_exercise = AsyncMock(
-            return_value=None
-        )
+    with patch("rembrandt_chat.session_handlers.Session") as MockSession:
+        MockSession.return_value.next_exercise = AsyncMock(return_value=None)
         await handle_play_mode(update, ctx)
 
     assert "session" not in ctx.user_data
@@ -363,9 +336,7 @@ async def test_review_no_reviews_due():
         "rembrandt_chat.session_handlers.Session",
     ) as mock_cls:
         session = mock_cls.return_value
-        session.next_exercise = AsyncMock(
-            return_value=None
-        )
+        session.next_exercise = AsyncMock(return_value=None)
         await review(update, ctx)
 
     text = update.message.reply_text.call_args[0][0]
@@ -379,8 +350,12 @@ async def test_review_no_reviews_due():
 async def test_stop_shows_summary():
     session = MagicMock()
     session.summary.return_value = SessionStats(
-        total=5, correct=4, incorrect=1,
-        streak=2, best_streak=3, accuracy_pct=80.0,
+        total=5,
+        correct=4,
+        incorrect=1,
+        streak=2,
+        best_streak=3,
+        accuracy_pct=80.0,
     )
     update = make_update()
     ctx = make_context(session=session)
@@ -407,15 +382,9 @@ async def test_stop_no_session():
 @pytest.mark.asyncio
 async def test_answer_text_correct():
     session = MagicMock()
-    session.answer = AsyncMock(
-        return_value=make_answer_result(correct=True)
-    )
-    session.next_exercise = AsyncMock(
-        return_value=make_exercise()
-    )
-    ex = make_exercise(
-        exercise_type=ExerciseType.MULTIPLE_CHOICE
-    )
+    session.answer = AsyncMock(return_value=make_answer_result(correct=True))
+    session.next_exercise = AsyncMock(return_value=make_exercise())
+    ex = make_exercise(exercise_type=ExerciseType.MULTIPLE_CHOICE)
 
     update = make_update(text="efimero")
     ctx = make_context(session=session, exercise=ex)
@@ -440,12 +409,8 @@ async def test_answer_text_no_session():
 @pytest.mark.asyncio
 async def test_callback_multiple_choice():
     session = MagicMock()
-    session.answer = AsyncMock(
-        return_value=make_answer_result(correct=True)
-    )
-    session.next_exercise = AsyncMock(
-        return_value=make_exercise()
-    )
+    session.answer = AsyncMock(return_value=make_answer_result(correct=True))
+    session.next_exercise = AsyncMock(return_value=make_exercise())
     ex = make_exercise()
 
     update = make_callback_update(f"{MC_PREFIX}0")
@@ -463,12 +428,8 @@ async def test_callback_multiple_choice():
 @pytest.mark.asyncio
 async def test_callback_quality():
     session = MagicMock()
-    session.answer = AsyncMock(
-        return_value=make_answer_result(correct=True)
-    )
-    session.next_exercise = AsyncMock(
-        return_value=make_exercise()
-    )
+    session.answer = AsyncMock(return_value=make_answer_result(correct=True))
+    session.next_exercise = AsyncMock(return_value=make_exercise())
     ex = make_exercise(exercise_type=ExerciseType.FLASHCARD)
 
     update = make_callback_update(f"{QUALITY_PREFIX}4")
@@ -502,17 +463,17 @@ async def test_callback_reveal():
 @pytest.mark.asyncio
 async def test_session_ends_on_last_exercise():
     session = MagicMock()
-    session.answer = AsyncMock(
-        return_value=make_answer_result(correct=True)
-    )
+    session.answer = AsyncMock(return_value=make_answer_result(correct=True))
     session.next_exercise = AsyncMock(return_value=None)
     session.summary.return_value = SessionStats(
-        total=1, correct=1, incorrect=0,
-        streak=1, best_streak=1, accuracy_pct=100.0,
+        total=1,
+        correct=1,
+        incorrect=0,
+        streak=1,
+        best_streak=1,
+        accuracy_pct=100.0,
     )
-    ex = make_exercise(
-        exercise_type=ExerciseType.MULTIPLE_CHOICE
-    )
+    ex = make_exercise(exercise_type=ExerciseType.MULTIPLE_CHOICE)
 
     update = make_update(text="efimero")
     ctx = make_context(session=session, exercise=ex)
@@ -534,9 +495,7 @@ async def test_hint_returns_pattern():
         pattern="ef_____",
         reveal_count=2,
     )
-    ex = make_exercise(
-        exercise_type=ExerciseType.MULTIPLE_CHOICE
-    )
+    ex = make_exercise(exercise_type=ExerciseType.MULTIPLE_CHOICE)
     update = make_update()
     ctx = make_context(session=session, exercise=ex)
 
@@ -573,9 +532,7 @@ async def test_skip_advances_to_next():
     session = MagicMock()
     skipped_ex = make_exercise()
     session.skip.return_value = skipped_ex
-    session.next_exercise = AsyncMock(
-        return_value=make_exercise()
-    )
+    session.next_exercise = AsyncMock(return_value=make_exercise())
 
     update = make_update()
     ctx = make_context(session=session, exercise=skipped_ex)
@@ -615,8 +572,10 @@ async def test_stats_shows_daily():
     ctx = make_context()
     ctx.bot_data["db"].daily_stats.return_value = [
         DailyStats(
-            date="2026-03-10", answers=20,
-            correct=18, accuracy_pct=90.0,
+            date="2026-03-10",
+            answers=20,
+            correct=18,
+            accuracy_pct=90.0,
         ),
     ]
     ctx.bot_data["db"].get_topics.return_value = []
@@ -749,9 +708,7 @@ async def test_topics_shows_categories():
 
     text = update.message.reply_text.call_args[0][0]
     assert "category" in text.lower()
-    kb = update.message.reply_text.call_args[1][
-        "reply_markup"
-    ]
+    kb = update.message.reply_text.call_args[1]["reply_markup"]
     flat = [btn for row in kb.inline_keyboard for btn in row]
     labels = [btn.text for btn in flat]
     assert any("Vocabulary" in lb for lb in labels)
@@ -766,13 +723,9 @@ async def test_topic_callback_starts_session():
     ctx.bot_data["db"].get_topic.return_value = topic
     ex = make_exercise()
 
-    with patch(
-        "rembrandt_chat.session_handlers.Session"
-    ) as MockSession:
+    with patch("rembrandt_chat.session_handlers.Session") as MockSession:
         mock_session = MockSession.return_value
-        mock_session.next_exercise = AsyncMock(
-            return_value=ex
-        )
+        mock_session.next_exercise = AsyncMock(return_value=ex)
         await handle_topic_callback(update, ctx)
 
     assert ctx.user_data["session"] is mock_session
@@ -793,10 +746,7 @@ async def test_topic_callback_not_found():
 
     await handle_topic_callback(update, ctx)
 
-    text = (
-        update.callback_query
-        .edit_message_text.call_args[0][0]
-    )
+    text = update.callback_query.edit_message_text.call_args[0][0]
     assert "not found" in text.lower()
 
 
@@ -857,8 +807,7 @@ async def test_import_file_success():
     mock_doc = AsyncMock()
     mock_tg_file = AsyncMock()
     mock_tg_file.download_as_bytearray.return_value = (
-        b'[{"concept_id":1},{"concept_id":2},'
-        b'{"concept_id":3}]'
+        b'[{"concept_id":1},{"concept_id":2},{"concept_id":3}]'
     )
     mock_doc.get_file.return_value = mock_tg_file
     update.message.document = mock_doc
@@ -880,9 +829,7 @@ async def test_import_file_invalid_json():
 
     mock_doc = AsyncMock()
     mock_tg_file = AsyncMock()
-    mock_tg_file.download_as_bytearray.return_value = (
-        b"not json"
-    )
+    mock_tg_file.download_as_bytearray.return_value = b"not json"
     mock_doc.get_file.return_value = mock_tg_file
     update.message.document = mock_doc
 
@@ -902,9 +849,7 @@ async def test_import_file_not_array():
 
     mock_doc = AsyncMock()
     mock_tg_file = AsyncMock()
-    mock_tg_file.download_as_bytearray.return_value = (
-        b'{"not": "an array"}'
-    )
+    mock_tg_file.download_as_bytearray.return_value = b'{"not": "an array"}'
     mock_doc.get_file.return_value = mock_tg_file
     update.message.document = mock_doc
 
@@ -968,10 +913,7 @@ async def test_history_with_date_filter():
 
     await history(update, ctx)
 
-    call_kw = (
-        ctx.bot_data["db"]
-        .get_answer_history.call_args[1]
-    )
+    call_kw = ctx.bot_data["db"].get_answer_history.call_args[1]
     assert call_kw["since"] is not None
 
 
@@ -1007,9 +949,7 @@ async def test_export_sends_typing():
 async def test_language_shows_options():
     update = make_update()
     ctx = make_context()
-    ctx.bot_data["db"].get_languages.return_value = (
-        make_languages()
-    )
+    ctx.bot_data["db"].get_languages.return_value = make_languages()
 
     await language(update, ctx)
 
@@ -1026,17 +966,14 @@ async def test_language_shows_options():
 async def test_language_callback_stores_choice():
     update = make_callback_update("lang:en")
     ctx = make_context()
-    ctx.bot_data["db"].get_language.return_value = (
-        make_language("en", "English")
+    ctx.bot_data["db"].get_language.return_value = make_language(
+        "en", "English"
     )
 
     await handle_language_callback(update, ctx)
 
     assert ctx.user_data["language"] == "en"
-    text = (
-        update.callback_query
-        .edit_message_text.call_args[0][0]
-    )
+    text = update.callback_query.edit_message_text.call_args[0][0]
     assert "English" in text
 
 

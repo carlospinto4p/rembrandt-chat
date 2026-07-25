@@ -10,6 +10,7 @@ from typing import Any
 from rembrandt import Database, ReviewConfig, Session, User, topic_progress
 from rembrandt.models import (
     ConceptTranslation,
+    Exercise,
     SessionMode,
     Topic,
     TopicProgress,
@@ -88,10 +89,9 @@ async def require_category(
     """
     cat = get_category(cat_key)
     if cat is None:
-        await query.edit_message_text(
-            t("category_not_found", lang)
-        )
+        await query.edit_message_text(t("category_not_found", lang))
     return cat
+
 
 # Type alias for handler functions
 _Handler = Callable[
@@ -110,10 +110,7 @@ def require_message(func: _Handler) -> _Handler:
         update: Update,
         context: ContextTypes.DEFAULT_TYPE,
     ) -> None:
-        if (
-            update.effective_user is None
-            or update.message is None
-        ):
+        if update.effective_user is None or update.message is None:
             return
         await func(update, context)
 
@@ -139,10 +136,7 @@ def require_message_conv(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE,
     ) -> int:
-        if (
-            update.effective_user is None
-            or update.message is None
-        ):
+        if update.effective_user is None or update.message is None:
             return ConversationHandler.END
         return await func(update, context)
 
@@ -181,9 +175,7 @@ async def conversation_timeout(
     lang = get_lang(context)
     chat = update.effective_chat
     if chat is not None:
-        await chat.send_message(
-            t("conversation_timeout", lang)
-        )
+        await chat.send_message(t("conversation_timeout", lang))
     return ConversationHandler.END
 
 
@@ -197,9 +189,7 @@ async def fallback_unknown_callback(
         return
     await query.answer()
     lang = get_lang(context)
-    await query.edit_message_text(
-        t("action_expired", lang)
-    )
+    await query.edit_message_text(t("action_expired", lang))
 
 
 async def fallback_expected_text(
@@ -209,9 +199,7 @@ async def fallback_expected_text(
     """Reply when user sends non-text in a text-expecting state."""
     lang = get_lang(context)
     if update.message:
-        await update.message.reply_text(
-            t("expected_text", lang)
-        )
+        await update.message.reply_text(t("expected_text", lang))
 
 
 async def fallback_expected_file(
@@ -221,9 +209,7 @@ async def fallback_expected_file(
     """Reply when user sends text in a file-expecting state."""
     lang = get_lang(context)
     if update.message:
-        await update.message.reply_text(
-            t("expected_file", lang)
-        )
+        await update.message.reply_text(t("expected_file", lang))
 
 
 async def send_typing(update: Update) -> None:
@@ -263,9 +249,7 @@ def _restore_user_state(
     if user_data.get("_state_restored"):
         return
     user_data["_state_restored"] = True
-    state_path: Path | None = context.bot_data.get(
-        "state_path"
-    )
+    state_path: Path | None = context.bot_data.get("state_path")
     if state_path is None:
         return
     tg_id = update.effective_user.id
@@ -382,7 +366,7 @@ def _build_review_config() -> ReviewConfig | None:
 async def setup_translations(
     user_data: dict,
     db: Database,
-    exercise: 'Exercise',
+    exercise: Exercise,
 ) -> None:
     """Load and cache translations for the current exercise.
 
@@ -393,9 +377,7 @@ async def setup_translations(
     translation = None
     tr_map = None
     if lang:
-        translation = await _lookup_translation(
-            db, exercise.concept.id, lang
-        )
+        translation = await _lookup_translation(db, exercise.concept.id, lang)
         tr_map = await _build_translation_map(db, lang)
         user_data[TRANSLATION_MAP] = tr_map
     user_data[TRANSLATION] = translation
@@ -412,14 +394,9 @@ async def get_category_topics(
     :return: ``(topics, progress)`` lists in matching order.
     """
     all_topics = await db.get_topics()
-    filtered = [
-        t for t in all_topics if t.id in topic_ids
-    ]
+    filtered = [t for t in all_topics if t.id in topic_ids]
     progress = await asyncio.gather(
-        *(
-            topic_progress(db, user_id, t)
-            for t in filtered
-        )
+        *(topic_progress(db, user_id, t) for t in filtered)
     )
     return filtered, list(progress)
 
@@ -431,10 +408,7 @@ async def _build_translation_map(
     """Map native concept text to translated text."""
     concepts = await db.get_concepts()
     translations = await asyncio.gather(
-        *(
-            db.get_translation(c.id, lang)
-            for c in concepts
-        )
+        *(db.get_translation(c.id, lang) for c in concepts)
     )
     tr_map: dict[str, str] = {}
     for concept, tr in zip(concepts, translations):
@@ -482,22 +456,20 @@ async def send_next(
         _clear_persisted_session(update, context)
         chat = update.effective_chat
         if chat is not None:
-            await chat.send_message(
-                format_summary(summary, lang)
-            )
+            await chat.send_message(format_summary(summary, lang))
         return
 
     user_data[EXERCISE] = exercise
     translation = None
     if db and lang:
-        translation = await _lookup_translation(
-            db, exercise.concept.id, lang
-        )
+        translation = await _lookup_translation(db, exercise.concept.id, lang)
     user_data[TRANSLATION] = translation
     tr_map = user_data.get(TRANSLATION_MAP)
     text, keyboard = format_exercise(
-        exercise, translation=translation,
-        tr_map=tr_map, lang=lang,
+        exercise,
+        translation=translation,
+        tr_map=tr_map,
+        lang=lang,
     )
     chat = update.effective_chat
     if chat is not None:
@@ -511,9 +483,7 @@ def _clear_persisted_session(
     """Remove the persisted session config for this user."""
     if context is None:
         return
-    state_path: Path | None = context.bot_data.get(
-        "state_path"
-    )
+    state_path: Path | None = context.bot_data.get("state_path")
     if state_path is None:
         return
     tg_user = update.effective_user
@@ -544,12 +514,11 @@ def persist_session_config(
         "concept_ids": concept_ids,
     }
     context.user_data[LAST_TOPIC] = last_topic
-    state_path: Path | None = context.bot_data.get(
-        "state_path"
-    )
+    state_path: Path | None = context.bot_data.get("state_path")
     if state_path:
         save_user_state(
-            state_path, tg_id,
+            state_path,
+            tg_id,
             **{SESSION_CONFIG: config, LAST_TOPIC: last_topic},
         )
 
@@ -560,10 +529,10 @@ def persist_language(
     lang: str,
 ) -> None:
     """Save language preference to disk."""
-    state_path: Path | None = context.bot_data.get(
-        "state_path"
-    )
+    state_path: Path | None = context.bot_data.get("state_path")
     if state_path:
         save_user_state(
-            state_path, tg_id, language=lang,
+            state_path,
+            tg_id,
+            language=lang,
         )

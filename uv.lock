@@ -448,7 +448,7 @@ dependencies = [
 
 [[package]]
 name = "rembrandt-chat"
-version = "0.36.71"
+version = "0.36.73"
 source = { editable = "." }
 dependencies = [
     { name = "python-dotenv" },

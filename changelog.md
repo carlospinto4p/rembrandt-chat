@@ -2,6 +2,24 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.73 - 25th July 2026
+
+- Fixed 19 pre-existing `ruff check` errors (backlog item):
+  - `bot.py`: moved `load_dotenv()` inside `create_app()` so config
+    imports sit at the top of the file (10 `E402` errors — env vars
+    are only read lazily inside functions, never at import time).
+  - `_helpers.py`: imported `Exercise` from `rembrandt.models`
+    instead of an unresolvable forward-reference string (`F821`).
+  - `session_handlers.py`: removed the unused `ExerciseType` import
+    and a dead `user_data` assignment; dropped the unused `answer`
+    result from `_handle_quality` (self-graded flashcards don't get
+    correct/wrong feedback, so the value was never meant to be used);
+    re-exported `CANCEL_CB`/`STUDY_WEAK_CB` explicitly (`as`-aliased)
+    since `handlers.py` re-imports them from this module.
+  - `test_handlers.py`, `test_persistence.py`: removed unused
+    `make_topic_progress`, `json`, `pytest` imports.
+
+
 ### v0.36.72 - 25th July 2026
 
 - Updated `.claude/rules/committing.md` from canonical: clarifies that

@@ -1,12 +1,9 @@
 """Bot application factory and entry point."""
 
 import logging
-
-from dotenv import load_dotenv
 from pathlib import Path
 
-load_dotenv()
-
+from dotenv import load_dotenv
 from rembrandt import Database, import_concepts_csv
 from rembrandt.topics import load_topics
 from telegram import BotCommand, Update
@@ -125,7 +122,8 @@ async def _load_base_vocab(db: Database) -> None:
     concepts = await import_concepts_csv(db, path)
     log.info(
         "Loaded %d base vocabulary words from %s",
-        len(concepts), path,
+        len(concepts),
+        path,
     )
 
 
@@ -204,6 +202,7 @@ async def _post_init(app) -> None:
 
 def create_app() -> None:
     """Build and run the Telegram bot application."""
+    load_dotenv()
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
@@ -240,7 +239,8 @@ def create_app() -> None:
     _timeout_states = {
         ConversationHandler.TIMEOUT: [
             MessageHandler(
-                filters.ALL, conversation_timeout,
+                filters.ALL,
+                conversation_timeout,
             ),
         ],
     }
@@ -434,16 +434,15 @@ def create_app() -> None:
     )
 
     # Catch-all for unmatched callback queries — must be last
-    app.add_handler(
-        CallbackQueryHandler(fallback_unknown_callback)
-    )
+    app.add_handler(CallbackQueryHandler(fallback_unknown_callback))
 
     app.add_error_handler(_error_handler)
     app.run_polling()
 
 
 async def _error_handler(
-    update: object, context: ContextTypes.DEFAULT_TYPE,
+    update: object,
+    context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
     """Log the error and notify the user."""
     log.error(
@@ -457,9 +456,7 @@ async def _error_handler(
         lang = None
         if context.user_data:
             lang = context.user_data.get("language")
-        await chat.send_message(
-            t("error_generic", lang=lang)
-        )
+        await chat.send_message(t("error_generic", lang=lang))
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@
 from typing import Any
 
 from rembrandt import Database, Session
-from rembrandt.models import ExerciseType, SessionMode
+from rembrandt.models import SessionMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
@@ -34,16 +34,16 @@ from rembrandt_chat._helpers import (
 )
 from rembrandt_chat.i18n import t
 from rembrandt_chat.formatting import (
+    CANCEL_CB as CANCEL_CB,
     CAT_CB_PREFIX,
     LANG_CB_PREFIX,
     PLAY_CAT_PREFIX,
     PLAY_LANG_PREFIX,
-    CANCEL_CB,
     PLAY_BACK_PREFIX,
-    STUDY_WEAK_CB,
     PLAY_MODE_PREFIX,
     PLAY_TOPIC_PREFIX,
     PLAY_TPAGE_PREFIX,
+    STUDY_WEAK_CB as STUDY_WEAK_CB,
     TOPIC_CB_PREFIX,
     TPAGE_PREFIX,
     MC_PREFIX,
@@ -111,7 +111,9 @@ async def _start_session(
     mode = session_kwargs.get("mode", SessionMode.MIXED)
     tg_id = update.effective_user.id
     persist_session_config(
-        context, tg_id, user_id,
+        context,
+        tg_id,
+        user_id,
         mode=mode.value,
         concept_ids=session_kwargs.get("concept_ids"),
     )
@@ -147,9 +149,7 @@ async def start(
 
     name = user.display_name or user.username
     lang = get_lang(context)
-    await update.message.reply_text(
-        t("welcome", lang, name=name)
-    )
+    await update.message.reply_text(t("welcome", lang, name=name))
 
 
 @require_message
@@ -169,9 +169,7 @@ async def cancel(
 ) -> None:
     """`/cancel` — fallback when no conversation is active."""
     lang = get_lang(context)
-    await update.message.reply_text(
-        t("nothing_to_cancel", lang)
-    )
+    await update.message.reply_text(t("nothing_to_cancel", lang))
 
 
 @require_message
@@ -187,9 +185,7 @@ async def play(
     lang = get_lang(context)
     languages = await db.get_languages()
     text, keyboard = format_play_languages(languages, lang)
-    await update.message.reply_text(
-        text, reply_markup=keyboard
-    )
+    await update.message.reply_text(text, reply_markup=keyboard)
 
 
 @require_message
@@ -206,9 +202,7 @@ async def review(
 
     last = context.user_data.get(LAST_TOPIC)
     if last is None:
-        await update.message.reply_text(
-            t("no_previous_topic", lang)
-        )
+        await update.message.reply_text(t("no_previous_topic", lang))
         return
 
     concept_ids = last.get("concept_ids")
@@ -225,24 +219,22 @@ async def review(
     exercise = await session.next_exercise()
     if exercise is None:
         user_data.pop(SESSION, None)
-        await update.message.reply_text(
-            t("no_reviews_due", lang)
-        )
+        await update.message.reply_text(t("no_reviews_due", lang))
         return
 
     user_data[EXERCISE] = exercise
     tg_id = update.effective_user.id
     persist_session_config(
-        context, tg_id, user.id,
+        context,
+        tg_id,
+        user.id,
         mode=SessionMode.REVIEW_DUE.value,
         concept_ids=concept_ids,
     )
 
     await setup_translations(user_data, db, exercise)
 
-    await update.message.reply_text(
-        t("review_started", lang)
-    )
+    await update.message.reply_text(t("review_started", lang))
     text, keyboard = format_exercise(
         exercise,
         translation=user_data.get(TRANSLATION),
@@ -251,9 +243,7 @@ async def review(
     )
     chat = update.effective_chat
     if chat is not None:
-        await chat.send_message(
-            text, reply_markup=keyboard
-        )
+        await chat.send_message(text, reply_markup=keyboard)
 
 
 @require_callback
@@ -271,16 +261,16 @@ async def handle_play_language(
     if await check_active_session(update, context):
         return
 
-    lang_code = data[len(PLAY_LANG_PREFIX):]
+    lang_code = data[len(PLAY_LANG_PREFIX) :]
     user_data[LANGUAGE] = lang_code
     persist_language(
-        context, update.effective_user.id, lang_code,
+        context,
+        update.effective_user.id,
+        lang_code,
     )
 
     text, keyboard = format_play_categories(lang=lang_code)
-    await query.edit_message_text(
-        text, reply_markup=keyboard
-    )
+    await query.edit_message_text(text, reply_markup=keyboard)
 
 
 @require_callback
@@ -294,11 +284,10 @@ async def handle_play_category(
     if not data.startswith(PLAY_CAT_PREFIX):
         return
 
-    user_data = context.user_data
     if await check_active_session(update, context):
         return
 
-    cat_key = data[len(PLAY_CAT_PREFIX):]
+    cat_key = data[len(PLAY_CAT_PREFIX) :]
     lang = get_lang(context)
     cat = await require_category(query, cat_key, lang)
     if cat is None:
@@ -306,14 +295,17 @@ async def handle_play_category(
 
     user, db = await resolve_user(update, context)
     filtered, progress = await get_category_topics(
-        db, user.id, cat.topic_ids,
+        db,
+        user.id,
+        cat.topic_ids,
     )
     text, keyboard = format_play_topics(
-        filtered, progress, lang=lang, cat_key=cat_key,
+        filtered,
+        progress,
+        lang=lang,
+        cat_key=cat_key,
     )
-    await query.edit_message_text(
-        text, reply_markup=keyboard
-    )
+    await query.edit_message_text(text, reply_markup=keyboard)
 
 
 @require_callback
@@ -332,7 +324,7 @@ async def handle_play_topic(
         return
 
     lang = get_lang(context)
-    topic_value = data[len(PLAY_TOPIC_PREFIX):]
+    topic_value = data[len(PLAY_TOPIC_PREFIX) :]
     if topic_value == "all":
         user_data.pop(_PLAY_CONCEPT_IDS, None)
         topic_label = all_topics_label(lang)
@@ -341,14 +333,10 @@ async def handle_play_topic(
         _, db = await resolve_user(update, context)
         topic = await db.get_topic(topic_id)
         if topic is None:
-            await query.edit_message_text(
-                t("topic_not_found", lang)
-            )
+            await query.edit_message_text(t("topic_not_found", lang))
             return
         user_data[_PLAY_CONCEPT_IDS] = topic.concept_ids
-        topic_label = topic_title(
-            topic.id, topic.title, lang
-        )
+        topic_label = topic_title(topic.id, topic.title, lang)
 
     buttons = [
         InlineKeyboardButton(
@@ -364,7 +352,8 @@ async def handle_play_topic(
     rows = [[b] for b in buttons] + [[back_btn]]
     await query.edit_message_text(
         t(
-            "choose_session_mode", lang,
+            "choose_session_mode",
+            lang,
             topic=topic_label,
         ),
         reply_markup=InlineKeyboardMarkup(rows),
@@ -382,7 +371,7 @@ async def handle_play_topic_page(
     if not data.startswith(PLAY_TPAGE_PREFIX):
         return
 
-    payload = data[len(PLAY_TPAGE_PREFIX):]
+    payload = data[len(PLAY_TPAGE_PREFIX) :]
     cat_key, page_str = payload.rsplit(":", 1)
     page = int(page_str)
 
@@ -393,14 +382,20 @@ async def handle_play_topic_page(
 
     user, db = await resolve_user(update, context)
     filtered, progress = await get_category_topics(
-        db, user.id, cat.topic_ids,
+        db,
+        user.id,
+        cat.topic_ids,
     )
     text, keyboard = format_play_topics(
-        filtered, progress, lang=lang,
-        page=page, cat_key=cat_key,
+        filtered,
+        progress,
+        lang=lang,
+        page=page,
+        cat_key=cat_key,
     )
     await query.edit_message_text(
-        text, reply_markup=keyboard,
+        text,
+        reply_markup=keyboard,
     )
 
 
@@ -430,9 +425,7 @@ async def handle_study_weak(
     lang = get_lang(context)
     concept_ids = user_data.pop("_weak_concept_ids", None)
     if not concept_ids:
-        await query.edit_message_text(
-            t("cancelled", lang)
-        )
+        await query.edit_message_text(t("cancelled", lang))
         return
 
     user_data[_PLAY_CONCEPT_IDS] = concept_ids
@@ -450,7 +443,8 @@ async def handle_study_weak(
     rows = [[b] for b in buttons] + [[back_btn]]
     await query.edit_message_text(
         t(
-            "choose_session_mode", lang,
+            "choose_session_mode",
+            lang,
             topic=t("weakest_words_header", lang).strip(),
         ),
         reply_markup=InlineKeyboardMarkup(rows),
@@ -471,7 +465,8 @@ async def handle_play_back(
     lang = get_lang(context)
     text, keyboard = format_play_categories(lang=lang)
     await query.edit_message_text(
-        text, reply_markup=keyboard,
+        text,
+        reply_markup=keyboard,
     )
 
 
@@ -486,7 +481,7 @@ async def handle_play_mode(
     if not data.startswith(PLAY_MODE_PREFIX):
         return
 
-    mode_value = data[len(PLAY_MODE_PREFIX):]
+    mode_value = data[len(PLAY_MODE_PREFIX) :]
     mode = SessionMode(mode_value)
 
     user_data = context.user_data
@@ -503,10 +498,15 @@ async def handle_play_mode(
         session_kwargs["concept_ids"] = concept_ids
 
     await _start_session(
-        update, context, db, user.id,
+        update,
+        context,
+        db,
+        user.id,
         no_words_msg=t("no_words_available", lang),
         confirm_msg=t(
-            "session_started", lang, label=label,
+            "session_started",
+            lang,
+            label=label,
         ),
         **session_kwargs,
     )
@@ -521,17 +521,13 @@ async def stop(
     session, user_data = get_session(context)
     lang = get_lang(context)
     if session is None:
-        await update.message.reply_text(
-            t("no_active_session", lang)
-        )
+        await update.message.reply_text(t("no_active_session", lang))
         return
 
     summary = session.summary()
     cleanup_session(user_data)
     _clear_persisted_session(update, context)
-    await update.message.reply_text(
-        format_summary(summary, lang)
-    )
+    await update.message.reply_text(format_summary(summary, lang))
 
 
 async def _require_active_exercise(
@@ -546,11 +542,7 @@ async def _require_active_exercise(
         return result
     lang = get_lang(context)
     session, _ = get_session(context)
-    key = (
-        "no_active_exercise"
-        if session is not None
-        else "no_active_session"
-    )
+    key = "no_active_exercise" if session is not None else "no_active_session"
     await update.message.reply_text(t(key, lang))
     return None
 
@@ -586,13 +578,14 @@ async def skip(
     skipped = session.skip()
     tr = user_data.get(TRANSLATION)
     front = tr.front if tr else skipped.concept.front
-    await update.message.reply_text(
-        t("skipped", lang, front=front)
-    )
+    await update.message.reply_text(t("skipped", lang, front=front))
 
     db: Database = context.bot_data["db"]
     await send_next(
-        session, user_data, update, db=db,
+        session,
+        user_data,
+        update,
+        db=db,
         context=context,
     )
 
@@ -609,16 +602,15 @@ async def handle_answer_text(
 
     session, user_data = result
     lang = get_lang(context)
-    answer = await session.answer(
-        text=update.message.text or ""
-    )
-    await update.message.reply_text(
-        format_answer(answer, lang)
-    )
+    answer = await session.answer(text=update.message.text or "")
+    await update.message.reply_text(format_answer(answer, lang))
 
     db: Database = context.bot_data["db"]
     await send_next(
-        session, user_data, update, db=db,
+        session,
+        user_data,
+        update,
+        db=db,
         context=context,
     )
 
@@ -627,42 +619,59 @@ async def _handle_reveal(query, exercise, user_data, lang):
     """Show the flashcard answer and quality buttons."""
     tr = user_data.get(TRANSLATION)
     text, keyboard = flashcard_reveal(
-        exercise, translation=tr, lang=lang,
+        exercise,
+        translation=tr,
+        lang=lang,
     )
-    await query.edit_message_text(
-        text, reply_markup=keyboard
-    )
+    await query.edit_message_text(text, reply_markup=keyboard)
 
 
 async def _handle_quality(
-    query, data, session, user_data, update, db, lang,
-    *, context,
+    query,
+    data,
+    session,
+    user_data,
+    update,
+    db,
+    lang,
+    *,
+    context,
 ):
     """Process a self-graded quality rating."""
-    quality = int(data[len(QUALITY_PREFIX):])
-    answer = await session.answer(quality=quality)
-    await query.edit_message_text(
-        t("quality_recorded", lang)
-    )
+    quality = int(data[len(QUALITY_PREFIX) :])
+    await session.answer(quality=quality)
+    await query.edit_message_text(t("quality_recorded", lang))
     await send_next(
-        session, user_data, update, db=db,
+        session,
+        user_data,
+        update,
+        db=db,
         context=context,
     )
 
 
 async def _handle_mc(
-    query, data, exercise, session, user_data, update,
-    db, lang, *, context,
+    query,
+    data,
+    exercise,
+    session,
+    user_data,
+    update,
+    db,
+    lang,
+    *,
+    context,
 ):
     """Process a multiple-choice button press."""
-    idx = int(data[len(MC_PREFIX):])
+    idx = int(data[len(MC_PREFIX) :])
     chosen = exercise.options[idx]
     answer = await session.answer(text=chosen)
-    await query.edit_message_text(
-        format_answer(answer, lang)
-    )
+    await query.edit_message_text(format_answer(answer, lang))
     await send_next(
-        session, user_data, update, db=db,
+        session,
+        user_data,
+        update,
+        db=db,
         context=context,
     )
 
@@ -686,17 +695,32 @@ async def handle_answer_callback(
 
     if data == REVEAL_CB:
         await _handle_reveal(
-            query, exercise, user_data, lang,
+            query,
+            exercise,
+            user_data,
+            lang,
         )
     elif data.startswith(QUALITY_PREFIX):
         await _handle_quality(
-            query, data, session, user_data,
-            update, db, lang, context=context,
+            query,
+            data,
+            session,
+            user_data,
+            update,
+            db,
+            lang,
+            context=context,
         )
     elif data.startswith(MC_PREFIX):
         await _handle_mc(
-            query, data, exercise, session,
-            user_data, update, db, lang,
+            query,
+            data,
+            exercise,
+            session,
+            user_data,
+            update,
+            db,
+            lang,
             context=context,
         )
 
@@ -709,9 +733,7 @@ async def topics(
     """`/topics` — list categories, then topics."""
     lang = get_lang(context)
     text, keyboard = format_categories(lang=lang)
-    await update.message.reply_text(
-        text, reply_markup=keyboard
-    )
+    await update.message.reply_text(text, reply_markup=keyboard)
 
 
 @require_callback
@@ -725,7 +747,7 @@ async def handle_category_callback(
     if not data.startswith(CAT_CB_PREFIX):
         return
 
-    cat_key = data[len(CAT_CB_PREFIX):]
+    cat_key = data[len(CAT_CB_PREFIX) :]
     lang = get_lang(context)
     cat = await require_category(query, cat_key, lang)
     if cat is None:
@@ -733,14 +755,17 @@ async def handle_category_callback(
 
     user, db = await resolve_user(update, context)
     filtered, progress = await get_category_topics(
-        db, user.id, cat.topic_ids,
+        db,
+        user.id,
+        cat.topic_ids,
     )
     text, keyboard = format_topics(
-        filtered, progress, lang=lang, cat_key=cat_key,
+        filtered,
+        progress,
+        lang=lang,
+        cat_key=cat_key,
     )
-    await query.edit_message_text(
-        text, reply_markup=keyboard
-    )
+    await query.edit_message_text(text, reply_markup=keyboard)
 
 
 @require_callback
@@ -754,7 +779,7 @@ async def handle_topic_page(
     if not data.startswith(TPAGE_PREFIX):
         return
 
-    payload = data[len(TPAGE_PREFIX):]
+    payload = data[len(TPAGE_PREFIX) :]
     cat_key, page_str = payload.rsplit(":", 1)
     page = int(page_str)
 
@@ -765,14 +790,20 @@ async def handle_topic_page(
 
     user, db = await resolve_user(update, context)
     filtered, progress = await get_category_topics(
-        db, user.id, cat.topic_ids,
+        db,
+        user.id,
+        cat.topic_ids,
     )
     text, keyboard = format_topics(
-        filtered, progress, lang=lang,
-        page=page, cat_key=cat_key,
+        filtered,
+        progress,
+        lang=lang,
+        page=page,
+        cat_key=cat_key,
     )
     await query.edit_message_text(
-        text, reply_markup=keyboard,
+        text,
+        reply_markup=keyboard,
     )
 
 
@@ -791,19 +822,20 @@ async def handle_topic_callback(
         return
 
     lang = get_lang(context)
-    topic_id = int(data[len(TOPIC_CB_PREFIX):])
+    topic_id = int(data[len(TOPIC_CB_PREFIX) :])
     user, db = await resolve_user(update, context)
 
     topic = await db.get_topic(topic_id)
     if topic is None:
-        await query.edit_message_text(
-            t("topic_not_found", lang)
-        )
+        await query.edit_message_text(t("topic_not_found", lang))
         return
 
     topic_label = topic_title(topic.id, topic.title, lang)
     await _start_session(
-        update, context, db, user.id,
+        update,
+        context,
+        db,
+        user.id,
         no_words_msg=t("no_words_in_topic", lang),
         confirm_msg=f"Topic: {topic_label}",
         concept_ids=topic.concept_ids,
@@ -820,9 +852,7 @@ async def language(
     lang = get_lang(context)
     languages = await db.get_languages()
     text, keyboard = format_languages(languages, lang)
-    await update.message.reply_text(
-        text, reply_markup=keyboard
-    )
+    await update.message.reply_text(text, reply_markup=keyboard)
 
 
 @require_callback
@@ -836,10 +866,12 @@ async def handle_language_callback(
     if not data.startswith(LANG_CB_PREFIX):
         return
 
-    lang_code = data[len(LANG_CB_PREFIX):]
+    lang_code = data[len(LANG_CB_PREFIX) :]
     context.user_data[LANGUAGE] = lang_code
     persist_language(
-        context, update.effective_user.id, lang_code,
+        context,
+        update.effective_user.id,
+        lang_code,
     )
 
     _, db = await resolve_user(update, context)
