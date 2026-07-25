@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.70 - 25th July 2026
+
+- Rotated changelog: archived 5 entries to `changelog/2026.md`.
+
+
 ### v0.36.69 - 24th July 2026
 
 - `CLAUDE.md`: replaced the superseded **Core Rules** periodic-review
@@ -194,29 +199,3 @@
 ### v0.36.41 - 17th May 2026
 
 - Rotated changelog: archived 5 old entries to `changelog/2026.md`.
-
-
-### v0.36.40 - 9th May 2026
-
-- Added `When to Skip Tests` section to `.claude/rules/committing.md`: explicit allowlist (markdown, version bump, lock file, `.claude/` config, `CLAUDE.md`) of diffs where tests can be safely skipped.
-
-
-### v0.36.39 - 9th May 2026
-
-- Regrouped 1 historical changelog entry flagged by `/changelog-review` (programme v2.52.143):
-  - `changelog/2026.md` v0.25.0: 3 top-level bullets touching `data/` collapsed under one parent.
-
-
-### v0.36.38 - 9th May 2026
-
-- Updated `.claude/rules/versioning.md` (1.0 → 1.1): rewrote changelog-format section to fix rule/example contradiction; threshold now stated as "3+ top-level bullets touching the same module → group under a parent"; sub-bullet patterns reorganised; added "When NOT to group" section. Synced from programme v2.52.144.
-
-
-### v0.36.37 - 8th May 2026
-
-- Synced canonical rules from `programme` v2.52.139/v2.52.140: `backlog`, `refactoring`, `optimization`, `improvements` rules promoted to global (`~/.claude/rules/`) and removed locally; `versioning.md` updated with depth-based-cadence batch exception.
-
-
-### v0.36.36 - 2nd May 2026
-
-- Rotated changelog: archived 2 entries to , keeping 30.
