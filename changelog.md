@@ -2,6 +2,14 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.74 - 26th July 2026
+
+- Redeployed the hardened `scripts/changelog-add.sh`: guards against
+  the CWD-relative wrong-repo footgun (comparing the target
+  changelog's version against the wrong repo's manifest when invoked
+  from outside its own directory).
+
+
 ### v0.36.73 - 25th July 2026
 
 - Fixed 19 pre-existing `ruff check` errors (backlog item):
