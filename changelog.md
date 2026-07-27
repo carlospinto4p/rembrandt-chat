@@ -2,6 +2,15 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.76 - 27th July 2026
+
+- Updated `.claude/rules/committing.md` from canonical: added a
+  "Concurrent Sessions" section covering the cross-session
+  commit-pollution hazard (check `git status --porcelain`
+  immediately before every commit, stage by name, diff before
+  re-shipping a change another session already committed).
+
+
 ### v0.36.75 - 27th July 2026
 
 - Fixed `scripts/backup_db.py`: `DEFAULT_DEST` now resolves to
