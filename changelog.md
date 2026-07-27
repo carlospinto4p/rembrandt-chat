@@ -2,6 +2,17 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.75 - 27th July 2026
+
+- Fixed `scripts/backup_db.py`: `DEFAULT_DEST` now resolves to
+  `~/Dropbox/home/development/db/rembrandt-chat` (was the stale
+  `rembrandt_chat` underscore slug from before the project's registry
+  rename). The old default had been silently writing nightly snapshots
+  into a parallel directory instead of the project's real backup
+  location. Added `test_default_dest_uses_hyphenated_project_slug`
+  regression test.
+
+
 ### v0.36.74 - 26th July 2026
 
 - Redeployed the hardened `scripts/changelog-add.sh`: guards against

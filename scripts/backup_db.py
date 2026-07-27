@@ -12,7 +12,7 @@ Destination resolution (highest priority first):
 
 1. ``--dest`` CLI flag
 2. ``REMBRANDT_CHAT_BACKUP_DEST`` environment variable
-3. Built-in default: ``~/Dropbox/home/development/db/rembrandt_chat``
+3. Built-in default: ``~/Dropbox/home/development/db/rembrandt-chat``
 
 Usage::
 
@@ -43,7 +43,7 @@ _PROJECT_ROOT = Path(__file__).parent.parent
 DEFAULT_DB = _PROJECT_ROOT / "data" / "rembrandt.db"
 
 DEFAULT_DEST = (
-    Path.home() / "Dropbox" / "home" / "development" / "db" / "rembrandt_chat"
+    Path.home() / "Dropbox" / "home" / "development" / "db" / "rembrandt-chat"
 )
 
 

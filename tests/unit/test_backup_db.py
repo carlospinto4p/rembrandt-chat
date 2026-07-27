@@ -26,6 +26,11 @@ def _make_sqlite(path: Path, rows: int = 50) -> None:
     conn.close()
 
 
+def test_default_dest_uses_hyphenated_project_slug():
+    mod = _load()
+    assert mod.DEFAULT_DEST.name == "rembrandt-chat"
+
+
 def test_backup_one_writes_snapshot(tmp_path):
     mod = _load()
     src = tmp_path / "rembrandt.db"
