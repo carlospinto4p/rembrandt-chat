@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.77 - 28th July 2026
+
+- Rotated changelog: archived 7 entries to `changelog/2026.md`.
+
+
 ### v0.36.76 - 27th July 2026
 
 - Updated `.claude/rules/committing.md` from canonical: added a
@@ -224,43 +229,3 @@
 ### v0.36.48 - 4th June 2026
 
 - Rotated changelog: archived 7 entries to `changelog/2026.md`.
-
-
-### v0.36.47 - 4th June 2026
-
-- Synced `.claude/rules/committing.md` from the programme registry: step 6 now scopes `uv.lock` regeneration to code-related bumps only — non-code patch bumps (`.claude/` config, docs, changelog, rule syncs) skip `uv lock`.
-
-
-### v0.36.46 - 3rd June 2026
-
-- Synced `.claude/rules/testing.md` from the programme registry: added the SQLite-backed fixtures pointer to the session-scoped template pattern (see the shared `testing-python` rule).
-
-
-### v0.36.45 - 3rd June 2026
-
-- Updated `.gitignore`: ignore SQLite WAL-mode sidecars
-  (`*.db-shm`, `*.db-wal`, `*.db-journal`) so transient files
-  stop appearing as untracked.
-
-
-### v0.36.44 - 1st June 2026
-
-- Updated `.claude/rules/committing.md`: no-parallel-git-command rule and `-m` flag guidance.
-
-
-### v0.36.43 - 31st May 2026
-
-- Added `[build-system]` to `pyproject.toml`; `uv sync --all-extras` now handles the editable install automatically.
-
-
-### v0.36.42 - 31st May 2026
-
-- Added `scripts/backup_db.py`: snapshots `data/rembrandt.db` to
-  `~/Dropbox/home/development/db/rembrandt_chat/` using the SQLite
-  online backup API (atomic write; source opened read-only). Destination
-  overridable via `REMBRANDT_CHAT_BACKUP_DEST` env var or `--dest` flag.
-
-
-### v0.36.41 - 17th May 2026
-
-- Rotated changelog: archived 5 old entries to `changelog/2026.md`.
