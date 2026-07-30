@@ -5,6 +5,10 @@ description: >-
   Audit user-facing strings in i18n.py for grammar, punctuation, and natural phrasing.
 ---
 
+<!-- opencode counterpart: .opencode/command/i18n-review.md — the
+     `/i18n-review` slash shim (skills aren't `/` commands in the
+     opencode TUI). Keep in sync (global claude-opencode-sync rule). -->
+
 Audit every user-facing string in `src/rembrandt_chat/i18n.py`
 for linguistic quality in both English and Spanish. Read the
 entire file and check each translation for:
