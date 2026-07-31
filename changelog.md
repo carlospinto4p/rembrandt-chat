@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.79 - 31st July 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.78 - 30th July 2026
 
 - Pruned the stale `Read(credentials/**)` deny from `.claude/settings.json`
@@ -226,13 +231,3 @@
 ### v0.36.50 - 8th June 2026
 
 - Synced from programme: reworded `versioning.md` changelog-prepend guidance (insert a new entry above the top header, never replace it) and added universal `.gitignore` entries (`*.bak.*`, `*.tmp.*`, etc.).
-
-
-### v0.36.49 - 7th June 2026
-
-- Rotated changelog: archived 1 entries to `changelog/2026.md`.
-
-
-### v0.36.48 - 4th June 2026
-
-- Rotated changelog: archived 7 entries to `changelog/2026.md`.
