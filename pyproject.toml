@@ -1,6 +1,6 @@
 [project]
 name = "rembrandt-chat"
-version = "0.36.79"
+version = "0.36.80"
 description = "A Client for chat sessions of Rembrandt."
 authors = [{ name = "Carlos Pinto", email = "carlospinto4p@gmail.com" }]
 readme = "README.md"
@@ -14,7 +14,7 @@ dependencies = [
 [project.scripts]
 rembrandt-chat = "rembrandt_chat.bot:create_app"
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pre-commit>=4.2.0",
     "ruff>=0.12.0",
@@ -23,6 +23,9 @@ dev = [
     "pytest-mock>=3.14.0",
     "pytest-cov>=6.0.0",
 ]
+
+[tool.uv]
+default-groups = ["dev"]
 
 [tool.ruff]
 line-length = 78

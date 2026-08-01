@@ -34,7 +34,7 @@ Store project rules and preferences in project config files (e.g., `.claude/sett
 
 ```bash
 # Install dependencies
-uv sync --all-extras
+uv sync
 
 # Run unit tests
 uv run pytest tests/unit -v

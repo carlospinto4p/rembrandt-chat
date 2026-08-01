@@ -1,6 +1,16 @@
 
 # Backlog - Rembrandt-Chat
 
+### 2026.08.01 (test warning)
+
+- [ ] Fix `RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call'
+  was never awaited` in `tests/unit/test_bot.py:174`
+  (`test_error_handler_sends_message`) — an `AsyncMock` return value or
+  side effect is likely being awaited twice, or a mocked coroutine is
+  never consumed. Surfaced while running the full unit suite during the
+  2026.08.01 PEP 735 dependency-groups migration; unrelated to that
+  change. Priority: LOW. Effort: Small.
+
 ### 2026.07.16 (roadmap)
 
 - [ ] **Define this project's roadmap.** `roadmap.md` was scaffolded as
