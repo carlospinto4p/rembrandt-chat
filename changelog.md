@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.81 - 4th August 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.80 - 1st August 2026
 
 - Moved dev tooling from `[project.optional-dependencies]` to PEP 735
@@ -232,13 +237,3 @@
 ### v0.36.52 - 13th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.
-
-
-### v0.36.51 - 10th June 2026
-
-- Rotated changelog: archived 2 entries to `changelog/2026.md`.
-
-
-### v0.36.50 - 8th June 2026
-
-- Synced from programme: reworded `versioning.md` changelog-prepend guidance (insert a new entry above the top header, never replace it) and added universal `.gitignore` entries (`*.bak.*`, `*.tmp.*`, etc.).
