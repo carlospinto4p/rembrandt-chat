@@ -48,3 +48,6 @@ build/
 
 .claude/wip
 .claude/docs-ok
+
+dist/
+logs/
