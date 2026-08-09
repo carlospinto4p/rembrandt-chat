@@ -77,6 +77,20 @@ If you reuse a token but point to a **new database**, the bot works
 but all users appear as new. They just send `/start` again to
 re-register, but previous scores and words are lost.
 
+## Restoring from backup
+
+`scripts/backup_db.py` snapshots `data/rembrandt.db` to
+`~/Dropbox/home/development/db/rembrandt-chat/` on a schedule (see the
+global `db-backup-dropbox.md` rule). To restore onto a fresh machine
+or after data loss, copy the snapshot back into place:
+
+```bash
+cp ~/Dropbox/home/development/db/rembrandt-chat/rembrandt.db data/rembrandt.db
+```
+
+The snapshot is a complete, self-contained SQLite file (produced via
+SQLite's online backup API) — no WAL or SHM sidecars needed.
+
 ## Deployment (Docker Compose)
 
 1. Copy the example environment file and fill in your bot token:

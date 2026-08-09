@@ -2,6 +2,15 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.82 - 9th August 2026
+
+- **Documented the Dropbox backup restore procedure.** Added a
+  `## Restoring from backup` section to `README.md` — the plain `cp`
+  step to copy `rembrandt.db` back from
+  `~/Dropbox/home/development/db/rembrandt-chat/` after
+  `scripts/backup_db.py` has snapshotted it.
+
+
 ### v0.36.81 - 4th August 2026
 
 - Rotated changelog: archived 2 entries to `changelog/2026.md`.
