@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.83 - 10th August 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.82 - 9th August 2026
 
 - **Documented the Dropbox backup restore procedure.** Added a
@@ -236,13 +241,3 @@
   (`.pre-commit-scripts/check_changelog_headers.sh` + the `.pre-commit-config.yaml`
   stanza): blocks a changelog edit that overwrites an existing version
   header (the bug that silently lost manifold's `v0.1.35`).
-
-
-### v0.36.53 - 13th June 2026
-
-- Rotated changelog: archived 1 entries to `changelog/2026.md`.
-
-
-### v0.36.52 - 13th June 2026
-
-- Rotated changelog: archived 1 entries to `changelog/2026.md`.
