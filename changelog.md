@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.85 - 25th September 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.84 - 23rd September 2026
 
 - Gave the backup's temporary file a per-process name, so two runs
@@ -248,19 +253,3 @@
   zero-byte source, and refuse a snapshot under 50% of the existing
   backup unless `--allow-shrink`. Added `tests/unit/test_backup_db.py`
   (5 tests). Mirrors programme's `backup_guard`.
-
-
-### v0.36.55 - 20th June 2026
-
-- Added `[tool.hatch.metadata] allow-direct-references = true` to
-  `pyproject.toml`: the `rembrandt` git direct-reference dependency made
-  `uv sync` fail at the editable build step (`Dependency #1 ... cannot be
-  a direct reference unless ...`), blocking the venv on a fresh machine.
-
-
-### v0.36.54 - 14th June 2026
-
-- Added the `check-changelog-headers` pre-commit guard
-  (`.pre-commit-scripts/check_changelog_headers.sh` + the `.pre-commit-config.yaml`
-  stanza): blocks a changelog edit that overwrites an existing version
-  header (the bug that silently lost manifold's `v0.1.35`).
