@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.87 - 28th September 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.86 - 27th September 2026
 
 - `.claude/rules/committing.md`/`versioning.md`: pulled programme's
@@ -244,21 +249,3 @@
 ### v0.36.58 - 20th June 2026
 
 - Added `scripts/changelog-add.sh` (safe changelog-prepend helper) and the `check-version-changelog` pre-commit guard, distributed in the programme fleet rollout.
-
-
-### v0.36.57 - 20th June 2026
-
-- `scripts/backup_db.py`: tightened the shrink guard to refuse **any**
-  snapshot smaller than the existing backup (was a >50% collapse) — a
-  smaller source signals truncation/data loss. The refusal exits
-  non-zero so the backup unit's `OnFailure` handler raises the alarm;
-  `--allow-shrink` overrides. Added a one-byte-smaller regression test.
-
-
-### v0.36.56 - 20th June 2026
-
-- `scripts/backup_db.py`: guard `backup_one` against clobbering a good
-  Dropbox backup with empty/fresh-machine data — refuse a missing or
-  zero-byte source, and refuse a snapshot under 50% of the existing
-  backup unless `--allow-shrink`. Added `tests/unit/test_backup_db.py`
-  (5 tests). Mirrors programme's `backup_guard`.
