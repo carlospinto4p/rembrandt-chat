@@ -1,0 +1,6 @@
+# Read by programme (~/development/programme). See its
+# .claude/rules/artifact-backup-coverage.md.
+
+# Where this project reads its database from. The Dropbox data
+# restore puts the snapshot back here.
+data = data

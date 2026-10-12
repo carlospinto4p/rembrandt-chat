@@ -2,6 +2,13 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.88 - 12th October 2026
+
+- Added `.programme-artifacts` with `data = data`. Programme's
+  Dropbox data restore now reads the data directory from this line
+  and skips a project that has none.
+
+
 ### v0.36.87 - 28th September 2026
 
 - Rotated changelog: archived 2 entries to `changelog/2026.md`.
