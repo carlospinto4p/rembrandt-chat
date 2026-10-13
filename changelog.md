@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.89 - 13th October 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.88 - 12th October 2026
 
 - Added `.programme-artifacts` with `data = data`. Programme's
@@ -246,13 +251,3 @@
 ### v0.36.60 - 25th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.
-
-
-### v0.36.59 - 25th June 2026
-
-- Rotated changelog: archived 6 entries to `changelog/2026.md`.
-
-
-### v0.36.58 - 20th June 2026
-
-- Added `scripts/changelog-add.sh` (safe changelog-prepend helper) and the `check-version-changelog` pre-commit guard, distributed in the programme fleet rollout.
