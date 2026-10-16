@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.91 - 16th October 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.90 - 13th October 2026
 
 - `CLAUDE.md` `## Core Rules`: removed "Update CLAUDE.md Each
@@ -247,15 +252,5 @@
 
 
 ### v0.36.62 - 1st July 2026
-
-- Rotated changelog: archived 1 entries to `changelog/2026.md`.
-
-
-### v0.36.61 - 28th June 2026
-
-- Rotated changelog: archived 1 entries to `changelog/2026.md`.
-
-
-### v0.36.60 - 25th June 2026
 
 - Rotated changelog: archived 1 entries to `changelog/2026.md`.
