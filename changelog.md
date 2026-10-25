@@ -2,6 +2,11 @@
 ## Changelog - Rembrandt-Chat
 
 
+### v0.36.93 - 25th October 2026
+
+- Rotated changelog: archived 2 entries to `changelog/2026.md`.
+
+
 ### v0.36.92 - 22nd October 2026
 
 - `.claude/rules/committing.md`: synced the trimmed canonical
@@ -248,16 +253,3 @@
 ### v0.36.64 - 4th July 2026
 
 - Rotated changelog: archived 2 entries to `changelog/2026.md`.
-
-
-### v0.36.63 - 3rd July 2026
-
-- Updated `.pre-commit-scripts/check_version_changelog.sh` to canonical:
-  exclude `reservations/**` placeholder manifests from version-bump
-  detection, so defensive package-name holds don't demand a changelog
-  entry (programme fleet rollout).
-
-
-### v0.36.62 - 1st July 2026
-
-- Rotated changelog: archived 1 entries to `changelog/2026.md`.
